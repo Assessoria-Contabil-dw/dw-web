@@ -1,3 +1,163 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    list-style-type: none;
+    list-style: none;
+  }
+
+  /* html {
+      @apply text-[62.5%] overflow-x-hidden;
+    } */
+  /* body {
+    @apply h-[100vh] w-[100vw] bg-gray-50 font-sans text-gray-900;
+  } */
+
+  footer {
+    @apply padding-main mt-16 h-16 w-full;
+  }
+
+  /* i svg {
+      @apply w-[2.4rem] h-[2.4rem];
+    }
+   */
+
+  option[value=""][disabled] {
+    @apply hidden text-gray-300;
+  }
+  option {
+    @apply text-gray-500;
+  }
+
+  /* table */
+  table {
+    @apply w-full;
+  }
+  table thead tr th, table tbody tr td{
+    @apply mr-9;
+  }
+
+  thead tr th,
+  tbody tr {
+    @apply border-b-[1px] border-dashed border-gray-200;
+  }
+  thead th {
+    @apply p-2 text-left font-alt text-xs font-bold uppercase text-gray-500;
+  }
+  tbody tr td {
+    @apply p-2 text-left font-sans text-sm font-medium text-gray-400;
+  }
+
+  tbody tr td:first-child {
+    @apply text-gray-500 hover:text-primary cursor-pointer uppercase;
+  }
+
+  tbody tr:last-child {
+    @apply border-b-0;
+  }
+  tbody tr td ul {
+    @apply flex flex-row justify-start gap-1;
+  }
+  tbody tr td ul li a {
+    @apply cursor-pointer text-white font-semibold rounded bg-slate-200 px-2 py-1;
+  }
+
+
+  /* text */
+  /* h2 {
+      @apply font-sans text-base font-medium uppercase text-gray-500 mb-2;
+    }
+    h4 {
+      font-family: sans;
+      font-size: 1rem;
+      font-weight: 400;
+      text-transform: uppercase;
+  
+      color: var(--gray-800);
+    }
+    a {
+      text-decoration: none;
+    }
+   */
+  /* buttons */
+  button:disabled,
+  button:disabled:hover,
+  button:disabled:focus,
+  button:disabled:active {
+    pointer-events: none;
+    background: var(--gray-100);
+  }
+
+  /* scroll */
+  html ::-webkit-scrollbar {
+    @apply h-2 w-2;
+  }
+  html ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-gray-400;
+  }
+  html ::-webkit-scrollbar-track {
+    @apply bg-gray-200;
+  }
+
+  /* form */
+  h1 {
+    @apply font-alt text-xl font-semibold text-gray-900;
+  }
+  h2 {
+    @apply font-alt text-lg font-semibold text-gray-900;
+  }
+  span {
+    @apply font-sans text-xs font-normal text-gray-400;
+  }
+
+  form,
+  fieldset {
+    @apply rounded-[0.8rem] border-[1px] border-gray-300 bg-white px-5 py-4;
+  }
+  legend {
+    @apply font-sans text-xl font-medium text-gray-900;
+  }
+
+  select,
+  input,
+  textarea {
+    @apply h-10 w-full rounded border border-gray-300 bg-white
+      px-3 font-sans text-sm font-normal text-gray-500;
+  }
+  select {
+    background-clip: padding-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  button {
+    @apply flex w-full items-center justify-center gap-1 rounded-lg p-2 font-sans text-sm font-semibold transition-colors;
+  }
+}
+
+@layer components {
+  #root {
+    @apply mb-16 flex h-full w-full flex-col overflow-auto;
+  }
+  .padding-main {
+    @apply px-32 py-0 max-md:px-4;
+  }
+  .card {
+    @apply rounded-[2rem] bg-white p-12 shadow-md ring-1 ring-slate-200 dark:bg-slate-900;
+  }
+  .bnt-sub {
+    @apply rounded-xl border-none bg-primary px-4 py-2 font-sans text-lg font-medium capitalize tracking-widest text-white;
+  }
+
+  .form-session {
+    @apply rounded-[0.8rem] border-[1px] border-gray-300 bg-white p-8;
+  }
+}
