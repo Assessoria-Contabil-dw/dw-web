@@ -55,10 +55,12 @@
   tbody tr td {
     @apply p-2 text-left font-sans text-sm font-medium text-gray-400;
   }
-
+  
+/*
   tbody tr td:first-child {
     @apply text-gray-500 hover:text-primary cursor-pointer uppercase;
   }
+*/
 
   tbody tr:last-child {
     @apply border-b-0;
@@ -114,6 +116,16 @@
   h2 {
     @apply font-alt text-lg font-semibold text-gray-900;
   }
+  h3 {
+    @apply font-alt text-base font-semibold text-gray-900;
+  }
+  h4 {
+    @apply font-alt text-sm font-semibold text-gray-900;
+  }
+  h5 {
+    @apply font-alt text-xs font-semibold text-gray-900;
+  }
+  
   span {
     @apply font-sans text-xs font-normal text-gray-400;
   }
@@ -123,11 +135,17 @@
     @apply rounded-[0.8rem] border-[1px] border-gray-300 bg-white px-5 py-4;
   }
   legend {
-    @apply font-sans text-xl font-medium text-gray-900;
+    @apply font-sans text-base font-medium text-gray-900;
   }
 
   select,
-  input,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="time"],
+  input[type="date"],
+  input[type="datetime-local"],
   textarea {
     @apply h-10 w-full rounded border border-gray-300 bg-white
       px-3 font-sans text-sm font-normal text-gray-500;
