@@ -1,11 +1,5 @@
 'use client'
-import {
-  KeyRound,
-  ClipboardList,
-  HomeIcon,
-  SquareAsterisk,
-  Users2,
-} from 'lucide-react'
+import { KeyRound, HomeIcon, SquareAsterisk, Users2 } from 'lucide-react'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 
@@ -29,9 +23,20 @@ export function NavigationMenu() {
 
         <li className="w-full">
           <Link
+            href="/pca"
+            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
+            ${activeSegment === 'pca' ? 'bg-[#ffffff19]' : ''}`}
+          >
+            <SquareAsterisk size={20} />
+            PCA
+          </Link>
+        </li>
+
+        <li className="w-full">
+          <Link
             href="/directory"
             className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'newDirectory' ? 'bg-[#ffffff19]' : ''}`}
+            ${activeSegment === 'directory' ? 'bg-[#ffffff19]' : ''}`}
           >
             <SquareAsterisk size={20} />
             Diretórios
@@ -48,6 +53,7 @@ export function NavigationMenu() {
             Representantes
           </Link>
         </li>
+
         <li className="w-full">
           <Link
             href="/advocate"
@@ -58,15 +64,14 @@ export function NavigationMenu() {
             Advogados
           </Link>
         </li>
-
         <li className="w-full">
           <Link
-            href="/pca"
+            href="/lawfirm"
             className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'pca' ? 'bg-[#ffffff19]' : ''}`}
+            ${activeSegment === 'lawfirm' ? 'bg-[#ffffff19]' : ''}`}
           >
-            <ClipboardList size={20} />
-            Cadastrar PCA
+            <SquareAsterisk size={20} />
+            Escritórios
           </Link>
         </li>
         <li className="w-full">
@@ -76,7 +81,7 @@ export function NavigationMenu() {
             ${activeSegment === 'acess' ? 'bg-[#ffffff19]' : ''}`}
           >
             <KeyRound size={20} />
-            Novo acesso
+            Administração
           </Link>
         </li>
       </ul>

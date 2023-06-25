@@ -1,7 +1,7 @@
 'use client'
 
 import { api } from '@/lib/api'
-import { Edit3, Eye, Plus, Trash2 } from 'lucide-react'
+import { Edit3, Eye, Plus, Search, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { LeaderForm } from '../form/Leader'
 
@@ -44,22 +44,12 @@ export function LeaderTable() {
   return (
     <div className="flex flex-col gap-8">
       <LeaderForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col">
-          <h2>Lista de Representantes</h2>
-          <span>10 cadastrados</span>
-        </div>
-
-        <div>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-secundary text-white"
-          >
-            <Plus size={20} />
-            Cadastrar Representante
-          </button>
-        </div>
+      <div className="flex w-96 gap-4">
+        <input type="text" className="w-fit" placeholder="Buscar por nome" />
+        <button className="w-fit gap-2 bg-secundary text-white">
+          <Search size={18} />
+          Pesquisar
+        </button>
       </div>
 
       <fieldset className="h-auto w-full rounded-lg px-3 py-2">
@@ -100,6 +90,13 @@ export function LeaderTable() {
           </tbody>
         </table>
       </fieldset>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="w-fit bg-secundary text-white"
+      >
+        <Plus size={20} />
+        Cadastrar Representante
+      </button>
     </div>
   )
 }

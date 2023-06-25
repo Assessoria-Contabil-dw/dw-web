@@ -4,6 +4,7 @@ import { api } from '@/lib/api'
 import { ChevronLeft, Edit3, Eye, FileText, Plus, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+// import { VigencyForm } from '../form/Vigency'
 
 type PCA = {
   id: string
@@ -20,7 +21,13 @@ type Directory = {
   SPCA: PCA[]
   SPCE: PCA[]
 }
-export function VigencyTable() {
+
+type VigencyProps = {
+  type: string
+  city: string
+  party: string
+}
+export function VigencyTable({ type, city, party }: VigencyProps) {
   const [directories, setDirectories] = useState<Directory[]>([])
 
   async function loadDirectories() {
@@ -42,6 +49,7 @@ export function VigencyTable() {
 
   return (
     <div className="flex flex-col gap-8">
+      {/* <VigencyForm /> */}
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start gap-4">
@@ -49,8 +57,10 @@ export function VigencyTable() {
               <ChevronLeft size={24} />
             </button>
             <div className="flex flex-col">
-              <h2>Vigência do DR ESTADO</h2>
-              <span>Nome do partido</span>
+              <h2>
+                Vigência do {type} {city}
+              </h2>
+              <span>{party}</span>
             </div>
           </div>
 

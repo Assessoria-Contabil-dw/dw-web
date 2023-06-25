@@ -135,7 +135,10 @@
     @apply rounded-[0.8rem] border-[1px] border-gray-300 bg-white px-5 py-4;
   }
   legend {
-    @apply font-sans text-base font-medium text-gray-900;
+    @apply font-sans text-base font-medium text-gray-700;
+  }
+  label{
+    @apply text-gray-700 font-sans font-medium;
   }
 
   select,
@@ -157,7 +160,7 @@
     -moz-appearance: none;
   }
   button {
-    @apply flex w-full items-center justify-center gap-1 rounded-lg p-2 font-sans text-sm font-semibold transition-colors;
+    @apply flex h-10 w-full items-center justify-center gap-1 rounded-lg p-2 font-sans text-sm font-semibold transition-colors;
   }
 }
 

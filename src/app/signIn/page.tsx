@@ -1,14 +1,14 @@
-// import { redirect } from 'next/navigation'
-// import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
 import { SignInForm } from '@/components/form/SignIn'
 
 export default function SignIn() {
   // verifica se o usuario ainda tem token ativo
-  // const isAuthenticated = cookies().get('token')?.value
+  const isAuthenticated = cookies().get('token')?.value
 
-  // if(isAuthenticated){
-  //   return redirect('/')
-  // }
+  if (isAuthenticated) {
+    return redirect('/')
+  }
 
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-zinc-50">

@@ -1,26 +1,9 @@
 'use client'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { api } from '@/lib/api'
-import cookie from 'js-cookie'
-import { useRouter } from 'next/navigation'
-import { Image, X } from 'lucide-react'
 
-const leaderFormShema = z.object({
-  cpf: z
-    .string()
-    .min(11, 'O CPF deve ter 11 caracteres')
-    .max(11, 'O CPF deve ter 11 caracteres')
-    .nonempty('O cpf é obrigatório'),
-  passwordHash: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
-})
-
-type SignInUser = z.infer<typeof leaderFormShema>
-
-interface TokenResponse {
-  token: string
-}
+import { X } from 'lucide-react'
+import { TextInput } from '../inputs/Text'
+import { ImgInput } from '../inputs/Img'
+import { RadioInput } from '../inputs/Radio'
 
 interface RegisterLeaderModalProps {
   isOpen: boolean
@@ -28,29 +11,6 @@ interface RegisterLeaderModalProps {
 }
 
 export function LeaderForm({ onClose, isOpen }: RegisterLeaderModalProps) {
-  const router = useRouter()
-  const { register, handleSubmit } = useForm<SignInUser>({
-    resolver: zodResolver(leaderFormShema),
-  })
-
-  async function handleSignInUser({ cpf, passwordHash }: SignInUser) {
-    try {
-      const response = await api.post('/signIn', {
-        cpf,
-        passwordHash,
-      })
-
-      console.log(response.data)
-
-      const { token } = response.data as TokenResponse
-
-      cookie.set('token', token, { expires: 7, path: '/' })
-      return router.refresh()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   if (!isOpen) {
     return null
   }
@@ -60,165 +20,110 @@ export function LeaderForm({ onClose, isOpen }: RegisterLeaderModalProps) {
 
   return (
     <div className="fixed right-0 top-0 flex h-screen w-screen items-center justify-center bg-black/50">
-      <div className="h-3/4 overflow-hidden">
-        <form
-          onSubmit={handleSubmit(handleSignInUser)}
-          className="flex h-full flex-col items-end p-1"
-        >
-          <div className="overflow-y-auto p-6">
-            <div className="flex w-full justify-between">
-              <h4>Cadastrar Representante</h4>
-              <div>
-                <button onClick={handleCloseModal} className="text-gray-600">
-                  <X size={24} />
+      <div className="h-3/4 w-2/4 overflow-hidden">
+        <form className="flex h-full w-full flex-col items-end  p-1">
+          <div className="flex h-full w-full flex-col justify-between gap-6 overflow-y-auto p-8">
+            <div className="flex flex-col gap-6">
+              <div className="flex w-full items-start justify-between border-b-[1px]">
+                <div>
+                  <h4>Cadastrar Representante</h4>
+                  <span>Insira as informações de um representante</span>
+                </div>
+                <button
+                  onClick={handleCloseModal}
+                  className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
+                >
+                  <X size={20} />
                 </button>
+              </div>
+              <div className="flex flex-1 flex-col gap-4">
+                <div className="flex gap-3">
+                  <TextInput
+                    label="Nome"
+                    type="text"
+                    placeholder="Digite o nome completo"
+                  />
+                  <TextInput
+                    label="CPF"
+                    type="text"
+                    placeholder="Digite o CPF"
+                  />
+                  <TextInput label="RG" type="text" placeholder="Digite o RG" />
+                </div>
+                <TextInput
+                  label="Endereço"
+                  type="text"
+                  placeholder="Rua, n°, Bairro, Cidade - UF, CEP"
+                />
+                <div className="flex gap-3">
+                  <TextInput
+                    label="Telefone"
+                    type="text"
+                    placeholder="Digite o telefone"
+                  />
+                  <TextInput
+                    label="E-mail"
+                    type="text"
+                    placeholder="Digite o email"
+                  />
+                  <TextInput
+                    label="Profissão"
+                    type="text"
+                    placeholder="Digite a profissão"
+                  />
+                </div>
+
+                <div className="flex gap-8">
+                  <label className="flex flex-col gap-1 whitespace-nowrap text-sm font-semibold">
+                    Situação Cívil
+                    <div>
+                      <RadioInput type="radio" label="Solteiro" name="status" />
+                      <RadioInput type="radio" label="Casado" name="status" />
+                      <RadioInput
+                        type="radio"
+                        label="Divorciado"
+                        name="status"
+                      />
+                      <RadioInput type="radio" label="Viúvo" name="status" />
+                    </div>
+                  </label>
+                  <label className="flex flex-col gap-1 text-sm font-semibold">
+                    Nacionalidade
+                    <div>
+                      <RadioInput
+                        type="radio"
+                        label="Brasileiro"
+                        name="nacionality"
+                      />
+                      <RadioInput
+                        type="radio"
+                        label="Estrangeiro"
+                        name="nacionality"
+                      />
+                    </div>
+                  </label>
+                  <ImgInput
+                    label="Assinatura"
+                    placeholder="Anexar assinatura"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-8">
-              <div className="flex w-full flex-row gap-8">
-                <div className="flex flex-1 flex-col gap-4">
-                  <label className="flex flex-col gap-1 text-sm font-semibold">
-                    Nome
-                    <input
-                      type="text"
-                      placeholder="Digite o Nome Completo"
-                      {...register('cpf')}
-                    />
-                  </label>
-                  <label className="flex flex-col gap-1 text-sm font-semibold">
-                    CPF
-                    <input
-                      type="text"
-                      placeholder="Digite o CPF"
-                      {...register('cpf')}
-                    />
-                  </label>
-                  <label className="flex flex-col gap-1 text-sm font-semibold">
-                    RG
-                    <input
-                      type="text"
-                      placeholder="Digite o RG"
-                      {...register('cpf')}
-                    />
-                  </label>
-                  <label className="flex flex-col gap-1 text-sm font-semibold">
-                    Endereço
-                    <input
-                      type="text"
-                      placeholder="Digite o Endereço"
-                      {...register('cpf')}
-                    />
-                  </label>
-                  <label className="flex flex-col gap-1 text-sm font-semibold">
-                    Telefone
-                    <input
-                      type="text"
-                      placeholder="Digite o Telefone"
-                      {...register('cpf')}
-                    />
-                  </label>
-                </div>
-
-                <div className="flex flex-1 flex-col gap-2">
-                  <div className="flex gap-8">
-                    <div>
-                      <label className="flex flex-col gap-1 text-sm font-semibold">
-                        Nacionalidade
-                      </label>
-                      <ul>
-                        <li>
-                          <label className="flex gap-1 text-sm font-normal">
-                            <input
-                              checked
-                              type="radio"
-                              name="Brasileiro"
-                              id=""
-                            />
-                            Brasileiro
-                          </label>
-                        </li>
-                        <li>
-                          <label className="flex gap-1 text-sm font-normal">
-                            <input type="radio" name="Estrangeiro" id="" />
-                            Estrangeiro
-                          </label>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <label className="flex flex-col gap-1 text-sm font-semibold">
-                        Situação Cívil
-                      </label>
-                      <ul>
-                        <li>
-                          <label className="flex gap-1 text-sm font-normal">
-                            <input type="radio" name="Solteiro" id="s" />
-                            Solteiro
-                          </label>
-                        </li>
-                        <li>
-                          <label className="flex gap-1 text-sm font-normal">
-                            <input type="radio" name="Casado" id="c" />
-                            Casado
-                          </label>
-                        </li>
-                        <li>
-                          <label className="flex gap-1 text-sm font-normal">
-                            <input type="radio" name="Divorciado" id="d" />
-                            Divorciado
-                          </label>
-                        </li>
-                        <li>
-                          <label className="flex gap-1 text-sm font-normal">
-                            <input type="radio" name="Viúvo" id="v" />
-                            Viúvo
-                          </label>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <label className="flex flex-col gap-1 text-sm font-semibold">
-                    E-mail
-                    <input
-                      type="text"
-                      placeholder="Digite o e-mail"
-                      {...register('cpf')}
-                    />
-                  </label>
-
-                  <label className="flex flex-col gap-1 text-sm font-semibold">
-                    Profissão
-                    <input
-                      type="text"
-                      placeholder="Digite a profissão"
-                      {...register('cpf')}
-                    />
-                  </label>
-
-                  <label className="flex flex-col gap-1 text-sm font-semibold">
-                    Assinatura
-                    <div className="flex h-24 w-full items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 text-gray-200">
-                      <Image size={32} />
-                    </div>
-                    <input
-                      className="border-0 file:rounded-xl file:border-0 file:bg-secundary file:p-2 file:text-white"
-                      type="file"
-                      name=""
-                      id=""
-                    />
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  className="bg-primary text-white hover:bg-primary-hover "
-                >
-                  Cadastrar
-                </button>
-              </div>
+            <div className="flex gap-4">
+              <button
+                onClick={handleCloseModal}
+                type="submit"
+                className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className="bg-primary text-white hover:bg-primary-hover "
+              >
+                Cadastrar
+              </button>
             </div>
           </div>
         </form>

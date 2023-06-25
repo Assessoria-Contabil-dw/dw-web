@@ -3,8 +3,7 @@
 import { api } from '@/lib/api'
 import { Edit3, Trash2, Eye, Plus, Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { DirectoryForm } from '../form/Directory'
-import Link from 'next/link'
+import { LawFirmForm } from '../form/LawFirm'
 
 type PCA = {
   id: string
@@ -21,7 +20,7 @@ type Directory = {
   SPCA: PCA[]
   SPCE: PCA[]
 }
-export function DirectoryTable() {
+export function LawFirmTable() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [directories, setDirectories] = useState<Directory[]>([])
 
@@ -43,50 +42,48 @@ export function DirectoryTable() {
 
   return (
     <div className="flex flex-col gap-8">
-      <DirectoryForm
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <LawFirmForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      <div className="flex flex-col gap-6">
-        <div className="flex gap-4">
-          <input type="text" placeholder="Buscar por Partido" />
-          <input type="text" placeholder="Buscar por Estado" />
-          <input type="text" placeholder="Buscar por Municipio" />
-          <button className="w-fit gap-2 bg-secundary text-white">
-            <Search size={18} />
-            Pesquisar
-          </button>
-        </div>
+      <div className="flex w-96 gap-4">
+        <input type="text" placeholder="Buscar por escritório" />
+        <button className="w-fit gap-2 bg-secundary text-white">
+          <Search size={18} />
+          Pesquisar
+        </button>
       </div>
 
       <fieldset className="h-auto w-full rounded-lg px-3 py-2">
         <table>
           <thead>
             <tr>
-              <th>Direção</th>
+              <th>Escritório</th>
               <th>Endereço</th>
               <th>CNPJ</th>
               <th>E-mail</th>
               <th>Telefone</th>
-              <th>Cor</th>
-              <th>Logo</th>
+              <th>Advogados</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
-                <Link href="directory/vigency/id">Nome</Link>
-              </td>
+              <td>Nome</td>
               <td>Endereço</td>
               <td>00000000</td>
               <td>email</td>
               <td>telefone</td>
-              <td>cor</td>
-              <td>logo</td>
               <td>
-                <div className="flex items-center justify-center">
+                <div className="h-20 overflow-y-scroll">
+                  <ul className="flex flex-col">
+                    <li>Nome completo</li>
+                    <li>Nome completo</li>
+                    <li>Nome completo</li>
+                    <li>Nome completo</li>
+                  </ul>
+                </div>
+              </td>
+              <td>
+                <div className="flex w-fit items-center  justify-center gap-2">
                   <button className="rounded p-0 hover:text-secundary">
                     <Eye size={16} />
                   </button>
@@ -109,7 +106,7 @@ export function DirectoryTable() {
           className="w-fit bg-secundary text-white"
         >
           <Plus size={20} />
-          Cadastrar Diretório
+          Cadastrar Escritório
         </button>
       </div>
     </div>

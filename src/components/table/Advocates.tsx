@@ -1,7 +1,7 @@
 'use client'
 
 import { api } from '@/lib/api'
-import { Edit3, Eye, Plus, Trash2 } from 'lucide-react'
+import { Edit3, Eye, Plus, Search, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { AdvocateForm } from '../form/Advocate'
 
@@ -48,21 +48,12 @@ export function AdvocateTable() {
         onClose={() => setIsModalOpen(false)}
       />
 
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col">
-          <h2>Lista de Advogados</h2>
-          <span>10 cadastrados</span>
-        </div>
-
-        <div>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-secundary text-white"
-          >
-            <Plus size={20} />
-            Cadastrar Advogado
-          </button>
-        </div>
+      <div className="flex w-96 gap-4">
+        <input type="text" className="w-fit" placeholder="Buscar por nome" />
+        <button className="w-fit gap-2 bg-secundary text-white">
+          <Search size={18} />
+          Pesquisar
+        </button>
       </div>
 
       <fieldset className="h-auto w-full rounded-lg px-3 py-2">
@@ -71,9 +62,10 @@ export function AdvocateTable() {
             <tr>
               <th>Nome</th>
               <th>OAB</th>
-              <th>RG</th>
+              <th>CPF</th>
               <th>Endereço</th>
               <th>email</th>
+              <th>Escritório</th>
               <th>Assinatura</th>
               <th></th>
             </tr>
@@ -85,6 +77,7 @@ export function AdvocateTable() {
               <td>00000000</td>
               <td>Rua, n°, Bairro, Cidade - UF, CEP</td>
               <td>email@gmail.com</td>
+              <td>Escritório</td>
               <td></td>
               <td>
                 <div className="flex items-center justify-center gap-1">
@@ -103,6 +96,14 @@ export function AdvocateTable() {
           </tbody>
         </table>
       </fieldset>
+
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="w-fit bg-secundary text-white"
+      >
+        <Plus size={20} />
+        Cadastrar Advogado
+      </button>
     </div>
   )
 }

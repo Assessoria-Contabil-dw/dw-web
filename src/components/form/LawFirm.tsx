@@ -1,30 +1,19 @@
 'use client'
-import { Plus, X } from 'lucide-react'
+import { Plus, Trash2, X } from 'lucide-react'
 import { FormEvent, useState } from 'react'
-import { VigencyForm } from './Vigency'
-import { RadioInput } from '../inputs/Radio'
 import { TextInput } from '../inputs/Text'
 import { SelectInput } from '../inputs/Select'
 
-interface RegisterDirectoryModalProps {
+interface LawFirmModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
-// interface AddVigencyProps extends FormEvent<HTMLFormElement> {
-//   id: number
-//   value: number
-//   e: MouseEvent<HTMLButtonElement>
-// }
-
-interface VigencyProps {
+interface LawFirmProps {
   id: number
 }
 
-export function DirectoryForm({
-  onClose,
-  isOpen,
-}: RegisterDirectoryModalProps) {
+export function LawFirmForm({ onClose, isOpen }: LawFirmModalProps) {
   if (!isOpen) {
     return null
   }
@@ -34,34 +23,34 @@ export function DirectoryForm({
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [vigency, setVigency] = useState<VigencyProps[]>([])
+  const [lawfirm, setLawfirm] = useState<LawFirmProps[]>([])
 
   function addElement(event: FormEvent<Element>) {
     event.preventDefault()
-    const newElement = { id: vigency.length }
-    setVigency([...vigency, newElement])
+    const newElement = { id: lawfirm.length }
+    setLawfirm([...lawfirm, newElement])
   }
 
   async function deleteElement(id: number, event: FormEvent<Element>) {
     event.preventDefault()
-    const newArray = vigency.filter((item) => item.id !== id)
+    const newArray = lawfirm.filter((item) => item.id !== id)
 
     const upgradeArray = await newArray.map((item, index) => {
       return { id: index }
     })
-    setVigency(upgradeArray)
+    setLawfirm(upgradeArray)
   }
 
   return (
     <div className="fixed right-0 top-0 flex h-screen w-screen items-center justify-center bg-black/50">
       <div className="h-3/4 w-2/4 overflow-hidden">
-        <form className="flex h-full w-full flex-col items-end  p-1 py-3">
+        <form className="flex h-full w-full flex-col items-end  p-1">
           <div className="flex h-full w-full flex-col justify-between gap-6 overflow-y-auto p-8">
             <div className="flex flex-col gap-6">
               <div className="flex w-full items-start justify-between border-b-[1px]">
                 <div>
-                  <h4>Cadastrar Diretório</h4>
-                  <span>Cadastre um diretório e suas vigências</span>
+                  <h4>Cadastrar Escritório</h4>
+                  <span>Cadastre um novo escritório e seus advogados</span>
                 </div>
                 <button
                   onClick={handleCloseModal}
@@ -70,37 +59,13 @@ export function DirectoryForm({
                   <X size={20} />
                 </button>
               </div>
+
               <div className="flex flex-1 flex-col gap-4">
-                <label className="flex flex-col gap-1 whitespace-nowrap text-sm font-semibold">
-                  Tipo de organização
-                  <div className="flex gap-4">
-                    <RadioInput type="radio" label="Nacional" name="type" />
-                    <RadioInput type="radio" label="Estadual" name="type" />
-                    <RadioInput type="radio" label="Municipal" name="type" />
-                  </div>
-                </label>
-                <div className="flex gap-3">
-                  <SelectInput
-                    label="Partido"
-                    placeholder="Selecione um partido"
-                    type="party"
-                  />
-                  <SelectInput
-                    label="Estado"
-                    placeholder="Selecione um estado"
-                    type="party"
-                  />
-                  <SelectInput
-                    label="Cidade"
-                    placeholder="Selecione uma cidade"
-                    type="party"
-                  />
-                </div>
                 <div className="flex gap-3">
                   <TextInput
-                    label="Endereço"
+                    label="Nome"
                     type="text"
-                    placeholder="Rua, n°, Bairro, Cidade - UF, CEP"
+                    placeholder="Nome do Escritório"
                   />
                   <TextInput
                     label="CNPJ"
@@ -108,6 +73,12 @@ export function DirectoryForm({
                     placeholder="Digite o CNPJ"
                   />
                 </div>
+                <TextInput
+                  label="Endereço"
+                  type="text"
+                  placeholder="Rua, n°, Bairro, Cidade - UF, CEP"
+                />
+
                 <div className="flex gap-3">
                   <TextInput
                     label="Telefone"
@@ -125,26 +96,36 @@ export function DirectoryForm({
                     placeholder="Digite o site"
                   />
                 </div>
+                <div className="flex items-end gap-3">
+                  <SelectInput
+                    label="Vincular Advocado"
+                    placeholder="Selecione um advogado"
+                    type="directory"
+                  />
+                  <button
+                    onClick={(e) => addElement(e)}
+                    className="w-fit whitespace-nowrap bg-secundary/20 text-secundary"
+                  >
+                    <Plus size={20} />
+                    Advogado
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-col gap-4">
-                {vigency.map((item, key) => (
-                  <div key={key}>
-                    <VigencyForm
-                      onClick={(event: FormEvent<Element>) =>
-                        deleteElement(item.id, event)
-                      }
-                      index={item.id}
-                    />
-                  </div>
+              <ul className="flex flex-col gap-4">
+                {lawfirm.map((item, key) => (
+                  <li key={key} className="flex items-center justify-between">
+                    <label className="flex flex-col gap-1 whitespace-nowrap text-sm font-semibold">
+                      Nome do advogado
+                    </label>
+                    <button
+                      onClick={(event) => deleteElement(item.id, event)}
+                      className="w-fit whitespace-nowrap bg-red-400/20 text-red-400"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  </li>
                 ))}
-                <button
-                  onClick={(e) => addElement(e)}
-                  className="w-fit whitespace-nowrap bg-secundary/20 text-secundary"
-                >
-                  <Plus size={20} />
-                  Virgência
-                </button>
-              </div>
+              </ul>
             </div>
 
             <div className="flex gap-4">

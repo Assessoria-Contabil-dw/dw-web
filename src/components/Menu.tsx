@@ -1,6 +1,5 @@
 import { Squirrel } from 'lucide-react'
 import { NavigationMenu } from './Navigation'
-import { Logout } from './Logout'
 
 export default function Menu() {
   return (
@@ -12,7 +11,6 @@ export default function Menu() {
         </div>
         <NavigationMenu />
       </div>
-      <Logout />
     </div>
   )
 }
