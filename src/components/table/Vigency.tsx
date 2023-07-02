@@ -166,17 +166,14 @@ export function VigencyTable({ type, city, party }: VigencyProps) {
                 <td>Nome Completo Sobrenome</td>
                 <td>-</td>
                 <td>
-                  <div className="flex items-center justify-center gap-1">
-                    <button className="rounded p-0 hover:text-secundary">
+                  <div className="flex items-center justify-center">
+                    <button className=" h-full w-auto p-1 hover:text-secundary">
                       <Eye size={16} />
                     </button>
-                    <button className="rounded p-0 hover:text-primary">
-                      <FileText size={16} />
-                    </button>
-                    <button className="rounded p-0 hover:text-primary">
+                    <button className="h-full w-auto rounded p-1 hover:text-primary">
                       <Edit3 size={16} />
                     </button>
-                    <button className="rounded p-0 hover:text-red-500">
+                    <button className="h-full w-auto rounded p-0 hover:text-red-500">
                       <Trash2 size={16} />
                     </button>
                   </div>

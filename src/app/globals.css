@@ -66,7 +66,7 @@
     @apply border-b-0;
   }
   tbody tr td ul {
-    @apply flex flex-row justify-start gap-1;
+    @apply flex flex-row justify-start gap-2;
   }
   tbody tr td ul li a {
     @apply cursor-pointer text-white font-semibold rounded bg-slate-200 px-2 py-1;

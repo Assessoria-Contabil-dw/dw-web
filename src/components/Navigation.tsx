@@ -1,5 +1,13 @@
 'use client'
-import { KeyRound, HomeIcon, SquareAsterisk, Users2 } from 'lucide-react'
+import {
+  KeyRound,
+  HomeIcon,
+  Users2,
+  CalendarRange,
+  Ungroup,
+  BookMarked,
+  GraduationCap,
+} from 'lucide-react'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 
@@ -23,11 +31,22 @@ export function NavigationMenu() {
 
         <li className="w-full">
           <Link
+            href="/party"
+            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
+            ${activeSegment === 'party' ? 'bg-[#ffffff19]' : ''}`}
+          >
+            <Ungroup size={20} />
+            Partidos
+          </Link>
+        </li>
+
+        <li className="w-full">
+          <Link
             href="/pca"
             className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
             ${activeSegment === 'pca' ? 'bg-[#ffffff19]' : ''}`}
           >
-            <SquareAsterisk size={20} />
+            <CalendarRange size={20} />
             PCA
           </Link>
         </li>
@@ -38,7 +57,7 @@ export function NavigationMenu() {
             className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
             ${activeSegment === 'directory' ? 'bg-[#ffffff19]' : ''}`}
           >
-            <SquareAsterisk size={20} />
+            <Ungroup size={20} />
             Diretórios
           </Link>
         </li>
@@ -60,7 +79,7 @@ export function NavigationMenu() {
             className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
             ${activeSegment === 'advocate' ? 'bg-[#ffffff19]' : ''}`}
           >
-            <SquareAsterisk size={20} />
+            <GraduationCap size={20} />
             Advogados
           </Link>
         </li>
@@ -70,7 +89,7 @@ export function NavigationMenu() {
             className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
             ${activeSegment === 'lawfirm' ? 'bg-[#ffffff19]' : ''}`}
           >
-            <SquareAsterisk size={20} />
+            <BookMarked size={20} />
             Escritórios
           </Link>
         </li>

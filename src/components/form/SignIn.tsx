@@ -34,8 +34,6 @@ export function SignInForm() {
         passwordHash,
       })
 
-      console.log(response.data)
-
       const { token } = response.data as TokenResponse
 
       cookie.set('token', token, { expires: 7, path: '/' })

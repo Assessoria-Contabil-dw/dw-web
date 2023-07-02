@@ -1,7 +1,7 @@
 'use client'
 
 import { api } from '@/lib/api'
-import { Edit3, Trash2, Eye, Plus, Search } from 'lucide-react'
+import { Edit3, Trash2, Eye, Plus, Search, Circle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { PCAForm } from '../form/PCA'
 
@@ -44,7 +44,7 @@ export function PCATable() {
     <div className="flex flex-col gap-8">
       <PCAForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      <div className="flex w-96 gap-4">
+      <div className="flex w-fit gap-4">
         <input type="text" placeholder="Buscar por Direção" />
         <button className="w-fit gap-2 bg-secundary text-white">
           <Search size={18} />
@@ -60,7 +60,6 @@ export function PCATable() {
               <th>SPCA</th>
               <th>Vigência</th>
               <th>SPCE</th>
-              <th>Observações</th>
               <th></th>
             </tr>
           </thead>
@@ -69,13 +68,17 @@ export function PCATable() {
               <td className="whitespace-nowrap">DR Cidade</td>
               <td>
                 <ul>
-                  <li>
+                  <li className="relative">
                     <a
-                      className="bg-red-400 bg-opacity-30 text-red-400"
+                      className=" bg-red-400 bg-opacity-30 text-red-400"
                       href="/"
                     >
                       2020
                     </a>
+                    <Circle
+                      className="absolute -right-1 -top-2 cursor-pointer fill-primary text-primary"
+                      size={12}
+                    />
                   </li>
                   <li>
                     <a
@@ -124,22 +127,16 @@ export function PCATable() {
                   </li>
                 </ul>
               </td>
+
               <td>
-                lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quislorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quis
-              </td>
-              <td>
-                <div className="flex items-center justify-center gap-1">
-                  <button className="rounded p-0 hover:text-secundary">
+                <div className="flex items-center justify-center">
+                  <button className=" h-full w-auto p-1 hover:text-secundary">
                     <Eye size={16} />
                   </button>
-                  <button className="rounded p-0 hover:text-primary">
+                  <button className="h-full w-auto rounded p-1 hover:text-primary">
                     <Edit3 size={16} />
                   </button>
-                  <button className="rounded p-0 hover:text-red-500">
+                  <button className="h-full w-auto rounded p-0 hover:text-red-500">
                     <Trash2 size={16} />
                   </button>
                 </div>
