@@ -1,9 +1,9 @@
-import { LeaderTable } from '@/components/Leader/'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
+import { SPCTable } from '@/components/SPC'
 import Header from '@/components/Header'
 
-export default function Leader() {
+export default function PCA() {
   const isAuthenticated = cookies().get('token')?.value
 
   if (!isAuthenticated) {
@@ -13,10 +13,10 @@ export default function Leader() {
   return (
     <div className="flex flex-col gap-6">
       <Header
-        title="Representantes"
-        descrition="Verificar representantes cadastrados"
+        title="Prestação de Conta"
+        descrition="Verifique o SPCA e SPCE de cada diretório"
       />
-      <LeaderTable />
+      <SPCTable />
     </div>
   )
 }

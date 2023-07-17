@@ -25,7 +25,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${roboto.variable} ${montserrat.variable} font-sans`}>
+      <body
+        className={`${roboto.variable} ${montserrat.variable} bg-gray-50 font-sans`}
+      >
         {isAuthenticated ? (
           <div className="grid h-screen min-h-screen w-screen grid-cols-[250px_auto]">
             <Menu />

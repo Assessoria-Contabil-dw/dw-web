@@ -1,4 +1,4 @@
-import { AdvocateTable } from '@/components/table/Advocates'
+import { AdvocateTable } from '@/components/Advocate'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import Header from '@/components/Header'

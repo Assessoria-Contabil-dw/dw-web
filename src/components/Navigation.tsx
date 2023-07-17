@@ -20,11 +20,18 @@ export function NavigationMenu() {
         <li className="w-full">
           <Link
             href="/"
-            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === null ? 'bg-[#ffffff19]' : ''}
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === null ? 'bg-primary text-white' : 'text-zinc-600'
+            }
             `}
           >
-            <HomeIcon size={20} />
+            <HomeIcon
+              size={18}
+              className={`w-4 ${
+                activeSegment === null ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
             Página Inicial
           </Link>
         </li>
@@ -32,32 +39,59 @@ export function NavigationMenu() {
         <li className="w-full">
           <Link
             href="/party"
-            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'party' ? 'bg-[#ffffff19]' : ''}`}
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === 'party'
+                ? 'bg-primary text-white'
+                : 'text-zinc-600'
+            }`}
           >
-            <Ungroup size={20} />
+            <Ungroup
+              size={18}
+              className={`w-4 ${
+                activeSegment === 'party' ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
             Partidos
           </Link>
         </li>
 
         <li className="w-full">
           <Link
-            href="/pca"
-            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'pca' ? 'bg-[#ffffff19]' : ''}`}
+            href="/spc"
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === 'spc'
+                ? 'bg-primary text-white'
+                : 'text-zinc-600'
+            }`}
           >
-            <CalendarRange size={20} />
-            PCA
+            <CalendarRange
+              size={18}
+              className={`w-4 ${
+                activeSegment === 'spc' ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
+            SPC
           </Link>
         </li>
 
         <li className="w-full">
           <Link
             href="/directory"
-            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'directory' ? 'bg-[#ffffff19]' : ''}`}
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === 'directory'
+                ? 'bg-primary text-white'
+                : 'text-zinc-600'
+            }`}
           >
-            <Ungroup size={20} />
+            <Ungroup
+              size={18}
+              className={`w-4 ${
+                activeSegment === 'directory' ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
             Diretórios
           </Link>
         </li>
@@ -65,10 +99,19 @@ export function NavigationMenu() {
         <li className="w-full">
           <Link
             href="/leader"
-            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'leader' ? 'bg-[#ffffff19]' : ''}`}
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === 'leader'
+                ? 'bg-primary text-white'
+                : 'text-zinc-600'
+            }`}
           >
-            <Users2 size={20} />
+            <Users2
+              size={18}
+              className={`w-4 ${
+                activeSegment === 'leader' ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
             Representantes
           </Link>
         </li>
@@ -76,30 +119,57 @@ export function NavigationMenu() {
         <li className="w-full">
           <Link
             href="/advocate"
-            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'advocate' ? 'bg-[#ffffff19]' : ''}`}
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === 'advocate'
+                ? 'bg-primary text-white'
+                : 'text-zinc-600'
+            }`}
           >
-            <GraduationCap size={20} />
+            <GraduationCap
+              size={18}
+              className={`w-4 ${
+                activeSegment === 'advocate' ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
             Advogados
           </Link>
         </li>
         <li className="w-full">
           <Link
             href="/lawfirm"
-            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'lawfirm' ? 'bg-[#ffffff19]' : ''}`}
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === 'lawfirm'
+                ? 'bg-primary text-white'
+                : 'text-zinc-600'
+            }`}
           >
-            <BookMarked size={20} />
+            <BookMarked
+              size={18}
+              className={`w-4 ${
+                activeSegment === 'lawfirm' ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
             Escritórios
           </Link>
         </li>
         <li className="w-full">
           <Link
             href="/acess"
-            className={`flex w-full flex-row items-center gap-2 rounded-lg  p-2 font-sans text-sm text-white
-            ${activeSegment === 'acess' ? 'bg-[#ffffff19]' : ''}`}
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === 'acess'
+                ? 'bg-primary text-white'
+                : 'text-zinc-600'
+            }`}
           >
-            <KeyRound size={20} />
+            <KeyRound
+              size={18}
+              className={`w-4 ${
+                activeSegment === 'acess' ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
             Administração
           </Link>
         </li>

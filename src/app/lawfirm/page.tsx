@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import Header from '@/components/Header'
-import { LawFirmTable } from '@/components/table/LawFirm'
+import { LawFirmTable } from '@/components/LawFirm'
 
 export default function LawFirm() {
   const isAuthenticated = cookies().get('token')?.value

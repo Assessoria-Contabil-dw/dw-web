@@ -34,7 +34,7 @@
     @apply hidden text-gray-300;
   }
   option {
-    @apply text-gray-500;
+    @apply text-zinc-600;
   }
 
   /* table */
@@ -47,10 +47,10 @@
 
   thead tr th,
   tbody tr {
-    @apply border-b-[1px] border-dashed border-gray-200;
+    @apply border-b-[1px] border-dashed border-gray-200 ;
   }
   thead th {
-    @apply p-2 text-left font-alt text-xs font-bold uppercase text-gray-500;
+    @apply p-2 text-left font-alt text-xs font-bold uppercase text-zinc-600 whitespace-nowrap;
   }
   tbody tr td {
     @apply p-2 text-left font-sans text-sm font-medium text-gray-400;
@@ -58,7 +58,7 @@
   
 /*
   tbody tr td:first-child {
-    @apply text-gray-500 hover:text-primary cursor-pointer uppercase;
+    @apply text-zinc-600 hover:text-primary cursor-pointer uppercase;
   }
 */
 
@@ -75,7 +75,7 @@
 
   /* text */
   /* h2 {
-      @apply font-sans text-base font-medium uppercase text-gray-500 mb-2;
+      @apply font-sans text-base font-medium uppercase text-zinc-600 mb-2;
     }
     h4 {
       font-family: sans;
@@ -135,7 +135,7 @@
     @apply rounded-[0.8rem] border-[1px] border-gray-300 bg-white px-5 py-4;
   }
   legend {
-    @apply font-sans text-base font-medium text-gray-700;
+    @apply font-sans text-xs font-medium text-zinc-600;
   }
   label{
     @apply text-gray-700 font-sans font-medium;
@@ -151,16 +151,14 @@
   input[type="datetime-local"],
   textarea {
     @apply h-10 w-full rounded border border-gray-300 bg-white
-      px-3 font-sans text-sm font-normal text-gray-500;
+      px-3 font-sans text-sm font-normal text-zinc-600;
   }
   select {
-    background-clip: padding-box;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    cursor: pointer;
   }
+ 
   button {
-    @apply flex h-10 w-full items-center justify-center gap-1 rounded-lg p-2 font-sans text-sm font-semibold transition-colors;
+    @apply flex h-10 w-full  whitespace-nowrap items-center justify-center gap-1 rounded-lg px-4 py-2 font-sans text-sm font-semibold transition-colors;
   }
 }
 

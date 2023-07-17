@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import { SignInForm } from '@/components/form/SignIn'
+import { SignInForm } from '@/components/SignIn'
 
 export default function SignIn() {
   // verifica se o usuario ainda tem token ativo
