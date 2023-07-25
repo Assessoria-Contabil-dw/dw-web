@@ -1,10 +1,12 @@
 'use client'
-import { useForm } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { api } from '@/lib/api'
 import cookie from 'js-cookie'
 import { useRouter } from 'next/navigation'
+import { Loading } from './Form/Loading'
+import { Form } from './Form'
 
 const signInUserFormShema = z.object({
   cpf: z
@@ -23,9 +25,14 @@ interface TokenResponse {
 
 export function SignInForm() {
   const router = useRouter()
-  const { register, handleSubmit } = useForm<SignInUser>({
+  const createLogin = useForm<SignInUser>({
     resolver: zodResolver(signInUserFormShema),
   })
+
+  const {
+    formState: { isSubmitting },
+    handleSubmit,
+  } = createLogin
 
   async function handleSignInUser({ cpf, passwordHash }: SignInUser) {
     try {
@@ -45,36 +52,41 @@ export function SignInForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(handleSignInUser)}
-      className="flex items-center justify-center"
-    >
-      <div className="flex w-72 flex-col items-center gap-8">
-        <div className="flex w-full flex-col gap-4">
-          <label className="flex flex-col gap-1 text-sm font-semibold">
-            CPF
-            <input
-              type="text"
-              placeholder="Digite seu CPF"
-              {...register('cpf')}
-            />
-          </label>
-          <label className="flex flex-col gap-1 text-sm font-semibold">
-            Senha
-            <input
-              type="password"
-              placeholder="Digite sua senha"
-              {...register('passwordHash')}
-            />
-          </label>
+    <FormProvider {...createLogin}>
+      <form
+        onSubmit={handleSubmit(handleSignInUser)}
+        className="flex items-center justify-center"
+      >
+        <div className="flex w-72 flex-col items-center gap-8">
+          <div className="flex w-full flex-col gap-4">
+            <Form.Field>
+              <Form.Label>CPF</Form.Label>
+              <Form.TextInput
+                type="text"
+                placeholder="Digite seu CPF"
+                name="cpf"
+              />
+              <Form.ErrorMessage field="cpf" />
+            </Form.Field>
+            <Form.Field>
+              <Form.Label>Senha</Form.Label>
+              <Form.TextInput
+                type="password"
+                placeholder="Digite sua senha"
+                name="passwordHash"
+              />
+              <Form.ErrorMessage field="passwordHash" />
+            </Form.Field>
+          </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
+          >
+            {isSubmitting ? <Loading /> : 'Entrar'}
+          </button>
         </div>
-        <button
-          type="submit"
-          className="bg-primary text-white hover:bg-primary-hover "
-        >
-          Entrar
-        </button>
-      </div>
-    </form>
+      </form>
+    </FormProvider>
   )
 }
