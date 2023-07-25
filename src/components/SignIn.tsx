@@ -39,6 +39,7 @@ export function SignInForm() {
       cookie.set('token', token, { expires: 7, path: '/' })
       return router.refresh()
     } catch (err) {
+      console.log('Erro ao fazer login')
       console.log(err)
     }
   }

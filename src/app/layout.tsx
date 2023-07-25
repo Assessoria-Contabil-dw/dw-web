@@ -1,11 +1,9 @@
 import Menu from '@/components/Menu'
 import './globals.css'
-// eslint-disable-next-line camelcase
-import { Roboto_Flex, Montserrat } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import { cookies } from 'next/headers'
 import React from 'react'
 
-const roboto = Roboto_Flex({ subsets: ['latin'], variable: '--font-roboto' })
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
@@ -25,9 +23,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body
-        className={`${roboto.variable} ${montserrat.variable} bg-gray-50 font-sans`}
-      >
+      <body className={`${montserrat.variable} bg-gray-50 font-sans`}>
         {isAuthenticated ? (
           <div className="grid h-screen min-h-screen w-screen grid-cols-[250px_auto]">
             <Menu />
