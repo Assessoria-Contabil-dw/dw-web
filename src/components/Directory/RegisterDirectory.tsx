@@ -7,15 +7,31 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { api } from '@/lib/api'
 import { Form } from '../Form'
 import { directoryFormShema } from '@/lib/validation'
-import {
-  CityProps,
-  DirectoryProps,
-  PartyProps,
-  StateProps,
-  TypeOrgProps,
-} from '@/lib/types'
+import { CityProps, PartyProps, StateProps, TypeOrgProps } from '@/lib/types'
 import { Loading } from '../Form/Loading'
 import Cookie from 'js-cookie'
+
+interface DirectoryProps {
+  id: string
+
+  cnpj: string
+  address: string
+  siteUrl: string
+  email: string
+  phone: string
+  mailingAddress: string
+  virgencyStatus: string
+
+  mailingList: string
+  vigencyStatus: string
+  city: string
+  state: string
+  party: string
+
+  typeOrg: string
+  partyId: number
+  cityCode: number
+}
 
 type DirectoryFormData = z.infer<typeof directoryFormShema>
 interface RegisterDirectoryModalProps {
@@ -106,8 +122,9 @@ export function DirectoryForm({
         },
       )
 
-      const directory = response.data[0] as DirectoryProps
-      onCreate(directory)
+      const directory = response.data as DirectoryProps
+      // onCreate(directory)
+      console.log(directory)
 
       setError('')
       console.log('Partido cadastrado com sucesso')

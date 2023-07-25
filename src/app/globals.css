@@ -53,7 +53,7 @@
     @apply p-2 text-left font-alt text-xs font-bold uppercase text-zinc-600 whitespace-nowrap;
   }
   tbody tr td {
-    @apply p-2 text-left font-sans text-sm font-medium text-gray-400;
+    @apply p-2 text-left font-sans text-[0.7rem] font-medium text-gray-400;
   }
   
 /*

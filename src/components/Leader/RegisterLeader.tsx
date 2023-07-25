@@ -65,7 +65,7 @@ export function RegisterLeader({
       console.log(formData)
 
       try {
-        const response = await api.post('/update', formData, {
+        const response = await api.post('/update/signature', formData, {
           headers: {
             'Content-Type': `multipart/form-data`,
             Authorization: `Bearer ${token}`,

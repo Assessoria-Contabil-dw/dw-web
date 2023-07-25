@@ -93,7 +93,8 @@ export function RegisterSPC({
       )
 
       const spc = response.data[0] as DirectorySPCProps
-      onCreate(spc)
+      console.log(spc)
+      // onCreate(spc)
       setError('')
       console.log('SPC cadastrado com sucesso')
     } catch (err) {

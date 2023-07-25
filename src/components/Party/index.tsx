@@ -29,6 +29,21 @@ export function PartyTable() {
     setLoading(false)
   }
 
+  async function handleDeleteParty(code: string) {
+    const token = Cookies.get('token')
+    try {
+      await api.delete(`/parties/${code}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      loadParty()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     loadParty()
   }, [])
@@ -131,7 +146,11 @@ export function PartyTable() {
                       <button className="h-full w-auto rounded p-1 hover:text-primary">
                         <Edit3 className="w-4" />
                       </button>
-                      <button className="h-full w-auto rounded p-1 hover:text-red-500">
+                      <button
+                        onClick={() => handleDeleteParty(party.code.toString())}
+                        type="button"
+                        className="h-full w-auto rounded p-1 hover:text-red-500"
+                      >
                         <Trash2 className="w-4" />
                       </button>
                     </div>

@@ -127,7 +127,8 @@ export function RegisterVigency({
         },
       )
       const vigency = response.data[0] as VigencyProps
-      onCreate(vigency)
+      // onCreate(vigency)
+      console.log(vigency)
 
       setError('')
       console.log('Partido cadastrado com sucesso')

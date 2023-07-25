@@ -86,7 +86,7 @@ export function RegisterAdvocate({
       console.log(formData)
 
       try {
-        const response = await api.post('/update', formData, {
+        const response = await api.post('/update/signature', formData, {
           headers: {
             'Content-Type': `multipart/form-data`,
             Authorization: `Bearer ${token}`,
@@ -135,7 +135,8 @@ export function RegisterAdvocate({
       )
 
       const advocate = response.data[0] as AdvocateProps
-      onCreate(advocate)
+      // onCreate(advocate)
+      console.log(advocate)
 
       setError('')
       console.log('Advogado cadastrado com sucesso')

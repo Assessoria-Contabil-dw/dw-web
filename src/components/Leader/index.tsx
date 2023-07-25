@@ -124,7 +124,7 @@ export function LeaderTable() {
                     {leader.status ? leader.status : '-'},{' '}
                     {leader.profession ? leader.profession : '-'}
                   </td>
-                  <td>{leader.address}</td>
+                  <td>{leader.address ? leader.address : '-'}</td>
                   <td>{leader.email ? leader.email : '-'}</td>
                   <td>
                     {leader.signatureUrl ? (

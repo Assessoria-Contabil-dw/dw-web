@@ -57,7 +57,8 @@ export function RegisterLawFirm({
       })
 
       const lawFirm = response.data[0] as LawFirmProps
-      onCreate(lawFirm)
+      // onCreate(lawFirm)
+      console.log(lawFirm)
     } catch (error: any) {
       if (error.response.status === 400) {
         setError(error.response.data.message)

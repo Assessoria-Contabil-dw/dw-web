@@ -14,9 +14,13 @@ import { useEffect, useState } from 'react'
 import { RegisterSPC } from './RegisterSPC'
 import { Loading } from '../Form/Loading'
 import { DirectorySPCProps } from '@/lib/types'
+import { Pop } from '../Pop'
 
 export function SPCTable() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isPopOpen, setIsPopOpen] = useState(false)
+  const [observation, setObservation] = useState('')
+
   const [loading, setLoading] = useState(true)
   const [SPC, setSPC] = useState<DirectorySPCProps[]>([])
 
@@ -37,6 +41,11 @@ export function SPCTable() {
 
   function handleCreateSPC(SPC: DirectorySPCProps) {
     setSPC((prevState) => prevState.concat(SPC))
+  }
+
+  function handleViewObservation(message: string) {
+    setObservation(message)
+    setIsPopOpen(true)
   }
 
   if (loading) {
@@ -108,6 +117,7 @@ export function SPCTable() {
                         spc.SPCA.map((spca, index) => (
                           <li key={index} className="relative">
                             <a
+                              target="blank"
                               title={spca.status}
                               style={{
                                 backgroundColor: `${spca.color}`,
@@ -118,10 +128,18 @@ export function SPCTable() {
                             </a>
 
                             {spca.observation && (
-                              <Circle
-                                className="absolute -right-1 -top-2 z-0 cursor-pointer fill-primary text-primary"
-                                size={12}
-                              />
+                              <button
+                                type="button"
+                                className="h-fit w-fit p-0"
+                                onClick={() =>
+                                  handleViewObservation(spca.observation)
+                                }
+                              >
+                                <Circle
+                                  className="absolute -right-1 -top-2 z-0 cursor-pointer fill-primary text-primary"
+                                  size={12}
+                                />
+                              </button>
                             )}
                           </li>
                         ))
@@ -137,6 +155,7 @@ export function SPCTable() {
                         spc.SPCE.map((spce, index) => (
                           <li key={index} className="relative">
                             <a
+                              target="blank"
                               title={spce.status}
                               style={{
                                 backgroundColor: `${spce.color}`,
@@ -147,10 +166,18 @@ export function SPCTable() {
                             </a>
 
                             {spce.observation && (
-                              <Circle
-                                className="absolute -right-1 -top-2 z-0 cursor-pointer fill-primary text-primary"
-                                size={12}
-                              />
+                              <button
+                                type="button"
+                                className="h-fit w-fit p-0"
+                                onClick={() =>
+                                  handleViewObservation(spce.observation)
+                                }
+                              >
+                                <Circle
+                                  className="absolute -right-1 -top-2 z-0 cursor-pointer fill-primary text-primary"
+                                  size={12}
+                                />
+                              </button>
                             )}
                           </li>
                         ))
@@ -185,6 +212,12 @@ export function SPCTable() {
           </tbody>
         </table>
       </fieldset>
+
+      <Pop
+        onClose={() => setIsPopOpen(false)}
+        isOpen={isPopOpen}
+        text={observation}
+      />
     </div>
   )
 }

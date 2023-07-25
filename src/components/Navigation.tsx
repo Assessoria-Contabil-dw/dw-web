@@ -7,6 +7,7 @@ import {
   Ungroup,
   BookMarked,
   GraduationCap,
+  FileText,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
@@ -152,6 +153,25 @@ export function NavigationMenu() {
               }`}
             />
             Escritórios
+          </Link>
+        </li>
+        <li className="w-full">
+          <Link
+            href="/relatory"
+            className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
+            ${
+              activeSegment === 'relatory'
+                ? 'bg-primary text-white'
+                : 'text-zinc-600'
+            }`}
+          >
+            <FileText
+              size={18}
+              className={`w-4 ${
+                activeSegment === 'acess' ? ' text-white' : 'text-zinc-400'
+              }`}
+            />
+            Relatórios
           </Link>
         </li>
         <li className="w-full">

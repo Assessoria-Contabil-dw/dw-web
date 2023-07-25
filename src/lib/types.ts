@@ -1,5 +1,5 @@
 export interface PartyProps {
-  code: number
+  code: string
 
   name: string
   abbreviation: string

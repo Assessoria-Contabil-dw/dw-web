@@ -14,7 +14,6 @@ export function AdvocateTable() {
 
   async function loadLeader() {
     setLoading(true)
-
     try {
       const response = await api.get('/advocates', {
         headers: {

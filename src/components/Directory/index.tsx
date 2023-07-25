@@ -7,7 +7,30 @@ import { DirectoryForm } from './RegisterDirectory'
 import Link from 'next/link'
 import { Loading } from '../Form/Loading'
 import Cookies from 'js-cookie'
-import { DirectoryProps } from '@/lib/types'
+// import { DirectoryProps } from '@/lib/types'
+import { ToastContainer } from 'react-toastify'
+
+interface DirectoryProps {
+  id: string
+
+  cnpj: string
+  address: string
+  siteUrl: string
+  email: string
+  phone: string
+  mailingAddress: string
+  virgencyStatus: string
+
+  mailingList: string
+  vigencyStatus: string
+  city: string
+  state: string
+  party: string
+
+  typeOrg: string
+  partyId: number
+  cityCode: number
+}
 
 export function DirectoryTable() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -34,8 +57,21 @@ export function DirectoryTable() {
     loadDirectories()
   }, [])
 
-  function handleCreateDirectory(directories: DirectoryProps) {
-    setDirectories((prevState) => prevState.concat(directories))
+  function handleCreateDirectory(directory: DirectoryProps) {
+    setDirectories((prevState) => prevState.concat(directory))
+  }
+
+  async function handleDeleteDirectory(id: string) {
+    const token = Cookies.get('token')
+    try {
+      await api.delete(`/directories/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   if (loading) {
@@ -49,6 +85,7 @@ export function DirectoryTable() {
 
   return (
     <div className="flex flex-col gap-8">
+      <ToastContainer />
       <DirectoryForm
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -133,7 +170,11 @@ export function DirectoryTable() {
                       <button className="h-full w-auto rounded p-1 hover:text-primary">
                         <Edit3 className="w-4" />
                       </button>
-                      <button className="h-full w-auto rounded p-1 hover:text-red-500">
+                      <button
+                        onClick={() => handleDeleteDirectory(directory.id)}
+                        type="button"
+                        className="h-full w-auto rounded p-1 hover:text-red-500"
+                      >
                         <Trash2 className="w-4" />
                       </button>
                     </div>

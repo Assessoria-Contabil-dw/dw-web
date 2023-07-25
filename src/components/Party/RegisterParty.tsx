@@ -73,7 +73,7 @@ export function RegisterParty({
       formData.set('file', data.img)
 
       try {
-        const response = await api.post('/update', formData, {
+        const response = await api.post('/update/logo', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${token}`,
@@ -111,7 +111,9 @@ export function RegisterParty({
       )
 
       const party = response.data[0] as PartyProps
-      onCreate(party)
+      console.log(party)
+
+      // onCreate(party)
 
       setError('')
       console.log('Partido cadastrado com sucesso')
