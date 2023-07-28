@@ -137,8 +137,11 @@ export function RegisterSPC({
                         >
                           {directory.map((directory, index) => {
                             return (
-                              <option key={index} value={directory.id}>
-                                {directory.typeOrg} {directory.city}
+                              <option
+                                key={index}
+                                value={directory.id.toString()}
+                              >
+                                {directory.surname}
                               </option>
                             )
                           })}
@@ -236,7 +239,10 @@ export function RegisterSPC({
                               >
                                 {colorStatus.map((color) => {
                                   return (
-                                    <option key={color.id} value={color.id}>
+                                    <option
+                                      key={color.id}
+                                      value={color.id.toString()}
+                                    >
                                       {color.name}
                                     </option>
                                   )

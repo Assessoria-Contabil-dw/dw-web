@@ -108,10 +108,10 @@ export function SPCTable() {
             {SPC.length > 0 ? (
               SPC.map((spc, index) => (
                 <tr key={index}>
-                  <td className="whitespace-nowrap">
-                    {spc.party} - {spc.typeOrg} {spc.city}
-                  </td>
                   <td>
+                    {spc.party} - {spc.surname}
+                  </td>
+                  <td className="whitespace-nowrap">
                     <ul>
                       {spc.SPCA.length > 0 ? (
                         spc.SPCA.map((spca, index) => (
@@ -148,8 +148,18 @@ export function SPCTable() {
                       )}
                     </ul>
                   </td>
-                  <td>{spc.vigency ? 'Ativa' : 'Inativa'}</td>
                   <td>
+                    <span
+                      className={
+                        spc.vigency
+                          ? `rounded-xl bg-blue-100 px-2 py-1 text-blue-400`
+                          : `rounded-xl bg-zinc-100 px-2 py-1 text-gray-400`
+                      }
+                    >
+                      {spc.vigency ? 'Ativa' : 'Inativa'}
+                    </span>
+                  </td>
+                  <td className="whitespace-nowrap">
                     <ul>
                       {spc.SPCE.length > 0 ? (
                         spc.SPCE.map((spce, index) => (

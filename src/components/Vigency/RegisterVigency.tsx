@@ -233,7 +233,10 @@ export function RegisterVigency({
                               >
                                 {leaderies.map((leader, index) => {
                                   return (
-                                    <option key={index} value={leader.id}>
+                                    <option
+                                      key={index}
+                                      value={leader.id.toString()}
+                                    >
                                       {leader.id}
                                     </option>
                                   )
@@ -254,7 +257,10 @@ export function RegisterVigency({
                               >
                                 {offices.map((office, index) => {
                                   return (
-                                    <option key={index} value={office.id}>
+                                    <option
+                                      key={index}
+                                      value={office.id.toString()}
+                                    >
                                       {office.name}
                                     </option>
                                   )
@@ -294,7 +300,10 @@ export function RegisterVigency({
                             >
                               {advocates.map((advocate) => {
                                 return (
-                                  <option key={advocate.id} value={advocate.id}>
+                                  <option
+                                    key={advocate.id}
+                                    value={advocate.id.toString()}
+                                  >
                                     {advocate.name}
                                   </option>
                                 )
@@ -332,7 +341,10 @@ export function RegisterVigency({
                             >
                               {lawFirms.map((lawFirm) => {
                                 return (
-                                  <option key={lawFirm.id} value={lawFirm.id}>
+                                  <option
+                                    key={lawFirm.id}
+                                    value={lawFirm.id.toString()}
+                                  >
                                     {lawFirm.name}
                                   </option>
                                 )

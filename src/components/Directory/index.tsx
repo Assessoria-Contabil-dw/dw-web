@@ -11,7 +11,7 @@ import Cookies from 'js-cookie'
 import { ToastContainer } from 'react-toastify'
 
 interface DirectoryProps {
-  id: string
+  id: number
 
   cnpj: string
   address: string
@@ -20,7 +20,7 @@ interface DirectoryProps {
   phone: string
   mailingAddress: string
   virgencyStatus: string
-
+  surname: string
   mailingList: string
   vigencyStatus: string
   city: string
@@ -61,7 +61,7 @@ export function DirectoryTable() {
     setDirectories((prevState) => prevState.concat(directory))
   }
 
-  async function handleDeleteDirectory(id: string) {
+  async function handleDeleteDirectory(id: number) {
     const token = Cookies.get('token')
     try {
       await api.delete(`/directories/${id}`, {
@@ -140,7 +140,7 @@ export function DirectoryTable() {
             {directories.length > 0 ? (
               directories.map((directory) => (
                 <tr key={directory.id}>
-                  <td className="whitespace-nowrap text-primary">
+                  <td className=" text-primary">
                     <Link
                       href={{
                         pathname: `directory/vigency/${directory.id}`,
@@ -153,11 +153,21 @@ export function DirectoryTable() {
                         },
                       }}
                     >
-                      {directory.typeOrg} {directory.city}
+                      {directory.surname}
                     </Link>
                   </td>
                   <td>{directory.party}</td>
-                  <td>{directory.vigencyStatus ? 'Ativo' : 'Inativo'}</td>
+                  <td>
+                    <span
+                      className={
+                        directory.vigencyStatus
+                          ? `rounded-xl bg-blue-100 px-2 py-1 text-blue-400`
+                          : `rounded-xl bg-zinc-100 px-2 py-1 text-gray-400`
+                      }
+                    >
+                      {directory.vigencyStatus ? 'Ativo' : 'Inativo'}
+                    </span>
+                  </td>
                   <td>{directory.address == null ? '-' : directory.address}</td>
                   <td>{directory.cnpj == null ? '-' : directory.cnpj}</td>
                   <td>{directory.email == null ? '-' : directory.email}</td>

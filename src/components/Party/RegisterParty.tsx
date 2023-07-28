@@ -171,7 +171,7 @@ export function RegisterParty({
                       >
                         {colors.map((color) => {
                           return (
-                            <option key={color.id} value={color.id}>
+                            <option key={color.id} value={color.id.toString()}>
                               {color.name}
                             </option>
                           )

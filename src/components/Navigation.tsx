@@ -168,7 +168,7 @@ export function NavigationMenu() {
             <FileText
               size={18}
               className={`w-4 ${
-                activeSegment === 'acess' ? ' text-white' : 'text-zinc-400'
+                activeSegment === 'relatory' ? ' text-white' : 'text-zinc-400'
               }`}
             />
             Relatórios

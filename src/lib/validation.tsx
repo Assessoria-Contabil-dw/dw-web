@@ -26,15 +26,15 @@ export const partyFormShema = z.object({
     .instanceof(FileList)
     .transform((file) => file[0])
     .optional(),
-  colorId: z
-    .string()
-    .nonempty('A cor do partido não deve ser vazia')
-    .uuid("A cor do partido deve ser um 'uuid'")
+  colorId: z.coerce
+    .number()
+    .positive()
+    .min(1, 'A cor do partido não deve ser vazia')
     .optional(),
 })
 // Color
 export const colorFormShema = z.object({
-  id: z.string().uuid(),
+  id: z.coerce.number().min(1),
   name: z.string().min(3).max(25),
   hex: z.string().min(3).max(8),
   type: z.enum(['LEGEND', 'BACKGROUND']).default('BACKGROUND'),
@@ -132,11 +132,10 @@ export const directoryVigencyFormShema = z.object({
     .min(5, 'O código deve ter no minino 5 digitos')
     .max(5, 'O código deve ter no maximo 5 digitos')
     .nonempty('O código da cidade não pode ser vazio'),
-  typeOrgId: z
-    .string()
-    .uuid()
-    .nonempty('O tipo de organização não pode ser vazio'),
-
+  typeOrgId: z.coerce
+    .number()
+    .positive()
+    .min(1, 'O tipo de organização não pode ser vazio'),
   virgencies: z.array(virgenciesFormSchema),
 })
 
@@ -198,10 +197,10 @@ export const lawFirmFormShema = z.object({
 })
 
 export const spcFormShema = z.object({
-  directoryId: z
-    .string()
-    .uuid('Selecione um diretório')
-    .nonempty('O diretório não pode ser vazio'),
+  directoryId: z.coerce
+    .number()
+    .positive()
+    .min(1, 'O diretório não pode ser vazio'),
   spc: z.array(
     z.object({
       type: z.enum(['SPCA', 'SPCE']),

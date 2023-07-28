@@ -10,7 +10,7 @@ export interface PartyProps {
 }
 
 export interface ColorProps {
-  id: string
+  id: number
 
   name: string
   hex: string
@@ -36,7 +36,7 @@ export interface CityProps {
 }
 
 export interface DirectoryProps {
-  id: string
+  id: number
 
   cnpj: string
   address: string
@@ -45,7 +45,7 @@ export interface DirectoryProps {
   phone: string
   mailingAddress: string
   virgencyStatus: string
-
+  surname: string
   mailingList: string
   vigencyStatus: string
   city: string
@@ -58,28 +58,28 @@ export interface DirectoryProps {
 }
 
 export interface TypeOrgProps {
-  id: string
+  id: number
 
   name: string
   abbreviation: string
 }
 
 export interface VigencyAdvocateProps {
-  id: string
+  id: number
 
   vigencyId: string
   advocateId: string
 }
 
 export interface VigencyLawFirmProps {
-  id: string
+  id: number
 
   vigencyId: string
   lawFirmId: string
 }
 
 export interface VigencyLeadersProps {
-  id: string
+  id: number
 
   vigencyId: string
   leaderId: string
@@ -87,7 +87,7 @@ export interface VigencyLeadersProps {
 }
 
 export interface VigencyProps {
-  id: string
+  id: number
 
   dateFirst: string
   dateLast: string
@@ -105,7 +105,7 @@ export interface VigencyProps {
 }
 
 export interface LeaderProps {
-  id: string
+  id: number
 
   name: string
   cpf: string
@@ -122,7 +122,7 @@ export interface LeaderProps {
 }
 
 export interface AdvocateProps {
-  id: string
+  id: number
 
   name: string
   oab: string
@@ -141,7 +141,7 @@ export interface AdvocateProps {
 }
 
 export interface LawFirmProps {
-  id: string
+  id: number
 
   name: string
   cnpj: string
@@ -153,7 +153,7 @@ export interface LawFirmProps {
 }
 
 export interface OfficesProps {
-  id: string
+  id: number
 
   name: string
 }
@@ -163,9 +163,10 @@ export type typeSPC = {
 }
 
 export interface SPCProps {
-  id: string
+  id: number
   directoryId: string
   status: string
+  surname: string
 
   type: typeSPC
   numPge: string
@@ -179,12 +180,13 @@ export interface SPCProps {
 }
 
 export interface DirectorySPCProps {
-  id: string
+  id: number
   city: string
   state: string
   typeOrg: string
   party: string
   vigency: string
+  surname: string
   SPCA: SPCProps[]
   SPCE: SPCProps[]
 }

@@ -8,7 +8,7 @@ import { Loading } from '../Form/Loading'
 import { RegisterLeader } from './RegisterLeader'
 
 type LeaderProps = {
-  id: string
+  id: number
   name: string
   birthday: string
   cpf: string
@@ -50,6 +50,19 @@ export function LeaderTable() {
 
   function handleCreateLeader(leader: LeaderProps) {
     setLeaderies((prevState) => prevState.concat(leader))
+  }
+
+  async function handleDeleteLeader(id: number) {
+    try {
+      await api.delete(`/leaderies/${id}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`,
+        },
+      })
+      loadLeader()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   if (loading) {
@@ -149,7 +162,11 @@ export function LeaderTable() {
                       <button className="h-full w-auto rounded p-1 hover:text-primary">
                         <Edit3 className="w-4" />
                       </button>
-                      <button className="h-full w-auto rounded p-1 hover:text-red-500">
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteLeader(leader.id)}
+                        className="h-full w-auto rounded p-1 hover:text-red-500"
+                      >
                         <Trash2 className="w-4" />
                       </button>
                     </div>

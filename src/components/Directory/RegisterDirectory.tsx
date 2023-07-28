@@ -12,7 +12,7 @@ import { Loading } from '../Form/Loading'
 import Cookie from 'js-cookie'
 
 interface DirectoryProps {
-  id: string
+  id: number
 
   cnpj: string
   address: string
@@ -21,7 +21,7 @@ interface DirectoryProps {
   phone: string
   mailingAddress: string
   virgencyStatus: string
-
+  surname: string
   mailingList: string
   vigencyStatus: string
   city: string
