@@ -51,7 +51,7 @@ export function RegisterLeader({
         `/leaderies/${data.cpf?.replace(/\D/g, '')}`,
       )
       if (existAdvocate.data !== null) {
-        console.log('Advogado já cadastrado')
+        console.log('Lider já cadastrado')
         return
       }
     } catch (error) {
@@ -90,7 +90,10 @@ export function RegisterLeader({
             name: data.name,
             cpf: data.cpf,
             rg: data.rg,
-            birthday: dayjs(data.birthday).format('YYYY-MM-DD'),
+            birthday:
+              data.birthday !== undefined
+                ? dayjs(data.birthday).format('YYYY-MM-DD')
+                : undefined,
             email: data.email,
             phone: data.phone,
             address: data.address,
