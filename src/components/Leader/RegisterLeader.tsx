@@ -48,7 +48,7 @@ export function RegisterLeader({
 
     try {
       const existAdvocate = await api.get(
-        `/leaderies/${String(data.name.toUpperCase())}`,
+        `/leaderies/${data.cpf?.replace(/\D/g, '')}`,
       )
       if (existAdvocate.data !== null) {
         console.log('Advogado já cadastrado')
@@ -90,7 +90,7 @@ export function RegisterLeader({
             name: data.name,
             cpf: data.cpf,
             rg: data.rg,
-            birthday: dayjs(data.birthday).format(),
+            birthday: dayjs(data.birthday).format('YYYY-MM-DD'),
             email: data.email,
             phone: data.phone,
             address: data.address,
@@ -231,6 +231,18 @@ export function RegisterLeader({
                     </Form.Field>
 
                     <Form.Field>
+                      <Form.Label htmlFor="birthday">
+                        Data de Nascimento
+                      </Form.Label>
+                      <Form.TextInput
+                        type="date"
+                        placeholder="Data de nascimento"
+                        name="birthday"
+                      />
+                      <Form.ErrorMessage field="birthday" />
+                    </Form.Field>
+
+                    <Form.Field>
                       <Form.Label htmlFor="status">Situação Cívil</Form.Label>
                       <div>
                         <RadioInput
@@ -257,27 +269,6 @@ export function RegisterLeader({
                           value="VIÚVO"
                           label="Viúvo"
                           name="status"
-                        />
-                      </div>
-                    </Form.Field>
-
-                    <Form.Field>
-                      <Form.Label htmlFor="nationality">
-                        Nacionalidade
-                      </Form.Label>
-                      <div>
-                        <RadioInput
-                          type="radio"
-                          value="BRASILEIRO"
-                          label="Brasileiro"
-                          name="nationality"
-                          checked
-                        />
-                        <RadioInput
-                          type="radio"
-                          value="ESTRANGEIRO"
-                          label="Estrangeiro"
-                          name="nationality"
                         />
                       </div>
                     </Form.Field>

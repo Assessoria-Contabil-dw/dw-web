@@ -33,6 +33,10 @@ export function FormRelatory() {
 
   async function handleRelatoryCreate(data: RelatoryFormData) {
     console.log(data)
+    setError(null)
+    setDirectory([])
+    setParty([])
+    setVigency([])
   }
 
   const {

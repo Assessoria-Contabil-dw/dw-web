@@ -68,10 +68,10 @@ export function RegisterAdvocate({
 
     try {
       const existAdvocate = await api.get(
-        `/advocates/${String(data.name.toUpperCase())}`,
+        `/advocates/${data.cpf?.replace(/\D/g, '')}`,
       )
       if (existAdvocate.data !== null) {
-        console.log('Advogado já cadastrado')
+        setError('Advogado já cadastrado')
         return
       }
     } catch (error) {
@@ -97,7 +97,7 @@ export function RegisterAdvocate({
         if (error.response.status === 400) {
           setError(error.response.data.message)
           return
-        } else if (error.response.status === 402) {
+        } else if (error.response.status === 422) {
           setError(error.response.data.message)
           return
         } else {
@@ -114,14 +114,16 @@ export function RegisterAdvocate({
           {
             name: data.name,
             cpf: data.cpf,
-            birthday: dayjs(data.birthday).format(),
+            birthday:
+              data.birthday !== ''
+                ? dayjs(data.birthday).format('YYYY-MM-DD')
+                : undefined,
             email: data.email,
             phone: data.phone,
             address: data.address,
             signatureUrl: url === '' ? undefined : url,
             title: data.title,
             lawFirmId: selectedLawFirm,
-            nationality: data.nationality,
             status: data.status,
             oab: data.oab,
           },
@@ -141,16 +143,11 @@ export function RegisterAdvocate({
       setError('')
       console.log('Advogado cadastrado com sucesso')
     } catch (error: any) {
-      if (error.response.status === 422) {
-        setError(error.response.data.message)
-      }
-      if (error.response.status === 400) {
-        setError(error.response.data.message)
-      }
-      if (error.response.status === 500) {
-        setError(error.response.data.message)
-      }
-      if (error.response.status === 401) {
+      if (
+        error.response.status === 422 ||
+        error.response.status === 401 ||
+        error.response.status === 400
+      ) {
         setError(error.response.data.message)
       } else {
         console.log(error)
@@ -251,6 +248,20 @@ export function RegisterAdvocate({
                     </Form.Field>
 
                     <Form.Field>
+                      <Form.Label htmlFor="birthday">
+                        Data de Nascimento
+                      </Form.Label>
+                      <Form.TextInput
+                        type="date"
+                        placeholder="Data de nascimento"
+                        name="birthday"
+                      />
+                      <Form.ErrorMessage field="birthday" />
+                    </Form.Field>
+                  </div>
+
+                  <div className="flex justify-between gap-8">
+                    <Form.Field>
                       <Form.Label htmlFor="lawFirmId">Escritório</Form.Label>
                       <Form.SelectInput
                         type="text"
@@ -269,9 +280,7 @@ export function RegisterAdvocate({
                       </Form.SelectInput>
                       <Form.ErrorMessage field="lawFirmId" />
                     </Form.Field>
-                  </div>
 
-                  <div className="flex justify-between gap-8">
                     <Form.Field>
                       <Form.Label htmlFor="status">Situação Cívil</Form.Label>
                       <div>
@@ -299,27 +308,6 @@ export function RegisterAdvocate({
                           value="VIÚVO"
                           label="Viúvo"
                           name="status"
-                        />
-                      </div>
-                    </Form.Field>
-
-                    <Form.Field>
-                      <Form.Label htmlFor="nationality">
-                        Nacionalidade
-                      </Form.Label>
-                      <div>
-                        <RadioInput
-                          type="radio"
-                          value="BRASILEIRO"
-                          label="Brasileiro"
-                          name="nationality"
-                          checked
-                        />
-                        <RadioInput
-                          type="radio"
-                          value="ESTRANGEIRO"
-                          label="Estrangeiro"
-                          name="nationality"
                         />
                       </div>
                     </Form.Field>

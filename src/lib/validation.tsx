@@ -144,7 +144,11 @@ export const leaderFormShema = z.object({
     .string()
     .min(3, 'O nome não pode ser vazio')
     .nonempty('O nome é obrigatório'),
-  cpf: z.string().optional(),
+  cpf: z
+    .string()
+    .min(11, 'O CPF deve ter 11 dígitos')
+    .max(11, 'O CPF deve ter 11 dígitos')
+    .nonempty('O CPF não pode ser vazio'),
   rg: z.string().optional(),
   title: z.string().optional(),
   birthday: z.coerce.date().optional(),
@@ -167,8 +171,12 @@ export const advocateFormShema = z.object({
     .string()
     .min(3, 'O nome não pode ser vazio')
     .nonempty('O nome não pode ser vazio'),
-  cpf: z.string().optional(),
-  birthday: z.coerce.date().optional(),
+  cpf: z
+    .string()
+    .min(11, 'O CPF deve ter 11 dígitos')
+    .max(11, 'O CPF deve ter 11 dígitos')
+    .nonempty('O CPF não pode ser vazio'),
+  birthday: z.string().optional(),
   email: z.string().optional(),
   oab: z.string().optional(),
   phone: z.string().optional(),
@@ -178,7 +186,6 @@ export const advocateFormShema = z.object({
     .transform((file) => file[0])
     .optional(),
   title: z.string().optional(),
-  nationality: z.enum(['BRASILEIRO', 'ESTRANGEIRO']).default('BRASILEIRO'),
   status: z
     .enum(['CASADO', 'DIVORCIADO', 'SOLTEIRO', 'VIUVO'])
     .default('SOLTEIRO'),
