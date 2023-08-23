@@ -16,16 +16,11 @@ import Cookies from 'js-cookie'
 interface RegisterPCAModalProps {
   isOpen: boolean
   onClose: () => void
-  onCreate: (spc: DirectorySPCProps) => void
 }
 
 type SPCFormData = z.infer<typeof spcFormShema>
 
-export function RegisterSPC({
-  onClose,
-  isOpen,
-  onCreate,
-}: RegisterPCAModalProps) {
+export function RegisterSPC({ onClose, isOpen }: RegisterPCAModalProps) {
   const [error, setError] = useState<string | null>(null)
   const [directory, setDirectory] = useState<DirectoryProps[]>([])
   const [selectedDirectory, setSelectedDirectory] = useState('')

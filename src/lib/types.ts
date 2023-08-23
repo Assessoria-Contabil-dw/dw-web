@@ -162,7 +162,7 @@ export type typeSPC = {
   type: 'SPCE' | 'SPCA'
 }
 
-export interface SPCProps {
+export interface SPCEProps {
   id: number
   directoryId: string
   status: string
@@ -179,6 +179,24 @@ export interface SPCProps {
   color: ColorProps
 }
 
+export interface SPCAProps {
+  id: number
+  directoryId: string
+  status: string
+  surname: string
+
+  type: typeSPC
+  numPge: string
+  year: string
+  link1: string
+  link2: string
+  colorId: string
+
+  observation: string
+  directory: DirectoryProps
+  color: ColorProps
+}
+
 export interface DirectorySPCProps {
   id: number
   city: string
@@ -187,6 +205,6 @@ export interface DirectorySPCProps {
   party: string
   vigency: string
   surname: string
-  SPCA: SPCProps[]
-  SPCE: SPCProps[]
+  SPCA: SPCAProps[]
+  SPCE: SPCEProps[]
 }

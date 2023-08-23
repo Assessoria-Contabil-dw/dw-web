@@ -5,7 +5,6 @@ import { useParams } from 'next/navigation'
 export default function Vigency() {
   const params = useParams()
   const { id } = params
-  console.log(params)
   return (
     <>
       <VigencyTable directoryId={id.toString()} />

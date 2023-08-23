@@ -22,15 +22,15 @@ export const partyFormShema = z.object({
     .min(2, 'A sigla do partido deve ter no mínimo duas letras')
     .max(25, 'A sigla do partido deve ter no máximo 25 letras')
     .nonempty('A sigla do partido não pode ser vazio'),
-  img: z
+  logoUrl: z
     .instanceof(FileList)
     .transform((file) => file[0])
     .optional(),
   colorId: z.coerce
     .number()
-    .positive()
-    .min(1, 'A cor do partido não deve ser vazia')
-    .optional(),
+    .positive('A cor do partido deve não deve ser vazia')
+    .min(1, 'A cor do partido não deve ser vazia'),
+  color: z.string().optional(),
 })
 // Color
 export const colorFormShema = z.object({

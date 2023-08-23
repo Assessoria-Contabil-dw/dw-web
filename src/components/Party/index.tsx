@@ -1,17 +1,37 @@
 'use client'
 
-import { Edit3, Trash2, Eye, Plus, Search, RotateCcw } from 'lucide-react'
+import { Edit3, Trash2, Plus, RotateCcw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { api } from '@/lib/api'
 import { RegisterParty } from './RegisterParty'
 import { Loading } from '../Form/Loading'
 import { PartyProps } from '@/lib/types'
 import Cookies from 'js-cookie'
+import Image from 'next/image'
+import { ToastContainer } from 'react-toastify'
+import { ModelDelet } from '../Model/Delet'
+import { UpdateParty } from './UpdateParty'
+
+interface RegisterDeleteProps {
+  id: string
+  path: string
+  msg: string
+}
 
 export function PartyTable() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalCreate, setIsModalCreate] = useState(false)
+  const [isModalDelet, setIsModalDelet] = useState(false)
+  const [isModalUpdate, setIsModalUpdate] = useState(false)
+
+  const [register, setRegister] = useState<RegisterDeleteProps>({
+    id: '',
+    path: '',
+    msg: '',
+  })
+
   const [parties, setParties] = useState<PartyProps[]>([])
   const [loading, setLoading] = useState(true)
+  const [filteredParties, setFilteredParties] = useState<PartyProps[]>([])
 
   async function loadParty() {
     setLoading(true)
@@ -29,28 +49,9 @@ export function PartyTable() {
     setLoading(false)
   }
 
-  async function handleDeleteParty(code: string) {
-    const token = Cookies.get('token')
-    try {
-      await api.delete(`/parties/${code}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
-      loadParty()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   useEffect(() => {
     loadParty()
   }, [])
-
-  function handleCreateParty(party: PartyProps) {
-    setParties((prevState) => prevState.concat(party))
-  }
 
   if (loading) {
     return (
@@ -61,22 +62,72 @@ export function PartyTable() {
     )
   }
 
+  // Função de deletar
+  function handleDeleteParty(id: string, path: string, msg: string) {
+    setRegister({ id, path, msg })
+    setIsModalDelet(true)
+  }
+  // função de atualizar
+  function handleUpdateParty(id: string) {
+    setRegister({ ...register, id })
+    setIsModalUpdate(true)
+  }
+
+  // pesquisar
+
+  function handleFilter(value: string, type: string) {
+    console.log(value)
+    if (value.trim() === '') {
+      setFilteredParties([])
+    } else if (type === 'code') {
+      const filter = parties.filter((p) => p.code.toString().includes(value))
+      setFilteredParties(filter)
+      console.log(filter)
+    } else if (type === 'name') {
+      const filter = parties.filter((p) =>
+        p.name.toLowerCase().includes(value.toLowerCase()),
+      )
+      setFilteredParties(filter)
+      console.log(filter)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <RegisterParty
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onCreate={handleCreateParty}
+        isCreate={isModalCreate}
+        onClose={() => setIsModalCreate(false)}
+        loading={() => loadParty()}
+      />
+
+      <UpdateParty
+        id={register.id}
+        isCreate={isModalUpdate}
+        onClose={() => setIsModalUpdate(false)}
+        loading={() => loadParty()}
+      />
+
+      <ModelDelet
+        path={register.path}
+        id={register.id}
+        msg={register.msg}
+        isOpen={isModalDelet}
+        onClose={() => setIsModalDelet(false)}
+        loading={() => loadParty()}
       />
 
       <div className="flex justify-between">
         <div className="flex w-fit gap-4">
-          <input type="text" placeholder="Buscar por Código" />
-          <input type="text" placeholder="Buscar por Sigla" />
-          <button className="w-fit gap-2 bg-secundary text-white">
-            <Search className="w-4" />
-            Pesquisar
-          </button>
+          <input
+            type="text"
+            onChange={(e) => handleFilter(e.target.value.toString(), 'code')}
+            placeholder="Buscar por Código"
+          />
+          <input
+            type="text"
+            onChange={(e) => handleFilter(e.target.value.toString(), 'name')}
+            placeholder="Buscar pelo nome do partido"
+          />
         </div>
 
         <div className="flex gap-3">
@@ -89,7 +140,7 @@ export function PartyTable() {
             Atualizar
           </button>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsModalCreate(true)}
             className="w-fit bg-primary text-white"
           >
             <Plus className="w-4" />
@@ -112,51 +163,111 @@ export function PartyTable() {
           </thead>
           <tbody>
             {parties.length > 0 ? (
-              parties.map((party, index) => (
-                <tr key={index}>
-                  <td>{party.code}</td>
-                  <td>{party.abbreviation}</td>
-                  <td>{party.name}</td>
-                  <td>
-                    <div
-                      className="h-4 w-4 rounded"
-                      style={{ background: party.color }}
-                    ></div>
-                  </td>
-                  <td>
-                    {party.logoUrl ? (
-                      <picture>
-                        <img
+              filteredParties.length > 0 ? (
+                filteredParties.map((party, index) => (
+                  <tr key={index}>
+                    <td>{party.code}</td>
+                    <td>{party.abbreviation}</td>
+                    <td>{party.name}</td>
+                    <td>
+                      <div
+                        className="h-4 w-4 rounded"
+                        style={{ background: party.color }}
+                      ></div>
+                    </td>
+                    <td>
+                      {party.logoUrl ? (
+                        <Image
                           className="bg-slate-200 object-cover"
                           src={party.logoUrl}
                           width={50}
                           height={50}
                           alt="Logo do partido"
                         />
-                      </picture>
-                    ) : (
-                      '-'
-                    )}
-                  </td>
-                  <td className="w-16 ">
-                    <div className="flex items-center ">
-                      <button className="h-full w-auto p-1 hover:text-secundary">
-                        <Eye className="w-4" />
-                      </button>
-                      <button className="h-full w-auto rounded p-1 hover:text-primary">
-                        <Edit3 className="w-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteParty(party.code.toString())}
-                        type="button"
-                        className="h-full w-auto rounded p-1 hover:text-red-500"
-                      >
-                        <Trash2 className="w-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
+                      ) : (
+                        '-'
+                      )}
+                    </td>
+                    <td className="w-16 ">
+                      <div className="flex items-center ">
+                        <button
+                          onClick={() =>
+                            handleUpdateParty(party.code.toString())
+                          }
+                          className="h-full w-auto rounded p-1 hover:text-primary"
+                        >
+                          <Edit3 className="w-4" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleDeleteParty(
+                              party.code.toString(),
+                              'parties',
+                              party.abbreviation,
+                            )
+                          }
+                          type="button"
+                          className="h-full w-auto rounded p-1 hover:text-red-500"
+                        >
+                          <Trash2 className="w-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                parties.map((party, index) => (
+                  <tr key={index}>
+                    <td>{party.code}</td>
+                    <td>{party.abbreviation}</td>
+                    <td>{party.name}</td>
+                    <td>
+                      <div
+                        className="h-4 w-4 rounded"
+                        style={{ background: party.color }}
+                      ></div>
+                    </td>
+                    <td>
+                      {party.logoUrl ? (
+                        <Image
+                          className="bg-slate-200 object-cover"
+                          src={party.logoUrl}
+                          width={50}
+                          height={50}
+                          alt="Logo do partido"
+                        />
+                      ) : (
+                        '-'
+                      )}
+                    </td>
+                    <td className="w-16 ">
+                      <div className="flex items-center ">
+                        <button
+                          onClick={() =>
+                            handleUpdateParty(party.code.toString())
+                          }
+                          className="h-full w-auto rounded p-1 hover:text-primary"
+                        >
+                          <Edit3 className="w-4" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleDeleteParty(
+                              party.code.toString(),
+                              'parties',
+                              party.abbreviation,
+                            )
+                          }
+                          type="button"
+                          className="h-full w-auto rounded p-1 hover:text-red-500"
+                        >
+                          <Trash2 className="w-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )
             ) : (
               <tr>
                 <td colSpan={5} className="py-6 text-center">
@@ -167,6 +278,7 @@ export function PartyTable() {
           </tbody>
         </table>
       </fieldset>
+      <ToastContainer />
     </div>
   )
 }

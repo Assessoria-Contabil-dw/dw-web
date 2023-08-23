@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import Header from '@/components/Header'
+import Header from '@/components/Menu/Header'
 import { LawFirmTable } from '@/components/LawFirm'
 
 export default function LawFirm() {

@@ -15,11 +15,22 @@ import { RegisterSPC } from './RegisterSPC'
 import { Loading } from '../Form/Loading'
 import { DirectorySPCProps } from '@/lib/types'
 import { Pop } from '../Pop'
+import { UpdateDirectory } from './UpdateDirectory'
+import { ViewSPC } from './ViewSPC'
 
 export function SPCTable() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  // Models
+  const [isModelView, setIsModelView] = useState(false)
+
+  const [isRegister, setIsRegister] = useState(false)
   const [isPopOpen, setIsPopOpen] = useState(false)
+
   const [observation, setObservation] = useState('')
+  const [filterSPC, setFilterSPC] = useState<DirectorySPCProps[]>([])
+
+  const [isLinkTwo, setIsLinkTwo] = useState(false)
+
+  const [isUpdate, setIsUpdate] = useState(false)
 
   const [loading, setLoading] = useState(true)
   const [SPC, setSPC] = useState<DirectorySPCProps[]>([])
@@ -39,15 +50,26 @@ export function SPCTable() {
     loadSPC()
   }, [])
 
-  function handleCreateSPC(SPC: DirectorySPCProps) {
-    setSPC((prevState) => prevState.concat(SPC))
-  }
-
   function handleViewObservation(message: string) {
     setObservation(message)
     setIsPopOpen(true)
   }
 
+  // filtrar dados
+  function handleFilter(value: string) {
+    if (value.trim() === '') {
+      setFilterSPC([])
+    }
+
+    const data = SPC.filter((spc) => {
+      return spc.surname.toLowerCase().includes(value.toLowerCase())
+    })
+
+    setFilterSPC(data)
+  }
+
+  // visualizar dados
+  function handleViewModel(id: number) {}
   if (loading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
@@ -59,19 +81,23 @@ export function SPCTable() {
 
   return (
     <div className="flex flex-col gap-8">
-      <RegisterSPC
-        onCreate={handleCreateSPC}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <RegisterSPC isOpen={isRegister} onClose={() => setIsRegister(false)} />
+      {/* <UpdateDirectory
+        id={2}
+        onClose={() => setIsUpdate(false)}
+        isOpen={isUpdate}
+      /> */}
+
+      <ViewSPC isOpen={isModelView} onClose={() => setIsModelView(false)} />
 
       <div className="flex justify-between">
         <div className="flex w-fit gap-4">
-          <input type="text" className="w-fit" placeholder="Buscar por nome" />
-          <button className="w-fit gap-2 bg-secundary text-white">
-            <Search className="w-4" />
-            Pesquisar
-          </button>
+          <input
+            type="text"
+            className="w-fit"
+            onChange={(e) => handleFilter(e.target.value)}
+            placeholder="Buscar direção"
+          />
         </div>
 
         <div className="flex gap-3">
@@ -84,7 +110,7 @@ export function SPCTable() {
             Atualizar
           </button>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsRegister(true)}
             className="w-fit bg-primary text-white"
           >
             <Plus className="w-4" />
@@ -98,7 +124,18 @@ export function SPCTable() {
           <thead>
             <tr>
               <th>Direção</th>
-              <th>SPCA</th>
+              <th className="flex items-center gap-2 ">
+                SPCA
+                <button
+                  type="button"
+                  onClick={() => setIsLinkTwo(!isLinkTwo)}
+                  className={`h-auto p-1 text-xs transition-shadow duration-200 ${
+                    isLinkTwo ? 'bg-primary text-white' : 'bg-gray-300'
+                  }`}
+                >
+                  PJE
+                </button>
+              </th>
               <th>Vigência</th>
               <th>SPCE</th>
               <th></th>
@@ -121,8 +158,9 @@ export function SPCTable() {
                               title={spca.status}
                               style={{
                                 backgroundColor: `${spca.color}`,
+                                border: '1px solid #ccc',
                               }}
-                              href={spca.link}
+                              href={isLinkTwo ? spca.link2 : spca.link1}
                             >
                               {spca.year}
                             </a>
@@ -200,7 +238,10 @@ export function SPCTable() {
                   <td className="w-16 ">
                     <div className="flex items-center ">
                       <button className="h-full w-auto p-1 hover:text-secundary">
-                        <Eye className="w-4" />
+                        <Eye
+                          onClick={() => handleViewModel(spc.id)}
+                          className="w-4"
+                        />
                       </button>
                       <button className="h-full w-auto rounded p-1 hover:text-primary">
                         <Edit3 className="w-4" />

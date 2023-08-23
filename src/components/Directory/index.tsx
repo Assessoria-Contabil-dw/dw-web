@@ -144,13 +144,6 @@ export function DirectoryTable() {
                     <Link
                       href={{
                         pathname: `directory/vigency/${directory.id}`,
-                        query: {
-                          id: directory.id,
-                          typeOrg: directory.typeOrg,
-                          city: directory.city,
-                          state: directory.state,
-                          party: directory.party,
-                        },
                       }}
                     >
                       {directory.surname}

@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import Header from '@/components/Header'
+import Header from '@/components/Menu/Header'
 import { RelatoryView } from '@/components/Relatory'
 
 export default function Relatory() {

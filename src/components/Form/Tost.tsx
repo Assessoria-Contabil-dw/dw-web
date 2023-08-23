@@ -1,12 +1,16 @@
 import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-export default function Test() {
-  const onClick = () =>
-    toast('Toast is good', {
-      hideProgressBar: true,
-      autoClose: 1000,
-      type: 'success',
-    })
+export function ToastSucess(msg: string) {
+  return toast.success(msg, {
+    position: 'top-right',
+    autoClose: 100,
 
-  return <button onClick={onClick}> Click Me</button>
+    // hideProgressBar: false,
+    // closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    // progress: undefined,
+    theme: 'light',
+  })
 }

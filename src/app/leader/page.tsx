@@ -1,7 +1,7 @@
 import { LeaderTable } from '@/components/Leader/'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import Header from '@/components/Header'
+import Header from '@/components/Menu/Header'
 
 export default function Leader() {
   const isAuthenticated = cookies().get('token')?.value

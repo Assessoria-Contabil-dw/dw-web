@@ -24,14 +24,12 @@ interface RegisterDirectoryModalProps {
   isOpen: boolean
   onClose: () => void
   directoryId: string
-  onCreate: (directory: VigencyProps) => void
 }
 
 export function RegisterVigency({
   onClose,
   isOpen,
   directoryId,
-  onCreate,
 }: RegisterDirectoryModalProps) {
   const [error, setError] = useState<string | null>(null)
   const [leaderies, setLeader] = useState<LeaderProps[]>([])

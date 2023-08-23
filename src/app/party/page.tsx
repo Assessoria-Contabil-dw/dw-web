@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import Header from '@/components/Header'
+import Header from '@/components/Menu/Header'
 import { PartyTable } from '@/components/Party/'
 
 export default function Party() {

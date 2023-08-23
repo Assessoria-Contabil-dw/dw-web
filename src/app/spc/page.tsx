@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { SPCTable } from '@/components/SPC'
-import Header from '@/components/Header'
+import Header from '@/components/Menu/Header'
 
 export default function PCA() {
   const isAuthenticated = cookies().get('token')?.value

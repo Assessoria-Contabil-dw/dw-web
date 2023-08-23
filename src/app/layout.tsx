@@ -1,4 +1,4 @@
-import Menu from '@/components/Menu'
+import Menu from '@/components/Menu/Menu'
 import './globals.css'
 import { Montserrat } from 'next/font/google'
 import { cookies } from 'next/headers'
