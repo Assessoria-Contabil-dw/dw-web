@@ -1,39 +1,42 @@
 'use client'
 
 import { api } from '@/lib/api'
-import {
-  Edit3,
-  Trash2,
-  Eye,
-  Plus,
-  Search,
-  Circle,
-  RotateCcw,
-} from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { RegisterSPC } from './RegisterSPC'
+import { Edit3, Eye, Plus, Circle, RotateCcw } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Loading } from '../Form/Loading'
 import { DirectorySPCProps } from '@/lib/types'
 import { Pop } from '../Pop'
-import { UpdateDirectory } from './UpdateDirectory'
-import { ViewSPC } from './ViewSPC'
+import UpdateDirectory, { UpdateDirectoryRef } from './UpdateDirectory'
+import ViewSPC, { ViewSPCRef } from './ViewSPC'
+import RegisterSPC, { RegisterSPCRef } from './RegisterSPC'
 
 export function SPCTable() {
   // Models
-  const [isModelView, setIsModelView] = useState(false)
 
-  const [isRegister, setIsRegister] = useState(false)
   const [isPopOpen, setIsPopOpen] = useState(false)
-
   const [observation, setObservation] = useState('')
-  const [filterSPC, setFilterSPC] = useState<DirectorySPCProps[]>([])
+  // const [filterSPC, setFilterSPC] = useState<DirectorySPCProps[]>([])
 
   const [isLinkTwo, setIsLinkTwo] = useState(false)
 
-  const [isUpdate, setIsUpdate] = useState(false)
-
   const [loading, setLoading] = useState(true)
   const [SPC, setSPC] = useState<DirectorySPCProps[]>([])
+
+  const modalViewRef = useRef<ViewSPCRef>(null)
+  const modalRegisterRef = useRef<RegisterSPCRef>(null)
+  const modalUpdateRef = useRef<UpdateDirectoryRef>(null)
+
+  const handleViewModal = useCallback((id: string) => {
+    modalViewRef.current?.openModal(id)
+  }, [])
+
+  const handleRegisterModal = useCallback(() => {
+    modalRegisterRef.current?.openModal()
+  }, [])
+
+  const handleUpdateModal = useCallback((id: string) => {
+    modalUpdateRef.current?.openModal(id)
+  }, [])
 
   async function loadSPC() {
     setLoading(true)
@@ -46,6 +49,7 @@ export function SPCTable() {
     }
     setLoading(false)
   }
+
   useEffect(() => {
     loadSPC()
   }, [])
@@ -55,21 +59,19 @@ export function SPCTable() {
     setIsPopOpen(true)
   }
 
-  // filtrar dados
-  function handleFilter(value: string) {
-    if (value.trim() === '') {
-      setFilterSPC([])
-    }
+  // // filtrar dados
+  // function handleFilter(value: string) {
+  //   if (value.trim() === '') {
+  //     setFilterSPC([])
+  //   }
 
-    const data = SPC.filter((spc) => {
-      return spc.surname.toLowerCase().includes(value.toLowerCase())
-    })
+  //   const data = SPC.filter((spc) => {
+  //     return spc.surname.toLowerCase().includes(value.toLowerCase())
+  //   })
 
-    setFilterSPC(data)
-  }
+  //   setFilterSPC(data)
+  // }
 
-  // visualizar dados
-  function handleViewModel(id: number) {}
   if (loading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
@@ -81,21 +83,16 @@ export function SPCTable() {
 
   return (
     <div className="flex flex-col gap-8">
-      <RegisterSPC isOpen={isRegister} onClose={() => setIsRegister(false)} />
-      {/* <UpdateDirectory
-        id={2}
-        onClose={() => setIsUpdate(false)}
-        isOpen={isUpdate}
-      /> */}
-
-      <ViewSPC isOpen={isModelView} onClose={() => setIsModelView(false)} />
+      <RegisterSPC ref={modalRegisterRef} />
+      <UpdateDirectory ref={modalUpdateRef} />
+      <ViewSPC ref={modalViewRef} />
 
       <div className="flex justify-between">
         <div className="flex w-fit gap-4">
           <input
             type="text"
             className="w-fit"
-            onChange={(e) => handleFilter(e.target.value)}
+            // onChange={(e) => handleFilter(e.target.value)}
             placeholder="Buscar direção"
           />
         </div>
@@ -110,7 +107,7 @@ export function SPCTable() {
             Atualizar
           </button>
           <button
-            onClick={() => setIsRegister(true)}
+            onClick={() => handleRegisterModal()}
             className="w-fit bg-primary text-white"
           >
             <Plus className="w-4" />
@@ -239,15 +236,15 @@ export function SPCTable() {
                     <div className="flex items-center ">
                       <button className="h-full w-auto p-1 hover:text-secundary">
                         <Eye
-                          onClick={() => handleViewModel(spc.id)}
+                          onClick={() => handleViewModal(spc.id.toString())}
                           className="w-4"
                         />
                       </button>
-                      <button className="h-full w-auto rounded p-1 hover:text-primary">
+                      <button
+                        onClick={() => handleUpdateModal(spc.id.toString())}
+                        className="h-full w-auto rounded p-1 hover:text-primary"
+                      >
                         <Edit3 className="w-4" />
-                      </button>
-                      <button className="h-full w-auto rounded p-1 hover:text-red-500">
-                        <Trash2 className="w-4" />
                       </button>
                     </div>
                   </td>

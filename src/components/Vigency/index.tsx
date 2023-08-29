@@ -10,12 +10,12 @@ import {
   RotateCcw,
   Trash2,
 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import { Loading } from '../Form/Loading'
-import { RegisterVigency } from './RegisterVigency'
-import { ViewVigency } from './ViewVigency'
+import ViewVigencyModel, { ViewVigencyRef } from './ViewVigency'
+import RegisterVigencyModel, { RegisterVigencyRef } from './RegisterVigency'
 
 interface VigencyTableProps {
   directoryId: string
@@ -46,18 +46,25 @@ interface VProps {
 }
 
 export function VigencyTable({ directoryId }: VigencyTableProps) {
+  console.log('vigencia')
   const router = useRouter()
 
   function handleBack() {
     router.back()
   }
-  const [isModalRegister, setIsModalRegister] = useState(false)
-  const [isModalView, setIsModalView] = useState(false)
-  const [vigenctId, setVigencyId] = useState(0)
 
   const [vigencyData, setVigency] = useState<VProps | null>(null)
-
   const [loading, setLoading] = useState(true)
+  const modalViewRef = useRef<ViewVigencyRef>(null)
+  const modelRegisterRef = useRef<RegisterVigencyRef>(null)
+
+  const handleViewModal = useCallback((id: string) => {
+    modalViewRef.current?.openModal(id)
+  }, [])
+
+  const handleRegisterModal = useCallback((id: string) => {
+    modelRegisterRef.current?.openViewModal(id)
+  }, [])
 
   async function loadVigency() {
     const token = Cookies.get('token')
@@ -75,11 +82,6 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
     }
   }
 
-  function handleViewVigency(id: number) {
-    setVigencyId(id)
-    setIsModalView(true)
-  }
-
   useEffect(() => {
     loadVigency()
   }, [])
@@ -95,17 +97,8 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      <RegisterVigency
-        isOpen={isModalRegister}
-        directoryId={directoryId}
-        onClose={() => setIsModalRegister(false)}
-      />
-
-      <ViewVigency
-        isOpen={isModalView}
-        vigencyId={String(vigenctId)}
-        onClose={() => setIsModalView(false)}
-      />
+      <RegisterVigencyModel ref={modelRegisterRef} />
+      <ViewVigencyModel ref={modalViewRef} />
 
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
@@ -137,7 +130,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
               Atualizar
             </button>
             <button
-              onClick={() => setIsModalRegister(true)}
+              onClick={() => handleRegisterModal(directoryId)}
               className="w-fit bg-primary text-white"
             >
               <Plus className="w-4" />
@@ -180,7 +173,8 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
                       <td className="w-16 ">
                         <div className="flex items-center">
                           <button
-                            onClick={() => handleViewVigency(v.id)}
+                            type="button"
+                            onClick={() => handleViewModal(v.id.toString())}
                             className="h-full w-auto rounded p-1 hover:text-secundary"
                           >
                             <Eye size={16} />
@@ -244,7 +238,11 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
                     </td>
                     <td className="w-16 ">
                       <div className="flex items-center">
-                        <button className="h-full w-auto rounded p-1 hover:text-secundary">
+                        <button
+                          type="button"
+                          onClick={() => handleViewModal(v.id.toString())}
+                          className="h-full w-auto rounded p-1 hover:text-secundary"
+                        >
                           <Eye size={16} />
                         </button>
                         <button className="h-full w-auto rounded p-1 hover:text-primary">

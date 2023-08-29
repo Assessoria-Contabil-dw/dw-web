@@ -5,7 +5,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form'
 import { api } from '@/lib/api'
 import Cookie from 'js-cookie'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState,
+  ForwardRefRenderFunction,
+  forwardRef,
+  useImperativeHandle,
+  useCallback,
+} from 'react'
 import { Form } from '../Form'
 import dayjs from 'dayjs'
 import { virgenciesFormSchema } from '@/lib/validation'
@@ -15,23 +22,24 @@ import {
   LawFirmProps,
   LeaderProps,
   OfficesProps,
-  VigencyProps,
 } from '@/lib/types'
 
 type VigencyFormData = z.infer<typeof virgenciesFormSchema>
 
-interface RegisterDirectoryModalProps {
-  isOpen: boolean
-  onClose: () => void
-  directoryId: string
+export interface RegisterVigencyRef {
+  openViewModal: (id: string) => void
+  closeViewModal: () => void
 }
 
-export function RegisterVigency({
-  onClose,
-  isOpen,
-  directoryId,
-}: RegisterDirectoryModalProps) {
+const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
+  props,
+  ref,
+) => {
+  const [directoryId, setDirectoryId] = useState('')
+
   const [error, setError] = useState<string | null>(null)
+  const [isModalView, setIsModalView] = useState(false)
+
   const [leaderies, setLeader] = useState<LeaderProps[]>([])
   const [advocates, setAdvocate] = useState<AdvocateProps[]>([])
   const [offices, setOffice] = useState<OfficesProps[]>([])
@@ -40,10 +48,26 @@ export function RegisterVigency({
   const [selectedLeader, setSelectedLeader] = useState('')
   const [selectedOffice, setSelectedOffice] = useState('')
 
+  // DINAMICA DO MODEL
+  const openViewModal = useCallback((id: string) => {
+    setDirectoryId(id)
+    setIsModalView(true)
+  }, [])
+
+  const closeViewModal = useCallback(() => {
+    setIsModalView(false)
+  }, [])
+
+  useImperativeHandle(ref, () => ({
+    openViewModal,
+    closeViewModal,
+  }))
+
   const createVigencyForm = useForm<VigencyFormData>({
     resolver: zodResolver(virgenciesFormSchema),
   })
 
+  console.log('registe')
   const {
     handleSubmit,
     control,
@@ -93,22 +117,14 @@ export function RegisterVigency({
       .catch((error) => {
         console.log(error)
       })
-  }, [onClose])
-
-  if (!isOpen) {
-    return null
-  }
-
-  function handleCloseModal() {
-    onClose()
-  }
+  }, [directoryId])
 
   async function handleVigency(data: VigencyFormData) {
     const token = Cookie.get('token')
     console.log(dayjs(data.dateFirst).format())
 
     try {
-      const response = await api.post(
+      await api.post(
         '/vigencies/directory',
         {
           dateFirst: dayjs(data.dateFirst).format(),
@@ -124,9 +140,6 @@ export function RegisterVigency({
           },
         },
       )
-      const vigency = response.data[0] as VigencyProps
-      // onCreate(vigency)
-      console.log(vigency)
 
       setError('')
       console.log('Partido cadastrado com sucesso')
@@ -142,6 +155,10 @@ export function RegisterVigency({
         setError('Não foi possível cadastrar vigência')
       }
     }
+  }
+
+  if (!isModalView) {
+    return null
   }
 
   return (
@@ -160,7 +177,7 @@ export function RegisterVigency({
                     <span>Cadastre uma vigência</span>
                   </div>
                   <button
-                    onClick={handleCloseModal}
+                    onClick={closeViewModal}
                     className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
                   >
                     <X size={20} />
@@ -368,7 +385,7 @@ export function RegisterVigency({
 
               <div className="flex gap-4">
                 <button
-                  onClick={handleCloseModal}
+                  onClick={closeViewModal}
                   className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
                 >
                   Cancelar
@@ -388,3 +405,5 @@ export function RegisterVigency({
     </div>
   )
 }
+
+export default forwardRef(RegisterVigencyModel)

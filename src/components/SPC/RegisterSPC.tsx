@@ -5,7 +5,14 @@ import { useForm, FormProvider, useFieldArray } from 'react-hook-form'
 import { z } from 'zod'
 import dayjs from 'dayjs'
 import { ColorProps, DirectoryProps, DirectorySPCProps } from '@/lib/types'
-import { useEffect, useState } from 'react'
+import {
+  ForwardRefRenderFunction,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react'
 import { Form } from '../Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { spcFormShema } from '@/lib/validation'
@@ -13,19 +20,36 @@ import { api } from '@/lib/api'
 import { Loading } from '../Form/Loading'
 import Cookies from 'js-cookie'
 
-interface RegisterPCAModalProps {
-  isOpen: boolean
-  onClose: () => void
+export interface RegisterSPCRef {
+  openModal: () => void
+  closeModal: () => void
 }
 
 type SPCFormData = z.infer<typeof spcFormShema>
 
-export function RegisterSPC({ onClose, isOpen }: RegisterPCAModalProps) {
+const RegisterSPCModel: ForwardRefRenderFunction<RegisterSPCRef> = (
+  props,
+  ref,
+) => {
   const [error, setError] = useState<string | null>(null)
   const [directory, setDirectory] = useState<DirectoryProps[]>([])
   const [selectedDirectory, setSelectedDirectory] = useState('')
   const [colorStatus, setColorStatus] = useState<ColorProps[]>([])
   const [selectedColorStatus, setSelectedColorStatus] = useState('')
+  const [isModalView, setIsModalView] = useState(false)
+
+  const openModal = useCallback(() => {
+    setIsModalView(true)
+  }, [])
+
+  const closeModal = useCallback(() => {
+    setIsModalView(false)
+  }, [])
+
+  useImperativeHandle(ref, () => ({
+    openModal,
+    closeModal,
+  }))
 
   const createSPCForm = useForm<SPCFormData>({
     resolver: zodResolver(spcFormShema),
@@ -50,14 +74,10 @@ export function RegisterSPC({ onClose, isOpen }: RegisterPCAModalProps) {
       .catch((err) => {
         console.log(err)
       })
-  }, [onClose])
+  }, [])
 
-  if (!isOpen) {
+  if (!isModalView) {
     return null
-  }
-
-  function handleCloseModal() {
-    onClose()
   }
 
   function addNewSPC() {
@@ -113,7 +133,7 @@ export function RegisterSPC({ onClose, isOpen }: RegisterPCAModalProps) {
                     <span>Cadastre um novo pca de um diretório</span>
                   </div>
                   <button
-                    onClick={handleCloseModal}
+                    onClick={closeModal}
                     className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
                   >
                     <X size={20} />
@@ -272,7 +292,7 @@ export function RegisterSPC({ onClose, isOpen }: RegisterPCAModalProps) {
 
               <div className="flex gap-4">
                 <button
-                  onClick={handleCloseModal}
+                  onClick={closeModal}
                   type="button"
                   className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
                 >
@@ -292,3 +312,5 @@ export function RegisterSPC({ onClose, isOpen }: RegisterPCAModalProps) {
     </div>
   )
 }
+
+export default forwardRef(RegisterSPCModel)
