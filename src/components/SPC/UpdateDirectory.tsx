@@ -8,10 +8,12 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from 'react'
 import { Loading } from '../Form/Loading'
 import Cookies from 'js-cookie'
+import DeletModel, { DeletRef } from '../Model/Delet'
 
 export interface UpdateDirectoryRef {
   openModal: (id: string) => void
@@ -92,21 +94,14 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
       console.log(err)
     }
   }
+  const modalDeleteRef = useRef<DeletRef>(null)
+  const handleDeletModal = useCallback(
+    (id: string, msg: string, path: string) => {
+      modalDeleteRef.current?.openModal(id, msg, path)
+    },
+    [],
+  )
 
-  function handleDeleteSPC(spcId: number) {
-    try {
-      const token = Cookies.get('token')
-
-      api.delete(`/spcs/${spcId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      loadSPC()
-    } catch (err) {
-      console.log(err)
-    }
-  }
   useEffect(() => {
     if (isModalView) {
       loadSPC()
@@ -119,6 +114,8 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
 
   return (
     <div className="fixed right-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/50">
+      <DeletModel ref={modalDeleteRef} />
+
       <div className="h-3/4 w-2/4 overflow-hidden">
         <fieldset className="flex h-full w-full flex-col items-start justify-start  border-b-[1px]">
           <div className="flex w-full justify-between">
@@ -203,7 +200,13 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
                               <button
                                 className="bg-red-400 text-white"
                                 type="button"
-                                onClick={() => handleDeleteSPC(spc.id)}
+                                onClick={() =>
+                                  handleDeletModal(
+                                    spc.id.toString(),
+                                    'spcs',
+                                    spc.year,
+                                  )
+                                }
                               >
                                 <Trash size={18} />
                               </button>
@@ -288,7 +291,13 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
                               <button
                                 className="bg-red-400 text-white"
                                 type="button"
-                                onClick={() => handleDeleteSPC(spc.id)}
+                                onClick={() =>
+                                  handleDeletModal(
+                                    spc.id.toString(),
+                                    'spcs',
+                                    spc.year,
+                                  )
+                                }
                               >
                                 <Trash size={18} />
                               </button>

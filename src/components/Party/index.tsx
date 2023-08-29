@@ -1,7 +1,7 @@
 'use client'
 
 import { Edit3, Trash2, Plus, RotateCcw } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '@/lib/api'
 import { RegisterParty } from './RegisterParty'
 import { Loading } from '../Form/Loading'
@@ -9,8 +9,8 @@ import { PartyProps } from '@/lib/types'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
 import { ToastContainer } from 'react-toastify'
-import { ModelDelet } from '../Model/Delet'
 import { UpdateParty } from './UpdateParty'
+import DeletModel, { DeletRef } from '../Model/Delet'
 
 interface RegisterDeleteProps {
   id: string
@@ -20,9 +20,15 @@ interface RegisterDeleteProps {
 
 export function PartyTable() {
   const [isModalCreate, setIsModalCreate] = useState(false)
-  const [isModalDelet, setIsModalDelet] = useState(false)
   const [isModalUpdate, setIsModalUpdate] = useState(false)
 
+  const modalDeleteRef = useRef<DeletRef>(null)
+  const handleDeletModal = useCallback(
+    (id: string, path: string, msg: string) => {
+      modalDeleteRef.current?.openModal(id, path, msg)
+    },
+    [],
+  )
   const [register, setRegister] = useState<RegisterDeleteProps>({
     id: '',
     path: '',
@@ -62,11 +68,6 @@ export function PartyTable() {
     )
   }
 
-  // Função de deletar
-  function handleDeleteParty(id: string, path: string, msg: string) {
-    setRegister({ id, path, msg })
-    setIsModalDelet(true)
-  }
   // função de atualizar
   function handleUpdateParty(id: string) {
     setRegister({ ...register, id })
@@ -106,15 +107,7 @@ export function PartyTable() {
         onClose={() => setIsModalUpdate(false)}
         loading={() => loadParty()}
       />
-
-      <ModelDelet
-        path={register.path}
-        id={register.id}
-        msg={register.msg}
-        isOpen={isModalDelet}
-        onClose={() => setIsModalDelet(false)}
-        loading={() => loadParty()}
-      />
+      <DeletModel ref={modalDeleteRef} />
 
       <div className="flex justify-between">
         <div className="flex w-fit gap-4">
@@ -200,7 +193,7 @@ export function PartyTable() {
                         </button>
                         <button
                           onClick={() =>
-                            handleDeleteParty(
+                            handleDeletModal(
                               party.code.toString(),
                               'parties',
                               party.abbreviation,
@@ -252,7 +245,7 @@ export function PartyTable() {
                         </button>
                         <button
                           onClick={() =>
-                            handleDeleteParty(
+                            handleDeletModal(
                               party.code.toString(),
                               'parties',
                               party.abbreviation,
