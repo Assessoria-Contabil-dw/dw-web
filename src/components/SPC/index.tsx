@@ -87,7 +87,7 @@ export function SPCTable() {
       <UpdateDirectory ref={modalUpdateRef} />
       <ViewSPC ref={modalViewRef} />
 
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-4">
         <div className="flex w-fit gap-4">
           <input
             type="text"
@@ -95,6 +95,12 @@ export function SPCTable() {
             // onChange={(e) => handleFilter(e.target.value)}
             placeholder="Buscar direção"
           />
+          <div className="flex flex-row items-center justify-center gap-4">
+            <h3>Filtro</h3>
+            <input type="text" placeholder="UP" />
+            <input type="text" placeholder="Status" />
+            <input type="text" placeholder="Ano" />
+          </div>
         </div>
 
         <div className="flex gap-3">
@@ -155,7 +161,6 @@ export function SPCTable() {
                               title={spca.status}
                               style={{
                                 backgroundColor: `${spca.color}`,
-                                border: '1px solid #ccc',
                               }}
                               href={isLinkTwo ? spca.link2 : spca.link1}
                             >
