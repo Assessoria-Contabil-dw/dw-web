@@ -9,22 +9,31 @@ import { Pop } from '../Pop'
 import UpdateDirectory, { UpdateDirectoryRef } from './UpdateDirectory'
 import ViewSPC, { ViewSPCRef } from './ViewSPC'
 import RegisterSPC, { RegisterSPCRef } from './RegisterSPC'
+import dayjs from 'dayjs'
 
 export function SPCTable() {
   // Models
 
   const [isPopOpen, setIsPopOpen] = useState(false)
   const [observation, setObservation] = useState('')
-  // const [filterSPC, setFilterSPC] = useState<DirectorySPCProps[]>([])
 
   const [isLinkTwo, setIsLinkTwo] = useState(false)
 
   const [loading, setLoading] = useState(true)
   const [SPC, setSPC] = useState<DirectorySPCProps[]>([])
+  const [filter, setFilter] = useState<DirectorySPCProps[]>([])
 
   const modalViewRef = useRef<ViewSPCRef>(null)
   const modalRegisterRef = useRef<RegisterSPCRef>(null)
   const modalUpdateRef = useRef<UpdateDirectoryRef>(null)
+
+  const [filterData, setFilterData] = useState({
+    city: undefined,
+    party: undefined,
+    up: undefined,
+    status: undefined,
+    year: undefined,
+  })
 
   const handleViewModal = useCallback((id: string) => {
     modalViewRef.current?.openModal(id)
@@ -41,36 +50,96 @@ export function SPCTable() {
   async function loadSPC() {
     setLoading(true)
     try {
-      const response = await api.get('/spcs')
-      setSPC(response.data)
-      console.log(response.data)
+      const response = await api.get('/spcs', {
+        params: {
+          take: 200,
+        },
+      })
+      setSPC(response.data.diretoryArray)
+      setFilter(SPC)
     } catch (error) {
       console.log("Erro ao carregar os dados da SPC's")
     }
     setLoading(false)
   }
 
+  async function filterSPC() {
+    // setLoading(true)
+    try {
+      const response = await api.get('/spcs/filter', {
+        params: {
+          take: 200,
+          city: filterData.city,
+          party: filterData.party,
+          status: filterData.status,
+          uf: filterData.up,
+          year: filterData.year,
+        },
+      })
+      setFilter(response.data.diretoryArray)
+    } catch (error) {
+      console.log("Erro ao carregar os dados da SPC's")
+    }
+    setLoading(false)
+  }
+
+  // useEffect(() => {
+  //   loadSPC()
+  // }, [])
+
   useEffect(() => {
-    loadSPC()
-  }, [])
+    filterSPC()
+  }, [filterData])
 
   function handleViewObservation(message: string) {
     setObservation(message)
     setIsPopOpen(true)
   }
 
-  // // filtrar dados
-  // function handleFilter(value: string) {
-  //   if (value.trim() === '') {
-  //     setFilterSPC([])
+  // filtrar dados
+  // const handleCityChange = (e: any) => {
+  //   if (e.target.value.length < 3) {
+  //     setFilterData({ ...filterData, city: undefined })
+  //     return
   //   }
-
-  //   const data = SPC.filter((spc) => {
-  //     return spc.surname.toLowerCase().includes(value.toLowerCase())
-  //   })
-
-  //   setFilterSPC(data)
+  //   if (e.target.value.trim() === '') {
+  //     setFilterData({ ...filterData, city: undefined })
+  //     return
+  //   }
+  //   setFilterData({ ...filterData, city: e.target.value })
   // }
+
+  const handleUfChange = (e: any) => {
+    console.log(e.target.value)
+    if (e.target.value === '') {
+      setFilterData({ ...filterData, up: undefined })
+      return
+    }
+    setFilterData({ ...filterData, up: e.target.value })
+  }
+
+  const handleStatusChange = (e: any) => {
+    console.log(e.target.value)
+    if (e.target.value === 'all') {
+      setFilterData({ ...filterData, status: undefined })
+      return
+    }
+    setFilterData({ ...filterData, status: e.target.value })
+  }
+
+  const handleYearChange = (e: any) => {
+    console.log(e.target.value)
+    if (e.target.value.length < 4) {
+      setFilterData({ ...filterData, year: undefined })
+      return
+    }
+    if (e.target.value === '') {
+      setFilterData({ ...filterData, year: undefined })
+      return
+    }
+
+    setFilterData({ ...filterData, year: e.target.value })
+  }
 
   if (loading) {
     return (
@@ -88,19 +157,62 @@ export function SPCTable() {
       <ViewSPC ref={modalViewRef} />
 
       <div className="flex justify-between gap-4">
-        <div className="flex w-fit gap-4">
+        <div className="flex flex-row items-center justify-center gap-4">
+          <legend>Filtro</legend>
+
           <input
             type="text"
-            className="w-fit"
-            // onChange={(e) => handleFilter(e.target.value)}
-            placeholder="Buscar direção"
+            placeholder="UF"
+            name="uf"
+            onChange={handleUfChange}
           />
-          <div className="flex flex-row items-center justify-center gap-4">
-            <h3>Filtro</h3>
-            <input type="text" placeholder="UP" />
-            <input type="text" placeholder="Status" />
-            <input type="text" placeholder="Ano" />
+          {/* <input
+            type="text"
+            name="surname"
+            className="w-[50%]"
+            placeholder="Cidade"
+            onChange={handleCityChange}
+          /> */}
+          <div className="flex gap-4">
+            <div className="flex items-center justify-center gap-1">
+              <input
+                type="radio"
+                value="all"
+                name="status"
+                onChange={handleStatusChange}
+              />
+              <label htmlFor="all">Todos</label>
+            </div>
+
+            <div className="flex items-center justify-center gap-1">
+              <input
+                type="radio"
+                value="true"
+                name="status"
+                onChange={handleStatusChange}
+              />
+              <label htmlFor="true">Ativo</label>
+            </div>
+
+            <div className="flex items-center justify-center gap-1">
+              <input
+                type="radio"
+                value="false"
+                name="status"
+                onChange={handleStatusChange}
+              />
+              <label htmlFor="false">Inativo</label>
+            </div>
           </div>
+
+          <input
+            type="number"
+            min={2017}
+            max={dayjs().year()}
+            placeholder={String(dayjs().year())}
+            name="year"
+            onChange={handleYearChange}
+          />
         </div>
 
         <div className="flex gap-3">
@@ -145,11 +257,11 @@ export function SPCTable() {
             </tr>
           </thead>
           <tbody>
-            {SPC.length > 0 ? (
-              SPC.map((spc, index) => (
+            {filter != null ? (
+              filter.map((spc, index) => (
                 <tr key={index}>
                   <td>
-                    {spc.party} - {spc.surname}
+                    {spc.state} - {spc.party} - {spc.surname}
                   </td>
                   <td className="whitespace-nowrap">
                     <ul>
