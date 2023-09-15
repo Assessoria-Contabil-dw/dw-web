@@ -212,7 +212,7 @@ export function SPC() {
           <span>
             {spcResult.data?.info.pages === 1
               ? 1
-              : page + 1 + '...' + spcResult.data?.info?.pages}
+              : page + 1 + '...' + spcResult.data?.info?.pages + 1}
           </span>
           <button
             className="h-fit rounded-full bg-primary px-1 py-1  text-white disabled:cursor-not-allowed disabled:bg-gray-300"
