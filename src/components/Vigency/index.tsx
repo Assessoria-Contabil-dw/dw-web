@@ -75,6 +75,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
         },
       })
       setVigency(response.data)
+      console.log(response.data)
     } catch (error) {
       console.log('Não foi possível carregar as vigências')
     } finally {
@@ -156,7 +157,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
                 {vigencyData?.vigencyActive != null ? (
                   vigencyData.vigencyActive.map((v, index) => (
                     <tr key={index}>
-                      <td>{v.dateFirst != null ? v.dateLast : '-'}</td>
+                      <td>{v.dateFirst != null ? v.dateFirst : '-'}</td>
                       <td>{v.dateLast != null ? v.dateLast : '-'}</td>
                       <td>
                         {v.president?.name != null ? v.president.name : '-'}
@@ -223,7 +224,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
               {vigencyData?.vigencyInactive != null ? (
                 vigencyData.vigencyInactive.map((v, index) => (
                   <tr key={index}>
-                    <td>{v.dateFirst != null ? v.dateLast : '-'}</td>
+                    <td>{v.dateFirst != null ? v.dateFirst : '-'}</td>
                     <td>{v.dateLast != null ? v.dateLast : '-'}</td>
                     <td>
                       {v.president?.name != null ? v.president.name : '-'}

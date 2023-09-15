@@ -18,13 +18,11 @@ type PartyFormData = z.infer<typeof partyFormShema>
 interface RegisterDirectoryModalProps {
   isCreate: boolean
   onClose: () => void
-  loading: () => void
 }
 
 export function RegisterParty({
   onClose,
   isCreate,
-  loading,
 }: RegisterDirectoryModalProps) {
   const [error, setError] = useState<string | null>(null)
   const [colors, setColors] = useState<ColorProps[]>([])
@@ -69,7 +67,6 @@ export function RegisterParty({
 
   function handleCloseModal() {
     handleReset()
-    loading()
     onClose()
   }
 

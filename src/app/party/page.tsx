@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import Header from '@/components/Menu/Header'
-import { PartyTable } from '@/components/Party/'
+import { Party } from '@/components/Party/'
 
-export default function Party() {
+export default function PartyPage() {
   const isAuthenticated = cookies().get('token')?.value
 
   if (!isAuthenticated) {
@@ -12,7 +12,7 @@ export default function Party() {
   return (
     <div className="flex flex-col gap-6">
       <Header title="Partidos" descrition="Verifique os partidos cadastrados" />
-      <PartyTable />
+      <Party />
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import Providers from '../services/providers'
 import Menu from '@/components/Menu/Menu'
 import './globals.css'
 import { Montserrat } from 'next/font/google'
@@ -24,14 +25,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.variable} bg-gray-50 font-sans`}>
-        {isAuthenticated ? (
-          <div className="grid h-screen min-h-screen w-screen grid-cols-[250px_auto]">
-            <Menu />
-            <main className="overflow-x-auto p-6">{children}</main>
-          </div>
-        ) : (
-          children
-        )}
+        <Providers>
+          {isAuthenticated ? (
+            <div className="grid h-screen min-h-screen w-screen grid-cols-[250px_auto]">
+              <Menu />
+              <main className="overflow-x-auto p-6">{children}</main>
+            </div>
+          ) : (
+            children
+          )}
+        </Providers>
       </body>
     </html>
   )

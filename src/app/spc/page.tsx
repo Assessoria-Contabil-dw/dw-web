@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import { SPCTable } from '@/components/SPC'
+import { SPC } from '@/components/SPC/index'
 import Header from '@/components/Menu/Header'
 
 export default function PCA() {
@@ -16,7 +16,7 @@ export default function PCA() {
         title="Prestação de Conta"
         descrition="Verifique o SPCA e SPCE de cada diretório"
       />
-      <SPCTable />
+      <SPC />
     </div>
   )
 }
