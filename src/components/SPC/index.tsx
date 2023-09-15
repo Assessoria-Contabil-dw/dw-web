@@ -210,8 +210,9 @@ export function SPC() {
             <ChevronLeft size={18} />
           </button>
           <span>
-            {page + 1} ...
-            {spcResult.data?.info?.pages ? spcResult.data?.info?.pages + 1 : 0}
+            {spcResult.data?.info.pages === 1
+              ? 1
+              : page + 1 + '...' + spcResult.data?.info?.pages}
           </span>
           <button
             className="h-fit rounded-full bg-primary px-1 py-1  text-white disabled:cursor-not-allowed disabled:bg-gray-300"
