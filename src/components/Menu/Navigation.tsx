@@ -176,10 +176,10 @@ export function NavigationMenu() {
         </li>
         <li className="w-full">
           <Link
-            href="/acess"
+            href="/admin"
             className={`flex w-full flex-row items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium 
             ${
-              activeSegment === 'acess'
+              activeSegment === 'admin'
                 ? 'bg-primary text-white'
                 : 'text-zinc-600'
             }`}
@@ -187,7 +187,7 @@ export function NavigationMenu() {
             <KeyRound
               size={18}
               className={`w-4 ${
-                activeSegment === 'acess' ? ' text-white' : 'text-zinc-400'
+                activeSegment === 'admin' ? ' text-white' : 'text-zinc-400'
               }`}
             />
             Administração

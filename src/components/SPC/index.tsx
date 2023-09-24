@@ -199,7 +199,9 @@ export function SPC() {
           </select>
         </div>
       </div>
+
       <TableSPC data={spcResult.data?.results ?? []} />
+
       {spcResult.data?.results != null ? (
         <div className="flex items-center gap-2">
           <button
