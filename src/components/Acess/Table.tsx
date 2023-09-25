@@ -1,12 +1,12 @@
 import { api } from '@/lib/api'
 import { Loading } from '../Form/Loading'
 import { useQuery } from 'react-query'
-import { ChevronLeft, ChevronRight, Trash2 } from 'lucide-react'
-import { ChangeEvent, useCallback, useRef, useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChangeEvent, useState } from 'react'
 import { Page } from '@/lib/page'
-import DeletModel, { DeletRef } from '../Model/Delet'
+// import DeletModel, { DeletRef } from '../Model/Delet'
 import { RefreshButton } from '../Buttons/refresh'
-import Register from './Register'
+// import Register from './Register'
 
 export interface UserProps {
   id: string
@@ -60,23 +60,6 @@ export function UserTable() {
     setPage(0)
     setSearch((old) => ({ ...old, [name]: value || undefined }))
   }
-
-  const modalDeleteRef = useRef<DeletRef>(null)
-  const handleDeletModal = useCallback(
-    (id: string, path: string, msg: string) => {
-      modalDeleteRef.current?.openModal(id, path, msg)
-    },
-    [],
-  )
-
-  const modalRegisterRef = useRef<DeletRef>(null)
-  const handleRegisterModal = useCallback(
-    (id: string, path: string, msg: string) => {
-      modalDeleteRef.current?.openModal(id, path, msg)
-    },
-    [],
-  )
-
   if (isLoading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
@@ -96,9 +79,6 @@ export function UserTable() {
 
   return (
     <div className="flex flex-col gap-2">
-      <DeletModel ref={modalDeleteRef} />
-      <Register />
-
       <div className="flex items-center justify-between">
         <div className="flex w-fit items-center gap-2">
           <h4>Filtros: </h4>
@@ -184,7 +164,7 @@ export function UserTable() {
                       >
                         <Edit3 className="w-4" />
                       </button> */}
-                      <button
+                      {/* <button
                         onClick={() =>
                           handleDeletModal(user.name, 'users', user.id)
                         }
@@ -192,7 +172,7 @@ export function UserTable() {
                         className="h-full w-auto rounded p-1 hover:text-red-500"
                       >
                         <Trash2 className="w-4" />
-                      </button>
+                      </button> */}
                     </div>
                   </td>
                 </tr>
