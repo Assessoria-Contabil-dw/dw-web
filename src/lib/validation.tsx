@@ -203,6 +203,24 @@ export const lawFirmFormShema = z.object({
   email: z.string().optional(),
 })
 
+export const userFormShema = z.object({
+  id: z.coerce.number().optional(),
+  name: z
+    .string()
+    .min(3, 'O nome não pode ser vazio')
+    .nonempty('O nome não pode ser vazio'),
+  cpf: z
+    .string()
+    .min(11, 'O CPF deve ter 11 dígitos')
+    .max(11, 'O CPF deve ter 11 dígitos')
+    .nonempty('O CPF não pode ser vazio'),
+
+  email: z.string().optional(),
+  role: z.enum(['ADMIN', 'CLIENT']).default('CLIENT'),
+  passwordHash: z.string().optional(),
+  disable: z.coerce.boolean().default(true).optional(),
+})
+
 export const spcFormShema = z.object({
   directoryId: z.coerce
     .number()

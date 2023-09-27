@@ -1,15 +1,16 @@
 import { api } from '@/lib/api'
 import { Loading } from '../Form/Loading'
 import { useQuery } from 'react-query'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { ChangeEvent, useState } from 'react'
+import { ChevronLeft, ChevronRight, Edit3, KeyIcon } from 'lucide-react'
+import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import { Page } from '@/lib/page'
 // import DeletModel, { DeletRef } from '../Model/Delet'
 import { RefreshButton } from '../Buttons/refresh'
 // import Register from './Register'
-
+import UpdateUser, { UpdateUserRef } from './Update'
+import PasswordUser, { PasswordUserRef } from './Password'
 export interface UserProps {
-  id: string
+  id: number
   name: string
   email: string
   role: string
@@ -23,6 +24,12 @@ export function UserTable() {
     name: undefined as string | undefined,
   })
 
+  // const modalRegisterRef = useRef<UpdateUserRef>(null)
+
+  // const handleRegisterModal = useCallback((id: number) => {
+  //   modalRegisterRef.current?.openModal(id)
+  // }, [])
+
   const { data, isLoading, isError, isFetching, isPreviousData } = useQuery<
     Page<UserProps>
   >(
@@ -32,7 +39,7 @@ export function UserTable() {
         .get('/users', {
           params: {
             skip: page,
-            take: search.name || search.cpf !== undefined ? 20 : 15,
+            take: 15,
             name: search.name,
             cpf: search.cpf,
           },
@@ -60,6 +67,18 @@ export function UserTable() {
     setPage(0)
     setSearch((old) => ({ ...old, [name]: value || undefined }))
   }
+
+  const modelUpdateRef = useRef<UpdateUserRef>(null)
+
+  const handleUpdateModal = useCallback((id: number) => {
+    modelUpdateRef.current?.openModal(id)
+  }, [])
+
+  const modelPassordRef = useRef<PasswordUserRef>(null)
+  const handlePasswordModal = useCallback((id: number) => {
+    modelPassordRef.current?.openModal(id)
+  }, [])
+
   if (isLoading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
@@ -79,20 +98,23 @@ export function UserTable() {
 
   return (
     <div className="flex flex-col gap-2">
+      <UpdateUser ref={modelUpdateRef} />
+      <PasswordUser ref={modelPassordRef} />
+
       <div className="flex items-center justify-between">
         <div className="flex w-fit items-center gap-2">
           <h4>Filtros: </h4>
           <input
-            type="number"
-            name="cpf"
-            onChange={handleSearchOnChange}
-            placeholder="Código"
-          />
-          <input
             type="text"
             name="name"
             onChange={handleSearchOnChange}
-            placeholder="Partido"
+            placeholder="Nome"
+          />
+          <input
+            type="text"
+            name="cpf"
+            onChange={handleSearchOnChange}
+            placeholder="CPF"
           />
         </div>
 
@@ -121,7 +143,7 @@ export function UserTable() {
                     setPage((old) => old + 1)
                   }
                 }}
-                disabled={isPreviousData || !data?.info?.next}
+                disabled={!!data?.info?.next}
               >
                 <ChevronRight size={18} />
               </button>
@@ -158,12 +180,18 @@ export function UserTable() {
 
                   <td className="w-16 ">
                     <div className="flex items-center ">
-                      {/* <button
-                        // onClick={() => handleUpdateuser(user.cpf.toString())}
+                      <button
+                        onClick={() => handleUpdateModal(user.id)}
                         className="h-full w-auto rounded p-1 hover:text-primary"
                       >
                         <Edit3 className="w-4" />
-                      </button> */}
+                      </button>
+                      <button
+                        onClick={() => handlePasswordModal(user.id)}
+                        className="h-full w-auto rounded p-1 hover:text-primary"
+                      >
+                        <KeyIcon className="w-4" />
+                      </button>
                       {/* <button
                         onClick={() =>
                           handleDeletModal(user.name, 'users', user.id)

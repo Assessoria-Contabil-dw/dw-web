@@ -6,20 +6,19 @@ import {
   useImperativeHandle,
   useState,
 } from 'react'
-import FormUser from './Form'
+import FormUpdate from './FormUpdate'
 
-export interface RegisterUserRef {
-  openModal: () => void
+export interface UpdateUserRef {
+  openModal: (id: number) => void
   closeModal: () => void
 }
 
-const RegisterUser: ForwardRefRenderFunction<RegisterUserRef> = (
-  props,
-  ref,
-) => {
+const UpdateUser: ForwardRefRenderFunction<UpdateUserRef> = (props, ref) => {
   const [isModalView, setIsModalView] = useState(false)
+  const [id, setId] = useState(0)
 
-  const openModal = useCallback(() => {
+  const openModal = useCallback((id: number) => {
+    setId(id)
     setIsModalView(true)
   }, [])
 
@@ -42,7 +41,7 @@ const RegisterUser: ForwardRefRenderFunction<RegisterUserRef> = (
         <fieldset className="flex h-full w-full flex-col items-start justify-start  border-b-[1px]">
           <div className="flex w-full justify-between">
             <div>
-              <h4>Cadastrar Usuario</h4>
+              <h4>Atualizar Usuario</h4>
             </div>
             <button
               onClick={closeModal}
@@ -52,11 +51,11 @@ const RegisterUser: ForwardRefRenderFunction<RegisterUserRef> = (
             </button>
           </div>
 
-          <FormUser openModal={openModal} closeModal={closeModal} />
+          <FormUpdate id={id} closeModal={closeModal} />
         </fieldset>
       </div>
     </div>
   )
 }
 
-export default forwardRef(RegisterUser)
+export default forwardRef(UpdateUser)

@@ -1,20 +1,22 @@
 import { X } from 'lucide-react'
 import {
   ForwardRefRenderFunction,
+  HTMLAttributes,
   forwardRef,
   useCallback,
   useImperativeHandle,
   useState,
 } from 'react'
-import FormUser from './Form'
 
 export interface RegisterUserRef {
   openModal: () => void
   closeModal: () => void
 }
 
+interface FieldProps extends HTMLAttributes<HTMLDivElement> {}
+
 const RegisterUser: ForwardRefRenderFunction<RegisterUserRef> = (
-  props,
+  props: FieldProps,
   ref,
 ) => {
   const [isModalView, setIsModalView] = useState(false)
@@ -42,7 +44,7 @@ const RegisterUser: ForwardRefRenderFunction<RegisterUserRef> = (
         <fieldset className="flex h-full w-full flex-col items-start justify-start  border-b-[1px]">
           <div className="flex w-full justify-between">
             <div>
-              <h4>Cadastrar Usuario</h4>
+              <h4></h4>
             </div>
             <button
               onClick={closeModal}
@@ -52,7 +54,7 @@ const RegisterUser: ForwardRefRenderFunction<RegisterUserRef> = (
             </button>
           </div>
 
-          <FormUser openModal={openModal} closeModal={closeModal} />
+          <div {...props} />
         </fieldset>
       </div>
     </div>
