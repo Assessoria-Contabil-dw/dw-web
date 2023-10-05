@@ -5,6 +5,7 @@ import { ImgInput } from './Img'
 import { Field } from './Field'
 import { Label } from './Label'
 import { ErrorMessage } from './ErrorMessage'
+import { PasswordInput } from './Password'
 
 export const Form = {
   TextInput,
@@ -13,5 +14,6 @@ export const Form = {
   ImgInput,
   Field,
   Label,
+  PasswordInput,
   ErrorMessage,
 }

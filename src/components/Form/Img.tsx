@@ -24,7 +24,7 @@ export function ImgInput({ name, ...props }: TextInputProps) {
       <div className="flex h-full flex-col gap-1">
         <label
           htmlFor={name}
-          className="flex h-4/5 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300  bg-gray-50 text-gray-200 transition-colors  duration-200 group-hover:border-secundary"
+          className="flex h-4/5 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300  bg-gray-50 text-gray-200 transition-colors  duration-200 group-hover:border-second"
         >
           {previewImage ? (
             <picture className="h-full w-full">
@@ -40,7 +40,7 @@ export function ImgInput({ name, ...props }: TextInputProps) {
         </label>
         <label
           htmlFor={name}
-          className="flex h-1/5 cursor-pointer items-center justify-start gap-2 text-xs font-medium text-gray-400 transition-colors duration-200 group-hover:text-secundary"
+          className="group-hover:text-secundary flex h-1/5 cursor-pointer items-center justify-start gap-2 text-xs font-medium text-gray-400 transition-colors duration-200"
         >
           <Camera size={18} />
           Anexar imagem

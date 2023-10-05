@@ -18,7 +18,7 @@
       @apply text-[62.5%] overflow-x-hidden;
     } */
   /* body {
-    @apply h-[100vh] w-[100vw] bg-gray-50 font-sans text-gray-900;
+    @apply h-[100vh] w-[100vw] bg-slate-50 font-sans text-slate-900;
   } */
 
   footer {
@@ -31,7 +31,7 @@
    */
 
   option[value=""][disabled] {
-    @apply hidden text-gray-300;
+    @apply hidden text-slate-300;
   }
   option {
     @apply text-zinc-600;
@@ -41,22 +41,23 @@
   table {
     @apply w-full;
   }
-  table thead tr th, table tbody tr td{
+  table thead tr th,
+  table tbody tr td {
     @apply mr-9;
   }
 
   thead tr th,
   tbody tr {
-    @apply border-b-[1px] border-dashed border-gray-200 ;
+    @apply border-b-[1px] border-dashed border-slate-200;
   }
   thead th {
-    @apply p-2 text-left font-alt text-xs font-bold uppercase text-zinc-600 whitespace-nowrap;
+    @apply whitespace-nowrap p-2 text-left font-alt text-xs font-bold uppercase text-zinc-600;
   }
   tbody tr td {
-    @apply p-2 text-left font-sans text-[0.7rem] font-medium text-gray-400;
+    @apply p-2 text-left font-sans text-[0.7rem] font-medium text-slate-400;
   }
-  
-/*
+
+  /*
   tbody tr td:first-child {
     @apply text-zinc-600 hover:text-primary cursor-pointer uppercase;
   }
@@ -69,9 +70,8 @@
     @apply flex flex-row justify-start gap-2;
   }
   tbody tr td ul li a {
-    @apply cursor-pointer text-white font-semibold rounded bg-slate-200 px-2 py-1;
+    @apply cursor-pointer rounded bg-slate-200 px-2 py-1 font-semibold text-white;
   }
-
 
   /* text */
   /* h2 {
@@ -83,7 +83,7 @@
       font-weight: 400;
       text-transform: uppercase;
   
-      color: var(--gray-800);
+      color: var(--slate-800);
     }
     a {
       text-decoration: none;
@@ -95,7 +95,7 @@
   button:disabled:focus,
   button:disabled:active {
     pointer-events: none;
-    background: var(--gray-100);
+    background: var(--slate-100);
   }
 
   /* scroll */
@@ -103,42 +103,46 @@
     @apply h-2 w-2;
   }
   html ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-400;
+    @apply rounded-full bg-slate-200;
   }
   html ::-webkit-scrollbar-track {
-    @apply bg-gray-200;
+    @apply bg-slate-100;
   }
 
   /* form */
   h1 {
-    @apply font-alt text-xl font-semibold text-gray-900;
+    @apply font-alt text-xl font-semibold text-slate-900;
   }
   h2 {
-    @apply font-alt text-lg font-semibold text-gray-900;
+    @apply font-alt text-lg font-semibold text-slate-900;
   }
   h3 {
-    @apply font-alt text-base font-semibold text-gray-900;
+    @apply font-alt text-base font-semibold text-slate-900;
   }
   h4 {
-    @apply font-alt text-sm font-semibold text-gray-900;
+    @apply font-alt text-sm font-semibold text-slate-900;
   }
   h5 {
-    @apply font-alt text-xs font-semibold text-gray-900;
-  }
-  
-  span {
-    @apply font-sans text-xs font-normal text-gray-400;
+    @apply font-alt text-xs font-semibold text-slate-900;
   }
 
-  form,
+  h6 {
+    @apply font-alt text-[10px] font-semibold text-slate-900;
+  }
+
+  span {
+    @apply font-sans text-xs font-normal text-slate-400;
+  }
+
+  .form,
   fieldset {
-    @apply rounded-[0.8rem] border-[1px] border-gray-300 bg-white px-5 py-4;
+    @apply rounded-[0.8rem] border-[1px] border-slate-300 bg-white px-5 py-4;
   }
   legend {
     @apply font-sans text-xs font-medium text-zinc-600;
   }
-  label{
-    @apply text-gray-700 font-sans font-medium;
+  label {
+    @apply font-sans font-medium text-slate-700;
   }
 
   select,
@@ -150,19 +154,16 @@
   input[type="date"],
   input[type="datetime-local"],
   textarea {
-    @apply h-10 w-full rounded border border-gray-300 bg-white
+    @apply h-10 w-full rounded border border-slate-300 bg-white
       px-3 font-sans text-sm font-normal text-zinc-600;
   }
   select {
     cursor: pointer;
   }
- 
+
   button {
-    @apply flex h-10 whitespace-nowrap items-center justify-center gap-1 rounded-lg px-4 py-2 font-sans text-sm font-semibold transition-colors;
+    @apply flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-4 py-2 font-sans text-sm font-semibold transition-colors;
   }
-
-  
-
 }
 
 @layer components {
@@ -180,8 +181,24 @@
   }
 
   .form-session {
-    @apply rounded-[0.8rem] border-[1px] border-gray-300 bg-white p-8;
+    @apply rounded-[0.8rem] border-[1px] border-slate-300 bg-white p-8;
   }
 
 
+
+  .button-primary {
+    @apply bg-primary text-slate-800 hover:bg-primaryHover disabled:bg-slate-400 disabled:text-white;
+  }
+
+  .button-second {
+    @apply bg-second text-white hover:bg-secondHover disabled:bg-slate-400 disabled:text-white;
+  }
+
+  .button-tertiary {
+    @apply bg-white text-slate-700 h-fit hover:bg-slate-100 p-2;
+  }
+
+  .button-arrow {
+    @apply h-fit rounded-md border-slate-200 border-solid border-[1px] px-1 py-1  text-slate-400 hover:bg-slate-100 hover:text-slate-500 disabled:cursor-not-allowed disabled:opacity-30;
+  }
 }

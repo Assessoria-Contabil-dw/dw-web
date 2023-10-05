@@ -1,21 +1,27 @@
-import decode from 'jwt-decode'
-import { cookies } from 'next/headers'
+import { useQuery } from 'react-query'
+import { api } from './api'
 
-interface User {
+export type User = {
   name: string
-  email: string
   role: string
-  sub: string
-}
+} | null
 
-export function getUser(): User {
-  const token = cookies().get('token')?.value
+export function useAuth() {
+  console.log('useAuth')
+  const { data, error } = useQuery<User>(
+    'authUser',
+    async () => {
+      const response = await api.get('/auth')
+      return response.data
+    },
+    {
+      retry: false,
+    },
+  )
 
-  if (!token) {
-    throw new Error('Unauthenticated.')
+  if (error) {
+    return null
+  } else {
+    return data
   }
-
-  const user: User = decode(token)
-
-  return user
 }

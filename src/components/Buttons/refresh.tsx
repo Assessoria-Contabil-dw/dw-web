@@ -1,4 +1,4 @@
-import { queryClient } from '@/services/providers'
+import { queryClient } from '@/services/query.provider'
 import { RotateCcw } from 'lucide-react'
 
 interface RefreshProps {

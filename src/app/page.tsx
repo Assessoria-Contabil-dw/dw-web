@@ -1,23 +1,19 @@
-import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
-import Header from '@/components/Menu/Header'
+'use client'
+import { useRouter } from 'next/navigation'
+import React from 'react'
 
-export default function Home() {
-  const isAuthenticated = cookies().get('token')?.value
+export default function Page() {
+  const router = useRouter()
 
-  if (!isAuthenticated) {
-    return redirect('/signIn')
+  function handleSignIn() {
+    router.push('/signIn')
   }
   return (
-    <div>
-      <Header title="Dashboard" />
-      <p>Informações resumidas como:</p>
-      <ul>
-        <li>Numero de clientes</li>
-        <li>Numero de diretorios</li>
-        <li>Numero de representantes e advogados</li>
-        <li>Numero de partidos</li>
-      </ul>
+    <div className="flex h-screen w-screen flex-col items-center justify-center gap-4">
+      <h1>Página em construção</h1>
+      <button onClick={handleSignIn} className="button-primary">
+        Entrar na conta
+      </button>
     </div>
   )
 }
