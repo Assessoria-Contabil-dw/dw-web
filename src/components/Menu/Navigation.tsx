@@ -10,10 +10,12 @@ import {
   FileText,
 } from 'lucide-react'
 import Link from 'next/link'
-import { useSelectedLayoutSegment } from 'next/navigation'
+import { usePathname } from 'next/navigation'
+
+
 
 export function NavigationMenu() {
-  const activeSegment = useSelectedLayoutSegment()
+  const pathnameCurrent = usePathname();
   const MenuItem = [
     {
       href: '/painel',
@@ -88,7 +90,7 @@ export function NavigationMenu() {
               href={item.href}
               replace={item.replace}
               className={`flex w-full flex-row  items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium text-slate-700 
-            ${activeSegment === item.click ? 'bg-slate-100' : ''}`}
+            ${pathnameCurrent === item.href ? 'bg-slate-100' : ''}`}
             >
               <item.icon size={18} className="w-4 text-slate-700" />
               {item.label}
