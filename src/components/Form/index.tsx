@@ -6,6 +6,7 @@ import { Field } from './Field'
 import { Label } from './Label'
 import { ErrorMessage } from './ErrorMessage'
 import { PasswordInput } from './Password'
+import { CPFInput } from './CPFInput'
 
 export const Form = {
   TextInput,
@@ -15,5 +16,6 @@ export const Form = {
   Field,
   Label,
   PasswordInput,
+  CPFInput,
   ErrorMessage,
 }

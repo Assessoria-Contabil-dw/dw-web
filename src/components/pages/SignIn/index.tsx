@@ -9,12 +9,15 @@ import Image from 'next/image'
 import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 import { useNotify } from '../../Toast/toast'
+import { Controller } from 'react-hook-form'
+import InputMask from 'react-input-mask';
+// import { useEffect } from 'react'
 
 const signInUserFormShema = z.object({
   cpf: z
     .string()
-    .min(11, 'O CPF deve ter 11 caracteres')
-    .max(11, 'O CPF deve ter 11 caracteres')
+    .min(14, 'O CPF deve ter 11 caracteres')
+    .max(14, 'O CPF deve ter 11 caracteres')
     .nonempty('O cpf é obrigatório'),
   passwordHash: z.string().min(6, 'A senha deve ter no mínimo 8 caracteres'),
 })
@@ -32,11 +35,13 @@ export function SignInForm() {
   const {
     formState: { isSubmitting },
     handleSubmit,
+    control
   } = createLogin
 
   async function handleSignInUser({ cpf, passwordHash }: SignInUser) {
+    const cpfClean: string = cpf.replace(/[^0-9]/g, "")
     try {
-      await api.post('/signIn', { cpf, passwordHash })
+      await api.post('/signIn', { cpf: cpfClean, passwordHash })
       notify({ type: 'success', message: 'Acesso realizado!' })
       router.push('/painel')
     } catch (error: any) {
@@ -45,7 +50,6 @@ export function SignInForm() {
       }
     }
   }
-
   return (
     <FormProvider {...createLogin}>
       <form
@@ -60,10 +64,9 @@ export function SignInForm() {
           <div className="flex w-full flex-col gap-4">
             <Form.Field>
               <Form.Label>CPF</Form.Label>
-              <Form.TextInput
-                type="text"
-                placeholder="Digite seu CPF"
-                name="cpf"
+              <Form.CPFInput
+                placeholder='Digite seu CPF'
+                name='cpf'
               />
               <Form.ErrorMessage field="cpf" />
             </Form.Field>

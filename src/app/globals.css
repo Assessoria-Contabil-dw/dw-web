@@ -33,6 +33,7 @@
   option[value=""][disabled] {
     @apply hidden text-slate-300;
   }
+
   option {
     @apply text-zinc-600;
   }
@@ -41,6 +42,7 @@
   table {
     @apply w-full;
   }
+
   table thead tr th,
   table tbody tr td {
     @apply mr-9;
@@ -50,9 +52,11 @@
   tbody tr {
     @apply border-b-[1px] border-dashed border-slate-200;
   }
+
   thead th {
     @apply whitespace-nowrap p-2 text-left font-alt text-xs font-bold uppercase text-zinc-600;
   }
+
   tbody tr td {
     @apply p-2 text-left font-sans text-[0.7rem] font-medium text-slate-400;
   }
@@ -66,9 +70,11 @@
   tbody tr:last-child {
     @apply border-b-0;
   }
+
   tbody tr td ul {
     @apply flex flex-row justify-start gap-2;
   }
+
   tbody tr td ul li a {
     @apply cursor-pointer rounded bg-slate-200 px-2 py-1 font-semibold text-white;
   }
@@ -102,9 +108,11 @@
   html ::-webkit-scrollbar {
     @apply h-2 w-2;
   }
+
   html ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-slate-200;
   }
+
   html ::-webkit-scrollbar-track {
     @apply bg-slate-100;
   }
@@ -113,15 +121,19 @@
   h1 {
     @apply font-alt text-xl font-semibold text-slate-900;
   }
+
   h2 {
     @apply font-alt text-lg font-semibold text-slate-900;
   }
+
   h3 {
     @apply font-alt text-base font-semibold text-slate-900;
   }
+
   h4 {
     @apply font-alt text-sm font-semibold text-slate-900;
   }
+
   h5 {
     @apply font-alt text-xs font-semibold text-slate-900;
   }
@@ -138,9 +150,11 @@
   fieldset {
     @apply rounded-[0.8rem] border-[1px] border-slate-300 bg-white px-5 py-4;
   }
+
   legend {
     @apply font-sans text-xs font-medium text-zinc-600;
   }
+
   label {
     @apply font-sans font-medium text-slate-700;
   }
@@ -154,9 +168,9 @@
   input[type="date"],
   input[type="datetime-local"],
   textarea {
-    @apply h-10 w-full rounded border border-slate-300 bg-white
-      px-3 font-sans text-sm font-normal text-zinc-600;
+    @apply h-10 w-full rounded border border-slate-300 bg-white px-3 font-sans text-sm font-normal text-zinc-600;
   }
+
   select {
     cursor: pointer;
   }
@@ -170,12 +184,15 @@
   #root {
     @apply mb-16 flex h-full w-full flex-col overflow-auto;
   }
+
   .padding-main {
     @apply px-32 py-0 max-md:px-4;
   }
+
   .card {
     @apply rounded-[2rem] bg-white p-12 shadow-md ring-1 ring-slate-200 dark:bg-slate-900;
   }
+
   .bnt-sub {
     @apply rounded-xl border-none bg-primary px-4 py-2 font-sans text-lg font-medium capitalize tracking-widest text-white;
   }
@@ -199,6 +216,6 @@
   }
 
   .button-arrow {
-    @apply h-fit rounded-md border-slate-200 border-solid border-[1px] px-1 py-1  text-slate-400 hover:bg-slate-100 hover:text-slate-500 disabled:cursor-not-allowed disabled:opacity-30;
+    @apply h-fit rounded-md border-slate-200 border-solid border-[1px] px-1 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-500 disabled:cursor-not-allowed disabled:opacity-30;
   }
 }

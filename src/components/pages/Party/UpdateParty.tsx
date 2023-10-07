@@ -5,9 +5,9 @@ import { X } from 'lucide-react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { api } from '@/lib/api'
 import { useEffect, useState } from 'react'
-import { Form } from '../Form'
+import { Form } from '../../Form'
 import { ColorProps } from '@/@types/types'
-import { Loading } from '../Form/Loading'
+import { Loading } from '../../Form/Loading'
 
 // export const partyFormShema = z.object({
 //   name: z
