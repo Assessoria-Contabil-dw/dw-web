@@ -136,7 +136,7 @@ export function DirectoryTable() {
             {directories.length > 0 ? (
               directories.map((directory) => (
                 <tr key={directory.id}>
-                  <td className=" text-secondH">
+                  <td className=" text-second">
                     <Link
                       href={{
                         pathname: `/painel/directory/vigency/${directory.id}`,

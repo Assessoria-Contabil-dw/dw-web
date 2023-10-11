@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useNotify } from '../Toast/toast'
 import imgLogo from '../../assets/icon.svg'
 import Image from 'next/image'
+import SelectParty from './Select'
 
 export default function Header() {
   const router = useRouter()
@@ -32,15 +33,19 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 flex w-full flex-row justify-between border-b-[1px] border-zinc-300 bg-white px-6 py-2">
-      <div className="flex items-center justify-start gap-2">
-        <Image src={imgLogo} alt="Logo da plataforma" width={40} />
-        <span className="w-4 font-alt text-xs font-medium leading-3 text-slate-500 ">
-          Assessoria Contábil
-        </span>
+      <div className="flex flex-row">
+        <div className="flex w-full items-center justify-start gap-2">
+          <Image src={imgLogo} alt="Logo da plataforma" width={40} />
+          <span className="font-alt text-xs font-medium leading-3 text-slate-500 ">
+            Assessoria <br /> Contábil
+          </span>
+        </div>
+        <SelectParty />
       </div>
-      <div className="flex w-fit cursor-pointer items-center justify-between gap-2">
+
+      <div className="flex w-fit  cursor-pointer items-center justify-between gap-2">
         <div className="flex flex-col justify-center gap-0  text-right">
-          <h6>{user.name}</h6>
+          <h6 className="whitespace-nowrap">{user.name}</h6>
 
           <span className="text-[10px] font-medium uppercase leading-[8px] text-slate-400">
             {user.role === 'CLIENT' ? 'Cliente' : 'Admin'}

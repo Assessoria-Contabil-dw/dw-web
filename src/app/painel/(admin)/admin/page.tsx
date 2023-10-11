@@ -1,9 +1,9 @@
-import { Acess } from '@/components/pages/Acess'
+import { Access } from '@/components/pages/Access'
 
-export default function Admin() {
+export default function AdminPage() {
   return (
     <div className="flex flex-col gap-6">
-      <Acess />
+      <Access />
     </div>
   )
 }

@@ -18,7 +18,6 @@ const signInUserFormShema = z.object({
     },
     { message: 'CPF inválido' },
   ),
-  // .nonempty('O cpf é obrigatório'),
   passwordHash: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
 })
 
@@ -39,7 +38,6 @@ export function SignInForm() {
 
   async function handleSignInUser({ cpf, passwordHash }: SignInUser) {
     const cpfClean: string = cpf.replace(/[^0-9]/g, '')
-    console.log(cpf)
     try {
       await api.post('/signIn', { cpf: cpfClean, passwordHash })
       notify({ type: 'success', message: 'Acesso realizado!' })

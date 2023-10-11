@@ -1,7 +1,7 @@
 import { api } from '@/lib/api'
 import { Loading } from '../../Form/Loading'
 import { useQuery } from 'react-query'
-import { ChevronLeft, ChevronRight, Edit3, KeyIcon } from 'lucide-react'
+import { Edit3, KeyIcon } from 'lucide-react'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import { Page } from '@/@types/page'
 // import DeletModel, { DeletRef } from '../Model/Delet'
@@ -9,6 +9,8 @@ import { RefreshButton } from '../../Buttons/refresh'
 // import Register from './Register'
 import UpdateUser, { UpdateUserRef } from './Update'
 import PasswordUser, { PasswordUserRef } from './Password'
+import Link from 'next/link'
+import { PaddingButtons } from '@/components/Buttons/next'
 export interface UserProps {
   id: number
   name: string
@@ -19,6 +21,14 @@ export interface UserProps {
 
 export function UserTable() {
   const [page, setPage] = useState(0)
+  const prevPage = useCallback(() => {
+    setPage((old) => Math.max(old - 1, 0))
+  }, [])
+
+  const nextPage = useCallback(() => {
+    setPage((old) => old + 1)
+  }, [])
+
   const [search, setSearch] = useState({
     cpf: undefined as string | undefined,
     name: undefined as string | undefined,
@@ -120,39 +130,15 @@ export function UserTable() {
 
         <div className="flex w-fit items-center gap-2">
           {data?.results !== null ? (
-            <div className="flex items-center gap-2">
-              <button
-                className="h-fit rounded-full bg-primary px-1 py-1  text-white disabled:cursor-not-allowed disabled:bg-gray-300"
-                onClick={() => setPage((old) => Math.max(old - 1, 0))}
-                disabled={page === 0}
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <span>
-                {data?.info?.pages === 1
-                  ? 1
-                  : page +
-                    1 +
-                    '...' +
-                    Number(data?.info?.pages ? data?.info?.pages + 1 : 0)}
-              </span>
-              <button
-                className="h-fit rounded-full bg-primary px-1 py-1  text-white disabled:cursor-not-allowed disabled:bg-gray-300"
-                onClick={() => {
-                  if (!isPreviousData && data?.info?.next) {
-                    setPage((old) => old + 1)
-                  }
-                }}
-                disabled={!!data?.info?.next}
-              >
-                <ChevronRight size={18} />
-              </button>
-              {isFetching ? (
-                <span>
-                  <Loading />
-                </span>
-              ) : null}
-            </div>
+            <PaddingButtons
+              pages={data?.info?.pages ? data?.info?.pages : 0}
+              page={page}
+              isPreviousData={isPreviousData}
+              nextPage={nextPage}
+              prevPage={prevPage}
+              next={data?.info?.next ? data?.info?.next : null}
+              isFetching={isFetching}
+            />
           ) : null}
           <RefreshButton queryName="parties" />
         </div>
@@ -173,12 +159,20 @@ export function UserTable() {
             {data?.results !== null ? (
               data?.results.map((user, index) => (
                 <tr key={index}>
-                  <td>{user.name}</td>
+                  <td className="text-second">
+                    <Link
+                      href={{
+                        pathname: `/painel/admin/permits/${user.cpf}`,
+                      }}
+                    >
+                      {user.name}
+                    </Link>
+                  </td>
                   <td>{user.cpf}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
 
-                  <td className="w-16 ">
+                  <td className="w-16">
                     <div className="flex items-center ">
                       <button
                         onClick={() => handleUpdateModal(user.id)}
@@ -192,6 +186,7 @@ export function UserTable() {
                       >
                         <KeyIcon className="w-4" />
                       </button>
+
                       {/* <button
                         onClick={() =>
                           handleDeletModal(user.name, 'users', user.id)

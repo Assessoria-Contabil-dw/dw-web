@@ -4,7 +4,7 @@ import { useCallback, useRef } from 'react'
 import Register, { RegisterUserRef } from './Register'
 import { UserTable } from './Table'
 
-export function Acess() {
+export function Access() {
   const modalRegisterRef = useRef<RegisterUserRef>(null)
 
   const handleRegisterModal = useCallback(() => {

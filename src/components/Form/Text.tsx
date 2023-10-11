@@ -22,7 +22,7 @@ export function TextInput({
     <InputMask
       id={name}
       type={type}
-      mask={mask}
+      mask={mask || ''}
       alwaysShowMask={false}
       maskChar=""
       {...props}

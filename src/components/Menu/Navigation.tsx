@@ -87,10 +87,10 @@ export function NavigationMenu() {
             <Link
               href={item.href}
               replace={item.replace}
-              className={`flex w-full flex-row  items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium text-slate-700 
-            ${pathnameCurrent === item.href ? 'bg-slate-100' : ''}`}
+              className={`flex w-full flex-row  items-center gap-3 rounded-lg p-2 font-sans text-sm font-medium text-slate-700
+            ${pathnameCurrent === item.href ? 'bg-primary' : ''}`}
             >
-              <item.icon size={18} className="w-4 text-slate-700" />
+              <item.icon size={18} className={`w-4 text-slate-700 `} />
               {item.label}
             </Link>
           </li>

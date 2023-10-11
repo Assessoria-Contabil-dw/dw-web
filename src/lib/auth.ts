@@ -16,6 +16,7 @@ export function useAuth() {
     },
     {
       retry: false,
+      staleTime: 1000 * 60 * 60 * 24 * 7, // 7 days
     },
   )
 

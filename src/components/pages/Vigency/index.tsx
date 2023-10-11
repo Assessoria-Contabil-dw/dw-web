@@ -1,21 +1,11 @@
-'use client'
-
 import { api } from '@/lib/api'
-import {
-  ChevronLeft,
-  Edit3,
-  Eye,
-  FileText,
-  Plus,
-  RotateCcw,
-  Trash2,
-} from 'lucide-react'
+import { Edit3, Eye, FileText, Plus, RotateCcw, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import { Loading } from '../../Form/Loading'
 import ViewVigencyModel, { ViewVigencyRef } from './ViewVigency'
 import RegisterVigencyModel, { RegisterVigencyRef } from './RegisterVigency'
+import { ButtomBack } from '@/components/Buttons/back'
 
 interface VigencyTableProps {
   directoryId: string
@@ -46,13 +36,6 @@ interface VProps {
 }
 
 export function VigencyTable({ directoryId }: VigencyTableProps) {
-  console.log('vigencia')
-  const router = useRouter()
-
-  function handleBack() {
-    router.back()
-  }
-
   const [vigencyData, setVigency] = useState<VProps | null>(null)
   const [loading, setLoading] = useState(true)
   const modalViewRef = useRef<ViewVigencyRef>(null)
@@ -104,14 +87,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start gap-4">
-            <button
-              type="button"
-              onClick={handleBack}
-              className="w-fit bg-gray-100/70 p-1 text-gray-600"
-            >
-              <ChevronLeft size={24} />
-            </button>
-
+            <ButtomBack />
             <div className="flex flex-col">
               <h2>Vigência</h2>
               <span>
