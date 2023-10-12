@@ -207,19 +207,27 @@ export const userFormShema = z.object({
   id: z.coerce.number().optional(),
   name: z
     .string()
-    .min(3, 'O nome não pode ser vazio')
-    .nonempty('O nome não pode ser vazio'),
-  cpf: z
-    .string()
-    .min(11, 'O CPF deve ter 11 dígitos')
-    .max(11, 'O CPF deve ter 11 dígitos')
-    .nonempty('O CPF não pode ser vazio'),
+    .min(3, 'O nome não pode ser vazio'),
+  cpf: z.string().refine(
+    (value) => {
+      const cleanedValue = value.replace(/[.-]/g, '')
+      return cleanedValue.length === 11 && /^\d{11}$/.test(cleanedValue)
+    },
+    { message: 'CPF inválido' }),
 
   email: z.string().optional(),
   role: z.enum(['ADMIN', 'CLIENT']).default('CLIENT'),
   passwordHash: z.string().optional(),
   disable: z.coerce.boolean().default(true).optional(),
-})
+}).transform((field) => ({
+  id: field.id,
+  name: field.name,
+  email: field.email,
+  role: field.role,
+  passwordHash: field.passwordHash,
+
+  cpf: field.cpf.replace(/[^0-9]/g, '')
+}))
 
 export const spcFormShema = z.object({
   directoryId: z.coerce

@@ -19,7 +19,10 @@ const signInUserFormShema = z.object({
     { message: 'CPF inválido' },
   ),
   passwordHash: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
-})
+}).transform((field) => ({
+  cpf: field.cpf.replace(/[^0-9]/g, ''),
+  passwordHash: field.passwordHash
+}))
 
 type SignInUser = z.infer<typeof signInUserFormShema>
 
@@ -37,9 +40,8 @@ export function SignInForm() {
   } = createLogin
 
   async function handleSignInUser({ cpf, passwordHash }: SignInUser) {
-    const cpfClean: string = cpf.replace(/[^0-9]/g, '')
     try {
-      await api.post('/signIn', { cpf: cpfClean, passwordHash })
+      await api.post('/signIn', { cpf, passwordHash })
       notify({ type: 'success', message: 'Acesso realizado!' })
       router.push('/painel')
     } catch (error: any) {

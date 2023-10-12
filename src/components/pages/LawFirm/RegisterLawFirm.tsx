@@ -70,7 +70,7 @@ export function RegisterLawFirm({
 
   return (
     <div className="fixed right-0 top-0 flex h-screen w-screen items-center justify-center bg-black/50">
-      <div className="h-3/4 w-2/4 overflow-hidden">
+      <div className="h-3/4 w-2/4 overflow-hidden bg-white">
         <FormProvider {...createLawFirmForm}>
           <form
             onSubmit={handleSubmit(handleLawFirm)}

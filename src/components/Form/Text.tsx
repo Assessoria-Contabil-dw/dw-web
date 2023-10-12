@@ -18,13 +18,25 @@ export function TextInput({
 }: TextInputProps) {
   const { register } = useFormContext()
 
+
+  if (mask) {
+    return (
+      <InputMask
+        id={name}
+        type={type}
+        mask={mask || ''}
+        alwaysShowMask={false}
+        maskChar=""
+        {...props}
+        placeholder={placeholder}
+        {...register(name)}
+      />
+    )
+  }
   return (
-    <InputMask
+    <input
       id={name}
       type={type}
-      mask={mask || ''}
-      alwaysShowMask={false}
-      maskChar=""
       {...props}
       placeholder={placeholder}
       {...register(name)}

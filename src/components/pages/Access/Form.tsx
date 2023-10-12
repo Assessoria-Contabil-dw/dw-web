@@ -65,7 +65,7 @@ export default function FormUser({ closeModal }: RegisterUserRef) {
 
           <Form.Field>
             <Form.Label htmlFor="cpf">CPF</Form.Label>
-            <Form.TextInput type="text" name="cpf" placeholder="CPF" />
+            <Form.TextInput type="text" name="cpf" placeholder="CPF" mask='999.999.999-99' />
             <Form.ErrorMessage field="cpf" />
           </Form.Field>
 
