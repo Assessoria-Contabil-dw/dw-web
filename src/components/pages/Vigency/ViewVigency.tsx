@@ -9,8 +9,8 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react'
-import { Loading } from '../../Form/Loading'
 import { AdvocateProps, LawFirmProps } from '@/@types/types'
+import { LoadingSecond } from '@/components/Loading/second'
 
 interface VigencyProps {
   vigency: {
@@ -150,7 +150,7 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
         <fieldset className="flex w-full flex-col items-start justify-between border-b-[1px]">
           {loading ? (
             <div className="flex w-full items-center justify-center">
-              <Loading />
+              <LoadingSecond />
             </div>
           ) : (
             <div className="w-full">

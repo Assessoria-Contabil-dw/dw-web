@@ -12,10 +12,10 @@ module.exports = {
         alt: 'var(--font-montserrat)',
       },
       colors: {
-        primary: '#DAFF02',
-        primaryHover: '#D7F116',
-        second: '#B2E500',
-        secondHover: '#91D800',
+        primary: '#feea51',
+        primaryHover: '#f9dd04',
+        second: '#01eaa0',
+        secondHover: '#05be84',
       },
       slate: {
         50: '#F8FAFC',

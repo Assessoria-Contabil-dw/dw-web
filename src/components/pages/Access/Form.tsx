@@ -5,10 +5,10 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { userFormShema } from '@/@types/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
-import { Loading } from '../../Form/Loading'
 import { RegisterUserRef } from './Register'
 import { api } from '@/lib/api'
 import Cookie from 'js-cookie'
+import { LoadingSecond } from '@/components/Loading/second'
 
 type UserFormData = z.infer<typeof userFormShema>
 
@@ -65,7 +65,12 @@ export default function FormUser({ closeModal }: RegisterUserRef) {
 
           <Form.Field>
             <Form.Label htmlFor="cpf">CPF</Form.Label>
-            <Form.TextInput type="text" name="cpf" placeholder="CPF" mask='999.999.999-99' />
+            <Form.TextInput
+              type="text"
+              name="cpf"
+              placeholder="CPF"
+              mask="999.999.999-99"
+            />
             <Form.ErrorMessage field="cpf" />
           </Form.Field>
 
@@ -116,7 +121,7 @@ export default function FormUser({ closeModal }: RegisterUserRef) {
             disabled={isSubmitting}
             className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
           >
-            {isSubmitting ? <Loading /> : 'Cadastrar'}
+            {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
           </button>
         </div>
       </form>

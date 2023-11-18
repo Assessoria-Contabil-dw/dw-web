@@ -18,7 +18,6 @@ export function TextInput({
 }: TextInputProps) {
   const { register } = useFormContext()
 
-
   if (mask) {
     return (
       <InputMask

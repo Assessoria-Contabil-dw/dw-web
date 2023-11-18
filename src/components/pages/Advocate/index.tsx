@@ -4,8 +4,8 @@ import { api } from '@/lib/api'
 import { Edit3, Eye, Plus, RotateCcw, Search, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { RegisterAdvocate } from './RegisterAdvocate'
-import { Loading } from '../../Form/Loading'
 import { AdvocateProps } from '@/@types/types'
+import { LoadingSecond } from '@/components/Loading/second'
 
 export function AdvocateTable() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -39,7 +39,7 @@ export function AdvocateTable() {
   if (loading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
-        <Loading />
+        <LoadingSecond />
         <i className="text-gray-500">Carregando...</i>
       </div>
     )

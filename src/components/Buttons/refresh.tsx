@@ -7,7 +7,6 @@ interface RefreshProps {
 
 export function RefreshButton({ queryName }: RefreshProps) {
   async function handleRefreshData() {
-    console.log('refresh')
     await queryClient.invalidateQueries([queryName])
   }
 

@@ -1,5 +1,4 @@
 import { api } from '@/lib/api'
-import { Loading } from '../../Form/Loading'
 import { useQuery } from 'react-query'
 import Image from 'next/image'
 import { Trash2 } from 'lucide-react'
@@ -8,6 +7,7 @@ import { Page } from '@/@types/page'
 import DeletModel, { DeletRef } from '../../Model/Delet'
 import { RefreshButton } from '../../Buttons/refresh'
 import { PaddingButtons } from '../../Buttons/next'
+import { LoadingSecond } from '@/components/Loading/second'
 
 export interface PartyProps {
   code: string
@@ -43,7 +43,7 @@ export function PartyTable() {
         .get('/parties', {
           params: {
             skip: page,
-            take: search.name || search.code !== undefined ? 20 : 15,
+            take: 15,
             name: search.name,
             code: search.code,
           },
@@ -83,7 +83,7 @@ export function PartyTable() {
   if (isLoading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
-        <Loading />
+        <LoadingSecond />
         <i className="text-gray-500">Carregando...</i>
       </div>
     )

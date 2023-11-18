@@ -4,7 +4,6 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form'
 import { api } from '@/lib/api'
-import Cookie from 'js-cookie'
 import {
   useEffect,
   useState,
@@ -16,13 +15,14 @@ import {
 import { Form } from '../../Form'
 import dayjs from 'dayjs'
 import { virgenciesFormSchema } from '@/@types/validation'
-import { Loading } from '../../Form/Loading'
 import {
   AdvocateProps,
   LawFirmProps,
   LeaderProps,
   OfficesProps,
 } from '@/@types/types'
+import { LoadingSecond } from '@/components/Loading/second'
+import { useNotify } from '@/components/Toast/toast'
 
 type VigencyFormData = z.infer<typeof virgenciesFormSchema>
 
@@ -45,8 +45,10 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
   const [offices, setOffice] = useState<OfficesProps[]>([])
   const [lawFirms, setLawFirm] = useState<LawFirmProps[]>([])
 
-  const [selectedLeader, setSelectedLeader] = useState('')
-  const [selectedOffice, setSelectedOffice] = useState('')
+  const [selectedLeader, setSelectedLeader] = useState<Array<string>>([])
+  const [selectedOffice, setSelectedOffice] = useState<Array<number>>([])
+  const [selectedAdvocate, setSelectedAdvocate] = useState<Array<number>>([])
+  const [selectedLawFirm, setSelectedLawFirm] = useState<Array<number>>([])
 
   // DINAMICA DO MODEL
   const openViewModal = useCallback((id: string) => {
@@ -67,7 +69,6 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
     resolver: zodResolver(virgenciesFormSchema),
   })
 
-  console.log('registe')
   const {
     handleSubmit,
     control,
@@ -80,7 +81,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
   })
 
   function addNewLeader() {
-    useFieldLeader.append({ leaderId: '', officeId: '' })
+    useFieldLeader.append({ leaderId: '', officeId: 0 })
   }
 
   const useFieldAdvocate = useFieldArray({
@@ -89,7 +90,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
   })
 
   function addNewAdvocate() {
-    useFieldAdvocate.append({ advocateId: '' })
+    useFieldAdvocate.append({ advocateId: 0 })
   }
 
   const useFieldLawFirm = useFieldArray({
@@ -98,7 +99,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
   })
 
   function addNewLawFirm() {
-    useFieldLawFirm.append({ lawFirmId: '' })
+    useFieldLawFirm.append({ lawFirmId: 0 })
   }
 
   useEffect(() => {
@@ -113,36 +114,31 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
         setOffice(offices.data)
         setAdvocate(advocates.data)
         setLawFirm(lawFirms.data)
+
+        console.log('ofiices', offices.data)
       })
       .catch((error) => {
         console.log(error)
       })
   }, [directoryId])
 
+  const notify = useNotify()
+
   async function handleVigency(data: VigencyFormData) {
-    const token = Cookie.get('token')
     console.log(dayjs(data.dateFirst).format())
 
     try {
-      await api.post(
-        '/vigencies/directory',
-        {
-          dateFirst: dayjs(data.dateFirst).format(),
-          dateLast: dayjs(data.dateLast).format(),
-          directoryId,
-          vigencyLeader: data.vigencyLeader,
-          vigencyAdvocate: data.vigencyAdvocate,
-          vigencyLawFirm: data.vigencyLawFirm,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
+      await api.post('/vigencies/directory', {
+        dateFirst: dayjs(data.dateFirst).format(),
+        dateLast: dayjs(data.dateLast).format(),
+        directoryId,
+        vigencyLeader: data.vigencyLeader,
+        vigencyAdvocate: data.vigencyAdvocate,
+        vigencyLawFirm: data.vigencyLawFirm,
+      })
 
       setError('')
-      console.log('Partido cadastrado com sucesso')
+      notify({ type: 'success', message: 'Vigência cadastrada com sucesso' })
     } catch (error: any) {
       if (
         error.response.status === 422 ||
@@ -163,7 +159,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
 
   return (
     <div className="fixed right-0 top-0 flex h-screen w-screen items-center justify-center bg-black/50">
-      <div className="h-3/4 w-2/4 overflow-hidden">
+      <fieldset className="h-3/4 w-2/4 overflow-hidden">
         <FormProvider {...createVigencyForm}>
           <form
             onSubmit={handleSubmit(handleVigency)}
@@ -238,10 +234,12 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                           <div className="flex gap-2">
                             <Form.Field>
                               <Form.SelectInput
-                                onChange={(e) =>
-                                  setSelectedLeader(e.target.value)
-                                }
-                                value={selectedLeader}
+                                onChange={(e) => {
+                                  const newSelectedLeader = [...selectedLeader]
+                                  newSelectedLeader[index] = e.target.value
+                                  setSelectedLeader(newSelectedLeader)
+                                }}
+                                value={selectedLeader[index] || ''}
                                 type="text"
                                 placeholder="Selecione representante"
                                 name={fleader}
@@ -252,7 +250,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                                       key={index}
                                       value={leader.id.toString()}
                                     >
-                                      {leader.id}
+                                      {leader.name}
                                     </option>
                                   )
                                 })}
@@ -262,20 +260,21 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
 
                             <Form.Field>
                               <Form.SelectInput
-                                onChange={(e) =>
-                                  setSelectedOffice(e.target.value)
-                                }
+                                onChange={(e) => {
+                                  const newSelectedOffice = [...selectedOffice]
+                                  newSelectedOffice[index] = Number(
+                                    e.target.value,
+                                  )
+                                  setSelectedOffice(newSelectedOffice)
+                                }}
                                 type="text"
-                                value={selectedOffice}
+                                value={String(selectedOffice[index]) || ''}
                                 placeholder="Selecione cargo"
                                 name={foffice}
                               >
                                 {offices.map((office, index) => {
                                   return (
-                                    <option
-                                      key={index}
-                                      value={office.id.toString()}
-                                    >
+                                    <option key={index} value={office.id}>
                                       {office.name}
                                     </option>
                                   )
@@ -305,20 +304,23 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                           <Form.Label htmlFor={fadvocate}>Advogado</Form.Label>
                           <div className="flex gap-2">
                             <Form.SelectInput
-                              onChange={(e) =>
-                                setSelectedOffice(e.target.value)
-                              }
+                              onChange={(e) => {
+                                const newSelectedAdvocate = [
+                                  ...selectedAdvocate,
+                                ]
+                                newSelectedAdvocate[index] = Number(
+                                  e.target.value,
+                                )
+                                setSelectedAdvocate(newSelectedAdvocate)
+                              }}
                               type="text"
-                              value={selectedOffice}
+                              value={String(selectedAdvocate[index]) || ''}
                               placeholder="Selecione advogado"
                               name={fadvocate}
                             >
                               {advocates.map((advocate) => {
                                 return (
-                                  <option
-                                    key={advocate.id}
-                                    value={advocate.id.toString()}
-                                  >
+                                  <option key={advocate.id} value={advocate.id}>
                                     {advocate.name}
                                   </option>
                                 )
@@ -346,20 +348,21 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                           <Form.Label htmlFor={flawFirm}>Escritório</Form.Label>
                           <div className="flex gap-2">
                             <Form.SelectInput
-                              onChange={(e) =>
-                                setSelectedOffice(e.target.value)
-                              }
+                              onChange={(e) => {
+                                const newSelectedLawFirm = [...selectedLawFirm]
+                                newSelectedLawFirm[index] = Number(
+                                  e.target.value,
+                                )
+                                setSelectedLawFirm(newSelectedLawFirm)
+                              }}
                               type="text"
-                              value={selectedOffice}
+                              value={String(selectedLawFirm[index]) || ''}
                               placeholder="Selecione escritorio"
                               name={flawFirm}
                             >
                               {lawFirms.map((lawFirm) => {
                                 return (
-                                  <option
-                                    key={lawFirm.id}
-                                    value={lawFirm.id.toString()}
-                                  >
+                                  <option key={lawFirm.id} value={lawFirm.id}>
                                     {lawFirm.name}
                                   </option>
                                 )
@@ -395,13 +398,13 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                   disabled={isSubmitting}
                   className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
                 >
-                  {isSubmitting ? <Loading /> : 'Cadastrar'}
+                  {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
                 </button>
               </div>
             </div>
           </form>
         </FormProvider>
-      </div>
+      </fieldset>
     </div>
   )
 }

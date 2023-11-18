@@ -1,5 +1,5 @@
 import { DirectorySPCProps } from '@/@types/types'
-import { Circle, Edit3, Eye } from 'lucide-react'
+import { Edit3, Eye } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import PopObservation, { ObservationRef } from './PopObservation'
 import UpdateDirectory, { UpdateDirectoryRef } from './UpdateDirectory'
@@ -86,10 +86,10 @@ export function TableSPC({ data }: SPCProps) {
                                   handleViewObservation(spca.observation)
                                 }
                               >
-                                <Circle
-                                  className="absolute -right-1 -top-2 z-0 cursor-pointer fill-secondHover text-secondHover"
-                                  size={12}
-                                />
+                                <span className="absolute -right-1 -top-2 z-0 flex h-3 w-3 ">
+                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-second opacity-75"></span>
+                                  <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
+                                </span>
                               </button>
                             )}
                           </li>
@@ -134,10 +134,10 @@ export function TableSPC({ data }: SPCProps) {
                                   handleViewObservation(spce.observation)
                                 }
                               >
-                                <Circle
-                                  className="absolute -right-1 -top-2 z-0 cursor-pointer fill-secondHover text-secondHover"
-                                  size={12}
-                                />
+                                <span className="absolute -right-1 -top-2 z-0 flex h-3 w-3 ">
+                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-second opacity-75"></span>
+                                  <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
+                                </span>
                               </button>
                             )}
                           </li>
@@ -148,7 +148,7 @@ export function TableSPC({ data }: SPCProps) {
                     </ul>
                   </td>
 
-                  <td className="w-16 ">
+                  <td className="w-12">
                     <div className="flex items-center ">
                       <button className="h-full w-auto p-1 hover:text-green-500">
                         <Eye

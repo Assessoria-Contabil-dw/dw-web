@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useState } from 'react'
 
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '../../Loading/second'
 
 const RelatoryViewFormSchema = z.object({
   partyId: z.string().nonempty('Selecione o partido'),
@@ -131,7 +131,7 @@ export function FormRelatory() {
             type="submit"
             className="bg-primary text-white hover:bg-primaryHover "
           >
-            {isSubmitting ? <Loading /> : 'Gerar'}
+            {isSubmitting ? <LoadingSecond /> : 'Gerar'}
           </button>
         </form>
       </FormProvider>

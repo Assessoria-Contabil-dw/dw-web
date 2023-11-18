@@ -11,8 +11,8 @@ import {
   useRef,
   useState,
 } from 'react'
-import { Loading } from '../../Form/Loading'
 import DeletModel, { DeletRef } from '../../Model/Delet'
+import { LoadingSecond } from '@/components/Loading/second'
 
 export interface UpdateDirectoryRef {
   openModal: (id: string) => void
@@ -128,7 +128,7 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
 
           {loading ? (
             <div className="flex h-full w-full items-center justify-center">
-              <Loading />
+              <LoadingSecond />
             </div>
           ) : (
             <div className="flex w-full flex-col items-start justify-start gap-8 overflow-y-scroll">

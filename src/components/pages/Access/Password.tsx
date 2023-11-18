@@ -9,7 +9,7 @@ import {
   useImperativeHandle,
   useState,
 } from 'react'
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '../../Loading/second'
 
 export interface PasswordUserRef {
   openModal: (id: number) => void
@@ -137,7 +137,7 @@ const PasswordUser: ForwardRefRenderFunction<PasswordUserRef> = (
                 disabled={isSubmitting}
                 className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
               >
-                {isSubmitting ? <Loading /> : 'Cadastrar'}
+                {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
               </button>
             </div>
           </form>

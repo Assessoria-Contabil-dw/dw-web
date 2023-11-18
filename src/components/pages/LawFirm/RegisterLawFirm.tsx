@@ -5,7 +5,7 @@ import { Form } from '../../Form'
 import { lawFirmFormShema } from '@/@types/validation'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '../../Loading/second'
 import { LawFirmProps } from '@/@types/types'
 import Cookies from 'js-cookie'
 import { api } from '@/lib/api'
@@ -164,7 +164,7 @@ export function RegisterLawFirm({
                   type="submit"
                   className="hover:bg-primary-hover bg-primary text-white "
                 >
-                  {isSubmitting ? <Loading /> : `Cadastrar`}
+                  {isSubmitting ? <LoadingSecond /> : `Cadastrar`}
                 </button>
               </div>
             </div>

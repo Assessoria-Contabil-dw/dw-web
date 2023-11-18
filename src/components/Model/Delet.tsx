@@ -1,7 +1,6 @@
 'use client'
 
 import { api } from '@/lib/api'
-import Cookies from 'js-cookie'
 import {
   ForwardRefRenderFunction,
   forwardRef,
@@ -9,12 +8,13 @@ import {
   useImperativeHandle,
   useState,
 } from 'react'
-import { Loading } from '../Form/Loading'
 import { X } from 'lucide-react'
+import { LoadingSecond } from '../Loading/second'
+import { useNotify } from '../Toast/toast'
 // import { ToastContainer, toast } from 'react-toastify'
 
 export interface DeletRef {
-  openModal: (id: string, msg: string, path: string) => void
+  openModal: (id: string, path: string, msg: string) => void
   closeModal: () => void
 }
 
@@ -26,6 +26,8 @@ const DeletModel: ForwardRefRenderFunction<DeletRef> = (props, ref) => {
     path: '',
     msg: '',
   })
+
+  const notify = useNotify()
 
   const openModal = useCallback((id: string, path: string, msg: string) => {
     setParams({ id, path, msg })
@@ -45,14 +47,11 @@ const DeletModel: ForwardRefRenderFunction<DeletRef> = (props, ref) => {
 
   async function handleDelete(id: string, path: string) {
     setIsSubmitting(true)
-    const token = Cookies.get('token')
+    console.log(id, path)
     try {
-      await api.delete(`/${path}/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      await api.delete(`/${path}/${id}`)
       setIsSubmitting(false)
+      notify({ type: 'success', message: 'Registro deletado com sucesso' })
       closeModal()
     } catch (error) {
       console.log(error)
@@ -92,7 +91,7 @@ const DeletModel: ForwardRefRenderFunction<DeletRef> = (props, ref) => {
             type="button"
             className="bg-red-500 text-white hover:bg-red-600 "
           >
-            {isSubmitting ? <Loading /> : 'Deletar'}
+            {isSubmitting ? <LoadingSecond /> : 'Deletar'}
           </button>
         </div>
       </fieldset>

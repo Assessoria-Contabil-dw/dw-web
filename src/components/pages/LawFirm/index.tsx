@@ -4,8 +4,8 @@ import { api } from '@/lib/api'
 import { Edit3, Trash2, Eye, Plus, Search, RotateCcw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { RegisterLawFirm } from './RegisterLawFirm'
-import { Loading } from '../../Form/Loading'
 import { LawFirmProps } from '@/@types/types'
+import { LoadingSecond } from '@/components/Loading/second'
 
 export function LawFirmTable() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -37,7 +37,7 @@ export function LawFirmTable() {
   if (loading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
-        <Loading />
+        <LoadingSecond />
         <i className="text-gray-500">Carregando...</i>
       </div>
     )

@@ -7,7 +7,7 @@ import { api } from '@/lib/api'
 import { useEffect, useState } from 'react'
 import { Form } from '../../Form'
 import { ColorProps } from '@/@types/types'
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '@/components/Loading/second'
 
 // export const partyFormShema = z.object({
 //   name: z
@@ -237,7 +237,7 @@ export function UpdateParty({
                   disabled={isSubmitting}
                   className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
                 >
-                  {isSubmitting ? <Loading /> : 'Atualizar'}
+                  {isSubmitting ? <LoadingSecond /> : 'Atualizar'}
                 </button>
               </div>
             </div>

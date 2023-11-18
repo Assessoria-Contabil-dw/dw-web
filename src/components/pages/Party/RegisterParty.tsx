@@ -7,8 +7,8 @@ import { api } from '@/lib/api'
 import { useEffect, useState } from 'react'
 import { Form } from '../../Form'
 import { ColorProps } from '@/@types/types'
-import { Loading } from '../../Form/Loading'
 import { partyFormShema } from '@/@types/validation'
+import { LoadingSecond } from '@/components/Loading/second'
 
 type PartyFormData = z.infer<typeof partyFormShema>
 
@@ -220,7 +220,7 @@ export function RegisterParty({
                   disabled={isSubmitting}
                   className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
                 >
-                  {isSubmitting ? <Loading /> : 'Cadastrar'}
+                  {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
                 </button>
               </div>
             </div>

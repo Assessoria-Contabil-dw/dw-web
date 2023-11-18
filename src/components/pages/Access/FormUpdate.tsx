@@ -5,7 +5,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { userFormShema } from '@/@types/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '../../Loading/second'
 import { api } from '@/lib/api'
 import Cookie from 'js-cookie'
 
@@ -56,7 +56,7 @@ export default function FormUpdate({ closeModal, id }: UpdateUserRef) {
           cpf: data.cpf,
           email: data.email,
           role: data.role,
-          disable: !!data.disable,
+          // disable: !!data.disable,
         },
 
         {
@@ -145,7 +145,7 @@ export default function FormUpdate({ closeModal, id }: UpdateUserRef) {
             disabled={isSubmitting}
             className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
           >
-            {isSubmitting ? <Loading /> : 'Cadastrar'}
+            {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
           </button>
         </div>
       </form>

@@ -8,8 +8,8 @@ import { api } from '@/lib/api'
 import { Form } from '../../Form'
 import { directoryFormShema } from '@/@types/validation'
 import { CityProps, PartyProps, StateProps, TypeOrgProps } from '@/@types/types'
-import { Loading } from '../../Form/Loading'
 import Cookie from 'js-cookie'
+import { LoadingSecond } from '@/components/Loading/second'
 
 interface DirectoryProps {
   id: number
@@ -359,7 +359,7 @@ export function DirectoryForm({
                     disabled={isSubmitting}
                     className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
                   >
-                    {isSubmitting ? <Loading /> : `Cadastrar`}
+                    {isSubmitting ? <LoadingSecond /> : `Cadastrar`}
                   </button>
                 </div>
               </div>

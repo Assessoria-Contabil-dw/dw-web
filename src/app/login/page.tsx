@@ -5,12 +5,12 @@ import imgContablue from '../../assets/contablue.png'
 import { redirect } from 'next/navigation'
 import { useAuth } from '@/lib/auth'
 
-export default function SignIn() {
-  console.log('SignIn')
+export default function Login() {
   const user = useAuth()
 
   if (user !== null && user !== undefined) {
-    return redirect('/painel')
+    if (user.role === 'ADMIN') return redirect('/acessos/painel')
+    if (user.role === 'CLIENT') return redirect('/acessos')
   }
 
   return (

@@ -9,7 +9,7 @@ import Cookies from 'js-cookie'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 import { advocateFormShema } from '@/@types/validation'
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '../../Loading/second'
 import dayjs from 'dayjs'
 import { AdvocateProps } from '@/@types/types'
 interface RegisterLeaderModalProps {
@@ -334,7 +334,7 @@ export function RegisterAdvocate({
                   disabled={isSubmitting}
                   className="hover:bg-primary-hover bg-primary text-white "
                 >
-                  {isSubmitting ? <Loading /> : 'Cadastrar'}
+                  {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
                 </button>
               </div>
             </div>

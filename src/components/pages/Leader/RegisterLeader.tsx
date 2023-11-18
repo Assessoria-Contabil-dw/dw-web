@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form } from '../../Form'
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '../../Loading/second'
 import { useState } from 'react'
 import { leaderFormShema } from '@/@types/validation'
 import Cookies from 'js-cookie'
@@ -308,7 +308,7 @@ export function RegisterLeader({
                   type="submit"
                   className="hover:bg-primary-hover bg-primary text-white "
                 >
-                  {isSubmitting ? <Loading /> : 'Cadastrar'}
+                  {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
                 </button>
               </div>
             </div>

@@ -3,7 +3,6 @@ import './globals.css'
 import { Montserrat } from 'next/font/google'
 import React from 'react'
 import ToastProvider from '@/services/toast.provider'
-import Head from 'next/head'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -21,12 +20,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  console.log('RootLayout')
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <body className={`${montserrat.variable} bg-gray-50 font-sans`}>
         <Providers>
           <ToastProvider>{children}</ToastProvider>

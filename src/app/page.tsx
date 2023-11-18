@@ -6,8 +6,9 @@ export default function Page() {
   const router = useRouter()
 
   function handleSignIn() {
-    router.push('/signIn')
+    router.push('/login')
   }
+
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-4">
       <h1>Página em construção</h1>

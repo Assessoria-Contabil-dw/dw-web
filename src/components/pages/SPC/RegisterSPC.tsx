@@ -17,7 +17,7 @@ import { Form } from '../../Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { spcFormShema } from '@/@types/validation'
 import { api } from '@/lib/api'
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '@/components/Loading/second'
 
 export interface RegisterSPCRef {
   openModal: () => void
@@ -291,7 +291,7 @@ const RegisterSPCModel: ForwardRefRenderFunction<RegisterSPCRef> = (
                   type="submit"
                   className="hover:bg-primary-hover bg-primary text-white "
                 >
-                  {isSubmitting ? <Loading /> : 'Cadastrar'}
+                  {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
                 </button>
               </div>
             </div>

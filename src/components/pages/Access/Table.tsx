@@ -1,5 +1,4 @@
 import { api } from '@/lib/api'
-import { Loading } from '../../Form/Loading'
 import { useQuery } from 'react-query'
 import { Edit3, KeyIcon } from 'lucide-react'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
@@ -11,6 +10,7 @@ import UpdateUser, { UpdateUserRef } from './Update'
 import PasswordUser, { PasswordUserRef } from './Password'
 import Link from 'next/link'
 import { PaddingButtons } from '@/components/Buttons/next'
+import { LoadingSecond } from '@/components/Loading/second'
 export interface UserProps {
   id: number
   name: string
@@ -92,7 +92,7 @@ export function UserTable() {
   if (isLoading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
-        <Loading />
+        <LoadingSecond />
         <i className="text-gray-500">Carregando...</i>
       </div>
     )
@@ -162,7 +162,7 @@ export function UserTable() {
                   <td className="text-second">
                     <Link
                       href={{
-                        pathname: `/painel/admin/permits/${user.cpf}`,
+                        pathname: `/admin/permits/${user.cpf}`,
                       }}
                     >
                       {user.name}

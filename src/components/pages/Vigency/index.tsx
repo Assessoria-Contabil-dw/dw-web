@@ -1,11 +1,18 @@
 import { api } from '@/lib/api'
-import { Edit3, Eye, FileText, Plus, RotateCcw, Trash2 } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import Cookies from 'js-cookie'
-import { Loading } from '../../Form/Loading'
-import ViewVigencyModel, { ViewVigencyRef } from './ViewVigency'
+import { Plus, Trash2 } from 'lucide-react'
+import { useCallback, useContext, useRef } from 'react'
+// import ViewVigencyModel, { ViewVigencyRef } from './ViewVigency'
 import RegisterVigencyModel, { RegisterVigencyRef } from './RegisterVigency'
 import { ButtomBack } from '@/components/Buttons/back'
+import { LoadingPrimary } from '@/components/Loading/primary'
+import { useQuery } from 'react-query'
+import { useNotify } from '@/components/Toast/toast'
+import { useRouter } from 'next/navigation'
+import { AccessContext } from '@/services/context.provider'
+import { RefreshButton } from '@/components/Buttons/refresh'
+import { User } from '@/lib/auth'
+import { queryClient } from '@/services/query.provider'
+import DeletModel, { DeletRef } from '@/components/Model/Delet'
 
 interface VigencyTableProps {
   directoryId: string
@@ -36,53 +43,74 @@ interface VProps {
 }
 
 export function VigencyTable({ directoryId }: VigencyTableProps) {
-  const [vigencyData, setVigency] = useState<VProps | null>(null)
-  const [loading, setLoading] = useState(true)
-  const modalViewRef = useRef<ViewVigencyRef>(null)
+  const notify = useNotify()
+  const router = useRouter()
+  const { partyCode, cityCode, stateId } = useContext(AccessContext)
+  const user: User = queryClient.getQueryData('authUser') as User
+
+  // const modalViewRef = useRef<ViewVigencyRef>(null)
   const modelRegisterRef = useRef<RegisterVigencyRef>(null)
 
-  const handleViewModal = useCallback((id: string) => {
-    modalViewRef.current?.openModal(id)
-  }, [])
+  // const handleViewModal = useCallback((id: string) => {
+  //   modalViewRef.current?.openModal(id)
+  // }, [])
 
   const handleRegisterModal = useCallback((id: string) => {
     modelRegisterRef.current?.openViewModal(id)
   }, [])
 
-  async function loadVigency() {
-    const token = Cookies.get('token')
-    try {
+  const modalDeleteRef = useRef<DeletRef>(null)
+  const handleDeletModal = useCallback(
+    (id: string, path: string, msg: string) => {
+      modalDeleteRef.current?.openModal(id, path, msg)
+    },
+    [],
+  )
+
+  const { data, isLoading, error } = useQuery<VProps>(
+    ['vigencies'],
+    async () => {
       const response = await api.get(`/vigencies/directory/${directoryId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+        params: {
+          partyCode,
+          cityCode,
+          stateId,
         },
       })
-      setVigency(response.data)
-      console.log(response.data)
-    } catch (error) {
-      console.log('Não foi possível carregar as vigências')
-    } finally {
-      setLoading(false)
-    }
-  }
+      return response.data
+    },
+    {
+      staleTime: 1000 * 60 * 60,
+      refetchOnWindowFocus: false,
+      retry: false,
+      onError: (error: any) => {
+        if (error.response.status === 403) {
+          notify({ type: 'warning', message: error.response.data.message })
+          router.push('/acessos')
+        }
+        console.log(error)
+      },
+    },
+  )
 
-  useEffect(() => {
-    loadVigency()
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
-        <Loading />
-        <i className="text-gray-500">Carregando...</i>
+        <LoadingPrimary />
       </div>
     )
+  }
+
+  if (error) {
+    return null
   }
 
   return (
     <div className="flex flex-col gap-8">
       <RegisterVigencyModel ref={modelRegisterRef} />
-      <ViewVigencyModel ref={modalViewRef} />
+      <DeletModel ref={modalDeleteRef} />
+      {/* 
+      <ViewVigencyModel ref={modalViewRef} /> */}
 
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
@@ -91,28 +119,22 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
             <div className="flex flex-col">
               <h2>Vigência</h2>
               <span>
-                {vigencyData?.surname} (
-                {vigencyData?.status ? 'Ativo' : 'Inativo'})
+                {data?.surname} ({data?.status ? 'Ativo' : 'Inativo'})
               </span>
             </div>
           </div>
 
           <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={() => loadVigency()}
-              className="w-fit border-[1px]  border-gray-200 bg-white text-gray-700"
-            >
-              <RotateCcw className="w-4" />
-              Atualizar
-            </button>
-            <button
-              onClick={() => handleRegisterModal(directoryId)}
-              className="w-fit bg-primary text-white"
-            >
-              <Plus className="w-4" />
-              Cadastrar
-            </button>
+            <RefreshButton queryName="vigencies" />
+            {user?.role === 'ADMIN' && (
+              <button
+                onClick={() => handleRegisterModal(directoryId)}
+                className="button-primary"
+              >
+                <Plus className="w-4" />
+                Cadastrar
+              </button>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-2">
@@ -130,8 +152,8 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
                 </tr>
               </thead>
               <tbody>
-                {vigencyData?.vigencyActive != null ? (
-                  vigencyData.vigencyActive.map((v, index) => (
+                {data?.vigencyActive != null ? (
+                  data.vigencyActive.map((v, index) => (
                     <tr key={index}>
                       <td>{v.dateFirst != null ? v.dateFirst : '-'}</td>
                       <td>{v.dateLast != null ? v.dateLast : '-'}</td>
@@ -149,22 +171,34 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
 
                       <td className="w-16 ">
                         <div className="flex items-center">
-                          <button
+                          {/* <button
                             type="button"
                             onClick={() => handleViewModal(v.id.toString())}
                             className="h-full w-auto rounded p-1 hover:text-second"
                           >
                             <Eye size={16} />
                           </button>
+                
                           <button className="h-full w-auto rounded p-1 hover:text-primary">
                             <FileText size={16} />
                           </button>
                           <button className="h-full w-auto rounded p-1 hover:text-primary">
                             <Edit3 size={16} />
-                          </button>
-                          <button className="h-full w-auto rounded p-1 hover:text-red-500">
-                            <Trash2 size={16} />
-                          </button>
+                          </button> */}
+                          {user?.role === 'ADMIN' && (
+                            <button
+                              onClick={() =>
+                                handleDeletModal(
+                                  v.id.toString(),
+                                  'vigencies',
+                                  v.dateFirst + ' - ' + v.dateLast,
+                                )
+                              }
+                              className="h-full w-auto rounded p-1 hover:text-red-500"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -197,8 +231,8 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
               </tr>
             </thead>
             <tbody>
-              {vigencyData?.vigencyInactive != null ? (
-                vigencyData.vigencyInactive.map((v, index) => (
+              {data?.vigencyInactive != null ? (
+                data.vigencyInactive.map((v, index) => (
                   <tr key={index}>
                     <td>{v.dateFirst != null ? v.dateFirst : '-'}</td>
                     <td>{v.dateLast != null ? v.dateLast : '-'}</td>
@@ -214,7 +248,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
                       {v.treasurer?.name != null ? v.treasurer.name : '-'}
                     </td>
                     <td className="w-16 ">
-                      <div className="flex items-center">
+                      {/* <div className="flex items-center">
                         <button
                           type="button"
                           onClick={() => handleViewModal(v.id.toString())}
@@ -231,7 +265,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
                         <button className="h-full w-auto rounded p-1 hover:text-red-500">
                           <Trash2 size={16} />
                         </button>
-                      </div>
+                      </div> */}
                     </td>
                   </tr>
                 ))

@@ -2,6 +2,7 @@ import { useQuery } from 'react-query'
 import { api } from './api'
 
 export type User = {
+  sub: string
   name: string
   role: string
 } | null

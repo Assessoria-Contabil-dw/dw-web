@@ -2,28 +2,36 @@
 import { useQuery } from 'react-query'
 import { TableSPC } from './Table'
 import { Page } from '@/@types/page'
-import {
-  CityProps,
-  ColorProps,
-  DirectorySPCProps,
-  StateProps,
-} from '@/@types/types'
+import { DirectorySPCProps } from '@/@types/types'
 import { api } from '@/lib/api'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { Loading } from '../../Form/Loading'
+import { ChangeEvent, useCallback, useContext, useState } from 'react'
 import dayjs from 'dayjs'
 import { PaddingButtons } from '../../Buttons/next'
+import { LoadingPrimary } from '@/components/Loading/primary'
+import { AccessContext } from '@/services/context.provider'
+import { useRouter } from 'next/navigation'
+import { useNotify } from '@/components/Toast/toast'
+import SearchParty from '@/components/Search/party'
+import SearchState from '@/components/Search/state'
+import SearchCity from '@/components/Search/city'
+import SearchVigency from '@/components/Search/status'
+import SearchLegend from '@/components/Search/legend'
+import { RefreshButton } from '@/components/Buttons/refresh'
 
 interface SearchProps {
   legend?: number
   party?: string
   city?: string
-  stateId?: string
+  state: string | null
   status?: string
   year?: string
 }
 
 export function SPC() {
+  const router = useRouter()
+  const notify = useNotify()
+  const { partyCode, cityCode, stateId } = useContext(AccessContext)
+
   const [page, setPage] = useState(0)
   const prevPage = useCallback(() => {
     setPage((old) => Math.max(old - 1, 0))
@@ -34,8 +42,6 @@ export function SPC() {
   }, [])
 
   const [search, setSearch] = useState<SearchProps>({} as SearchProps)
-  const [states, setStates] = useState<StateProps[]>([])
-  const [colors, setColors] = useState<ColorProps[]>([])
 
   // const modalRegisterRef = useRef<RegisterSPCRef>(null)
 
@@ -50,9 +56,12 @@ export function SPC() {
       search.legend,
       search.party,
       search.city,
-      search.stateId,
+      search.state,
       search.status,
       search.year,
+      partyCode,
+      cityCode,
+      stateId,
     ],
     async () => {
       const response = await api
@@ -63,9 +72,12 @@ export function SPC() {
             legend: search.legend,
             party: search.party,
             city: search.city,
-            stateId: search.stateId,
+            state: search.state,
             status: search.status,
             year: search.year,
+            partyCode,
+            cityCode,
+            stateId,
           },
         })
         .then((response) => response.data)
@@ -78,43 +90,12 @@ export function SPC() {
       onSuccess: () => {
         console.log('Dados atualizados com sucesso')
       },
-    },
-  )
-
-  useEffect(() => {
-    Promise.all([api.get('/states'), api.get('/colors/legend')])
-      .then(([states, colorStatus]) => {
-        setStates(states.data)
-        setColors(colorStatus.data)
-        console.log(states.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-
-  async function fetchCity(): Promise<CityProps[]> {
-    if (search.stateId === undefined) return []
-    const response = await api
-      .get('/cities', {
-        params: {
-          stateId: search.stateId,
-        },
-      })
-      .then((response) => response.data)
-      .catch((err) => {
-        throw err
-      })
-
-    console.log('cidades', response)
-    return response
-  }
-
-  const cityResult = useQuery<CityProps[]>(
-    ['city', search.stateId],
-    fetchCity,
-    {
-      keepPreviousData: true,
+      onError: (error: any) => {
+        if (error.response.status === 403) {
+          notify({ type: 'warning', message: error.response.data.message })
+          router.push('/acessos')
+        }
+      },
     },
   )
 
@@ -133,11 +114,9 @@ export function SPC() {
   }
 
   if (spcResult.isLoading) {
-    console.log('dentro', spcResult.isLoading)
     return (
-      <div className="mt-4 flex items-center justify-center gap-2">
-        <Loading />
-        <i className="text-gray-500">Carregando...</i>
+      <div className="flex h-full w-full items-center justify-center">
+        <LoadingPrimary />
       </div>
     )
   }
@@ -151,75 +130,64 @@ export function SPC() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="space-y-8">
       {/* <RegisterSPC ref={modalRegisterRef} /> */}
-      <div className="flex justify-between gap-4">
+      <div className="flex items-end justify-between">
         <div className="flex w-fit items-center gap-2">
-          <h4>Filtros: </h4>
-          <input
-            type="text"
-            name="party"
-            onChange={handleSearchOnChange}
-            placeholder="Partido"
-          />
+          {!partyCode && (
+            <SearchParty handleSearchOnChange={handleSearchOnChange} />
+          )}
 
-          <select name="stateId" onChange={handleSearchOnChange}>
-            <option value="">Todos</option>
-            {states.map((state) => (
-              <option key={state.code} value={state.uf}>
-                {state.uf}
-              </option>
-            ))}
-          </select>
+          {!stateId && (
+            <SearchState handleSearchOnChange={handleSearchOnChange} />
+          )}
 
-          <select name="city" onChange={handleSearchOnChange}>
-            <option value="">Todos</option>
-            {cityResult.data !== undefined
-              ? cityResult.data.map((city) => (
-                  <option key={city.code} value={city.code}>
-                    {city.name}
-                  </option>
-                ))
-              : null}
-          </select>
+          {!cityCode && (
+            <SearchCity
+              stateId={search.state}
+              handleSearchOnChange={handleSearchOnChange}
+            />
+          )}
 
-          <select name="status" onChange={handleSearchOnChange}>
-            <option value="">Todos</option>
-            <option value="true">Ativo</option>
-            <option value="false">Inativo</option>
-          </select>
-          <input
-            type="number"
-            min={2017}
-            max={dayjs().year()}
-            placeholder={String(dayjs().year())}
-            name="year"
-            onChange={handleSearchOnChange}
-          />
-          <select name="legend" onChange={handleSearchOnChange}>
-            <option value="">Todos</option>
-            {colors.map((legend) => (
-              <option key={legend.id} value={legend.id}>
-                {legend.name}
-              </option>
-            ))}
-          </select>
+          <SearchVigency handleSearchOnChange={handleSearchOnChange} />
+
+          <div className="w-full">
+            <label htmlFor="year" className="text-xs">
+              Ano
+            </label>
+            <input
+              type="number"
+              min={2017}
+              max={dayjs().year()}
+              placeholder={String(dayjs().year())}
+              name="year"
+              onChange={handleSearchOnChange}
+            />
+          </div>
+
+          <SearchLegend handleSearchOnChange={handleSearchOnChange} />
         </div>
+
+        <RefreshButton queryName="spcs" />
       </div>
 
-      <TableSPC data={spcResult.data?.results ?? []} />
+      <div className="space-y-2">
+        <TableSPC data={spcResult.data?.results ?? []} />
 
-      {spcResult.data?.results != null ? (
-        <PaddingButtons
-          pages={spcResult.data?.info.pages}
-          isFetching={spcResult.isFetching}
-          next={spcResult.data?.info?.next}
-          isPreviousData={spcResult.isPreviousData}
-          prevPage={prevPage}
-          nextPage={nextPage}
-          page={page}
-        />
-      ) : null}
+        <div className="flex w-full justify-end">
+          {spcResult?.data?.results != null ? (
+            <PaddingButtons
+              pages={spcResult.data?.info.pages}
+              isFetching={spcResult.isFetching}
+              next={spcResult.data?.info?.next}
+              isPreviousData={spcResult.isPreviousData}
+              prevPage={prevPage}
+              nextPage={nextPage}
+              page={page}
+            />
+          ) : null}
+        </div>
+      </div>
     </div>
   )
 }

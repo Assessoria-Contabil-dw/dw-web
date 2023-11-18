@@ -2,17 +2,18 @@
 import { LogOut } from 'lucide-react'
 import { queryClient } from '@/services/query.provider'
 import { api } from '@/lib/api'
-import { User } from '@/lib/auth'
+import { useAuth } from '@/lib/auth'
 import { useRouter } from 'next/navigation'
 import { useNotify } from '../Toast/toast'
 import imgLogo from '../../assets/icon.svg'
 import Image from 'next/image'
-import SelectParty from './Select'
+import { NavigationHeader } from './NavHeader'
+import Link from 'next/link'
 
 export default function Header() {
   const router = useRouter()
   const notify = useNotify()
-  const user: User | undefined = queryClient.getQueryData('authUser')
+  const user = useAuth()
 
   function handleLogout() {
     api
@@ -27,20 +28,24 @@ export default function Header() {
       })
   }
 
+  console.log(user)
   if (!user) {
     return null
   }
 
   return (
-    <header className="sticky top-0 z-50 flex w-full flex-row justify-between border-b-[1px] border-zinc-300 bg-white px-6 py-2">
-      <div className="flex flex-row">
-        <div className="flex w-full items-center justify-start gap-2">
+    <header className="sticky top-0 z-50 flex w-full flex-row justify-between border-b-[1px] border-zinc-300 bg-white px-6">
+      <div className="flex flex-row gap-6">
+        <Link
+          href="/"
+          className="flex w-full cursor-pointer items-center justify-start gap-2"
+        >
           <Image src={imgLogo} alt="Logo da plataforma" width={40} />
-          <span className="font-alt text-xs font-medium leading-3 text-slate-500 ">
+          <span className="font-alt text-xs font-semibold leading-3 text-slate-700 ">
             Assessoria <br /> Contábil
           </span>
-        </div>
-        <SelectParty />
+        </Link>
+        <NavigationHeader />
       </div>
 
       <div className="flex w-fit  cursor-pointer items-center justify-between gap-2">

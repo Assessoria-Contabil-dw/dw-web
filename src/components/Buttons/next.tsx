@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Loading } from '../Form/Loading'
+import { LoadingSecond } from '../Loading/second'
 
 export interface PaddingProps {
   prevPage: () => void
@@ -24,7 +24,7 @@ export const PaddingButtons = ({
   prevPage,
 }: PaddingProps) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex w-fit items-center space-x-2">
       <button
         className="button-arrow"
         onClick={() => prevPage()}
@@ -46,7 +46,7 @@ export const PaddingButtons = ({
       </button>
       {isFetching ? (
         <span>
-          <Loading />
+          <LoadingSecond />
         </span>
       ) : null}
     </div>

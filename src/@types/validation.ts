@@ -68,7 +68,7 @@ export const virgenciesFormSchema = z.object({
   vigencyLeader: z
     .array(
       z.object({
-        officeId: z.string().uuid().nonempty('O cargo não pode ser vazio'),
+        officeId: z.coerce.number().min(1, 'O cargo não pode ser vazio'),
         leaderId: z.string().nonempty('O líder não pode ser vazio'),
       }),
     )
@@ -76,17 +76,14 @@ export const virgenciesFormSchema = z.object({
   vigencyAdvocate: z
     .array(
       z.object({
-        advocateId: z.string().uuid().nonempty('O advogado não pode ser vazio'),
+        advocateId: z.coerce.number().min(1, 'O advogado não pode ser vazio'),
       }),
     )
     .min(0),
   vigencyLawFirm: z
     .array(
       z.object({
-        lawFirmId: z
-          .string()
-          .uuid()
-          .nonempty('O escritório não pode ser vazio'),
+        lawFirmId: z.coerce.number().min(1, 'O escritório não pode ser vazio'),
       }),
     )
     .min(0),
@@ -203,31 +200,32 @@ export const lawFirmFormShema = z.object({
   email: z.string().optional(),
 })
 
-export const userFormShema = z.object({
-  id: z.coerce.number().optional(),
-  name: z
-    .string()
-    .min(3, 'O nome não pode ser vazio'),
-  cpf: z.string().refine(
-    (value) => {
-      const cleanedValue = value.replace(/[.-]/g, '')
-      return cleanedValue.length === 11 && /^\d{11}$/.test(cleanedValue)
-    },
-    { message: 'CPF inválido' }),
+export const userFormShema = z
+  .object({
+    id: z.coerce.number().optional(),
+    name: z.string().min(3, 'O nome não pode ser vazio'),
+    cpf: z.string().refine(
+      (value) => {
+        const cleanedValue = value.replace(/[.-]/g, '')
+        return cleanedValue.length === 11 && /^\d{11}$/.test(cleanedValue)
+      },
+      { message: 'CPF inválido' },
+    ),
 
-  email: z.string().optional(),
-  role: z.enum(['ADMIN', 'CLIENT']).default('CLIENT'),
-  passwordHash: z.string().optional(),
-  disable: z.coerce.boolean().default(true).optional(),
-}).transform((field) => ({
-  id: field.id,
-  name: field.name,
-  email: field.email,
-  role: field.role,
-  passwordHash: field.passwordHash,
+    email: z.string().optional(),
+    role: z.enum(['ADMIN', 'CLIENT']).default('CLIENT'),
+    passwordHash: z.string().optional(),
+    disable: z.coerce.boolean().default(true).optional(),
+  })
+  .transform((field) => ({
+    id: field.id,
+    name: field.name,
+    email: field.email,
+    role: field.role,
+    passwordHash: field.passwordHash,
 
-  cpf: field.cpf.replace(/[^0-9]/g, '')
-}))
+    cpf: field.cpf.replace(/[^0-9]/g, ''),
+  }))
 
 export const spcFormShema = z.object({
   directoryId: z.coerce

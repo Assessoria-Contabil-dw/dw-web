@@ -83,7 +83,7 @@ export interface VigencyLeadersProps {
 
   vigencyId: string
   leaderId: string
-  officeId: string
+  officeId: number
 }
 
 export interface VigencyProps {

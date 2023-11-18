@@ -2,27 +2,29 @@
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Loading } from '../../Form/Loading'
 import { Form } from '../../Form'
 import imgLogo from '../../../assets/logo_v2.svg'
 import Image from 'next/image'
 import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 import { useNotify } from '../../Toast/toast'
+import { LoadingSecond } from '@/components/Loading/second'
 
-const signInUserFormShema = z.object({
-  cpf: z.string().refine(
-    (value) => {
-      const cleanedValue = value.replace(/[.-]/g, '')
-      return cleanedValue.length === 11 && /^\d{11}$/.test(cleanedValue)
-    },
-    { message: 'CPF inválido' },
-  ),
-  passwordHash: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
-}).transform((field) => ({
-  cpf: field.cpf.replace(/[^0-9]/g, ''),
-  passwordHash: field.passwordHash
-}))
+const signInUserFormShema = z
+  .object({
+    cpf: z.string().refine(
+      (value) => {
+        const cleanedValue = value.replace(/[.-]/g, '')
+        return cleanedValue.length === 11 && /^\d{11}$/.test(cleanedValue)
+      },
+      { message: 'CPF inválido' },
+    ),
+    passwordHash: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
+  })
+  .transform((field) => ({
+    cpf: field.cpf.replace(/[^0-9]/g, ''),
+    passwordHash: field.passwordHash,
+  }))
 
 type SignInUser = z.infer<typeof signInUserFormShema>
 
@@ -43,10 +45,13 @@ export function SignInForm() {
     try {
       await api.post('/signIn', { cpf, passwordHash })
       notify({ type: 'success', message: 'Acesso realizado!' })
-      router.push('/painel')
+      router.push('/acessos')
     } catch (error: any) {
       if (error.response) {
-        return notify({ type: 'error', message: error.response.data.message })
+        return notify({
+          type: 'error',
+          message: error.response.data.message || 'Erro ao realizar acesso',
+        })
       }
     }
   }
@@ -88,7 +93,7 @@ export function SignInForm() {
               disabled={isSubmitting}
               className="button-primary w-full"
             >
-              {isSubmitting ? <Loading /> : 'Entrar'}
+              {isSubmitting ? <LoadingSecond /> : 'Entrar'}
             </button>
             <p className="font-sans text-xs font-normal text-slate-500">
               Ainda não tem uma conta?{' '}

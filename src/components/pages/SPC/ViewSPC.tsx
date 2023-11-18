@@ -9,7 +9,7 @@ import {
   useImperativeHandle,
   useState,
 } from 'react'
-import { Loading } from '../../Form/Loading'
+import { LoadingSecond } from '@/components/Loading/second'
 
 export interface ViewSPCRef {
   openModal: (id: string) => void
@@ -80,7 +80,7 @@ const ViewSPCModel: ForwardRefRenderFunction<ViewSPCRef> = (props, ref) => {
 
           {loading ? (
             <div className="flex h-full w-full items-center justify-center">
-              <Loading />
+              <LoadingSecond />
             </div>
           ) : (
             <div className="flex w-full flex-col justify-start gap-8 overflow-y-scroll">
