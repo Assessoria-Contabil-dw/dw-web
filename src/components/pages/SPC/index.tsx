@@ -8,7 +8,7 @@ import { ChangeEvent, useCallback, useContext, useState } from 'react'
 import dayjs from 'dayjs'
 import { PaddingButtons } from '../../Buttons/next'
 import { LoadingPrimary } from '@/components/Loading/primary'
-import { AccessContext } from '@/services/context.provider'
+import { AccessContext } from '@/provider/context.provider'
 import { useRouter } from 'next/navigation'
 import { useNotify } from '@/components/Toast/toast'
 import SearchParty from '@/components/Search/party'
@@ -93,7 +93,7 @@ export function SPC() {
       onError: (error: any) => {
         if (error.response.status === 403) {
           notify({ type: 'warning', message: error.response.data.message })
-          router.push('/acessos')
+          router.push('/painel')
         }
       },
     },
@@ -109,6 +109,11 @@ export function SPC() {
       setSearch((old) => ({ ...old, [name]: undefined }))
       return
     }
+
+    if (name === 'state' && value === '') {
+      setSearch((old) => ({ ...old, city: undefined }))
+    }
+
     setPage(0)
     setSearch((old) => ({ ...old, [name]: value || undefined }))
   }
@@ -132,8 +137,8 @@ export function SPC() {
   return (
     <div className="space-y-8">
       {/* <RegisterSPC ref={modalRegisterRef} /> */}
-      <div className="flex items-end justify-between">
-        <div className="flex w-fit items-center gap-2">
+      <div className="relative flex items-end justify-between space-x-2 max-md:flex-col  max-md:space-y-2">
+        <div className="grid w-full grid-flow-col items-center gap-2 max-md:grid-rows-2">
           {!partyCode && (
             <SearchParty handleSearchOnChange={handleSearchOnChange} />
           )}
@@ -151,8 +156,8 @@ export function SPC() {
 
           <SearchVigency handleSearchOnChange={handleSearchOnChange} />
 
-          <div className="w-full">
-            <label htmlFor="year" className="text-xs">
+          <div className="min-w-[80px]">
+            <label htmlFor="year" className="w-fit text-xs">
               Ano
             </label>
             <input
@@ -167,7 +172,6 @@ export function SPC() {
 
           <SearchLegend handleSearchOnChange={handleSearchOnChange} />
         </div>
-
         <RefreshButton queryName="spcs" />
       </div>
 

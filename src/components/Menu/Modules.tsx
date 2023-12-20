@@ -1,10 +1,10 @@
 'use client'
 import { Lock } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
-import { AccessContext, Modules } from '@/services/context.provider'
+import { AccessContext, Modules } from '@/provider/context.provider'
 import { useContext } from 'react'
 import { User } from '@/lib/auth'
-import { queryClient } from '@/services/query.provider'
+import { queryClient } from '@/provider/query.provider'
 
 export default function NavigationModule({ modules }: { modules: Modules[] }) {
   const router = useRouter()
@@ -13,16 +13,25 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
 
   const { partyCode, cityCode, stateId } = useContext(AccessContext)
 
-  const mudulosMenu = [
+  const modulesClient = [
     {
-      href: `/acessos/painel`,
-      label: 'Diretórios',
+      href: `/painel`,
+      label: 'Pagina Inicial',
+      sub: null,
       replace: true,
       disable: true,
     },
     {
-      href: `/acessos/painel/spc`,
+      href: `/painel/diretorio`,
+      sub: '/vigencia',
+      label: 'Diretórios',
+      replace: true,
+      disable: user?.role === 'CLIENT' ? partyCode !== 0 && true : true,
+    },
+    {
+      href: `/painel/spc`,
       label: 'SPC',
+      sub: null,
       replace: true,
       disable:
         user?.role === 'CLIENT'
@@ -30,13 +39,37 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
           : true,
     },
     {
-      href: `/acessos/painel/relatory`,
+      href: `/painel/relatorio`,
       label: 'Relatórios',
+      sub: null,
       replace: true,
       disable:
         user?.role === 'CLIENT'
           ? modules?.find((item) => item.module === 'Visualizar Relatórios')
           : true,
+    },
+  ]
+
+  const modulesAdmin = [
+    {
+      href: '/painel/partidos',
+      label: 'Partidos',
+      replace: true,
+    },
+    {
+      href: '/painel/advogados',
+      label: 'Advogados',
+      replace: true,
+    },
+    {
+      href: '/painel/lideres',
+      label: 'Representantes',
+      replace: true,
+    },
+    {
+      href: '/painel/escritorio',
+      label: 'Escritórios',
+      replace: true,
     },
   ]
 
@@ -63,25 +96,43 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
   }
 
   if (user?.role === 'CLIENT') {
-    if (!modules) {
+    if (modules === null) {
       return null
     }
   }
 
   return (
     <div className="flex flex-col gap-2">
-      {mudulosMenu.map((item, index) => (
+      {modulesClient?.map((item, index) => (
         <button
           disabled={!item.disable}
           onClick={() => handleClick(item.href)}
           className={`w-full justify-between text-start font-medium disabled:cursor-not-allowed disabled:text-slate-400
-          ${params === item.href ? 'bg-primary' : ''}`}
+          
+          ${
+            params === item.href || (item.sub && params.match(item.sub) != null)
+              ? 'bg-primary'
+              : ''
+          }`}
           key={index}
         >
           {item.label}
           {!item.disable && <Lock size={18} />}
         </button>
       ))}
+
+      {user?.role === 'ADMIN' &&
+        modulesAdmin?.map((item, index) => (
+          <button
+            onClick={() => handleClick(item.href)}
+            className={`w-full justify-between text-start font-medium disabled:cursor-not-allowed disabled:text-slate-400
+            
+            ${params === item.href ? 'bg-primary' : ''}`}
+            key={index}
+          >
+            {item.label}
+          </button>
+        ))}
     </div>
   )
 }

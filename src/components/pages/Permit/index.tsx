@@ -5,7 +5,7 @@ import PermitParty from './PartyTable'
 import PermitState from './StateTable'
 import PermitCity from './CityTable'
 
-import { queryClient } from '@/services/query.provider'
+import { queryClient } from '@/provider/query.provider'
 import { PermitProps } from '@/app/(user)/layout'
 import { RefreshButton } from '@/components/Buttons/refresh'
 

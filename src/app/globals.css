@@ -59,7 +59,7 @@
   }
 
   tbody tr td {
-    @apply p-2 text-left font-sans text-[0.7rem] font-medium text-slate-400;
+    @apply p-2 text-left font-sans text-[0.7rem] font-medium text-gray-400;
   }
 
   /*
@@ -78,6 +78,9 @@
 
   tbody tr td ul li a {
     @apply cursor-pointer rounded bg-slate-200 px-2 py-1 font-semibold text-white;
+  }
+  ul li{
+    @apply text-xs font-normal text-slate-800;
   }
 
   /* text */
@@ -154,7 +157,7 @@
 
   .form,
   fieldset {
-    @apply rounded-[0.8rem] border-[1px] border-slate-300 bg-white px-5 py-4;
+    @apply rounded-[0.8rem] border-[1px] border-slate-300 bg-white px-5 py-4 overflow-x-auto min-w-[18rem];
   }
 
   legend {
@@ -166,7 +169,6 @@
   }
 
   select,
-  input[type="radio"],
   input[type="text"],
   input[type="email"],
   input[type="password"],
@@ -196,9 +198,7 @@
     @apply px-32 py-0 max-md:px-4;
   }
 
-  .card {
-    @apply rounded-[2rem] bg-white p-12 shadow-md ring-1 ring-slate-200 dark:bg-slate-900;
-  }
+ 
 
   .bnt-sub {
     @apply rounded-xl border-none bg-primary px-4 py-2 font-sans text-lg font-medium capitalize tracking-widest text-white;
@@ -231,6 +231,27 @@
   }
 
   .button-min{
-  @apply h-fit cursor-pointer bg-white px-2 py-1 text-xs text-slate-700 shadow-sm 
+  @apply h-fit cursor-pointer hover:bg-primary bg-slate-300 px-1 py-1 text-xs text-slate-700
+  }
+
+
+
+  .model-bg{
+    @apply fixed right-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/50;
+  }
+  .model-size{
+    @apply max-md:w-[80%] w-2/4 h-[80%] px-5 py-4 bg-white rounded-xl border-[1px] border-slate-300 overflow-hidden;
+  }
+  .model-card{
+    @apply flex h-full w-full flex-col items-start justify-start gap-2;
+  }
+  .model-header{
+    @apply flex w-full items-center justify-between leading-3 pb-1 border-b-[1px];
+  }
+  .model-body {
+    @apply flex w-full flex-col justify-start gap-8 overflow-auto h-full pr-4;
+  }
+  .model-loading{
+    @apply flex w-full h-full items-center justify-center;
   }
 }

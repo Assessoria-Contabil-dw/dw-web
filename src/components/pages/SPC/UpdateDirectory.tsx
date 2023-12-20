@@ -144,81 +144,82 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
                     </tr>
                   </thead>
                   <tbody>
-                    {spcs?.SPCA.map((spc) =>
-                      register === spc.id ? (
-                        <tr key={spc.id}>
-                          <td colSpan={4}>
-                            <form
-                              onSubmit={handleEditFormSubmit}
-                              className="grid w-full grid-flow-col gap-2 border-none p-0"
-                            >
-                              <button
-                                onClick={() => setRegister(0)}
-                                className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
+                    {spcs?.SPCA !== null &&
+                      spcs?.SPCA.map((spc) =>
+                        register === spc.id ? (
+                          <tr key={spc.id}>
+                            <td colSpan={4}>
+                              <form
+                                onSubmit={handleEditFormSubmit}
+                                className="grid w-full grid-flow-col gap-2 border-none p-0"
                               >
-                                <X size={18} />
-                              </button>
-                              <input
-                                name="year"
-                                type="text"
-                                defaultValue={spc.year}
-                                required
-                              />
-                              <input
-                                name="numPge"
-                                type="text"
-                                defaultValue={spc.numPge}
-                                required
-                              />
-                              <select name="status">
-                                {color.map((c) => (
-                                  <option
-                                    key={c.id}
-                                    value={c.id}
-                                    selected={c.name === spc.status}
-                                  >
-                                    {c.name}
-                                  </option>
-                                ))}
-                              </select>
-                              <textarea name="observation">
-                                {spc.observation}
-                              </textarea>
-                              <button
-                                className="bg-primary text-white"
-                                type="submit"
-                              >
-                                <Check size={18} />
-                              </button>
-                              <button
-                                className="bg-red-400 text-white"
-                                type="button"
-                                onClick={() =>
-                                  handleDeletModal(
-                                    spc.id.toString(),
-                                    'spcs',
-                                    spc.year,
-                                  )
-                                }
-                              >
-                                <Trash size={18} />
-                              </button>
-                            </form>
-                          </td>
-                        </tr>
-                      ) : (
-                        <tr
-                          key={spc.id}
-                          onClick={() => handleRowClick(spc.id)}
-                          className="cursor-pointer"
-                        >
-                          <td>{spc.year}</td>
-                          <td>{spc.numPge != null ? spc.numPge : '-'}</td>
-                          <td>{spc.status}</td>
-                          <td>{spc.observation}</td>
-                        </tr>
-                      ),
-                    )}
+                                <button
+                                  onClick={() => setRegister(0)}
+                                  className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
+                                >
+                                  <X size={18} />
+                                </button>
+                                <input
+                                  name="year"
+                                  type="text"
+                                  defaultValue={spc.year}
+                                  required
+                                />
+                                <input
+                                  name="numPge"
+                                  type="text"
+                                  defaultValue={spc.numPge}
+                                  required
+                                />
+                                <select name="status">
+                                  {color.map((c) => (
+                                    <option
+                                      key={c.id}
+                                      value={c.id}
+                                      selected={c.name === spc.status}
+                                    >
+                                      {c.name}
+                                    </option>
+                                  ))}
+                                </select>
+                                <textarea name="observation">
+                                  {spc.observation}
+                                </textarea>
+                                <button
+                                  className="bg-primary text-white"
+                                  type="submit"
+                                >
+                                  <Check size={18} />
+                                </button>
+                                <button
+                                  className="bg-red-400 text-white"
+                                  type="button"
+                                  onClick={() =>
+                                    handleDeletModal(
+                                      spc.id.toString(),
+                                      'spcs',
+                                      spc.year,
+                                    )
+                                  }
+                                >
+                                  <Trash size={18} />
+                                </button>
+                              </form>
+                            </td>
+                          </tr>
+                        ) : (
+                          <tr
+                            key={spc.id}
+                            onClick={() => handleRowClick(spc.id)}
+                            className="cursor-pointer"
+                          >
+                            <td>{spc.year}</td>
+                            <td>{spc.numPge != null ? spc.numPge : '-'}</td>
+                            <td>{spc.status}</td>
+                            <td>{spc.observation}</td>
+                          </tr>
+                        ),
+                      )}
                   </tbody>
                 </table>
               </div>
@@ -235,81 +236,82 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
                     </tr>
                   </thead>
                   <tbody>
-                    {spcs?.SPCE.map((spc) =>
-                      register === spc.id ? (
-                        <tr key={spc.id}>
-                          <td colSpan={4}>
-                            <form
-                              onSubmit={handleEditFormSubmit}
-                              className="grid w-full grid-flow-col gap-2 border-none p-0"
-                            >
-                              <button
-                                onClick={() => setRegister(0)}
-                                className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
+                    {spcs?.SPCE !== null &&
+                      spcs?.SPCE.map((spc) =>
+                        register === spc.id ? (
+                          <tr key={spc.id}>
+                            <td colSpan={4}>
+                              <form
+                                onSubmit={handleEditFormSubmit}
+                                className="grid w-full grid-flow-col gap-2 border-none p-0"
                               >
-                                <X size={18} />
-                              </button>
-                              <input
-                                name="year"
-                                type="text"
-                                defaultValue={spc.year}
-                                required
-                              />
-                              <input
-                                name="numPge"
-                                type="text"
-                                defaultValue={spc.numPge}
-                                required
-                              />
-                              <select name="status">
-                                {color.map((c) => (
-                                  <option
-                                    key={c.id}
-                                    value={c.id}
-                                    selected={c.name === spc.status}
-                                  >
-                                    {c.name}
-                                  </option>
-                                ))}
-                              </select>
-                              <textarea name="observation">
-                                {spc.observation}
-                              </textarea>
-                              <button
-                                className="bg-primary text-white"
-                                type="submit"
-                              >
-                                <Check size={18} />
-                              </button>
-                              <button
-                                className="bg-red-400 text-white"
-                                type="button"
-                                onClick={() =>
-                                  handleDeletModal(
-                                    spc.id.toString(),
-                                    'spcs',
-                                    spc.year,
-                                  )
-                                }
-                              >
-                                <Trash size={18} />
-                              </button>
-                            </form>
-                          </td>
-                        </tr>
-                      ) : (
-                        <tr
-                          key={spc.id}
-                          onClick={() => handleRowClick(spc.id)}
-                          className="cursor-pointer"
-                        >
-                          <td>{spc.year}</td>
-                          <td>{spc.numPge != null ? spc.numPge : '-'}</td>
-                          <td>{spc.status}</td>
-                          <td>{spc.observation}</td>
-                        </tr>
-                      ),
-                    )}
+                                <button
+                                  onClick={() => setRegister(0)}
+                                  className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
+                                >
+                                  <X size={18} />
+                                </button>
+                                <input
+                                  name="year"
+                                  type="text"
+                                  defaultValue={spc.year}
+                                  required
+                                />
+                                <input
+                                  name="numPge"
+                                  type="text"
+                                  defaultValue={spc.numPge}
+                                  required
+                                />
+                                <select name="status">
+                                  {color.map((c) => (
+                                    <option
+                                      key={c.id}
+                                      value={c.id}
+                                      selected={c.name === spc.status}
+                                    >
+                                      {c.name}
+                                    </option>
+                                  ))}
+                                </select>
+                                <textarea name="observation">
+                                  {spc.observation}
+                                </textarea>
+                                <button
+                                  className="bg-primary text-white"
+                                  type="submit"
+                                >
+                                  <Check size={18} />
+                                </button>
+                                <button
+                                  className="bg-red-400 text-white"
+                                  type="button"
+                                  onClick={() =>
+                                    handleDeletModal(
+                                      spc.id.toString(),
+                                      'spcs',
+                                      spc.year,
+                                    )
+                                  }
+                                >
+                                  <Trash size={18} />
+                                </button>
+                              </form>
+                            </td>
+                          </tr>
+                        ) : (
+                          <tr
+                            key={spc.id}
+                            onClick={() => handleRowClick(spc.id)}
+                            className="cursor-pointer"
+                          >
+                            <td>{spc.year}</td>
+                            <td>{spc.numPge != null ? spc.numPge : '-'}</td>
+                            <td>{spc.status}</td>
+                            <td>{spc.observation}</td>
+                          </tr>
+                        ),
+                      )}
                   </tbody>
                 </table>
               </div>

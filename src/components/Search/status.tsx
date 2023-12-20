@@ -8,7 +8,7 @@ export default function SearchVigency({
   handleSearchOnChange,
 }: SearchPartyProps) {
   return (
-    <div className="w-full">
+    <div className="w-full min-w-[90px]">
       <label htmlFor="state" className="text-xs">
         Vigência
       </label>

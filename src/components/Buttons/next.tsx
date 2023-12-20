@@ -24,7 +24,7 @@ export const PaddingButtons = ({
   prevPage,
 }: PaddingProps) => {
   return (
-    <div className="flex w-fit items-center space-x-2">
+    <div className="z-1 flex w-fit items-center space-x-2">
       <button
         className="button-arrow"
         onClick={() => prevPage()}

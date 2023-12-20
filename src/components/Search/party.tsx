@@ -1,5 +1,5 @@
 import { Page } from '@/@types/page'
-import { api } from '@/lib/api'
+import { PartyService } from '@/services/party.service'
 import { ChangeEvent } from 'react'
 import { useQuery } from 'react-query'
 
@@ -20,14 +20,11 @@ interface SearchPartyProps {
 export default function SearchParty({
   handleSearchOnChange,
 }: SearchPartyProps) {
+  const partyService = new PartyService()
+
   const { data, isLoading } = useQuery<Page<PartyProps>>(
     'party',
-    async () => {
-      const response = await api
-        .get('/parties')
-        .then((response) => response.data)
-      return response
-    },
+    () => partyService.getAll(),
     {
       keepPreviousData: true,
       staleTime: 1000 * 60 * 60,
@@ -38,7 +35,7 @@ export default function SearchParty({
   if (isLoading) return null
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-[90px]">
       <label htmlFor="party" className="text-xs">
         Partido
       </label>
@@ -46,7 +43,7 @@ export default function SearchParty({
         <option value="">Todos</option>
         {data !== undefined && data.results !== null
           ? data?.results.map((party) => (
-              <option key={party.code} value={party.code}>
+              <option key={party.code} value={party.abbreviation}>
                 {party.abbreviation}
               </option>
             ))

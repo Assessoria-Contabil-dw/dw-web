@@ -1,10 +1,9 @@
 'use client'
 import { api } from '@/lib/api'
 import { useAuth } from '@/lib/auth'
-import { useRouter, useSearchParams } from 'next/navigation'
-import React, { createContext, useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import React, { createContext, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
-import { queryClient } from './query.provider'
 
 export interface Modules {
   acessId: number
@@ -14,19 +13,21 @@ export interface Modules {
 }
 
 export interface ModulesData {
-  acessName: string
+  acessName: string | null
   modules: Modules[]
 }
 
 type ContextType = {
   modulesArray: ModulesData
   partyCode: number
-  stateId: string | null
-  cityCode: string | null
+  stateId: string | undefined
+  cityCode: string | undefined
+  openMenu: boolean
   setModulesArray: (modules: ModulesData) => void
   setPartyCode: (partyCode: number) => void
   setStateId: (stateId: string) => void
   setCityCode: (cityCode: string) => void
+  setOpenMenu: (openMenu: boolean) => void
   handleSetRouter: (path: string) => void
 }
 
@@ -36,6 +37,7 @@ export function AccessProvider({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams()
   const router = useRouter()
   const user = useAuth()
+  const path = usePathname()
 
   const [modulesArray, setModulesArray] = useState<ModulesData>(
     {} as ModulesData,
@@ -44,18 +46,16 @@ export function AccessProvider({ children }: { children: React.ReactNode }) {
   const [partyCode, setPartyCode] = useState(
     Number(searchParams.get('partido')),
   )
-  const [stateId, setStateId] = useState(searchParams.get('estado'))
-  const [cityCode, setCityCode] = useState(searchParams.get('cidade'))
-
-  console.log(partyCode, stateId, cityCode)
-  const permissions = queryClient.getQueryData('permitions')
+  const [stateId, setStateId] = useState(searchParams.get('estado') as string)
+  const [cityCode, setCityCode] = useState(searchParams.get('cidade') as string)
+  const [openMenu, setOpenMenu] = useState<boolean>(false)
 
   useQuery<ModulesData>(
     'modules',
     async () => {
-      const response = await api.get(`/user/${user?.sub}/modules`, {
+      const response = await api.get(`/access/modules`, {
         params: {
-          partyCode,
+          partyCode: partyCode === 0 ? undefined : partyCode,
           stateId,
           cityCode,
         },
@@ -63,7 +63,6 @@ export function AccessProvider({ children }: { children: React.ReactNode }) {
       return response.data
     },
     {
-      enabled: permissions !== undefined,
       staleTime: 1000 * 60 * 60 * 10,
       onError: (error) => {
         console.log(error)
@@ -93,6 +92,10 @@ export function AccessProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  useEffect(() => {
+    handleSetRouter(path)
+  }, [partyCode, stateId, cityCode])
+
   return (
     <AccessContext.Provider
       value={{
@@ -100,6 +103,8 @@ export function AccessProvider({ children }: { children: React.ReactNode }) {
         partyCode,
         stateId,
         cityCode,
+        openMenu,
+        setOpenMenu,
         setModulesArray,
         setPartyCode,
         setStateId,

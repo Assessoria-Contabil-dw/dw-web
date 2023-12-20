@@ -12,7 +12,7 @@ import React, {
 import { AdvocateProps, LawFirmProps } from '@/@types/types'
 import { LoadingSecond } from '@/components/Loading/second'
 
-interface VigencyProps {
+export interface VigencyProps {
   vigency: {
     vigencyId: number
     dateFirst: string
@@ -145,89 +145,127 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
   }
 
   return (
-    <div className="fixed right-0 top-0 flex h-screen w-screen items-center justify-center bg-black/50">
-      <div className="h-3/4 w-2/4 overflow-hidden">
-        <fieldset className="flex w-full flex-col items-start justify-between border-b-[1px]">
+    <div className="model-bg">
+      <div className="model-size">
+        <div className="model-card">
+          <div className="model-header">
+            <div>
+              <h4>{vigencyData?.vigency.party.abbreviation}</h4>
+              <span>
+                {vigencyData?.vigency.dateFirst} -{' '}
+                {vigencyData?.vigency.dateLast}
+              </span>
+            </div>
+            <button
+              onClick={closeModal}
+              className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
+            >
+              <X size={20} />
+            </button>
+          </div>
           {loading ? (
-            <div className="flex w-full items-center justify-center">
+            <div className="model-loading">
               <LoadingSecond />
             </div>
           ) : (
-            <div className="w-full">
-              <div className="flex w-full justify-between ">
-                <div>
-                  <h4>
-                    {vigencyData?.vigency.dateFirst} -{' '}
-                    {vigencyData?.vigency.dateLast}
-                  </h4>
-                  <span>{vigencyData?.vigency.party.abbreviation}</span>
-                </div>
-                <button
-                  onClick={closeModal}
-                  className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              <ul>
+            <div className="model-body">
+              <ul className="grid grid-cols-2 space-y-2 max-sm:grid-cols-1">
                 <li>
+                  <h5>Partido </h5>
                   {vigencyData?.vigency.directory.city} -{' '}
                   {vigencyData?.vigency.directory.uf}
                 </li>
-                <li>{vigencyData?.vigency.directory.cnpj}</li>
-                <li>{vigencyData?.vigency.directory.address}</li>
-                <li>{vigencyData?.vigency.directory.email}</li>
-                <li>{vigencyData?.vigency.directory.phone}</li>
                 <li>
-                  Presidente:{' '}
-                  {vigencyData?.president != null
-                    ? vigencyData.president.name
-                    : 'Não cadastrado'}
+                  <h5>CNPJ</h5>
+                  {vigencyData?.vigency.directory.cnpj != null ? (
+                    vigencyData?.vigency.directory.cnpj
+                  ) : (
+                    <span>Não cadastrado</span>
+                  )}
                 </li>
                 <li>
-                  Vice-Presidente:{' '}
-                  {vigencyData?.vicePresident != null
-                    ? vigencyData.vicePresident.name
-                    : 'Não cadastrado'}
+                  <h5>Endereço</h5>
+                  {vigencyData?.vigency.directory.address != null ? (
+                    vigencyData?.vigency.directory.address
+                  ) : (
+                    <span>Não cadastrado</span>
+                  )}
                 </li>
                 <li>
-                  Tesoureiro:{' '}
-                  {vigencyData?.treasurer != null
-                    ? vigencyData?.treasurer.name
-                    : 'Não cadastrado'}
+                  <h5>E-mail</h5>
+                  {vigencyData?.vigency.directory.email != null ? (
+                    vigencyData?.vigency.directory.email
+                  ) : (
+                    <span>Não cadastrado</span>
+                  )}
+                </li>
+                <li>
+                  <h5>Telefone</h5>
+                  {vigencyData?.vigency.directory.phone != null ? (
+                    vigencyData?.vigency.directory.phone
+                  ) : (
+                    <span>Não cadastrado</span>
+                  )}
                 </li>
               </ul>
-              <ul>
-                <h2>Advogados</h2>
 
-                {vigencyData?.advocates === null ? (
-                  <li>Nenhum advogado cadastrado</li>
-                ) : (
-                  vigencyData?.advocates.map((advocate, index) => (
-                    <li key={index}>
-                      {advocate.name} - {advocate.oab}
-                    </li>
-                  ))
-                )}
+              <ul className="grid grid-cols-3 space-y-2 max-sm:grid-cols-1">
+                <li>
+                  <h5>Presidente</h5>
+                  {vigencyData?.president != null ? (
+                    vigencyData.president.name
+                  ) : (
+                    <span>Não cadastrado</span>
+                  )}
+                </li>
+                <li>
+                  <h5> Vice-Presidente</h5>
+                  {vigencyData?.vicePresident != null ? (
+                    vigencyData.vicePresident.name
+                  ) : (
+                    <span>Não cadastrado</span>
+                  )}
+                </li>
+                <li>
+                  <h5> Tesoureiro</h5>
+                  {vigencyData?.treasurer != null ? (
+                    vigencyData?.treasurer.name
+                  ) : (
+                    <span>Não cadastrado</span>
+                  )}
+                </li>
               </ul>
 
-              <ul>
-                <h2>Escritorio</h2>
+              <ul className="grid grid-cols-2 space-y-2 max-sm:grid-cols-1">
+                <li>
+                  <h5>Advogados</h5>
 
-                {vigencyData?.lawFirm === null ? (
-                  <li>Nenhum escritorio cadastrado</li>
-                ) : (
-                  vigencyData?.lawFirm.map((lawfirm, index) => (
-                    <li key={index}>
-                      {lawfirm.name} - {lawfirm.cnpj}
-                    </li>
-                  ))
-                )}
+                  {vigencyData?.advocates === null ? (
+                    <span>Não cadastrado</span>
+                  ) : (
+                    vigencyData?.advocates.map((advocate, index) => (
+                      <span key={index}>
+                        {advocate.name} - {advocate.oab}
+                      </span>
+                    ))
+                  )}
+                </li>
+
+                <li>
+                  <h5>Escritorio</h5>
+
+                  {vigencyData?.lawFirm === null ? (
+                    <span>Não cadastrado</span>
+                  ) : (
+                    vigencyData?.lawFirm.map((lawfirm, index) => (
+                      <span key={index}>{lawfirm.name}</span>
+                    ))
+                  )}
+                </li>
               </ul>
             </div>
           )}
-        </fieldset>
+        </div>
       </div>
     </div>
   )

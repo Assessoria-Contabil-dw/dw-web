@@ -1,6 +1,13 @@
 'use client'
 import { X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import {
+  ForwardRefRenderFunction,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
@@ -8,8 +15,9 @@ import { api } from '@/lib/api'
 import { Form } from '../../Form'
 import { directoryFormShema } from '@/@types/validation'
 import { CityProps, PartyProps, StateProps, TypeOrgProps } from '@/@types/types'
-import Cookie from 'js-cookie'
 import { LoadingSecond } from '@/components/Loading/second'
+import { queryClient } from '@/provider/query.provider'
+import { Page } from '@/@types/page'
 
 interface DirectoryProps {
   id: number
@@ -34,23 +42,15 @@ interface DirectoryProps {
 }
 
 type DirectoryFormData = z.infer<typeof directoryFormShema>
-interface RegisterDirectoryModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onCreate: (directory: DirectoryProps) => void
+export interface RegisterDirectoryModalProps {
+  openModal: () => void
+  closeModal: () => void
 }
 
-export function DirectoryForm({
-  onClose,
-  isOpen,
-  onCreate,
-}: RegisterDirectoryModalProps) {
-  const createDirectoryForm = useForm<DirectoryFormData>({
-    resolver: zodResolver(directoryFormShema),
-  })
-
+const PopRegisterModel: ForwardRefRenderFunction<
+  RegisterDirectoryModalProps
+> = (props, ref) => {
   const [error, setError] = useState<string | null>(null)
-  const [parties, setParty] = useState<PartyProps[]>([])
   const [states, setState] = useState<StateProps[]>([])
   const [cities, setCity] = useState<CityProps[]>([])
   const [org, setTypeOrg] = useState<TypeOrgProps[]>([])
@@ -59,17 +59,46 @@ export function DirectoryForm({
   const [selectedCity, setSelectedCity] = useState('')
   const [selectedOrg, setSelectedOrg] = useState('')
 
+  const parties: Page<PartyProps> = queryClient.getQueryData(
+    'party',
+  ) as Page<PartyProps>
+
+  console.log(parties)
+
+  const [isModalView, setIsModalView] = useState(false)
+
+  const openModal = useCallback(() => {
+    setIsModalView(true)
+  }, [])
+
+  const closeModal = useCallback(() => {
+    setIsModalView(false)
+  }, [])
+
+  useImperativeHandle(ref, () => ({
+    openModal,
+    closeModal,
+  }))
+
+  const createDirectoryForm = useForm<DirectoryFormData>({
+    resolver: zodResolver(directoryFormShema),
+  })
+
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = createDirectoryForm
+
   useEffect(() => {
-    Promise.all([api.get('/parties'), api.get('/states'), api.get('/typeOrg')])
-      .then(([parties, states, typeOrg]) => {
-        setParty(parties.data)
+    Promise.all([api.get('/states'), api.get('/typeOrg')])
+      .then(([states, typeOrg]) => {
         setState(states.data)
         setTypeOrg(typeOrg.data)
       })
       .catch((error) => {
         console.log(error)
       })
-  }, [onClose])
+  }, [])
 
   useEffect(() => {
     setSelectedCity('')
@@ -85,45 +114,26 @@ export function DirectoryForm({
     }
   }, [selectedState])
 
-  if (!isOpen) {
-    return null
-  }
-
-  function handleCloseModal() {
-    onClose()
-  }
-
   async function handleDirectory(data: DirectoryFormData) {
     console.log(data)
 
-    const token = Cookie.get('token')
     try {
-      const response = await api.post(
-        '/directories',
-        [
-          {
-            typeOrgId: selectedOrg,
-            partyId: Number(selectedParty),
-            cityCode: selectedCity,
-            address: data.address === '' ? undefined : data.address,
-            cnpj: data.cnpj,
-            phone: data.phone === '' ? undefined : data.phone,
-            email: data.email === '' ? undefined : data.email,
-            siteUrl: data.siteUrl === '' ? undefined : data.siteUrl,
-            mailingAddress:
-              data.mailingAddress === '' ? undefined : data.mailingAddress,
-          },
-        ],
+      const response = await api.post('/directories', [
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
+          typeOrgId: selectedOrg,
+          partyId: Number(selectedParty),
+          cityCode: selectedCity,
+          address: data.address === '' ? undefined : data.address,
+          cnpj: data.cnpj,
+          phone: data.phone === '' ? undefined : data.phone,
+          email: data.email === '' ? undefined : data.email,
+          siteUrl: data.siteUrl === '' ? undefined : data.siteUrl,
+          mailingAddress:
+            data.mailingAddress === '' ? undefined : data.mailingAddress,
         },
-      )
+      ])
 
       const directory = response.data as DirectoryProps
-      // onCreate(directory)
       console.log(directory)
 
       setError('')
@@ -142,34 +152,32 @@ export function DirectoryForm({
     }
   }
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = createDirectoryForm
+  if (!isModalView) {
+    return null
+  }
 
   return (
-    <div className="fixed right-0 top-0 flex h-screen w-screen items-center justify-center bg-black/50">
-      <div className="h-3/4 w-2/4 overflow-hidden">
+    <div className="model-bg">
+      <div className="model-size">
         <FormProvider {...createDirectoryForm}>
           <form
             onSubmit={handleSubmit(handleDirectory)}
-            className="flex h-full w-full flex-col items-end  p-1 py-3"
+            className="flex h-full w-full flex-col items-end"
           >
-            <div className="flex h-full w-full overflow-y-auto p-8">
-              <div className="flex h-full w-full flex-col justify-between gap-6">
-                <div className="flex w-full items-start justify-between border-b-[1px]">
-                  <div>
-                    <h4>Cadastrar Diretório</h4>
-                    <span>Cadastre um diretório</span>
-                  </div>
-                  <button
-                    onClick={handleCloseModal}
-                    className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
-                  >
-                    <X size={20} />
-                  </button>
+            <div className="model-card">
+              <div className="model-header">
+                <div>
+                  <h4>Cadastrar Diretório</h4>
+                  <span>Cadastre um diretório</span>
                 </div>
-
+                <button
+                  onClick={closeModal}
+                  className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="model-body">
                 <div className="flex flex-1 flex-col gap-4">
                   <Form.Field>
                     <Form.Label htmlFor="typeOrg">
@@ -224,13 +232,14 @@ export function DirectoryForm({
                         onChange={(e) => setSelectedParty(e.target.value)}
                         placeholder="Selecione um partido"
                       >
-                        {parties.map((party, index) => {
-                          return (
-                            <option key={index} value={party.code.toString()}>
-                              {party.code} - {party.abbreviation}
-                            </option>
-                          )
-                        })}
+                        {parties?.results !== null &&
+                          parties?.results.map((party, index) => {
+                            return (
+                              <option key={index} value={party.code.toString()}>
+                                {party.code} - {party.abbreviation}
+                              </option>
+                            )
+                          })}
                       </Form.SelectInput>
                       <Form.ErrorMessage field="partyId" />
                     </Form.Field>
@@ -349,7 +358,7 @@ export function DirectoryForm({
                 {error && <span className="text-red-500">{error}</span>}
                 <div className="flex gap-4">
                   <button
-                    onClick={handleCloseModal}
+                    onClick={closeModal}
                     className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
                   >
                     Cancelar
@@ -370,3 +379,5 @@ export function DirectoryForm({
     </div>
   )
 }
+
+export default forwardRef(PopRegisterModel)

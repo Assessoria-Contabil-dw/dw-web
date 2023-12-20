@@ -1,4 +1,4 @@
-import { queryClient } from '@/services/query.provider'
+import { queryClient } from '@/provider/query.provider'
 import { RotateCcw } from 'lucide-react'
 
 interface RefreshProps {
@@ -14,7 +14,7 @@ export function RefreshButton({ queryName }: RefreshProps) {
     <button
       type="button"
       onClick={handleRefreshData}
-      className="w-fit border-[1px]  border-gray-200 bg-white text-gray-700"
+      className="w-fit border-[1px] border-gray-200 bg-white text-gray-700"
     >
       <RotateCcw className="w-4" />
       Atualizar

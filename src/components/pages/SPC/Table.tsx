@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from 'react'
 import PopObservation, { ObservationRef } from './PopObservation'
 import UpdateDirectory, { UpdateDirectoryRef } from './UpdateDirectory'
 import ViewSPC, { ViewSPCRef } from './ViewSPC'
+import dayjs from 'dayjs'
 
 interface SPCProps {
   data: DirectorySPCProps[] | null
@@ -26,6 +27,74 @@ export function TableSPC({ data }: SPCProps) {
   const handleViewObservation = useCallback((message: string) => {
     popObservationRef.current?.openModal(message)
   }, [])
+
+  const generateSPCAList = (spc: DirectorySPCProps) => {
+    const spcaList = []
+
+    for (let i = 2017; i <= dayjs().year(); i++) {
+      console.log(i)
+      const spca = spc.SPCA?.find((spca) => spca?.year === String(i) || null)
+
+      spcaList.push(
+        <li key={i} className="relative">
+          {spca ? (
+            <a
+              target="blank"
+              title={spca.status}
+              style={{ backgroundColor: `${spca.color}` }}
+              href={isLinkTwo ? spca.link2 : spca.link1}
+            >
+              {spca.year}
+            </a>
+          ) : (
+            <div className="w-10" />
+          )}
+          {spca?.observation && (
+            <button
+              type="button"
+              className="h-fit w-fit p-0"
+              onClick={() => handleViewObservation(spca.observation)}
+            >
+              <span className="absolute -right-1 -top-2 z-0 flex h-3 w-3 ">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-second opacity-75"></span>
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
+              </span>
+            </button>
+          )}
+        </li>,
+      )
+    }
+    return spcaList
+  }
+
+  const generateSPCEList = (spc: DirectorySPCProps) => {
+    const spceList = []
+
+    for (let i = 2018; i <= dayjs().year(); i += 2) {
+      console.log(i)
+      const spce = spc.SPCE?.find((spce) => spce?.year === String(i) || null)
+
+      spceList.push(
+        <li key={i} className="relative">
+          {spce ? (
+            <a
+              target="blank"
+              title={spce.status}
+              style={{
+                backgroundColor: `${spce.color}`,
+              }}
+              href={spce.link}
+            >
+              {spce.year}
+            </a>
+          ) : (
+            <div className="w-10" />
+          )}
+        </li>,
+      )
+    }
+    return spceList
+  }
 
   return (
     <div>
@@ -64,38 +133,10 @@ export function TableSPC({ data }: SPCProps) {
                   </td>
                   <td className="whitespace-nowrap">
                     <ul>
-                      {spc.SPCA.length > 0 ? (
-                        spc.SPCA.map((spca, index) => (
-                          <li key={index} className="relative">
-                            <a
-                              target="blank"
-                              title={spca.status}
-                              style={{
-                                backgroundColor: `${spca.color}`,
-                              }}
-                              href={isLinkTwo ? spca.link2 : spca.link1}
-                            >
-                              {spca.year}
-                            </a>
-
-                            {spca.observation && (
-                              <button
-                                type="button"
-                                className="h-fit w-fit p-0"
-                                onClick={() =>
-                                  handleViewObservation(spca.observation)
-                                }
-                              >
-                                <span className="absolute -right-1 -top-2 z-0 flex h-3 w-3 ">
-                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-second opacity-75"></span>
-                                  <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
-                                </span>
-                              </button>
-                            )}
-                          </li>
-                        ))
+                      {spc.SPCA !== null && spc.SPCA.length > 0 ? (
+                        generateSPCAList(spc)
                       ) : (
-                        <li>-</li>
+                        <li></li>
                       )}
                     </ul>
                   </td>
@@ -112,38 +153,10 @@ export function TableSPC({ data }: SPCProps) {
                   </td>
                   <td className="whitespace-nowrap">
                     <ul>
-                      {spc.SPCE.length > 0 ? (
-                        spc.SPCE.map((spce, index) => (
-                          <li key={index} className="relative">
-                            <a
-                              target="blank"
-                              title={spce.status}
-                              style={{
-                                backgroundColor: `${spce.color}`,
-                              }}
-                              href={spce.link}
-                            >
-                              {spce.year}
-                            </a>
-
-                            {spce.observation && (
-                              <button
-                                type="button"
-                                className="h-fit w-fit p-0"
-                                onClick={() =>
-                                  handleViewObservation(spce.observation)
-                                }
-                              >
-                                <span className="absolute -right-1 -top-2 z-0 flex h-3 w-3 ">
-                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-second opacity-75"></span>
-                                  <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
-                                </span>
-                              </button>
-                            )}
-                          </li>
-                        ))
+                      {spc.SPCE !== null && spc.SPCE.length > 0 ? (
+                        generateSPCEList(spc)
                       ) : (
-                        <li>-</li>
+                        <li></li>
                       )}
                     </ul>
                   </td>

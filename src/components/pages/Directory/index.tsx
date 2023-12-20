@@ -1,15 +1,15 @@
 'use client'
 
 import { api } from '@/lib/api'
-import { Eye, Circle } from 'lucide-react'
-import { ChangeEvent, useCallback, useContext, useState } from 'react'
+import { Eye, Circle, Trash2, Plus } from 'lucide-react'
+import { ChangeEvent, useCallback, useContext, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Page } from '@/@types/page'
 import { PaddingButtons } from '@/components/Buttons/next'
 import { RefreshButton } from '@/components/Buttons/refresh'
 import { LoadingPrimary } from '@/components/Loading/primary'
 import { useRouter } from 'next/navigation'
-import { AccessContext } from '@/services/context.provider'
+import { AccessContext } from '@/provider/context.provider'
 import { LoadingSecond } from '@/components/Loading/second'
 import { useNotify } from '@/components/Toast/toast'
 import SearchParty from '@/components/Search/party'
@@ -17,7 +17,9 @@ import SearchState from '@/components/Search/state'
 import SearchCity from '@/components/Search/city'
 import SearchVigency from '@/components/Search/status'
 import { User } from '@/lib/auth'
-import { queryClient } from '@/services/query.provider'
+import { queryClient } from '@/provider/query.provider'
+import DirectoryForm, { RegisterDirectoryModalProps } from './RegisterDirectory'
+import { DirectoryService } from '@/services/directory.service'
 
 interface DirectoryProps {
   id: number
@@ -43,7 +45,7 @@ interface DirectoryProps {
 
 type Search = {
   city?: string
-  state: string | null
+  state?: string
   party?: string
   vigencyStatus?: string
 }
@@ -52,6 +54,12 @@ export function DirectoryTable() {
   const [page, setPage] = useState(0)
   const router = useRouter()
   const notify = useNotify()
+  const directoryService = new DirectoryService()
+
+  const modalRegisterRef = useRef<RegisterDirectoryModalProps>(null)
+  const handleRegisterModal = useCallback(() => {
+    modalRegisterRef.current?.openModal()
+  }, [])
 
   const { modulesArray, partyCode, cityCode, stateId, handleSetRouter } =
     useContext(AccessContext)
@@ -80,24 +88,18 @@ export function DirectoryTable() {
       cityCode,
       stateId,
     ],
-    async () => {
-      const response = await api
-        .get('/directories', {
-          params: {
-            skip: page,
-            take: 15,
-            party: search.party,
-            city: search.city,
-            state: search.state,
-            vigencyStatus: search.vigencyStatus,
-            partyCode,
-            cityCode,
-            stateId,
-          },
-        })
-        .then((response) => response.data)
-      return response
-    },
+    () =>
+      directoryService.getAll(
+        page,
+        15,
+        search.party,
+        search.city,
+        search.state,
+        search.vigencyStatus,
+        partyCode,
+        cityCode,
+        stateId,
+      ),
     {
       keepPreviousData: true,
       retry: false,
@@ -106,7 +108,7 @@ export function DirectoryTable() {
       onError: (error: any) => {
         if (error.response.status === 403) {
           notify({ type: 'warning', message: error.response.data.message })
-          router.push('/acessos')
+          router.push('/painel')
         }
         console.log(error)
       },
@@ -122,17 +124,21 @@ export function DirectoryTable() {
       setSearch((old) => ({ ...old, [name]: undefined }))
       return
     }
+
+    if (name === 'state' && value === '') {
+      setSearch((old) => ({ ...old, city: undefined }))
+    }
     setPage(0)
     setSearch((old) => ({ ...old, [name]: value || undefined }))
   }
 
-  // async function handleDeleteDirectory(id: number) {
-  //   try {
-  //     await api.delete(`/directories/${id}`)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  async function handleDeleteDirectory(id: number) {
+    try {
+      await api.delete(`/directories/${id}`)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   if (isLoading) {
     return (
@@ -142,39 +148,45 @@ export function DirectoryTable() {
     )
   }
 
+  if (!modulesArray && user?.role === 'CLIENT') {
+    return null
+  }
+
   return (
-    <div className="space-y-8">
-      {/* <DirectoryForm
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        // onCreate={handleCreateDirectory}
-      /> */}
+    <div className="flex flex-col gap-6">
+      <DirectoryForm ref={modalRegisterRef} />
 
-      <div className="flex items-end justify-between">
-        <div className="flex w-fit gap-4">
-          {!partyCode && (
-            <SearchParty handleSearchOnChange={handleSearchOnChange} />
-          )}
+      <div className="grid grid-flow-col items-end gap-2 max-sm:grid-flow-row max-sm:grid-cols-2">
+        {!partyCode && (
+          <SearchParty handleSearchOnChange={handleSearchOnChange} />
+        )}
 
-          {!stateId && (
-            <SearchState handleSearchOnChange={handleSearchOnChange} />
-          )}
+        {!stateId && (
+          <SearchState handleSearchOnChange={handleSearchOnChange} />
+        )}
 
-          {!cityCode && (
-            <SearchCity
-              stateId={search.state}
-              handleSearchOnChange={handleSearchOnChange}
-            />
-          )}
+        {!cityCode && (
+          <SearchCity
+            stateId={search.state}
+            handleSearchOnChange={handleSearchOnChange}
+          />
+        )}
 
-          <SearchVigency handleSearchOnChange={handleSearchOnChange} />
-        </div>
+        <SearchVigency handleSearchOnChange={handleSearchOnChange} />
 
         <RefreshButton queryName="directories" />
+
+        <button
+          onClick={() => handleRegisterModal()}
+          className="button-primary"
+        >
+          <Plus className="w-4" />
+          Cadastrar
+        </button>
       </div>
 
       <div className="space-y-2">
-        <fieldset className="h-auto w-full rounded-lg px-3 py-2">
+        <fieldset className="h-auto rounded-lg px-3 py-2">
           <table>
             <thead>
               <tr>
@@ -225,7 +237,7 @@ export function DirectoryTable() {
                         }
                         onClick={() =>
                           handleSetRouter(
-                            `/acessos/painel/vigencia/${directory.id}`,
+                            `/painel/diretorio/vigencia/${directory.id}`,
                           )
                         }
                         className="disabled:text-slate-4 h-fit w-full items-start justify-start whitespace-break-spaces p-0 text-start text-xs font-medium disabled:cursor-not-allowed disabled:opacity-70"
@@ -245,13 +257,13 @@ export function DirectoryTable() {
                         <button className="hover:text-secundary h-full w-auto p-1">
                           <Eye className="w-4" />
                         </button>
-                        {/* <button
-                        onClick={() => handleDeleteDirectory(directory.id)}
-                        type="button"
-                        className="h-full w-auto rounded p-1 hover:text-red-500"
-                      >
-                        <Trash2 className="w-4" />
-                      </button> */}
+                        <button
+                          onClick={() => handleDeleteDirectory(directory.id)}
+                          type="button"
+                          className="h-full w-auto rounded p-1 hover:text-red-500"
+                        >
+                          <Trash2 className="w-4" />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -267,7 +279,7 @@ export function DirectoryTable() {
           </table>
         </fieldset>
 
-        <div className="flex w-full justify-end">
+        <div className="z-0 flex w-full justify-end">
           {data?.results !== null ? (
             <PaddingButtons
               pages={data?.info?.pages ? data?.info?.pages : 0}

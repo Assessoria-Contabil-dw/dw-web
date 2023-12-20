@@ -67,8 +67,8 @@ export interface TypeOrgProps {
 export interface VigencyAdvocateProps {
   id: number
 
-  vigencyId: string
-  advocateId: string
+  vigencyId: number
+  advocateId: number
 }
 
 export interface VigencyLawFirmProps {
@@ -81,8 +81,8 @@ export interface VigencyLawFirmProps {
 export interface VigencyLeadersProps {
   id: number
 
-  vigencyId: string
-  leaderId: string
+  vigencyId: number
+  leaderId: number
   officeId: number
 }
 
@@ -205,6 +205,6 @@ export interface DirectorySPCProps {
   party: string
   vigency: string
   surname: string
-  SPCA: SPCAProps[]
-  SPCE: SPCEProps[]
+  SPCA: SPCAProps[] | null
+  SPCE: SPCEProps[] | null
 }

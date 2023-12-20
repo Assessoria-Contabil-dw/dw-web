@@ -1,8 +1,8 @@
-import Providers from '../services/query.provider'
+import Providers from '../provider/query.provider'
 import './globals.css'
 import { Montserrat } from 'next/font/google'
 import React from 'react'
-import ToastProvider from '@/services/toast.provider'
+import ToastProvider from '@/provider/toast.provider'
 
 const montserrat = Montserrat({
   subsets: ['latin'],

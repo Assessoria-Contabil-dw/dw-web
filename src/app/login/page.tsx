@@ -9,8 +9,7 @@ export default function Login() {
   const user = useAuth()
 
   if (user !== null && user !== undefined) {
-    if (user.role === 'ADMIN') return redirect('/acessos/painel')
-    if (user.role === 'CLIENT') return redirect('/acessos')
+    return redirect('/painel')
   }
 
   return (
@@ -35,7 +34,7 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="flex flex-1 items-center justify-center p-12">
+      <div className="flex flex-1 items-center justify-center p-8">
         <SignInForm />
       </div>
     </div>

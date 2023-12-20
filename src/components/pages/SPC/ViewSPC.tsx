@@ -60,10 +60,10 @@ const ViewSPCModel: ForwardRefRenderFunction<ViewSPCRef> = (props, ref) => {
   }
 
   return (
-    <div className="fixed right-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/50">
-      <div className="h-3/4 w-2/4 overflow-hidden">
-        <fieldset className="flex h-full w-full flex-col items-start justify-start border-b-[1px]">
-          <div className="flex w-full justify-between">
+    <div className="model-bg">
+      <div className="model-size">
+        <div className="model-card">
+          <div className="model-header">
             <div>
               <h4>Visualizar SPCS</h4>
               <span>
@@ -79,11 +79,11 @@ const ViewSPCModel: ForwardRefRenderFunction<ViewSPCRef> = (props, ref) => {
           </div>
 
           {loading ? (
-            <div className="flex h-full w-full items-center justify-center">
+            <div className="model-loading">
               <LoadingSecond />
             </div>
           ) : (
-            <div className="flex w-full flex-col justify-start gap-8 overflow-y-scroll">
+            <div className="model-body">
               <div>
                 <h3>SPCA</h3>
                 <table>
@@ -96,14 +96,15 @@ const ViewSPCModel: ForwardRefRenderFunction<ViewSPCRef> = (props, ref) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {spcs?.SPCA.map((spc) => (
-                      <tr key={spc.id}>
-                        <td>{spc.year}</td>
-                        <td>{spc.numPge != null ? spc.numPge : '-'}</td>
-                        <td>{spc.status}</td>
-                        <td>{spc.observation}</td>
-                      </tr>
-                    ))}
+                    {spcs?.SPCA != null &&
+                      spcs?.SPCA.map((spc) => (
+                        <tr key={spc.id}>
+                          <td>{spc.year}</td>
+                          <td>{spc.numPge != null ? spc.numPge : '-'}</td>
+                          <td>{spc.status}</td>
+                          <td>{spc.observation}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -120,20 +121,21 @@ const ViewSPCModel: ForwardRefRenderFunction<ViewSPCRef> = (props, ref) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {spcs?.SPCE.map((spc) => (
-                      <tr key={spc.id}>
-                        <td>{spc.year}</td>
-                        <td>{spc.numPge != null ? spc.numPge : '-'}</td>
-                        <td>{spc.status}</td>
-                        <td>{spc.observation}</td>
-                      </tr>
-                    ))}
+                    {spcs?.SPCE != null &&
+                      spcs?.SPCE.map((spc) => (
+                        <tr key={spc.id}>
+                          <td>{spc.year}</td>
+                          <td>{spc.numPge != null ? spc.numPge : '-'}</td>
+                          <td>{spc.status}</td>
+                          <td>{spc.observation}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
             </div>
           )}
-        </fieldset>
+        </div>
       </div>
     </div>
   )

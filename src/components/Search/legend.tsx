@@ -28,7 +28,7 @@ export default function SearchLegend({
   if (isLoading) return null
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-[90px]">
       <label htmlFor="state" className="text-xs">
         Status
       </label>

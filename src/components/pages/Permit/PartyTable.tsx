@@ -2,7 +2,7 @@ import {
   AccessContext,
   Modules,
   ModulesData,
-} from '@/services/context.provider'
+} from '@/provider/context.provider'
 import { useRouter } from 'next/navigation'
 import { useContext } from 'react'
 

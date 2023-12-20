@@ -14,7 +14,7 @@ interface CityProps {
 }
 
 interface SearchPartyProps {
-  stateId: string | null
+  stateId: string | undefined
   handleSearchOnChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
@@ -45,15 +45,17 @@ export default function SearchCity({
   if (isLoading) return null
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-[90px]">
       <label htmlFor="city" className="text-xs">
         Cidade
       </label>
       <select name="city" onChange={handleSearchOnChange}>
-        <option value="">Todos</option>
+        <option value="" selected>
+          Todos
+        </option>
         {data !== undefined
           ? data.map((city) => (
-              <option key={city.code} value={city.code}>
+              <option key={city.code} value={city.name}>
                 {city.name}
               </option>
             ))
