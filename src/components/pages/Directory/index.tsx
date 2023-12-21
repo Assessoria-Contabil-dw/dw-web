@@ -1,7 +1,7 @@
 'use client'
 
 import { api } from '@/lib/api'
-import { Eye, Circle, Trash2, Plus } from 'lucide-react'
+import { Circle, Trash2, Plus } from 'lucide-react'
 import { ChangeEvent, useCallback, useContext, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Page } from '@/@types/page'
@@ -10,7 +10,6 @@ import { RefreshButton } from '@/components/Buttons/refresh'
 import { LoadingPrimary } from '@/components/Loading/primary'
 import { useRouter } from 'next/navigation'
 import { AccessContext } from '@/provider/context.provider'
-import { LoadingSecond } from '@/components/Loading/second'
 import { useNotify } from '@/components/Toast/toast'
 import SearchParty from '@/components/Search/party'
 import SearchState from '@/components/Search/state'
@@ -174,15 +173,17 @@ export function DirectoryTable() {
 
         <SearchVigency handleSearchOnChange={handleSearchOnChange} />
 
-        <RefreshButton queryName="directories" />
+        <RefreshButton isLoading={isFetching} queryName="directories" />
 
-        <button
-          onClick={() => handleRegisterModal()}
-          className="button-primary"
-        >
-          <Plus className="w-4" />
-          Cadastrar
-        </button>
+        {user?.role === 'ADMIN' && (
+          <button
+            onClick={() => handleRegisterModal()}
+            className="button-primary"
+          >
+            <Plus className="w-4" />
+            Cadastrar
+          </button>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -201,15 +202,7 @@ export function DirectoryTable() {
               </tr>
             </thead>
             <tbody>
-              {isFetching ? (
-                <tr>
-                  <td colSpan={8} className="py-6">
-                    <span className="flex justify-center">
-                      <LoadingSecond />
-                    </span>
-                  </td>
-                </tr>
-              ) : data?.results != null ? (
+              {data?.results != null ? (
                 data?.results.map((directory) => (
                   <tr key={directory.id}>
                     <td
@@ -253,18 +246,20 @@ export function DirectoryTable() {
                     <td>{directory.cnpj == null ? '-' : directory.cnpj}</td>
                     <td>{directory.email == null ? '-' : directory.email}</td>
                     <td>
-                      <div className="flex items-center ">
-                        <button className="hover:text-secundary h-full w-auto p-1">
+                      {user?.role === 'ADMIN' && (
+                        <div className="flex items-center ">
+                          {/* <button className="hover:text-secundary h-full w-auto p-1">
                           <Eye className="w-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteDirectory(directory.id)}
-                          type="button"
-                          className="h-full w-auto rounded p-1 hover:text-red-500"
-                        >
-                          <Trash2 className="w-4" />
-                        </button>
-                      </div>
+                        </button> */}
+                          <button
+                            onClick={() => handleDeleteDirectory(directory.id)}
+                            type="button"
+                            className="h-full w-auto rounded p-1 hover:text-red-500"
+                          >
+                            <Trash2 className="w-4" />
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))

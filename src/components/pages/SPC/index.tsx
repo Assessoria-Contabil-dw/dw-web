@@ -22,7 +22,7 @@ interface SearchProps {
   legend?: number
   party?: string
   city?: string
-  state: string | null
+  state?: string
   status?: string
   year?: string
 }
@@ -49,7 +49,13 @@ export function SPC() {
   //   modalRegisterRef.current?.openModal()
   // }, [])
 
-  const spcResult = useQuery<Page<DirectorySPCProps>>(
+  const {
+    data: spcResult,
+    isFetching,
+    isLoading,
+    isError,
+    isPreviousData,
+  } = useQuery<Page<DirectorySPCProps>>(
     [
       'spcs',
       page,
@@ -118,7 +124,7 @@ export function SPC() {
     setSearch((old) => ({ ...old, [name]: value || undefined }))
   }
 
-  if (spcResult.isLoading) {
+  if (isLoading) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <LoadingPrimary />
@@ -126,7 +132,7 @@ export function SPC() {
     )
   }
 
-  if (spcResult.isError) {
+  if (isError) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
         <i className="text-gray-500">Algo deu errado!</i>
@@ -172,19 +178,19 @@ export function SPC() {
 
           <SearchLegend handleSearchOnChange={handleSearchOnChange} />
         </div>
-        <RefreshButton queryName="spcs" />
+        <RefreshButton isLoading={isFetching} queryName="spcs" />
       </div>
 
       <div className="space-y-2">
-        <TableSPC data={spcResult.data?.results ?? []} />
+        <TableSPC data={spcResult?.results ?? []} />
 
         <div className="flex w-full justify-end">
-          {spcResult?.data?.results != null ? (
+          {spcResult?.results != null ? (
             <PaddingButtons
-              pages={spcResult.data?.info.pages}
-              isFetching={spcResult.isFetching}
-              next={spcResult.data?.info?.next}
-              isPreviousData={spcResult.isPreviousData}
+              pages={spcResult?.info.pages}
+              isFetching={isFetching}
+              next={spcResult?.info?.next}
+              isPreviousData={isPreviousData}
               prevPage={prevPage}
               nextPage={nextPage}
               page={page}

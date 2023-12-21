@@ -23,6 +23,7 @@ import {
 } from '@/@types/types'
 import { LoadingSecond } from '@/components/Loading/second'
 import { useNotify } from '@/components/Toast/toast'
+import { queryClient } from '@/provider/query.provider'
 
 type VigencyFormData = z.infer<typeof virgenciesFormSchema>
 
@@ -138,6 +139,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
 
       setError('')
       notify({ type: 'success', message: 'Vigência cadastrada com sucesso' })
+      queryClient.invalidateQueries('vigencies')
     } catch (error: any) {
       if (
         error.response.status === 422 ||

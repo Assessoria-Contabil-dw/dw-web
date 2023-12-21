@@ -11,6 +11,7 @@ import {
 import { X } from 'lucide-react'
 import { LoadingSecond } from '../Loading/second'
 import { useNotify } from '../Toast/toast'
+import { queryClient } from '@/provider/query.provider'
 // import { ToastContainer, toast } from 'react-toastify'
 
 export interface DeletRef {
@@ -52,6 +53,7 @@ const DeletModel: ForwardRefRenderFunction<DeletRef> = (props, ref) => {
       await api.delete(`/${path}/${id}`)
       setIsSubmitting(false)
       notify({ type: 'success', message: 'Registro deletado com sucesso' })
+      queryClient.invalidateQueries(path)
       closeModal()
     } catch (error) {
       console.log(error)

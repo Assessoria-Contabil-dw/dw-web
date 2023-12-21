@@ -1,5 +1,5 @@
 'use client'
-import { X, Trash2, MoreHorizontal, Plus } from 'lucide-react'
+import { X, Trash2, Plus } from 'lucide-react'
 
 import { api } from '@/lib/api'
 import {
@@ -17,6 +17,9 @@ import {
   LawFirmProps,
   LeaderProps,
   OfficesProps,
+  VigencyAdvocateProps,
+  VigencyLawFirmProps,
+  VigencyLeadersProps,
   VigencyProps,
 } from '@/@types/types'
 import { LoadingSecond } from '@/components/Loading/second'
@@ -29,23 +32,10 @@ export interface UpdateVigencyRef {
   closeViewModal: () => void
 }
 
-type leaderProps = {
-  id: number
-  leaderId: number
-}
-
-type officesProps = {
-  id: number
-  officeId: number
-}
-
-type advocateProps = {
-  id: number
-  advocateId: number
-}
-type lawFirmProps = {
-  id: number
-  lawFirmId: number
+interface CreateVigencyProps {
+  vigencyLeader: VigencyLeadersProps[]
+  vigencyAdvocate: VigencyAdvocateProps[]
+  vigencyLawFirm: VigencyLawFirmProps[]
 }
 
 const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
@@ -60,10 +50,7 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
   const [lawFirms, setLawFirm] = useState<LawFirmProps[]>([])
   const [advocates, setAdvocate] = useState<AdvocateProps[]>([])
 
-  const [selectedLeader, setSelectedLeader] = useState<leaderProps[]>([])
-  const [selectedOffice, setSelectedOffice] = useState<officesProps[]>([])
-  const [selectedAdvocate, setSelectedAdvocate] = useState<advocateProps[]>([])
-  const [selectedLawFirm, setSelectedLawFirm] = useState<lawFirmProps[]>([])
+  const [vigencyAdd, setVigencyAdd] = useState<CreateVigencyProps>()
 
   const openViewModal = useCallback((id: string) => {
     setvigencyId(id)
@@ -113,64 +100,286 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
       })
   }, [vigencyId])
 
-  const handleLeaderChange = (
-    index: number,
-    selectedLeaderId: number,
-    id: number,
-  ) => {
-    setSelectedLeader((prevSelected) => {
-      const newSelected = [...prevSelected]
-      newSelected[index] = { id, leaderId: selectedLeaderId }
+  // LIDER
+  const handleLeaderChange = (id: number, leaderId: number) => {
+    queryClient.setQueryData(['vigencies', vigencyId], (oldData: any) => {
+      return {
+        ...oldData,
+        vigencyLeader: oldData.vigencyLeader.map((item: any) => {
+          if (item.id === id) {
+            console.log(id, item.id)
+            return { ...item, leaderId }
+          }
+          return item
+        }),
+      }
+    })
+  }
+
+  const handleOfficeChange = (id: number, officeId: number) => {
+    queryClient.setQueryData(['vigencies', vigencyId], (oldData: any) => {
+      return {
+        ...oldData,
+        vigencyLeader: oldData.vigencyLeader.map((item: any) => {
+          if (item.id === id) {
+            console.log(id, item.id)
+
+            return { ...item, officeId }
+          }
+          return item
+        }),
+      }
+    })
+  }
+
+  const handleRemoveLeader = (leaderId: number) => {
+    setVigencyAdd((prevSelected: CreateVigencyProps | undefined) => {
+      if (!prevSelected) {
+        return undefined
+      }
+
+      const newSelected = {
+        ...prevSelected,
+        vigencyLeader: prevSelected.vigencyLeader.filter(
+          (item) => item.id !== leaderId,
+        ),
+      }
+      console.log(newSelected)
       return newSelected
     })
   }
 
-  const handleOfficeChange = (
-    index: number,
-    selectedOfficeId: number,
-    id: number,
-  ) => {
-    setSelectedOffice((prevSelected) => {
-      const newSelected = [...prevSelected]
-      newSelected[index] = { id, officeId: selectedOfficeId }
+  const handleDeleteVigency = (leaderId: number, path: string) => {
+    try {
+      api.delete(`/vigencies/${path}/${leaderId}`)
+      queryClient.invalidateQueries('vigencies')
+
+      notify({ message: 'Removido com sucesso', type: 'success' })
+    } catch (error) {
+      notify({ message: 'Não foi possível remover', type: 'error' })
+    }
+  }
+
+  const handleLeaderCreate = (id: number, leaderId: number) => {
+    setVigencyAdd((prevSelected: any) => {
+      if (!prevSelected) {
+        return undefined
+      }
+
+      const newSelected = {
+        ...prevSelected,
+        vigencyLeader: prevSelected.vigencyLeader.map((item: any) => {
+          if (item.id === id) {
+            return { ...item, id, leaderId }
+          }
+          return item
+        }),
+      }
       return newSelected
     })
   }
 
-  const handleAdvocateChange = (
-    index: number,
-    selectedAdvocateId: number,
-    id: number,
-  ) => {
-    setSelectedAdvocate((prevSelected) => {
-      const newSelected = [...prevSelected]
-      newSelected[index] = { id, advocateId: selectedAdvocateId }
+  const handleOfficeCreate = (id: number, officeId: number) => {
+    setVigencyAdd((prevSelected: any) => {
+      if (!prevSelected) {
+        return undefined
+      }
+      console.log(id, officeId)
+
+      const newSelected = {
+        ...prevSelected,
+        vigencyLeader: prevSelected.vigencyLeader.map((item: any) => {
+          if (item.id === id) {
+            return { ...item, id, officeId }
+          }
+          return item
+        }),
+      }
       return newSelected
     })
   }
-  const handleRemoveAdvocate = (advocateId: number) => {
-    queryClient.setQueryData<VigencyProps>(
-      ['vigencies', vigencyId],
-      (prevData: any) => {
-        const updatedAdvocates = prevData.vigencyAdvocate.filter(
-          (item: any) => item.id !== advocateId,
-        )
+
+  const handleAddLeader = (index: number) => {
+    setVigencyAdd((prevSelected: any) => {
+      const newIndex = index || 0
+      console.log(prevSelected.vigencyLeader)
+
+      if (!prevSelected) {
         return {
-          ...prevData,
-          vigencyAdvocate: updatedAdvocates,
+          vigencyLeader: [{ id: newIndex, leaderId: 0, officeId: 0 }],
         }
-      },
-    )
+      }
+
+      if (!prevSelected.vigencyLeader) {
+        return {
+          ...prevSelected,
+          vigencyLeader: [{ id: newIndex, leaderId: 0, officeId: 0 }],
+        }
+      } else {
+        return {
+          ...prevSelected,
+          vigencyLeader: [
+            ...prevSelected.vigencyLeader,
+            { id: newIndex, leaderId: 0, officeId: 0 },
+          ],
+        }
+      }
+    })
   }
 
-  const handleLawFirmChange = (
-    index: number,
-    selectedLawFirmId: number,
-    id: number,
-  ) => {
-    setSelectedLawFirm((prevSelected) => {
-      const newSelected = [...prevSelected]
-      newSelected[index] = { id, lawFirmId: selectedLawFirmId }
+  // ADVOGADO
+  const handleAdvocateChange = (id: number, advocateId: number) => {
+    queryClient.setQueryData(['vigencies', vigencyId], (oldData: any) => {
+      return {
+        ...oldData,
+        vigencyAdvocate: oldData.vigencyAdvocate.map((item: any) => {
+          if (item.id === id) {
+            return { ...item, advocateId }
+          }
+          return item
+        }),
+      }
+    })
+  }
+
+  const handleAdvocateCreate = (id: number, advocateId: number) => {
+    setVigencyAdd((prevSelected: any) => {
+      if (!prevSelected) {
+        return undefined
+      }
+
+      const newSelected = {
+        ...prevSelected,
+        vigencyAdvocate: prevSelected.vigencyAdvocate.map((item: any) => {
+          if (item.id === id) {
+            console.log(item)
+            return { id, advocateId }
+          }
+          return item
+        }),
+      }
+      return newSelected
+    })
+  }
+
+  const handleAddAdvocate = (index: number) => {
+    setVigencyAdd((prevSelected: any) => {
+      const newIndex = index || 0
+
+      if (!prevSelected) {
+        return {
+          vigencyAdvocate: [{ id: newIndex, advocateId: 0 }],
+        }
+      }
+
+      if (!prevSelected.vigencyAdvocate) {
+        return {
+          ...prevSelected,
+          vigencyAdvocate: [{ id: newIndex, advocateId: 0 }],
+        }
+      } else {
+        return {
+          ...prevSelected,
+          vigencyAdvocate: [
+            ...prevSelected.vigencyAdvocate,
+            { id: newIndex, advocateId: 0 },
+          ],
+        }
+      }
+    })
+  }
+
+  const handleRemoveAdvocate = (advocateId: number) => {
+    setVigencyAdd((prevSelected: CreateVigencyProps | undefined) => {
+      if (!prevSelected) {
+        return undefined
+      }
+
+      const newSelected = {
+        ...prevSelected,
+        vigencyAdvocate: prevSelected.vigencyAdvocate.filter(
+          (item) => item.id !== advocateId,
+        ),
+      }
+      console.log(newSelected)
+      return newSelected
+    })
+  }
+
+  // ESCRITORIO
+  const handleLawFirmChange = (id: number, lawFirmId: number) => {
+    queryClient.setQueryData(['vigencies', vigencyId], (oldData: any) => {
+      return {
+        ...oldData,
+        vigencyLawFirm: oldData.vigencyLawFirm.map((item: any) => {
+          if (item.id === id) {
+            return { ...item, lawFirmId }
+          }
+          return item
+        }),
+      }
+    })
+  }
+
+  const handleAddLawFirm = (index: number) => {
+    setVigencyAdd((prevSelected: any) => {
+      const newIndex = index || 0
+
+      if (!prevSelected) {
+        return {
+          vigencyLawFirm: [{ id: newIndex, lawFirmId: 0 }],
+        }
+      }
+
+      if (!prevSelected.vigencyLawFirm) {
+        return {
+          ...prevSelected,
+          vigencyLawFirm: [{ id: newIndex, lawFirmId: 0 }],
+        }
+      } else {
+        return {
+          ...prevSelected,
+          vigencyLawFirm: [
+            ...prevSelected.vigencyLawFirm,
+            { id: newIndex, lawFirmId: 0 },
+          ],
+        }
+      }
+    })
+  }
+
+  const handleRemoveLawFirm = (lawFirmId: number) => {
+    setVigencyAdd((prevSelected: CreateVigencyProps | undefined) => {
+      if (!prevSelected) {
+        return undefined
+      }
+
+      const newSelected = {
+        ...prevSelected,
+        vigencyLawFirm: prevSelected.vigencyLawFirm.filter(
+          (item) => item.id !== lawFirmId,
+        ),
+      }
+      console.log(newSelected)
+      return newSelected
+    })
+  }
+
+  const handleLawFirmCreate = (id: number, lawFirmId: number) => {
+    setVigencyAdd((prevSelected: any) => {
+      if (!prevSelected) {
+        return undefined
+      }
+
+      const newSelected = {
+        ...prevSelected,
+        vigencyLawFirm: prevSelected.vigencyLawFirm.map((item: any) => {
+          if (item.id === id) {
+            return { id, lawFirmId }
+          }
+          return item
+        }),
+      }
       return newSelected
     })
   }
@@ -184,66 +393,76 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
     const dateFirst = dayjs(formData.get('dateFirst') as string).format()
     const dateLast = dayjs(formData.get('dateLast') as string).format()
 
-    const vigencyLeader = selectedLeader.map((id, index) => ({
-      id: id.id,
-      leaderId: id.leaderId,
-      officeId: selectedOffice[index].officeId,
-    }))
-
-    const vigencyAdvocate = selectedAdvocate.map((id) => {
-      return {
-        id: id.id,
-        advocateId: id.advocateId,
-      }
-    })
-
-    const vigencyLawFirm = selectedLawFirm.map((id) => {
-      return {
-        id: id.id,
-        lawFirmId: id.lawFirmId,
-      }
-    })
     const data = {
       dateFirst,
       dateLast,
-      vigencyLeader:
-        vigencyLeader.length !== 0 ? vigencyLeader : vigencyData?.vigencyLeader,
-      vigencyAdvocate:
-        vigencyAdvocate.length !== 0
-          ? vigencyAdvocate
-          : vigencyData?.vigencyAdvocate,
-      vigencyLawFirm:
-        vigencyLawFirm.length !== 0
-          ? vigencyLawFirm
-          : vigencyData?.vigencyLawFirm,
+      vigencyLeader: vigencyData?.vigencyLeader,
+      vigencyAdvocate: vigencyData?.vigencyAdvocate,
+      vigencyLawFirm: vigencyData?.vigencyLawFirm,
     }
 
-    console.log(data)
-  }
-  // async function handleEditFormSubmit(event: FormEvent<HTMLFormElement>) {
-  // try {
-  //   await api.put('/vigencies/directory', {
-  //     dateFirst: dayjs(data.dateFirst).format(),
-  //     dateLast: dayjs(data.dateLast).format(),
-  //     vigencyLeader: data.vigencyLeader,
-  //     vigencyAdvocate: data.vigencyAdvocate,
-  //     vigencyLawFirm: data.vigencyLawFirm,
-  //   })
+    try {
+      await api.put(`/vigencies/${vigencyId}`, {
+        dateFirst: dayjs(data.dateFirst).format(),
+        dateLast: dayjs(data.dateLast).format(),
+        vigencyLeader: data.vigencyLeader,
+        vigencyAdvocate: data.vigencyAdvocate,
+        vigencyLawFirm: data.vigencyLawFirm,
+      })
 
-  //   setError('')
-  //   notify({ type: 'success', message: 'Vigência atualizada com sucesso' })
-  // } catch (error: any) {
-  //   if (
-  //     error.response.status === 422 ||
-  //     error.response.status === 400 ||
-  //     error.response.status === 404
-  //   ) {
-  //     setError(error.response.data.message)
-  //   } else {
-  //     console.log(error)
-  //     setError('Não foi possível atualizar vigência')
-  //   }
-  // }
+      notify({ type: 'success', message: 'Vigência atualizada com sucesso' })
+      queryClient.invalidateQueries('vigencies')
+    } catch (error: any) {
+      notify({
+        type: 'error',
+        message: 'Não foi possível atualizar vigência',
+      })
+    }
+
+    if (
+      vigencyAdd?.vigencyAdvocate ||
+      vigencyAdd?.vigencyLeader ||
+      vigencyAdd?.vigencyLawFirm
+    ) {
+      const transformVigencyAdd = {
+        vigencyLeader: vigencyAdd?.vigencyLeader
+          ? vigencyAdd?.vigencyLeader.map((item) => {
+              return {
+                leaderId: item.leaderId,
+                officeId: item.officeId,
+              }
+            })
+          : [],
+        vigencyAdvocate: vigencyAdd?.vigencyAdvocate
+          ? vigencyAdd?.vigencyAdvocate.map((item) => {
+              return {
+                advocateId: item.advocateId,
+              }
+            })
+          : [],
+        vigencyLawFirm: vigencyAdd?.vigencyLawFirm
+          ? vigencyAdd?.vigencyLawFirm.map((item) => {
+              return {
+                lawFirmId: item.lawFirmId,
+              }
+            })
+          : [],
+      }
+      try {
+        const response = await api.post(
+          `/vigencies/${vigencyId}`,
+          transformVigencyAdd,
+        )
+        console.log(response.data)
+        notify({ message: 'Vigência criada com sucesso', type: 'success' })
+        queryClient.invalidateQueries('vigencies')
+      } catch (error) {
+        notify({ message: 'Não foi possível criar vigência', type: 'error' })
+      }
+    }
+
+    closeViewModal()
+  }
 
   if (!isModalView) {
     return null
@@ -287,19 +506,37 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="">Representantes</label>
+                <div className="flex items-center gap-2">
+                  <label htmlFor="">Representantes</label>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleAddLeader(
+                        Number(
+                          vigencyData?.vigencyLeader
+                            ? vigencyData?.vigencyLeader.length
+                            : 0,
+                        ) +
+                          Number(
+                            vigencyAdd?.vigencyLeader
+                              ? vigencyAdd?.vigencyLeader.length
+                              : 0,
+                          ),
+                      )
+                    }
+                    className="button-min"
+                  >
+                    <Plus size={16} />
+                  </button>
+                </div>
                 {vigencyData?.vigencyLeader.map((leader, index) => {
                   return (
-                    <div className="flex gap-2" key={leader.id}>
+                    <div className="flex items-center gap-2" key={leader.id}>
                       <select
                         defaultValue={leader.leaderId}
                         name={`vigencyLeader${index}`}
                         onChange={(e) =>
-                          handleLeaderChange(
-                            index,
-                            Number(e.target.value),
-                            leader.id,
-                          )
+                          handleLeaderChange(leader.id, Number(e.target.value))
                         }
                       >
                         {leaderies.map((l, i) => {
@@ -314,11 +551,7 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
                       <select
                         name={`vigencyOffice${index}`}
                         onChange={(e) =>
-                          handleOfficeChange(
-                            index,
-                            Number(e.target.value),
-                            leader.id,
-                          )
+                          handleOfficeChange(leader.id, Number(e.target.value))
                         }
                         defaultValue={leader.officeId}
                       >
@@ -330,16 +563,85 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
                           )
                         })}
                       </select>
+
+                      <button
+                        onClick={() => handleDeleteVigency(leader.id, 'leader')}
+                        type="button"
+                        className="button-tool text-red-500"
+                      >
+                        <Trash2 className="w-4" />
+                      </button>
+                    </div>
+                  )
+                })}
+
+                {vigencyAdd?.vigencyLeader?.map((leader, index) => {
+                  return (
+                    <div className="flex items-center gap-2" key={leader.id}>
+                      <select
+                        name={`vigencyLeader${index}`}
+                        onChange={(e) =>
+                          handleLeaderCreate(leader.id, Number(e.target.value))
+                        }
+                      >
+                        <option value="">Selecione um representante</option>
+
+                        {leaderies.map((l, i) => {
+                          return (
+                            <option key={i} value={l.id}>
+                              {l.name}
+                            </option>
+                          )
+                        })}
+                      </select>
+
+                      <select
+                        name={`vigencyOffice${index}`}
+                        onChange={(e) =>
+                          handleOfficeCreate(leader.id, Number(e.target.value))
+                        }
+                      >
+                        <option value="">Selecione um cargo</option>
+                        {offices.map((o, i) => {
+                          return (
+                            <option key={i} value={o.id}>
+                              {o.name}
+                            </option>
+                          )
+                        })}
+                      </select>
+
+                      <button
+                        onClick={() => handleRemoveLeader(leader.id)}
+                        type="button"
+                        className="button-tool text-slate-500"
+                      >
+                        <X className="w-4" />
+                      </button>
                     </div>
                   )
                 })}
               </div>
+
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <label htmlFor="">Advogados</label>
                   <button
                     type="button"
-                    // onClick={addNewAdvocate}
+                    onClick={() =>
+                      handleAddAdvocate(
+                        Number(
+                          vigencyData?.vigencyAdvocate
+                            ? vigencyData.vigencyAdvocate.length
+                            : 0,
+                        ) +
+                          Number(
+                            vigencyAdd?.vigencyAdvocate
+                              ? vigencyAdd.vigencyAdvocate.length
+                              : 0,
+                          ),
+                      )
+                    }
                     className="button-min"
                   >
                     <Plus size={16} />
@@ -348,18 +650,55 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
 
                 {vigencyData?.vigencyAdvocate.map((advocate, index) => {
                   return (
-                    <div className="flex gap-2" key={advocate.id}>
+                    <div className="flex items-center gap-2" key={advocate.id}>
                       <select
                         defaultValue={advocate.advocateId}
                         name={`vigencyAdvocate${index}`}
                         onChange={(e) =>
                           handleAdvocateChange(
-                            index,
-                            Number(e.target.value),
                             advocate.id,
+                            Number(e.target.value),
                           )
                         }
                       >
+                        {advocates.map((a, i) => {
+                          return (
+                            <option
+                              key={i}
+                              value={a.id}
+                              selected={advocate.advocateId === a.id}
+                            >
+                              {a.name}
+                            </option>
+                          )
+                        })}
+                      </select>
+                      <button
+                        onClick={() =>
+                          handleDeleteVigency(advocate.id, 'advocate')
+                        }
+                        type="button"
+                        className="button-tool text-red-500"
+                      >
+                        <Trash2 className="w-4" />
+                      </button>
+                    </div>
+                  )
+                })}
+
+                {vigencyAdd?.vigencyAdvocate?.map((advocate, index) => {
+                  return (
+                    <div className="flex items-center gap-2" key={index}>
+                      <select
+                        name={`vigencyAdvocate${index}`}
+                        onChange={(e) =>
+                          handleAdvocateCreate(
+                            advocate.id,
+                            Number(e.target.value),
+                          )
+                        }
+                      >
+                        <option value="">Selecione um advogado</option>
                         {advocates.map((a, i) => {
                           return (
                             <option key={i} value={a.id}>
@@ -371,26 +710,47 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
                       <button
                         onClick={() => handleRemoveAdvocate(advocate.id)}
                         type="button"
-                        className="w-fit text-red-500"
+                        className="button-tool text-slate-500"
                       >
-                        <Trash2 className="w-4" />
+                        <X className="w-4" />
                       </button>
                     </div>
                   )
                 })}
               </div>
 
-              <div>
-                <label htmlFor="">Escritorio</label>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <label htmlFor="">Escritorio</label>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleAddLawFirm(
+                        Number(
+                          vigencyData?.vigencyLawFirm
+                            ? vigencyData.vigencyLawFirm.length
+                            : 0,
+                        ) +
+                          Number(
+                            vigencyAdd?.vigencyLawFirm
+                              ? vigencyAdd.vigencyLawFirm.length
+                              : 0,
+                          ),
+                      )
+                    }
+                    className="button-min"
+                  >
+                    <Plus size={16} />
+                  </button>
+                </div>
                 {vigencyData?.vigencyLawFirm.map((lawFirm, index) => {
                   return (
-                    <div className="flex gap-2" key={lawFirm.id}>
+                    <div className="flex items-center gap-2" key={lawFirm.id}>
                       <select
                         onChange={(e) =>
                           handleLawFirmChange(
-                            index,
-                            Number(e.target.value),
                             lawFirm.id,
+                            Number(e.target.value),
                           )
                         }
                         defaultValue={lawFirm.lawFirmId}
@@ -404,6 +764,48 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
                           )
                         })}
                       </select>
+                      <button
+                        onClick={() =>
+                          handleDeleteVigency(lawFirm.id, 'lawfirm')
+                        }
+                        type="button"
+                        className="button-tool text-red-500"
+                      >
+                        <Trash2 className="w-4" />
+                      </button>
+                    </div>
+                  )
+                })}
+
+                {vigencyAdd?.vigencyLawFirm?.map((lawFirm, index) => {
+                  return (
+                    <div className="flex items-center gap-2" key={lawFirm.id}>
+                      <select
+                        onChange={(e) =>
+                          handleLawFirmCreate(
+                            lawFirm.id,
+                            Number(e.target.value),
+                          )
+                        }
+                        defaultValue={lawFirm.lawFirmId}
+                        name={`vigencyLawFirm${index}`}
+                      >
+                        <option value="">Selecione um advogado</option>
+                        {lawFirms.map((l, i) => {
+                          return (
+                            <option key={i} value={l.id}>
+                              {l.name}
+                            </option>
+                          )
+                        })}
+                      </select>
+                      <button
+                        onClick={() => handleRemoveLawFirm(lawFirm.id)}
+                        type="button"
+                        className="button-tool text-slate-500"
+                      >
+                        <X className="w-4" />
+                      </button>
                     </div>
                   )
                 })}

@@ -73,7 +73,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
     [],
   )
 
-  const { data, isLoading, error } = useQuery<VProps>(
+  const { data, isLoading, isFetching, error } = useQuery<VProps>(
     ['vigencies', directoryId],
     async () => {
       const response = await api.get(`/vigencies/directory/${directoryId}`, {
@@ -131,7 +131,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
           </div>
 
           <div className="flex gap-3">
-            <RefreshButton queryName="vigencies" />
+            <RefreshButton isLoading={isFetching} queryName="vigencies" />
             {user?.role === 'ADMIN' && (
               <button
                 onClick={() => handleRegisterModal(directoryId)}
