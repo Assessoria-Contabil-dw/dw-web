@@ -1,6 +1,7 @@
 import { api } from '@/lib/api'
 import { ChangeEvent } from 'react'
 import { useQuery } from 'react-query'
+import { LoadingSecond } from '../Loading/second'
 
 interface CityProps {
   code: string
@@ -42,13 +43,14 @@ export default function SearchCity({
     },
   )
 
-  if (isLoading) return null
-
   return (
-    <div className="w-full min-w-[90px]">
-      <label htmlFor="city" className="text-xs">
-        Cidade
-      </label>
+    <div className="flex w-full min-w-[90px] flex-col justify-between gap-1">
+      <div className="flex gap-1">
+        <label htmlFor="city" className="text-xs">
+          Cidade
+        </label>
+        {isLoading && <LoadingSecond />}
+      </div>
       <select name="city" onChange={handleSearchOnChange}>
         <option value="" selected>
           Todos

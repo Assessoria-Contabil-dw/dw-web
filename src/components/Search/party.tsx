@@ -2,6 +2,7 @@ import { Page } from '@/@types/page'
 import { PartyService } from '@/services/party.service'
 import { ChangeEvent } from 'react'
 import { useQuery } from 'react-query'
+import { LoadingSecond } from '../Loading/second'
 
 interface PartyProps {
   code: string
@@ -32,13 +33,15 @@ export default function SearchParty({
     },
   )
 
-  if (isLoading) return null
-
   return (
-    <div className="w-full min-w-[90px]">
-      <label htmlFor="party" className="text-xs">
-        Partido
-      </label>
+    <div className="flex w-full min-w-[90px] flex-col justify-between gap-1">
+      <div className="flex gap-1">
+        <label htmlFor="party" className="text-xs">
+          Partido
+        </label>
+        {isLoading && <LoadingSecond />}
+      </div>
+
       <select name="party" onChange={handleSearchOnChange}>
         <option value="">Todos</option>
         {data !== undefined && data.results !== null

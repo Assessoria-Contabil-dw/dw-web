@@ -36,11 +36,11 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-0 flex h-12 w-full flex-row justify-between border-b-[1px] border-zinc-300 bg-white px-6 max-sm:px-2">
-      <div className="flex flex-row items-center gap-6 max-sm:gap-2">
+    <header className="sticky top-0 z-0 flex h-12 w-full flex-row justify-between border-b-[1px] border-zinc-300 bg-white px-6 max-md:px-2">
+      <div className="flex flex-row items-center gap-6 max-md:gap-2">
         <Link
           href="/"
-          className="flex w-full cursor-pointer items-center justify-start gap-2  max-sm:hidden"
+          className="flex w-full cursor-pointer items-center justify-start gap-2  max-md:hidden"
         >
           <Image src={imgLogo} alt="Logo da plataforma" width={40} />
           <span className="font-alt text-xs font-semibold leading-3 text-slate-700">
@@ -50,7 +50,7 @@ export default function Header() {
 
         <button
           onClick={() => setOpenMenu(!openMenu)}
-          className="button-tertiary hidden max-sm:block"
+          className="button-tertiary hidden max-md:block"
           title="Menu"
         >
           {openMenu ? <XIcon size={16} /> : <MenuIcon size={16} />}

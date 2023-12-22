@@ -6,7 +6,7 @@ import PermitState from './StateTable'
 import PermitCity from './CityTable'
 
 import { queryClient } from '@/provider/query.provider'
-import { PermitProps } from '@/app/(user)/layout'
+import { PermitProps } from '@/app/(private)/layout'
 import { RefreshButton } from '@/components/Buttons/refresh'
 
 export default function Permit() {

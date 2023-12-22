@@ -1,6 +1,7 @@
 import { api } from '@/lib/api'
 import { ChangeEvent } from 'react'
 import { useQuery } from 'react-query'
+import { LoadingSecond } from '../Loading/second'
 
 interface StateProps {
   uf: string
@@ -32,13 +33,14 @@ export default function SearchState({
     },
   )
 
-  if (isLoading) return null
-
   return (
-    <div className="w-full min-w-[90px]">
-      <label htmlFor="state" className="text-xs">
-        Estado
-      </label>
+    <div className="flex w-full min-w-[90px] flex-col justify-between gap-1">
+      <div className="flex gap-1">
+        <label htmlFor="state" className="text-xs">
+          Estado
+        </label>
+        {isLoading && <LoadingSecond />}
+      </div>
       <select name="state" onChange={handleSearchOnChange}>
         <option value="">Todos</option>
         {data !== undefined

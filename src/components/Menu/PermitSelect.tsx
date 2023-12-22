@@ -4,7 +4,7 @@ import { ChangeEvent, useContext, useEffect, useState } from 'react'
 import NavigationModule from './Modules'
 import { AccessContext, ModulesData } from '@/provider/context.provider'
 import { queryClient } from '@/provider/query.provider'
-import { PermitProps } from '@/app/(user)/layout'
+import { PermitProps } from '@/app/(private)/layout'
 import { useAuth } from '@/lib/auth'
 
 export default function PermitSelect() {
