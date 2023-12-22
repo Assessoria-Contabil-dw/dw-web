@@ -1,7 +1,7 @@
 'use client'
 import { SignInForm } from '@/components/pages/SignIn'
 import Image from 'next/image'
-import imgContablue from '../../assets/contablue.png'
+import imgContablue from '../../../assets/contablue.png'
 import { redirect } from 'next/navigation'
 import { useAuth } from '@/lib/auth'
 

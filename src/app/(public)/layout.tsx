@@ -1,13 +1,10 @@
-import Providers from '../provider/query.provider'
-import './globals.css'
-import { Montserrat } from 'next/font/google'
+
 import React from 'react'
 import ToastProvider from '@/provider/toast.provider'
+import Providers from '@/provider/query.provider'
+import { montserrat } from '@/app/fonts'
+import '@/app/globals.css'
 
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-})
 
 export const metadata = {
   title: 'DW',
