@@ -71,6 +71,7 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
 
     const { year, numPge, status, observation } =
       event.target as HTMLFormElement
+
     const updateSPCA = {
       year: year.value,
       numPge: numPge.value,
