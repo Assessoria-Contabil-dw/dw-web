@@ -6,8 +6,8 @@ import PermitState from './StateTable'
 import PermitCity from './CityTable'
 
 import { queryClient } from '@/provider/query.provider'
-import { PermitProps } from '@/app/(private)/layout'
 import { RefreshButton } from '@/components/Buttons/refresh'
+import { PermitProps } from '@/components/Layouts/PrivateLayout'
 
 export default function Permit() {
   const [option, setOption] = useState(1)
