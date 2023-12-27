@@ -33,8 +33,8 @@ export function Templates() {
   }
 
   return (
-    <main className="overflow-y-auto px-32 py-14 max-lg:px-4">
-      <div className="flex flex-col gap-2">
+    <main className="h-full flex-1 overflow-auto px-32 max-lg:px-4">
+      <div className="flex flex-col gap-2 py-12">
         <div className="flex gap-2">
           <div>
             <SearchTemplate handleSearchOnChange={handleSearchOnChange} />
@@ -52,11 +52,13 @@ export function Templates() {
             />
           </div>
         </div>
-        <EditorTemplate
-          templateId={search.templateId}
-          name={search.name}
-          content={search.content}
-        />
+        <div>
+          <EditorTemplate
+            templateId={search.templateId}
+            name={search.name}
+            content={search.content}
+          />
+        </div>
       </div>
     </main>
   )

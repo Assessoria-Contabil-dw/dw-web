@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import DeletModel, { DeletRef } from '../../Model/Delete'
+import DeleteModel, { DeleteRef } from '../../Model/Delete'
 import { LoadingSecond } from '@/components/Loading/second'
 
 export interface UpdateDirectoryRef {
@@ -88,7 +88,7 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
       console.log(err)
     }
   }
-  const modalDeleteRef = useRef<DeletRef>(null)
+  const modalDeleteRef = useRef<DeleteRef>(null)
   const handleDeletModal = useCallback(
     (id: string, msg: string, path: string) => {
       modalDeleteRef.current?.openModal(id, msg, path)
@@ -108,7 +108,7 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
 
   return (
     <div className="fixed right-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/50">
-      <DeletModel ref={modalDeleteRef} />
+      <DeleteModel ref={modalDeleteRef} />
 
       <div className="h-3/4 w-2/4 overflow-hidden">
         <fieldset className="flex h-full w-full flex-col items-start justify-start  border-b-[1px]">

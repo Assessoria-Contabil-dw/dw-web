@@ -1,16 +1,16 @@
-"use client"
-import LinksButton from "@/components/Buttons/links"
-import ZapButton from "@/components/Buttons/zap"
-import { LoadingPrimary } from "@/components/Loading/primary"
-import Header from "@/components/Menu/Header"
-import { api } from "@/lib/api"
-import { useAuth } from "@/lib/auth"
-import { AccessProvider } from "@/provider/context.provider"
-import ToastProvider from "@/provider/toast.provider"
-import { ChevronUp } from "lucide-react"
-import { redirect } from "next/navigation"
-import { ReactNode } from "react"
-import { useQuery } from "react-query"
+'use client'
+import LinksButton from '@/components/Buttons/links'
+import ZapButton from '@/components/Buttons/zap'
+import { LoadingPrimary } from '@/components/Loading/primary'
+import Header from '@/components/Menu/Header'
+import { api } from '@/lib/api'
+import { useAuth } from '@/lib/auth'
+import { AccessProvider } from '@/provider/context.provider'
+import ToastProvider from '@/provider/toast.provider'
+import { ChevronUp } from 'lucide-react'
+import { redirect } from 'next/navigation'
+import { ReactNode } from 'react'
+import { useQuery } from 'react-query'
 import { CityData } from '@/components/pages/Permit/CityTable'
 import { PartyData } from '@/components/pages/Permit/PartyTable'
 import { StateData } from '@/components/pages/Permit/StateTable'
@@ -20,8 +20,6 @@ export interface PermitProps {
   acessCity: CityData[] | null
   acessState: StateData[] | null
 }
-
-
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
   const user = useAuth()

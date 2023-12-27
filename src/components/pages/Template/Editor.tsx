@@ -4,6 +4,7 @@ import { api } from '@/lib/api'
 import { useNotify } from '@/components/Toast/toast'
 import { Trash } from 'lucide-react'
 import DeleteModel, { DeleteRef } from '../../Model/Delete'
+import { queryClient } from '@/provider/query.provider'
 
 interface CreateTemplateProps {
   content?: string
@@ -42,6 +43,7 @@ export function EditorTemplate({
       console.log(response)
 
       notify({ type: 'success', message: 'Template criado com sucesso' })
+      queryClient.invalidateQueries('templates')
     } catch (error) {
       console.log(error)
       notify({ type: 'error', message: 'Erro ao criar template' })
@@ -63,7 +65,11 @@ export function EditorTemplate({
         content,
       })
       .then(() => {
-        console.log('Template atualizado com sucesso')
+        notify({ type: 'success', message: 'Template atualizado com sucesso' })
+        queryClient.invalidateQueries('templates')
+      })
+      .catch(() => {
+        notify({ type: 'error', message: 'Erro ao atualizar template' })
       })
   }
 
@@ -77,7 +83,7 @@ export function EditorTemplate({
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue={content}
         init={{
-          height: 600,
+          height: 500,
           quickbars_selection_toolbar: true,
           plugins: [
             'advlist',
@@ -109,6 +115,30 @@ export function EditorTemplate({
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat',
+          templates: [
+            {
+              title: 'Simples',
+              description: 'Cabeçalho e rodapé simples',
+              content: ` <div style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between;
+              width: 21.59cm; height: 30.85cm; position: relative;" size="A4">
+                  
+                  <header style="width: 100%; height: 0.8cm; background: #01eaa0; padding: 0.1cm 0.4cm;">
+                  <div  style="width: 100%; height: 100%; background: {PARTIDO_COR}; color: white; display: flex; justify-content: space-between; align-items: center;">
+                   <p style="line-height: 0;">{PARTIDO_NOME}</p>
+                    <p style="line-height: 0;">{DIRETORIO_SURNAME}</p>
+                  </div>
+                  </header>
+              
+                  <main style="padding: 0 4rem; height: 100%; flex: 1">Conteúdo</main>
+              
+                  <footer style="width: 100%; margin-top:0; height: 0.8cm; background: #01eaa0; padding: 0.1cm; ">
+                  <div  style="width: 100%; line-height: 0; margin-top:0; height: 100%; background: {PARTIDO_COR}; color: white; display: flex; justify-content: center;  align-items: center;">
+                    <p>{DIRETORIO_ENDEREÇO} - {DIRETORIO_CNPJ} - {DIRETORIO_TELEFONE}</p>
+                  </div> 
+                  </footer>
+                </div>`,
+            },
+          ],
           content_style: ` 
           header, footer{
             background-color: #01eaa0;
@@ -150,7 +180,7 @@ export function EditorTemplate({
 
         <button
           onClick={() =>
-            handleDeleteModal(String(templateId), 'templetes', name)
+            handleDeleteModal(String(templateId), 'templates', name)
           }
           className="button-primary bg-red-400 text-white hover:bg-red-600"
           disabled={!templateId}

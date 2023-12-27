@@ -12,7 +12,7 @@ import { AccessContext } from '@/provider/context.provider'
 import { RefreshButton } from '@/components/Buttons/refresh'
 import { User } from '@/lib/auth'
 import { queryClient } from '@/provider/query.provider'
-import DeletModel, { DeletRef } from '@/components/Model/Delet'
+import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
 import UpdateVigency, { UpdateVigencyRef } from './UpdateVigency'
 
 interface VigencyTableProps {
@@ -51,7 +51,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
 
   const modalViewRef = useRef<ViewVigencyRef>(null)
   const modalRegisterRef = useRef<RegisterVigencyRef>(null)
-  const modalDeleteRef = useRef<DeletRef>(null)
+  const modalDeleteRef = useRef<DeleteRef>(null)
   const modalUpdateRef = useRef<UpdateVigencyRef>(null)
 
   const handleViewModal = useCallback((id: string) => {
@@ -114,7 +114,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
   return (
     <div className="flex flex-col gap-8">
       <RegisterVigencyModel ref={modalRegisterRef} />
-      <DeletModel ref={modalDeleteRef} />
+      <DeleteModel ref={modalDeleteRef} />
       <UpdateVigency ref={modalUpdateRef} />
       <ViewVigencyModel ref={modalViewRef} />
 
