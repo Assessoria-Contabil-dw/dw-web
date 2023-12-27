@@ -1,10 +1,8 @@
-
 import React from 'react'
 import ToastProvider from '@/provider/toast.provider'
 import Providers from '@/provider/query.provider'
 import { montserrat } from '@/app/fonts'
 import '@/app/globals.css'
-
 
 export const metadata = {
   title: 'DW',

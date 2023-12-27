@@ -1,5 +1,3 @@
-'use client'
-
 import Menu from '@/components/Menu'
 import { ReactNode } from 'react'
 

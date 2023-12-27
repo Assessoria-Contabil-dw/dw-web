@@ -1,9 +1,5 @@
 import { DirectoryTable } from '@/components/pages/Directory'
 
-export default function Directories() {
-  return (
-    <>
-      <DirectoryTable />
-    </>
-  )
+export default function DirectoryPage() {
+  return <DirectoryTable />
 }

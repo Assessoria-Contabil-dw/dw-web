@@ -14,12 +14,16 @@ import { useNotify } from '../Toast/toast'
 import { queryClient } from '@/provider/query.provider'
 // import { ToastContainer, toast } from 'react-toastify'
 
-export interface DeletRef {
-  openModal: (id: string, path: string, msg: string) => void
+export interface DeleteRef {
+  openModal: (
+    id: string | undefined,
+    path: string,
+    msg: string | undefined,
+  ) => void
   closeModal: () => void
 }
 
-const DeletModel: ForwardRefRenderFunction<DeletRef> = (props, ref) => {
+const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isModalView, setIsModalView] = useState(false)
   const [params, setParams] = useState({
@@ -30,10 +34,15 @@ const DeletModel: ForwardRefRenderFunction<DeletRef> = (props, ref) => {
 
   const notify = useNotify()
 
-  const openModal = useCallback((id: string, path: string, msg: string) => {
-    setParams({ id, path, msg })
-    setIsModalView(true)
-  }, [])
+  const openModal = useCallback(
+    (id: string | undefined, path: string, msg: string | undefined) => {
+      if (!id) return
+      if (!msg) return
+      setParams({ id, path, msg })
+      setIsModalView(true)
+    },
+    [],
+  )
 
   const closeModal = useCallback(() => {
     setIsModalView(false)
@@ -66,7 +75,7 @@ const DeletModel: ForwardRefRenderFunction<DeletRef> = (props, ref) => {
   }
 
   return (
-    <div className="fixed right-0 top-0 flex h-screen w-screen items-center justify-center bg-black/50">
+    <div className="model-bg">
       <fieldset className="w-auto">
         <div className="flex w-full items-center justify-between">
           <h4>Deletar registro</h4>
@@ -102,4 +111,4 @@ const DeletModel: ForwardRefRenderFunction<DeletRef> = (props, ref) => {
   )
 }
 
-export default forwardRef(DeletModel)
+export default forwardRef(DeleteModel)

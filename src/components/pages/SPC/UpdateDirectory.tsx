@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import DeletModel, { DeletRef } from '../../Model/Delet'
+import DeletModel, { DeletRef } from '../../Model/Delete'
 import { LoadingSecond } from '@/components/Loading/second'
 
 export interface UpdateDirectoryRef {
