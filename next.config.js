@@ -6,8 +6,8 @@ module.exports = {
     return [
       {
         source: '/api/:path*',
-        // destination: `${process.env.NEXT_API_URL}/:path*`,
-        destination: `${process.env.NEXT_API_URL_LOCALHOST}/:path*`,
+        destination: `${process.env.NEXT_API_URL}/:path*`,
+        // destination: `${process.env.NEXT_API_URL_LOCALHOST}/:path*`,
       },
     ]
   },
