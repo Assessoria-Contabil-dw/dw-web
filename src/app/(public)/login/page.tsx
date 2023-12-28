@@ -4,6 +4,7 @@ import Image from 'next/image'
 import imgContablue from '../../../assets/contablue.png'
 import { redirect } from 'next/navigation'
 import { useAuth } from '@/lib/auth'
+import "@/app/globals.css"
 
 export default function Login() {
   const user = useAuth()

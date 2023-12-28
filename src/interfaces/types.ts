@@ -1,3 +1,8 @@
+export type NavigationItem = {
+  name: string
+  href: string
+}
+
 export interface PartyProps {
   code: string
 
@@ -207,3 +212,5 @@ export interface DirectorySPCProps {
   SPCA: SPCAProps[] | null
   SPCE: SPCEProps[] | null
 }
+
+
