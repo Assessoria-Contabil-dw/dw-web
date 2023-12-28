@@ -14,7 +14,7 @@ const LinkPrimary = forwardRef<Ref, ButtonPrimaryProps>(function ({ className, v
             className={
                 `
                 ${variant === "container" && "bg-primary hover:bg-primaryHover text-slate-900"} 
-                ${variant === "outline" && "border-2 border-transparent  hover:border-slate-900 text-slate-900 bg-transparent "}
+                ${variant === "outline" && "border-2 border-transparent border-slate-900 text-slate-900 bg-transparent hover:bg-gray-200 "}
                 ${className}
                 `
             }

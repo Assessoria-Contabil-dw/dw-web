@@ -21,7 +21,7 @@ const NAVIGATION: NavigationItem[] = [
 export default function Navbar() {
     return (
         <header className="flex w-full justify-center h-20 border-b text-base">
-            <div className="flex flex-1  max-w-7xl  items-center justify-between">
+            <div className="flex flex-1  max-w-7xl mx-5  items-center justify-between">
                 <div className="flex items-center">
                     <div className="pr-5">
                         <Image
