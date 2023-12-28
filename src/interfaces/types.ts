@@ -5,8 +5,7 @@ export interface PartyProps {
   abbreviation: string
   logoUrl: string
 
-  color: string
-  colorId: string
+  hex: string
 }
 
 export interface ColorProps {

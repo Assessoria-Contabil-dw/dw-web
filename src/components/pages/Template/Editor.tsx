@@ -22,8 +22,8 @@ export function EditorTemplate({
 
   const modalDeleteRef = useRef<DeleteRef>(null)
   const handleDeleteModal = useCallback(
-    (id: string | undefined, path: string, msg: string | undefined) => {
-      modalDeleteRef.current?.openModal(id, path, msg)
+    (id: string, path: string, msg: string | undefined, query: string) => {
+      modalDeleteRef.current?.openModal(id, path, msg, query)
     },
     [],
   )
@@ -180,7 +180,12 @@ export function EditorTemplate({
 
         <button
           onClick={() =>
-            handleDeleteModal(String(templateId), 'templates', name)
+            handleDeleteModal(
+              String(templateId),
+              'templates',
+              name,
+              'templates',
+            )
           }
           className="button-primary bg-red-400 text-white hover:bg-red-600"
           disabled={!templateId}

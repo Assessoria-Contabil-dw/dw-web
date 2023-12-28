@@ -1,5 +1,5 @@
 import { api } from '@/lib/api'
-import { ColorProps, DirectorySPCProps } from '@/@types/types'
+import { ColorProps, DirectorySPCProps } from '@/interfaces/types'
 import { Check, Trash, X } from 'lucide-react'
 import {
   FormEvent,
@@ -90,8 +90,8 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
   }
   const modalDeleteRef = useRef<DeleteRef>(null)
   const handleDeletModal = useCallback(
-    (id: string, msg: string, path: string) => {
-      modalDeleteRef.current?.openModal(id, msg, path)
+    (id: string, msg: string, path: string, query: string) => {
+      modalDeleteRef.current?.openModal(id, msg, path, query)
     },
     [],
   )
@@ -200,6 +200,7 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
                                       spc.id.toString(),
                                       'spcs',
                                       spc.year,
+                                      'spcs',
                                     )
                                   }
                                 >
@@ -292,6 +293,7 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
                                       spc.id.toString(),
                                       'spcs',
                                       spc.year,
+                                      'spcs',
                                     )
                                   }
                                 >

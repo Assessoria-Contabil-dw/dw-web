@@ -1,3 +1,4 @@
+'use client'
 import { api } from '@/lib/api'
 import { Edit3, Eye, Plus, Trash2 } from 'lucide-react'
 import { useCallback, useContext, useRef } from 'react'
@@ -7,17 +8,13 @@ import { ButtomBack } from '@/components/Buttons/back'
 import { LoadingPrimary } from '@/components/Loading/primary'
 import { useQuery } from 'react-query'
 import { useNotify } from '@/components/Toast/toast'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { AccessContext } from '@/provider/context.provider'
 import { RefreshButton } from '@/components/Buttons/refresh'
 import { User } from '@/lib/auth'
 import { queryClient } from '@/provider/query.provider'
 import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
 import UpdateVigency, { UpdateVigencyRef } from './UpdateVigency'
-
-interface VigencyTableProps {
-  directoryId: string
-}
 
 interface Leader {
   id: number
@@ -43,9 +40,12 @@ interface VProps {
   vigencyInactive: Vigency[]
 }
 
-export function VigencyTable({ directoryId }: VigencyTableProps) {
+export function VigencyTable() {
   const notify = useNotify()
   const router = useRouter()
+  const params = useParams()
+  const { id } = params
+
   const { partyCode, cityCode, stateId } = useContext(AccessContext)
   const user: User = queryClient.getQueryData('authUser') as User
 
@@ -67,16 +67,16 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
   }, [])
 
   const handleDeletModal = useCallback(
-    (id: string, path: string, msg: string) => {
-      modalDeleteRef.current?.openModal(id, path, msg)
+    (id: string, path: string, msg: string, query: string) => {
+      modalDeleteRef.current?.openModal(id, path, msg, query)
     },
     [],
   )
 
   const { data, isLoading, isFetching, error } = useQuery<VProps>(
-    ['vigencies', directoryId],
+    ['vigencies', id],
     async () => {
-      const response = await api.get(`/vigencies/directory/${directoryId}`, {
+      const response = await api.get(`/vigencies/directory/${id}`, {
         params: {
           partyCode: partyCode === 0 ? null : partyCode,
           cityCode,
@@ -134,7 +134,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
             <RefreshButton isLoading={isFetching} queryName="vigencies" />
             {user?.role === 'ADMIN' && (
               <button
-                onClick={() => handleRegisterModal(directoryId)}
+                onClick={() => handleRegisterModal(id)}
                 className="button-primary"
               >
                 <Plus className="w-4" />
@@ -197,6 +197,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
                                   v.id.toString(),
                                   'vigencies',
                                   v.dateFirst + ' - ' + v.dateLast,
+                                  'vigencies',
                                 )
                               }
                               className="h-full w-auto rounded p-1 hover:text-red-500"
@@ -274,6 +275,7 @@ export function VigencyTable({ directoryId }: VigencyTableProps) {
                                 v.id.toString(),
                                 'vigencies',
                                 v.dateFirst + ' - ' + v.dateLast,
+                                'vigencies',
                               )
                             }
                             className="h-full w-auto rounded p-1 hover:text-red-500"

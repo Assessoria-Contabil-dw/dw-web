@@ -19,7 +19,7 @@ export function RefreshButton({ queryName, isLoading }: RefreshProps) {
       className="w-fit border-[1px] border-gray-200 bg-white text-gray-700"
     >
       {isLoading ? <LoadingSecond /> : <RotateCcw className="w-4" />}
-      Atualizar
+      <h4 className="max-sm:hidden">Atualizar</h4>
     </button>
   )
 }

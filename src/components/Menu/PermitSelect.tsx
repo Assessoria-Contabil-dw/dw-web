@@ -81,8 +81,17 @@ export default function PermitSelect() {
       item.city.startsWith(e.target.value.toUpperCase()),
     )
 
-    if (!filterParty && !filterState && !filterCity) {
-      setIsFilter({ acessCity: null, acessParty: null, acessState: null })
+    const filterDistrict = data?.acessDistrict?.filter((item) =>
+      item.city.startsWith(e.target.value.toUpperCase()),
+    )
+
+    if (!filterParty && !filterState && !filterCity && !filterDistrict) {
+      setIsFilter({
+        acessCity: null,
+        acessParty: null,
+        acessState: null,
+        acessDistrict: null,
+      })
       return
     }
 
@@ -90,6 +99,7 @@ export default function PermitSelect() {
       acessParty: filterParty?.length ? filterParty : null,
       acessCity: filterCity?.length ? filterCity : null,
       acessState: filterState?.length ? filterState : null,
+      acessDistrict: filterDistrict?.length ? filterDistrict : null,
     })
 
     console.log(e.target.value, isFilter)

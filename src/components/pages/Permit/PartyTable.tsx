@@ -1,10 +1,7 @@
-import {
-  AccessContext,
-  Modules,
-  ModulesData,
-} from '@/provider/context.provider'
-import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
+import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
+import { Modules } from '@/provider/context.provider'
+import { Edit3, Trash2 } from 'lucide-react'
+import { useRef } from 'react'
 
 export interface PartyData {
   id: number
@@ -18,18 +15,20 @@ interface ArrayParty {
 }
 
 export default function PermitParty({ data }: ArrayParty) {
-  const router = useRouter()
-
-  const { setPartyCode, setModulesArray } = useContext(AccessContext)
-
-  function handlePainel(partyCode: number, modules: ModulesData) {
-    setPartyCode(partyCode)
-    setModulesArray(modules)
-    router.push(`/acessos/painel?partido=${partyCode}`)
+  const deleteRef = useRef<DeleteRef>(null)
+  function handleDeleteModal(
+    id: string,
+    path: string,
+    msg: string,
+    query: string,
+  ) {
+    deleteRef.current?.openModal(id, path, msg, query)
   }
 
   return (
     <div className="flex flex-col gap-2">
+      <DeleteModel ref={deleteRef} />
+
       <fieldset className="h-auto w-full rounded-lg px-3 py-2">
         <table>
           <thead>
@@ -64,17 +63,27 @@ export default function PermitParty({ data }: ArrayParty) {
                     </ul>
                   </td>
                   <td className="w-8">
-                    <button
-                      className="button-primary"
-                      onClick={() =>
-                        handlePainel(party.partyCode, {
-                          acessName: party.party,
-                          modules: party.modules,
-                        })
-                      }
-                    >
-                      Gerenciar
-                    </button>
+                    <div className="flex items-center">
+                      <button
+                        // onClick={() => handleUpdateModal(v.id.toString())}
+                        className="h-full w-auto rounded p-1 hover:text-primary"
+                      >
+                        <Edit3 size={16} />
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleDeleteModal(
+                            party.id.toString(),
+                            'access/party',
+                            party.party,
+                            'accessData',
+                          )
+                        }
+                        className="h-full w-auto rounded p-1 hover:text-red-500"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))

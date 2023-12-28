@@ -2,13 +2,13 @@
 import { Form } from '../../Form'
 import { z } from 'zod'
 import { useForm, FormProvider } from 'react-hook-form'
-import { userFormShema } from '@/@types/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { RegisterUserRef } from './Register'
 import { api } from '@/lib/api'
 import Cookie from 'js-cookie'
 import { LoadingSecond } from '@/components/Loading/second'
+import { userFormShema } from '@/interfaces/validation'
 
 type UserFormData = z.infer<typeof userFormShema>
 

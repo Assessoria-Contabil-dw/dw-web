@@ -1,13 +1,15 @@
+'use client'
 import { api } from '@/lib/api'
 import { useQuery } from 'react-query'
 import { Edit3, KeyIcon } from 'lucide-react'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
-import { Page } from '@/@types/page'
+import { Page } from '@/interfaces/page'
 // import DeletModel, { DeletRef } from '../Model/Delet'
 import { RefreshButton } from '../../Buttons/refresh'
 // import Register from './Register'
 import UpdateUser, { UpdateUserRef } from './Update'
 import PasswordUser, { PasswordUserRef } from './Password'
+import Register, { RegisterUserRef } from './Register'
 import Link from 'next/link'
 import { PaddingButtons } from '@/components/Buttons/next'
 import { LoadingSecond } from '@/components/Loading/second'
@@ -32,6 +34,7 @@ export function UserTable() {
   const [search, setSearch] = useState({
     cpf: undefined as string | undefined,
     name: undefined as string | undefined,
+    role: undefined as string | undefined,
   })
 
   // const modalRegisterRef = useRef<UpdateUserRef>(null)
@@ -43,7 +46,7 @@ export function UserTable() {
   const { data, isLoading, isError, isFetching, isPreviousData } = useQuery<
     Page<UserProps>
   >(
-    ['users', page, search.cpf, search.name],
+    ['users', page, search.cpf, search.name, search.role],
     async () => {
       const response = await api
         .get('/users', {
@@ -52,6 +55,7 @@ export function UserTable() {
             take: 15,
             name: search.name,
             cpf: search.cpf,
+            role: search.role,
           },
         })
         .then((response) => response.data)
@@ -67,7 +71,9 @@ export function UserTable() {
     },
   )
 
-  function handleSearchOnChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleSearchOnChange(
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
+  ) {
     const { name, value } = e.target
 
     if (name === 'name' && value.length < 3) {
@@ -87,6 +93,11 @@ export function UserTable() {
   const modelPassordRef = useRef<PasswordUserRef>(null)
   const handlePasswordModal = useCallback((id: number) => {
     modelPassordRef.current?.openModal(id)
+  }, [])
+
+  const modalRegisterRef = useRef<RegisterUserRef>(null)
+  const handleRegisterModal = useCallback(() => {
+    modalRegisterRef.current?.openModal()
   }, [])
 
   if (isLoading) {
@@ -110,10 +121,10 @@ export function UserTable() {
     <div className="flex flex-col gap-2">
       <UpdateUser ref={modelUpdateRef} />
       <PasswordUser ref={modelPassordRef} />
+      <Register ref={modalRegisterRef} />
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <div className="flex w-fit items-center gap-2">
-          <h4>Filtros: </h4>
           <input
             type="text"
             name="name"
@@ -126,21 +137,22 @@ export function UserTable() {
             onChange={handleSearchOnChange}
             placeholder="CPF"
           />
+          <select name="role" onChange={handleSearchOnChange}>
+            <option value="">Todos</option>
+            <option value="ADMIN">Administrador</option>
+            <option value="CLIENT">Cliente</option>
+          </select>
         </div>
 
         <div className="flex w-fit items-center gap-2">
-          {data?.results !== null ? (
-            <PaddingButtons
-              pages={data?.info?.pages ? data?.info?.pages : 0}
-              page={page}
-              isPreviousData={isPreviousData}
-              nextPage={nextPage}
-              prevPage={prevPage}
-              next={data?.info?.next ? data?.info?.next : null}
-              isFetching={isFetching}
-            />
-          ) : null}
           <RefreshButton queryName="parties" />
+
+          <button
+            onClick={handleRegisterModal}
+            className="w-fit rounded-md bg-green-500 px-4 py-2 text-white"
+          >
+            Registrar
+          </button>
         </div>
       </div>
 
@@ -159,10 +171,10 @@ export function UserTable() {
             {data?.results !== null ? (
               data?.results.map((user, index) => (
                 <tr key={index}>
-                  <td className="text-second">
+                  <td className="text-secondHover">
                     <Link
                       href={{
-                        pathname: `/admin/permits/${user.cpf}`,
+                        pathname: `/painel/clientes/acessos/${user.cpf}`,
                       }}
                     >
                       {user.name}
@@ -210,6 +222,19 @@ export function UserTable() {
           </tbody>
         </table>
       </fieldset>
+      <div className="flex w-fit items-center gap-2">
+        {data?.results !== null ? (
+          <PaddingButtons
+            pages={data?.info?.pages ? data?.info?.pages : 0}
+            page={page}
+            isPreviousData={isPreviousData}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            next={data?.info?.next ? data?.info?.next : null}
+            isFetching={isFetching}
+          />
+        ) : null}
+      </div>
     </div>
   )
 }

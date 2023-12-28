@@ -6,7 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { api } from '@/lib/api'
 import { useEffect, useState } from 'react'
 import { Form } from '../../Form'
-import { ColorProps } from '@/@types/types'
+import { ColorProps } from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
 
 // export const partyFormShema = z.object({

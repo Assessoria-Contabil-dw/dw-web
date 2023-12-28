@@ -4,7 +4,7 @@ import { api } from '@/lib/api'
 import { Edit3, Eye, Plus, RotateCcw, Search, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { RegisterAdvocate } from './RegisterAdvocate'
-import { AdvocateProps } from '@/@types/types'
+import { AdvocateProps } from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
 
 export function AdvocateTable() {

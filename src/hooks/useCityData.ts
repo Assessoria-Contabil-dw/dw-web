@@ -1,0 +1,21 @@
+import { CityProps } from '@/interfaces/types'
+import { CityService } from '@/services/city.service'
+import { useQuery } from 'react-query'
+
+export function useCityData(stateId?: string) {
+  const cityService = new CityService()
+
+  const query = useQuery<CityProps[]>(
+    ['cityData', stateId],
+    () => cityService.getAll(stateId),
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: false,
+      refetchOnWindowFocus: false,
+      enabled: !!stateId,
+    },
+  )
+
+  return query
+}

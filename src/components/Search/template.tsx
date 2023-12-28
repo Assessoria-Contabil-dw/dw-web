@@ -25,6 +25,12 @@ export default function SearchTemplate({
       }
       return response.data
     },
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
   )
 
   return (

@@ -14,16 +14,16 @@ import {
 } from 'react'
 import { Form } from '../../Form'
 import dayjs from 'dayjs'
-import { virgenciesFormSchema } from '@/@types/validation'
 import {
   AdvocateProps,
   LawFirmProps,
   LeaderProps,
   OfficesProps,
-} from '@/@types/types'
+} from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
 import { useNotify } from '@/components/Toast/toast'
 import { queryClient } from '@/provider/query.provider'
+import { virgenciesFormSchema } from '@/interfaces/validation'
 
 type VigencyFormData = z.infer<typeof virgenciesFormSchema>
 

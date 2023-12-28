@@ -16,9 +16,10 @@ import { queryClient } from '@/provider/query.provider'
 
 export interface DeleteRef {
   openModal: (
-    id: string | undefined,
+    id: string,
     path: string,
     msg: string | undefined,
+    query: string | undefined,
   ) => void
   closeModal: () => void
 }
@@ -30,15 +31,21 @@ const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
     id: '',
     path: '',
     msg: '',
+    query: '',
   })
 
   const notify = useNotify()
 
   const openModal = useCallback(
-    (id: string | undefined, path: string, msg: string | undefined) => {
-      if (!id) return
+    (
+      id: string,
+      path: string,
+      msg: string | undefined,
+      query: string | undefined,
+    ) => {
       if (!msg) return
-      setParams({ id, path, msg })
+      if (!query) return
+      setParams({ id, path, msg, query })
       setIsModalView(true)
     },
     [],
@@ -55,14 +62,14 @@ const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
     }
   })
 
-  async function handleDelete(id: string, path: string) {
+  async function handleDelete(id: string, path: string, query: string) {
     setIsSubmitting(true)
     console.log(id, path)
     try {
       await api.delete(`/${path}/${id}`)
       setIsSubmitting(false)
       notify({ type: 'success', message: 'Registro deletado com sucesso' })
-      queryClient.invalidateQueries(path)
+      queryClient.invalidateQueries(query)
       closeModal()
     } catch (error) {
       console.log(error)
@@ -98,7 +105,7 @@ const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
             Cancelar
           </button>
           <button
-            onClick={() => handleDelete(params.id, params.path)}
+            onClick={() => handleDelete(params.id, params.path, params.query)}
             type="button"
             className="bg-red-500 text-white hover:bg-red-600 "
           >
@@ -106,7 +113,6 @@ const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
           </button>
         </div>
       </fieldset>
-      {/* <ToastContainer /> */}
     </div>
   )
 }

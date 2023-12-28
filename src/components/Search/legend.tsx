@@ -1,4 +1,4 @@
-import { ColorProps } from '@/@types/types'
+import { ColorProps } from '@/interfaces/types'
 import { api } from '@/lib/api'
 import { ChangeEvent } from 'react'
 import { useQuery } from 'react-query'

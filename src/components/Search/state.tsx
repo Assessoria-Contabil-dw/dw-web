@@ -1,14 +1,6 @@
-import { api } from '@/lib/api'
 import { ChangeEvent } from 'react'
-import { useQuery } from 'react-query'
 import { LoadingSecond } from '../Loading/second'
-
-interface StateProps {
-  uf: string
-
-  code: number
-  name: string
-}
+import { useStateData } from '@/hooks/useStateData'
 
 interface SearchPartyProps {
   party?: number
@@ -18,20 +10,7 @@ interface SearchPartyProps {
 export default function SearchState({
   handleSearchOnChange,
 }: SearchPartyProps) {
-  const { data, isLoading } = useQuery<StateProps[]>(
-    'state',
-    async () => {
-      const response = await api
-        .get('/states')
-        .then((response) => response.data)
-      return response
-    },
-    {
-      keepPreviousData: true,
-      staleTime: 1000 * 60 * 60,
-      retry: false,
-    },
-  )
+  const { data, isLoading } = useStateData()
 
   return (
     <div className="flex w-full min-w-[90px] flex-col justify-between gap-1">

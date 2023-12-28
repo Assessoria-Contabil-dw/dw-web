@@ -1,5 +1,5 @@
-import { Page } from '@/@types/page'
-import { DirectoryProps } from '@/@types/types'
+import { Page } from '@/interfaces/page'
+import { DirectoryProps } from '@/interfaces/types'
 import { AccessContext } from '@/provider/context.provider'
 import { DirectoryService } from '@/services/directory.service'
 import { ChangeEvent, useContext } from 'react'

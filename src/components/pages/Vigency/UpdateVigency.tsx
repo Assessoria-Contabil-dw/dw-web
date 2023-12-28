@@ -21,7 +21,7 @@ import {
   VigencyLawFirmProps,
   VigencyLeadersProps,
   VigencyProps,
-} from '@/@types/types'
+} from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
 import { useNotify } from '@/components/Toast/toast'
 import { useQuery } from 'react-query'

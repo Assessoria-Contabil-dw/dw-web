@@ -13,11 +13,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 import { api } from '@/lib/api'
 import { Form } from '../../Form'
-import { directoryFormShema } from '@/@types/validation'
-import { CityProps, PartyProps, StateProps, TypeOrgProps } from '@/@types/types'
+import {
+  CityProps,
+  PartyProps,
+  StateProps,
+  TypeOrgProps,
+} from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
 import { queryClient } from '@/provider/query.provider'
-import { Page } from '@/@types/page'
+import { Page } from '@/interfaces/page'
+import { directoryFormShema } from '@/interfaces/validation'
 
 interface DirectoryProps {
   id: number

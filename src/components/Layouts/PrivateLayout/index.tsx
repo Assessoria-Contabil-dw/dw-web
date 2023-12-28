@@ -19,6 +19,7 @@ export interface PermitProps {
   acessParty: PartyData[] | null
   acessCity: CityData[] | null
   acessState: StateData[] | null
+  acessDistrict: CityData[] | null
 }
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {

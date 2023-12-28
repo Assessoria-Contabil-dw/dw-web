@@ -8,7 +8,6 @@ export type User = {
 } | null
 
 export function useAuth() {
-  console.log('useAuth')
   const { data, error } = useQuery<User>(
     'authUser',
     async () => {
@@ -20,7 +19,6 @@ export function useAuth() {
       staleTime: 1000 * 60 * 60 * 24 * 7, // 7 days
     },
   )
-
   if (error) {
     return null
   } else {

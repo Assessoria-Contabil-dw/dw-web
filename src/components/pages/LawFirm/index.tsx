@@ -4,7 +4,7 @@ import { api } from '@/lib/api'
 import { Edit3, Trash2, Eye, Plus, Search, RotateCcw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { RegisterLawFirm } from './RegisterLawFirm'
-import { LawFirmProps } from '@/@types/types'
+import { LawFirmProps } from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
 
 export function LawFirmTable() {

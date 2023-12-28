@@ -1,5 +1,5 @@
 import { api } from '@/lib/api'
-import { DirectorySPCProps } from '@/@types/types'
+import { DirectorySPCProps } from '@/interfaces/types'
 import { X } from 'lucide-react'
 import {
   ForwardRefRenderFunction,

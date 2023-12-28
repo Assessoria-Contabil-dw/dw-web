@@ -1,4 +1,4 @@
-import { DirectorySPCProps } from '@/@types/types'
+import { DirectorySPCProps } from '@/interfaces/types'
 import { Edit3, Eye } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import PopObservation, { ObservationRef } from './PopObservation'

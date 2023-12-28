@@ -1,23 +1,11 @@
-import { api } from '@/lib/api'
-import { useQuery } from 'react-query'
 import Image from 'next/image'
 import { Trash2 } from 'lucide-react'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
-import { Page } from '@/@types/page'
 import DeleteModel, { DeleteRef } from '../../Model/Delete'
 import { RefreshButton } from '../../Buttons/refresh'
 import { PaddingButtons } from '../../Buttons/next'
 import { LoadingSecond } from '@/components/Loading/second'
-
-export interface PartyProps {
-  code: string
-
-  name: string
-  abbreviation: string
-  logoUrl: string
-
-  hex: string
-}
+import { usePartyData } from '@/hooks/usePartyData'
 
 export function PartyTable() {
   const [page, setPage] = useState(0)
@@ -34,31 +22,11 @@ export function PartyTable() {
     name: undefined as string | undefined,
   })
 
-  const { data, isLoading, isError, isFetching, isPreviousData } = useQuery<
-    Page<PartyProps>
-  >(
-    ['parties', page, search.code, search.name],
-    async () => {
-      const response = await api
-        .get('/parties', {
-          params: {
-            skip: page,
-            take: 15,
-            name: search.name,
-            code: search.code,
-          },
-        })
-        .then((response) => response.data)
-      console.log(response)
-      return response
-    },
-    {
-      keepPreviousData: true,
-      staleTime: 1000 * 60, // 1 minute
-      onSuccess: () => {
-        console.log('Dados atualizados com sucesso')
-      },
-    },
+  const { data, isLoading, isError, isFetching, isPreviousData } = usePartyData(
+    page,
+    15,
+    search.name,
+    search.code,
   )
 
   function handleSearchOnChange(e: ChangeEvent<HTMLInputElement>) {
@@ -74,8 +42,8 @@ export function PartyTable() {
 
   const modalDeleteRef = useRef<DeleteRef>(null)
   const handleDeleteModal = useCallback(
-    (id: string, path: string, msg: string) => {
-      modalDeleteRef.current?.openModal(id, path, msg)
+    (id: string, path: string, msg: string, query: string) => {
+      modalDeleteRef.current?.openModal(id, path, msg, query)
     },
     [],
   )
@@ -102,9 +70,8 @@ export function PartyTable() {
     <div className="flex flex-col gap-2">
       <DeleteModel ref={modalDeleteRef} />
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <div className="flex w-fit items-center gap-2">
-          <h4>Filtros: </h4>
           <input
             type="number"
             name="code"
@@ -120,18 +87,8 @@ export function PartyTable() {
         </div>
 
         <div className="flex w-fit items-center gap-2">
-          {data?.results !== null ? (
-            <PaddingButtons
-              pages={data?.info?.pages ? data?.info?.pages : 0}
-              page={page}
-              isPreviousData={isPreviousData}
-              nextPage={nextPage}
-              prevPage={prevPage}
-              next={data?.info?.next ? data?.info?.next : null}
-              isFetching={isFetching}
-            />
-          ) : null}
-          <RefreshButton queryName="parties" />
+          {/* <button>Cadastrar</button> */}
+          <RefreshButton isLoading={isFetching} queryName="partyData" />
         </div>
       </div>
 
@@ -156,7 +113,7 @@ export function PartyTable() {
                   <td>{party.name}</td>
                   <td>
                     <div
-                      className="h-4 w-4 rounded"
+                      className="h-4 w-4 rounded border-[1px] border-slate-300"
                       style={{ background: party.hex }}
                     ></div>
                   </td>
@@ -187,6 +144,7 @@ export function PartyTable() {
                             party.code.toString(),
                             'parties',
                             party.abbreviation,
+                            'partyData',
                           )
                         }
                         type="button"
@@ -208,6 +166,19 @@ export function PartyTable() {
           </tbody>
         </table>
       </fieldset>
+      <div className="flex w-full justify-end">
+        {data?.results !== null ? (
+          <PaddingButtons
+            pages={data?.info?.pages ? data?.info?.pages : 0}
+            page={page}
+            isPreviousData={isPreviousData}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            next={data?.info?.next ? data?.info?.next : null}
+            isFetching={isFetching}
+          />
+        ) : null}
+      </div>
     </div>
   )
 }

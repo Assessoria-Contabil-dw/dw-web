@@ -1,5 +1,5 @@
 'use client'
-import { Lock } from 'lucide-react'
+import { BadgeCheck, Lock } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { AccessContext, Modules } from '@/provider/context.provider'
 import { useContext } from 'react'
@@ -71,6 +71,11 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
       label: 'Escritórios',
       replace: true,
     },
+    {
+      href: '/painel/clientes' || '/painel/clientes/acessos',
+      label: 'Clientes',
+      replace: true,
+    },
   ]
 
   function handleClick(path: string) {
@@ -125,12 +130,17 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
         modulesAdmin?.map((item, index) => (
           <button
             onClick={() => handleClick(item.href)}
-            className={`w-full justify-between text-start font-medium disabled:cursor-not-allowed disabled:text-slate-400
-            
-            ${params === item.href ? 'bg-primary' : ''}`}
+            className={`w-full items-center justify-start gap-2 font-medium
+            ${
+              params === item.href ||
+              (item.href && params.match(item.href) != null)
+                ? 'bg-primary'
+                : ''
+            }`}
             key={index}
           >
             {item.label}
+            <BadgeCheck size={14} />
           </button>
         ))}
     </div>

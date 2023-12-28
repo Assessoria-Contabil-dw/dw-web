@@ -5,7 +5,6 @@ import { useForm, FormProvider, useFieldArray } from 'react-hook-form'
 
 import { z } from 'zod'
 import dayjs from 'dayjs'
-import { ColorProps, DirectoryProps, DirectorySPCProps } from '@/@types/types'
 import {
   ForwardRefRenderFunction,
   forwardRef,
@@ -16,9 +15,14 @@ import {
 } from 'react'
 import { Form } from '../../Form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { spcFormShema } from '@/@types/validation'
 import { api } from '@/lib/api'
 import { LoadingSecond } from '@/components/Loading/second'
+import { spcFormShema } from '@/interfaces/validation'
+import {
+  ColorProps,
+  DirectoryProps,
+  DirectorySPCProps,
+} from '@/interfaces/types'
 
 export interface RegisterSPCRef {
   openModal: () => void

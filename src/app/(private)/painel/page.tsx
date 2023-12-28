@@ -14,6 +14,13 @@ export default function Dashboard() {
       <div className="flex gap-2">
         <div className="flex flex-col items-center justify-center gap-1  rounded-md border-[1px] bg-white p-4">
           <h2 className="leading-3">
+            {data?.acessDistrict == null ? 0 : data.acessDistrict.length}
+          </h2>
+          <span>Distrital</span>
+        </div>
+
+        <div className="flex flex-col items-center justify-center gap-1  rounded-md border-[1px] bg-white p-4">
+          <h2 className="leading-3">
             {data?.acessParty == null ? 0 : data.acessParty.length}
           </h2>
           <span>Nacional</span>

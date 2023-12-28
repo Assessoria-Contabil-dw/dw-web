@@ -1,10 +1,7 @@
-import {
-  AccessContext,
-  Modules,
-  ModulesData,
-} from '@/provider/context.provider'
-import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
+import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
+import { Modules } from '@/provider/context.provider'
+import { Edit3, Trash2 } from 'lucide-react'
+import { useRef } from 'react'
 
 export interface CityData {
   id: number
@@ -21,23 +18,20 @@ interface ArrayCity {
 }
 
 export default function PermitCity({ data }: ArrayCity) {
-  const router = useRouter()
-  const { setPartyCode, setCityCode, setModulesArray } =
-    useContext(AccessContext)
-
-  function handlePainel(
-    partyCode: number,
-    cityCode: string,
-    modules: ModulesData,
+  const deleteRef = useRef<DeleteRef>(null)
+  function handleDeleteModal(
+    id: string,
+    path: string,
+    msg: string,
+    query: string,
   ) {
-    setPartyCode(partyCode)
-    setCityCode(cityCode)
-    setModulesArray(modules)
-    router.push(`/acessos/painel?partido=${partyCode}&cidade=${cityCode}`)
+    deleteRef.current?.openModal(id, path, msg, query)
   }
 
   return (
     <div className="flex flex-col gap-2">
+      <DeleteModel ref={deleteRef} />
+
       <fieldset className="h-auto w-full rounded-lg px-3 py-2">
         <table>
           <thead>
@@ -72,23 +66,27 @@ export default function PermitCity({ data }: ArrayCity) {
                     </ul>
                   </td>
                   <td className="w-8">
-                    <button
-                      className="button-primary"
-                      onClick={() =>
-                        handlePainel(city.partyCode, city.cityCode, {
-                          acessName:
-                            city.partyCode +
-                            ' - ' +
-                            city.city +
-                            '(' +
-                            city.state +
-                            ')',
-                          modules: city.modules,
-                        })
-                      }
-                    >
-                      Gerenciar
-                    </button>
+                    <div className="flex items-center">
+                      <button
+                        // onClick={() => handleUpdateModal(v.id.toString())}
+                        className="h-full w-auto rounded p-1 hover:text-primary"
+                      >
+                        <Edit3 size={16} />
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleDeleteModal(
+                            city.id.toString(),
+                            'access/city',
+                            city.city,
+                            'accessData',
+                          )
+                        }
+                        className="h-full w-auto rounded p-1 hover:text-red-500"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))

@@ -6,9 +6,9 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { api } from '@/lib/api'
 import { useEffect, useState } from 'react'
 import { Form } from '../../Form'
-import { ColorProps } from '@/@types/types'
-import { partyFormShema } from '@/@types/validation'
+import { ColorProps } from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
+import { partyFormShema } from '@/interfaces/validation'
 
 type PartyFormData = z.infer<typeof partyFormShema>
 

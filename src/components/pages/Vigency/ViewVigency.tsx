@@ -9,7 +9,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react'
-import { AdvocateProps, LawFirmProps } from '@/@types/types'
+import { AdvocateProps, LawFirmProps } from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
 
 export interface VigencyProps {

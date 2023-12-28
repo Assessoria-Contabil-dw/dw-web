@@ -8,11 +8,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form } from '../../Form'
 import { LoadingSecond } from '../../Loading/second'
 import { useState } from 'react'
-import { leaderFormShema } from '@/@types/validation'
 import Cookies from 'js-cookie'
 import { api } from '@/lib/api'
 import dayjs from 'dayjs'
-import { LeaderProps } from '@/@types/types'
+import { LeaderProps } from '@/interfaces/types'
+import { leaderFormShema } from '@/interfaces/validation'
 
 interface RegisterLeaderModalProps {
   isOpen: boolean

@@ -1,18 +1,6 @@
-import { Page } from '@/@types/page'
-import { PartyService } from '@/services/party.service'
 import { ChangeEvent } from 'react'
-import { useQuery } from 'react-query'
 import { LoadingSecond } from '../Loading/second'
-
-interface PartyProps {
-  code: string
-
-  name: string
-  abbreviation: string
-  logoUrl: string
-
-  hex: string
-}
+import { usePartyData } from '@/hooks/usePartyData'
 
 interface SearchPartyProps {
   handleSearchOnChange: (e: ChangeEvent<HTMLSelectElement>) => void
@@ -21,17 +9,7 @@ interface SearchPartyProps {
 export default function SearchParty({
   handleSearchOnChange,
 }: SearchPartyProps) {
-  const partyService = new PartyService()
-
-  const { data, isLoading } = useQuery<Page<PartyProps>>(
-    'party',
-    () => partyService.getAll(),
-    {
-      keepPreviousData: true,
-      staleTime: 1000 * 60 * 60,
-      retry: false,
-    },
-  )
+  const { data, isLoading } = usePartyData()
 
   return (
     <div className="flex w-full min-w-[90px] flex-col justify-between gap-1">

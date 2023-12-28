@@ -8,10 +8,10 @@ import { api } from '@/lib/api'
 import Cookies from 'js-cookie'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
-import { advocateFormShema } from '@/@types/validation'
 import { LoadingSecond } from '../../Loading/second'
 import dayjs from 'dayjs'
-import { AdvocateProps } from '@/@types/types'
+import { AdvocateProps } from '@/interfaces/types'
+import { advocateFormShema } from '@/interfaces/validation'
 interface RegisterLeaderModalProps {
   isOpen: boolean
   onClose: () => void

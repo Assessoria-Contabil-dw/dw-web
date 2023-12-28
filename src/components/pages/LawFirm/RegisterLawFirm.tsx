@@ -2,14 +2,14 @@
 import { X } from 'lucide-react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { Form } from '../../Form'
-import { lawFirmFormShema } from '@/@types/validation'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoadingSecond } from '../../Loading/second'
-import { LawFirmProps } from '@/@types/types'
+import { LawFirmProps } from '@/interfaces/types'
 import Cookies from 'js-cookie'
 import { api } from '@/lib/api'
 import { useState } from 'react'
+import { lawFirmFormShema } from '@/interfaces/validation'
 
 interface LawFirmModalProps {
   isOpen: boolean
