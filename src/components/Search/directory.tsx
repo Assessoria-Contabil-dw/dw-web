@@ -57,10 +57,10 @@ export default function SearchDirectory({
         <option value="">Selecione</option>
         {data !== undefined && data.results
           ? data.results.map((directory) => (
-              <option key={directory.id} value={directory.id}>
-                {directory.surname}
-              </option>
-            ))
+            <option key={directory.id} value={directory.id}>
+              {directory.surname}
+            </option>
+          ))
           : null}
       </select>
     </div>
