@@ -21,7 +21,6 @@ export default function RootLayout({
       <body className={`${inter.className} bg-gray-50 font-sans flex flex-col`}>
         <Providers>
           <ToastProvider>
-            <Navbar />
             {children}
           </ToastProvider>
         </Providers>

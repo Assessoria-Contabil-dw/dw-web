@@ -2,10 +2,12 @@ import { CheckCircle2, MoveRight } from "lucide-react";
 import LinkPrimary from "../../Links/LinkPrimary";
 import Image from 'next/image'
 import imgContablue from '/src/assets/contablue.png'
+import Navbar from "../../Headers/Navbar";
 
 export default function Home() {
   return (
     <>
+      <Navbar />
       <main className="flex flex-col flex-1 items-center">
         <section className="flex w-full justify-center">
           <div className="flex flex-1 max-w-7xl mx-5 justify-between py-10 gap-20">
