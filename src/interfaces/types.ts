@@ -212,5 +212,3 @@ export interface DirectorySPCProps {
   SPCA: SPCAProps[] | null
   SPCE: SPCEProps[] | null
 }
-
-

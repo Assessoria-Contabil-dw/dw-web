@@ -1,10 +1,10 @@
 'use client'
 import { SignInForm } from '@/components/pages/SignIn'
 import Image from 'next/image'
-import imgContablue from '../../../assets/contablue.png'
+import imgContablue from '../../../assets/bgLogin.svg'
 import { redirect } from 'next/navigation'
 import { useAuth } from '@/lib/auth'
-import "@/app/globals.css"
+import '@/app/globals.css'
 
 export default function Login() {
   const user = useAuth()
@@ -19,7 +19,7 @@ export default function Login() {
         <div className="flex h-full w-5/6 flex-col items-start justify-center gap-8">
           <div>
             <Image
-              className="w-72"
+              className="w-80"
               src={imgContablue}
               alt="Figura de contabilidade"
             />

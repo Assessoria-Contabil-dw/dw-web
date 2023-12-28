@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-    @apply h-[100vh] w-[100vw] bg-slate-50 font-sans text-slate-900;
+    @apply h-full w-full bg-slate-50 font-sans text-slate-900;
 }

@@ -1,16 +1,14 @@
-
-import { Inter, Lexend, Montserrat, Titillium_Web } from "next/font/google";
+import { Inter, Lexend, Montserrat } from 'next/font/google'
 
 export const inter = Inter({
   subsets: ['latin'],
   variable: '--font-montserrat',
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
-
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
 
 export const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   variable: '--font-montserrat',
 })
 
@@ -19,9 +17,3 @@ export const lexend = Lexend({
   variable: '--font-lexend',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
-
-// export const titillium_web = Titillium_Web({
-//   subsets: ['latin'],
-//   variable: '--font-lexend',
-//   weight: ['200', '300', '400', '600', '700', '900'],
-// })

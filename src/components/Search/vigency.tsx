@@ -88,21 +88,3 @@ export default function SearchVigency({
     </div>
   )
 }
-
-/*
-<main>
-<p style="text-align: center; padding-top: 72px;">PROCURA&Ccedil;&Atilde;O <strong><em>AD JUDICIA ET EXTRA</em></strong></p>
-<p style="text-align: center;">&nbsp;</p>
-<p style="text-align: left;"><strong>OUTORGANTE:</strong></p>
-<p style="text-align: justify;">${PARTIDO} - ${PARTIDO_SIGLA}/${SUR_NAME}, inscrito no CNPJ sob n. ${CNPJ}, com endere&ccedil;o para notifica&ccedil;&atilde;o &agrave; ${ENDERE&Ccedil;O}, neste ato representado por seu presidente, Sr(a). ${PRESIDENTE}, ${QUALIFICA&Ccedil;&Atilde;O}, inscrita no CPF sob o n. ${CPF}, residente e domiciliada &agrave; ${ENDERE&Ccedil;O}.</p>
-<p style="text-align: left;">&nbsp;</p>
-<p style="text-align: left;"><strong>OUTORGANTE</strong>:</p>
-<p style="text-align: justify;"><strong>${ADV_1}</strong>, portador(a) do registro ${OAB_1}, cadastrado no Minist&eacute;rio da Fazenda sob n. ${CPF_1}, e-mail: ${EMAIL} e $<strong>{ADV_2}</strong>, portador(a) do registro ${OAB_2}, inscrito no CPF sob n. ${CPF_2}, ambos com endere&ccedil;o profissional situado na ${END_2}, e- mail: ${EMAIL_2}, conferindo- lhes os poderes da cl&aacute;usula <strong><em>"ad judicia et extra"</em></strong> para em qualquer&nbsp;inst&acirc;ncia ou tribunal defenderem os seus interesses, propor a&ccedil;&atilde;o, nela podendo&nbsp;contestar, reconvir, recorrer e impetrar mandados, acompanhando os processos at&eacute; o&nbsp;seu tr&acirc;nsito final, confere tamb&eacute;m os poderes especiais para desistir, renunciar a&nbsp;direito em que se funda&ccedil;&atilde;o, transigir, acordar, firmar termos e compromissos, prestar declara&ccedil;&atilde;o, receber e quitar, juntar e desentranhar documentos, requerer&nbsp;administrativamente ou judicialmente o que de direito, bem como substabelecer o&nbsp;presente mandato com ou sem reserva a pessoa de confian&ccedil;a.</p>
-<p style="text-align: justify;">&nbsp;</p>
-<p style="text-align: justify;">&nbsp;</p>
-<p style="text-align: right;">${DATA}, ${LOCAL}</p>
-<p style="text-align: center;">&nbsp;</p>
-<div style="text-align: center; display: relative;"><img style="display: absolute; transform: translateY(50%); margin-left: auto; margin-right: auto;" src="{&#96;$SIGNATURE_PRESIDENTE&#96;}" width="194" height="90"> <br>_________________________________________</div>
-<p style="text-align: center;">${PRESIDENTE} - Presidente</p>
-</main>
-*/

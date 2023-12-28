@@ -3,7 +3,6 @@ import ToastProvider from '@/provider/toast.provider'
 import Providers from '@/provider/query.provider'
 import { inter, montserrat } from '@/app/fonts'
 import '@/app/(public)/style.css'
-import Navbar from '@/components/public/Headers/Navbar'
 
 export const metadata = {
   title: 'DW',
@@ -18,11 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 font-sans flex flex-col`}>
+      <body
+        className={`${inter.className}  ${montserrat.className} flex flex-col bg-gray-50 font-sans`}
+      >
         <Providers>
-          <ToastProvider>
-            {children}
-          </ToastProvider>
+          <ToastProvider>{children}</ToastProvider>
         </Providers>
       </body>
     </html>

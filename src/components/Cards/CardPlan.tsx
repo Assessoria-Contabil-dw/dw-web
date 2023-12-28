@@ -1,7 +1,3 @@
 export default function CardPlan() {
-    return (
-        <div>
-
-        </div>
-    )
+  return <div></div>
 }
