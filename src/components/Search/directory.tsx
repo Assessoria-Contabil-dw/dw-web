@@ -57,10 +57,23 @@ export default function SearchDirectory({
         <option value="">Selecione</option>
         {data !== undefined && data.results
           ? data.results.map((directory) => (
+<<<<<<< HEAD
             <option key={directory.id} value={directory.id}>
               {directory.surname}
             </option>
           ))
+=======
+              <option
+                key={directory.id}
+                value={JSON.stringify({
+                  directoryId: directory.id,
+                  city: directory.city,
+                })}
+              >
+                {directory.surname}
+              </option>
+            ))
+>>>>>>> f8dc981419908afcf13f24980b72af54b47e1fc9
           : null}
       </select>
     </div>

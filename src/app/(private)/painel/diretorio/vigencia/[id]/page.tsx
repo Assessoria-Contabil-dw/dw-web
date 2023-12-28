@@ -3,7 +3,7 @@ import { VigencyTable } from '@/components/pages/Vigency'
 import { useParams } from 'next/navigation'
 import { useEffect } from 'react'
 
-export default function Vigency() {
+export default function VigencyPage() {
   const params = useParams()
   const { id } = params
 

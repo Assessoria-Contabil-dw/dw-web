@@ -225,7 +225,7 @@
   }
 
   .button-arrow {
-    @apply h-fit rounded-md border-slate-200 border-solid border-[1px] px-1 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-500 disabled:cursor-not-allowed disabled:opacity-30;
+    @apply h-fit rounded-md border-slate-300 border-solid border-[1px] px-1 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-500 disabled:cursor-not-allowed disabled:opacity-30;
   }
 
   .button-tool {

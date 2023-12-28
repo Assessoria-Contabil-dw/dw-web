@@ -15,8 +15,13 @@ export function NavigationHeader() {
       replace: true,
       role: '',
     },
+    {
+      href: '/templates',
+      label: 'Templates',
+      replace: true,
+      role: 'ADMIN',
+    },
   ]
-
   return (
     <nav className="h-full">
       <ul className="flex h-full">

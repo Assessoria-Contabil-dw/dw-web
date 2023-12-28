@@ -1,3 +1,4 @@
+'use client'
 import { useContext } from 'react'
 import PermitSelect from './PermitSelect'
 
@@ -8,7 +9,7 @@ export default function Menu() {
 
   return (
     <aside
-      className={`sticky flex h-[calc(100vh-3rem)] min-w-[200px] flex-col justify-between overflow-x-auto bg-white p-4 
+      className={`sticky flex h-full min-w-[200px] flex-col justify-between overflow-x-auto bg-white p-4 
       max-md:absolute max-md:z-10 max-md:w-full
       md:block md:border-r-[1px] md:border-zinc-300
     ${openMenu ? 'block' : 'hidden'}`}

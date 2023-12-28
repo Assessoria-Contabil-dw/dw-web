@@ -6,8 +6,8 @@ module.exports = {
     return [
       {
         source: '/api/:path*',
-        // destination: 'http://189.90.36.16:3330/:path*',
-        destination: 'http://localhost:3330/:path*',
+        destination: `${process.env.NEXT_API_URL}/:path*`,
+        // destination: `${process.env.NEXT_API_URL_LOCALHOST}/:path*`,
       },
     ]
   },

@@ -1,7 +1,7 @@
 'use client'
 
 import { queryClient } from '@/provider/query.provider'
-import { PermitProps } from '../layout'
+import { PermitProps } from '@/components/Layouts/PrivateLayout'
 
 export default function Dashboard() {
   const data = queryClient.getQueryData<PermitProps>('permitions')

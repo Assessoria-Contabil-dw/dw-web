@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Trash2 } from 'lucide-react'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import { Page } from '@/@types/page'
-import DeletModel, { DeletRef } from '../../Model/Delet'
+import DeleteModel, { DeleteRef } from '../../Model/Delete'
 import { RefreshButton } from '../../Buttons/refresh'
 import { PaddingButtons } from '../../Buttons/next'
 import { LoadingSecond } from '@/components/Loading/second'
@@ -72,8 +72,8 @@ export function PartyTable() {
     setSearch((old) => ({ ...old, [name]: value || undefined }))
   }
 
-  const modalDeleteRef = useRef<DeletRef>(null)
-  const handleDeletModal = useCallback(
+  const modalDeleteRef = useRef<DeleteRef>(null)
+  const handleDeleteModal = useCallback(
     (id: string, path: string, msg: string) => {
       modalDeleteRef.current?.openModal(id, path, msg)
     },
@@ -100,7 +100,7 @@ export function PartyTable() {
   console.log('ola')
   return (
     <div className="flex flex-col gap-2">
-      <DeletModel ref={modalDeleteRef} />
+      <DeleteModel ref={modalDeleteRef} />
 
       <div className="flex items-center justify-between">
         <div className="flex w-fit items-center gap-2">
@@ -183,7 +183,7 @@ export function PartyTable() {
                       </button> */}
                       <button
                         onClick={() =>
-                          handleDeletModal(
+                          handleDeleteModal(
                             party.code.toString(),
                             'parties',
                             party.abbreviation,

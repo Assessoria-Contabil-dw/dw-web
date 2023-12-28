@@ -39,13 +39,13 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
           : true,
     },
     {
-      href: `/painel/relatorio`,
-      label: 'Relatórios',
+      href: `/painel/emissor`,
+      label: 'Emissor',
       sub: null,
       replace: true,
       disable:
         user?.role === 'CLIENT'
-          ? modules?.find((item) => item.module === 'Visualizar Relatórios')
+          ? modules?.find((item) => item.module === 'Visualizar Emissor')
           : true,
     },
   ]
