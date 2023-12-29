@@ -14,7 +14,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-slate-50">
+    <div id='painel' className="flex h-screen w-screen items-center justify-center bg-slate-50">
       <div className="left-0 h-screen flex-1 bg-slate-900 p-12 text-white max-sm:hidden">
         <div className="flex h-full w-5/6 flex-col items-start justify-center gap-8">
           <div>
