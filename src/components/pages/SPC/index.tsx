@@ -33,11 +33,16 @@ export function SPC() {
   const { partyCode, cityCode, stateId } = useContext(AccessContext)
 
   const [page, setPage] = useState(0)
+  const [skip, setSkip] = useState(0)
+  const take = 15
+
   const prevPage = useCallback(() => {
+    setSkip((old) => Math.max(old - take, 0))
     setPage((old) => Math.max(old - 1, 0))
   }, [])
 
   const nextPage = useCallback(() => {
+    setSkip((old) => old + take)
     setPage((old) => old + 1)
   }, [])
 
@@ -73,15 +78,15 @@ export function SPC() {
       const response = await api
         .get('/spcs', {
           params: {
-            skip: page,
-            take: 15,
+            skip,
+            take,
             legend: search.legend,
             party: search.party,
             city: search.city,
             state: search.state,
             status: search.status,
             year: search.year,
-            partyCode,
+            partyCode: partyCode === 0 ? undefined : partyCode,
             cityCode,
             stateId,
           },

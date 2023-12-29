@@ -122,8 +122,8 @@ export function EditorTemplate({
               content: ` <div style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between;
               width: 21.59cm; height: 30.85cm; position: relative;" size="A4">
                   
-                  <header style="width: 100%; height: 0.8cm; background: #01eaa0; padding: 0.1cm 0.4cm;">
-                  <div  style="width: 100%; height: 100%; background: {PARTIDO_COR}; color: white; display: flex; justify-content: space-between; align-items: center;">
+                  <header style="width: 100%; height: 0.8cm; background: #01eaa0; ">
+                  <div  style="width: 100%; padding: 0.1cm 0.4cm; height: 100%; background: {PARTIDO_COR}; color: white; display: flex; justify-content: space-between; align-items: center;">
                    <p style="line-height: 0;">{PARTIDO_NOME}</p>
                     <p style="line-height: 0;">{DIRETORIO_SURNAME}</p>
                   </div>
@@ -131,8 +131,8 @@ export function EditorTemplate({
               
                   <main style="padding: 0 4rem; height: 100%; flex: 1">Conteúdo</main>
               
-                  <footer style="width: 100%; margin-top:0; height: 0.8cm; background: #01eaa0; padding: 0.1cm; ">
-                  <div  style="width: 100%; line-height: 0; margin-top:0; height: 100%; background: {PARTIDO_COR}; color: white; display: flex; justify-content: center;  align-items: center;">
+                  <footer style="width: 100%; margin-top:0; height: 0.8cm; background: #01eaa0; padding-left: 0px; padding-right: 0px;  ">
+                  <div  style="width: 100%; padding: 0.1cm; line-height: 0; margin-top:0; height: 100%; background: {PARTIDO_COR}; color: white; display: flex; justify-content: center;  align-items: center;">
                     <p>{DIRETORIO_ENDEREÇO} - {DIRETORIO_CNPJ} - {DIRETORIO_TELEFONE}</p>
                   </div> 
                   </footer>

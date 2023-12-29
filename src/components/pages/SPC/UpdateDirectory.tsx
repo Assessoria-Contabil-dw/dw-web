@@ -215,7 +215,7 @@ const UpdateDirectory: ForwardRefRenderFunction<UpdateDirectoryRef> = (
                             onClick={() => handleRowClick(spc.id)}
                             className="cursor-pointer"
                           >
-                            <td>{spc.year}</td>
+                            <td>{spc.id}</td>
                             <td>{spc.numPge != null ? spc.numPge : '-'}</td>
                             <td>{spc.status}</td>
                             <td>{spc.observation}</td>

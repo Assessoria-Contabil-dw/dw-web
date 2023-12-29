@@ -32,7 +32,6 @@ export function TableSPC({ data }: SPCProps) {
     const spcaList = []
 
     for (let i = 2017; i <= dayjs().year(); i++) {
-      console.log(i)
       const spca = spc.SPCA?.find((spca) => spca?.year === String(i) || null)
 
       spcaList.push(
@@ -71,7 +70,6 @@ export function TableSPC({ data }: SPCProps) {
     const spceList = []
 
     for (let i = 2018; i <= dayjs().year(); i += 2) {
-      console.log(i)
       const spce = spc.SPCE?.find((spce) => spce?.year === String(i) || null)
 
       spceList.push(

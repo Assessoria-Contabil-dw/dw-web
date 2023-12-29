@@ -32,7 +32,7 @@ export const PaddingButtons = ({
       >
         <ChevronLeft size={18} />
       </button>
-      <span>{pages === 1 ? 1 : page + 1 + '...' + Number(pages + 1)}</span>
+      <span>{pages === 1 ? 1 : page + 1 + '...' + pages}</span>
       <button
         className="button-arrow"
         onClick={() => {

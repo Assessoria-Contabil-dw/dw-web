@@ -3,14 +3,10 @@
 import { api } from '@/lib/api'
 import { Circle, Trash2, Plus } from 'lucide-react'
 import { ChangeEvent, useCallback, useContext, useRef, useState } from 'react'
-import { useQuery } from 'react-query'
-import { Page } from '@/interfaces/page'
 import { PaddingButtons } from '@/components/Buttons/next'
 import { RefreshButton } from '@/components/Buttons/refresh'
 import { LoadingPrimary } from '@/components/Loading/primary'
-import { useRouter } from 'next/navigation'
 import { AccessContext } from '@/provider/context.provider'
-import { useNotify } from '@/components/Toast/toast'
 import SearchParty from '@/components/Search/party'
 import SearchState from '@/components/Search/state'
 import SearchCity from '@/components/Search/city'
@@ -18,29 +14,7 @@ import SearchVigency from '@/components/Search/status'
 import { User } from '@/lib/auth'
 import { queryClient } from '@/provider/query.provider'
 import DirectoryForm, { RegisterDirectoryModalProps } from './RegisterDirectory'
-import { DirectoryService } from '@/services/directory.service'
-
-interface DirectoryProps {
-  id: number
-
-  cnpj: string
-  address: string
-  siteUrl: string
-  email: string
-  phone: string
-  mailingAddress: string
-  virgencyStatus: string
-  surname: string
-  mailingList: string
-  vigencyStatus: string
-  city: string
-  state: string
-  party: string
-
-  typeOrg: string
-  partyId: number
-  cityCode: number
-}
+import { useDirectoryData } from '@/hooks/useDirectoryData'
 
 type Search = {
   city?: string
@@ -50,11 +24,6 @@ type Search = {
 }
 
 export function DirectoryTable() {
-  const [page, setPage] = useState(0)
-  const router = useRouter()
-  const notify = useNotify()
-  const directoryService = new DirectoryService()
-
   const modalRegisterRef = useRef<RegisterDirectoryModalProps>(null)
   const handleRegisterModal = useCallback(() => {
     modalRegisterRef.current?.openModal()
@@ -66,52 +35,31 @@ export function DirectoryTable() {
   const user: User = queryClient.getQueryData('authUser') as User
 
   const [search, setSearch] = useState<Search>({} as Search)
+
+  const [page, setPage] = useState(0)
+  const [skip, setSkip] = useState(0)
+  const take = 15
+
   const prevPage = useCallback(() => {
+    setSkip((old) => Math.max(old - take, 0))
     setPage((old) => Math.max(old - 1, 0))
   }, [])
+
   const nextPage = useCallback(() => {
+    setSkip((old) => old + take)
     setPage((old) => old + 1)
   }, [])
 
-  const { data, isLoading, isFetching, isPreviousData } = useQuery<
-    Page<DirectoryProps>
-  >(
-    [
-      'directories',
-      page,
-      search.city,
-      search.state,
-      search.party,
-      search.vigencyStatus,
-      partyCode,
-      cityCode,
-      stateId,
-    ],
-    () =>
-      directoryService.getAll(
-        page,
-        15,
-        search.party,
-        search.city,
-        search.state,
-        search.vigencyStatus,
-        partyCode,
-        cityCode,
-        stateId,
-      ),
-    {
-      keepPreviousData: true,
-      retry: false,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 60, // 10 minute
-      onError: (error: any) => {
-        if (error.response.status === 403) {
-          notify({ type: 'warning', message: error.response.data.message })
-          router.push('/painel')
-        }
-        console.log(error)
-      },
-    },
+  const { data, isLoading, isFetching, isPreviousData } = useDirectoryData(
+    skip,
+    take,
+    search.party,
+    search.state,
+    search.city,
+    search.vigencyStatus,
+    partyCode,
+    cityCode,
+    stateId,
   )
 
   function handleSearchOnChange(
@@ -173,7 +121,7 @@ export function DirectoryTable() {
 
         <SearchVigency handleSearchOnChange={handleSearchOnChange} />
 
-        <RefreshButton isLoading={isFetching} queryName="directories" />
+        <RefreshButton isLoading={isFetching} queryName="directoryData" />
 
         {user?.role === 'ADMIN' && (
           <button

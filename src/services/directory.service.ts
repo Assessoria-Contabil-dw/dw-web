@@ -2,18 +2,18 @@ import { api } from '@/lib/api'
 
 export class DirectoryService {
   public async getAll(
-    skip: number | undefined,
-    take: number | undefined,
-    party: string | undefined,
-    city: string | undefined,
-    state: string | undefined,
-    vigencyStatus: string | undefined,
-    partyCode: number | undefined,
-    cityCode: string | undefined,
-    stateId: string | undefined,
+    skip?: number,
+    take?: number,
+    party?: string,
+    city?: string,
+    state?: string,
+    vigencyStatus?: string,
+    partyCode?: number,
+    cityCode?: string,
+    stateId?: string,
   ) {
-    const response = await api
-      .get('/directories', {
+    try {
+      const response = await api.get('/directories', {
         params: {
           skip,
           take,
@@ -26,7 +26,9 @@ export class DirectoryService {
           stateId,
         },
       })
-      .then((response) => response.data)
-    return response
+      return response.data
+    } catch (error) {
+      return error
+    }
   }
 }
