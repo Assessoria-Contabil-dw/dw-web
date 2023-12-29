@@ -18,7 +18,7 @@
       @apply text-[62.5%] overflow-x-hidden;
     } */
 
-  body {
+  #painel body {
     @apply h-[100vh] w-[100vw] bg-slate-50 font-sans text-slate-900;
   }
 
@@ -111,19 +111,19 @@
 
   /* scroll */
 
-  html {
+  #painel html {
     overflow: hidden;
   }
 
-  html ::-webkit-scrollbar {
+  #painel html ::-webkit-scrollbar {
     @apply h-2 w-2;
   }
 
-  html ::-webkit-scrollbar-thumb {
+  #painel html ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-slate-200;
   }
 
-  html ::-webkit-scrollbar-track {
+  #painel html ::-webkit-scrollbar-track {
     @apply bg-slate-100;
   }
 
