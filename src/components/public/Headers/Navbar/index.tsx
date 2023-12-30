@@ -1,5 +1,5 @@
 import ActiveLink from './ActiveLink'
-import LinkPrimary from '../../Links/LinkPrimary'
+import LinkPrimary from '../../../Links/LinkPrimary'
 import Image from 'next/image'
 import logo from '@/assets/logo_v2.svg'
 import { NavigationItem } from '@/interfaces/types'
@@ -11,11 +11,11 @@ const NAVIGATION: NavigationItem[] = [
   },
   {
     name: 'Planos',
-    href: '/planos',
+    href: '#planos',
   },
   {
     name: 'Sobre nós',
-    href: '/sobre',
+    href: '#sobre',
   },
 ]
 
@@ -44,7 +44,9 @@ export default function Navbar() {
           >
             Fale Conosco
           </LinkPrimary>
-          <LinkPrimary href="/login">Entrar</LinkPrimary>
+          <LinkPrimary variant="container" href="/login">
+            Entrar
+          </LinkPrimary>
         </div>
       </div>
     </header>

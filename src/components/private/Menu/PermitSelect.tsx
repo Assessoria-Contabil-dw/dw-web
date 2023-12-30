@@ -1,11 +1,11 @@
 'use client'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { ChangeEvent, useContext, useEffect, useState } from 'react'
-import NavigationModule from './Modules'
-import { AccessContext, ModulesData } from '@/provider/context.provider'
-import { queryClient } from '@/provider/query.provider'
+import { AccessContext } from '@/provider/context.provider'
 import { useAuth } from '@/lib/auth'
-import { PermitProps } from '../Layouts/PrivateLayout'
+import NavigationModule from './NavModule'
+import { AccessModuleData, AccessProps } from '@/interfaces/modules'
+import { useAccessData } from '@/hooks/useAccessData'
 
 export default function PermitSelect() {
   const {
@@ -19,12 +19,13 @@ export default function PermitSelect() {
     setCityCode,
   } = useContext(AccessContext)
   const user = useAuth()
+  const { data, isLoading } = useAccessData()
   const [isSelect, setIsSelect] = useState(false)
-  const [isFilter, setIsFilter] = useState<PermitProps>()
+  const [isFilter, setIsFilter] = useState<AccessProps>()
 
   function handleChange(
-    modules: ModulesData,
-    party: number,
+    modules: AccessModuleData,
+    party: string,
     state: string,
     city: string,
   ) {
@@ -50,19 +51,11 @@ export default function PermitSelect() {
     }
   }
 
-  const data: PermitProps = queryClient.getQueryData(
-    'permitions',
-  ) as PermitProps
-
   useEffect(() => {
     setIsFilter(data)
   }, [])
 
-  if (user?.role === 'CLIENT') {
-    if (!data) {
-      return null
-    }
-  }
+  if (isLoading) return null
 
   function handleFilter(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.value.length < 2) {
@@ -101,8 +94,6 @@ export default function PermitSelect() {
       acessState: filterState?.length ? filterState : null,
       acessDistrict: filterDistrict?.length ? filterDistrict : null,
     })
-
-    console.log(e.target.value, isFilter)
   }
 
   return (
@@ -115,19 +106,13 @@ export default function PermitSelect() {
             className="peer/access absolute inset-0 z-20 cursor-pointer opacity-0"
           />
           <div>
-            <label
-              htmlFor="access"
-              className="cursor-pointer font-alt text-xs font-medium peer-checked/access:text-primaryHover"
-            >
+            <label htmlFor="access" className="text-label cursor-pointer">
               Acesso
             </label>
 
-            <div
-              className="inputStyle flex items-center justify-between text-slate-600
-        peer-checked/access:border-primary"
-            >
+            <div className="input-style flex items-center justify-between">
               <div>
-                {modulesArray === null
+                {modulesArray === undefined
                   ? 'Selecione o acesso'
                   : modulesArray.acessName}
               </div>
@@ -140,23 +125,28 @@ export default function PermitSelect() {
               isSelect ? 'block' : 'hidden'
             } absolute mt-1  rounded border-[1px] border-slate-300 bg-white p-1 shadow-md`}
           >
-            <input type="text" placeholder="Buscar" onChange={handleFilter} />
+            <input
+              type="text"
+              placeholder="Buscar"
+              onChange={handleFilter}
+              className="input-style"
+            />
 
             <div className="mt-2 h-48 w-full overflow-x-auto">
               {isFilter?.acessParty !== null ? (
                 <div>
-                  <span>Nacional</span>
+                  <span className="text-label">Nacional</span>
                   <ul>
                     {isFilter?.acessParty.map((item) => (
                       <li
                         key={item.id}
-                        className={`relative flex cursor-pointer items-center justify-between p-1 text-xs hover:bg-slate-100 `}
+                        className="text-select relative mr-1 flex cursor-pointer items-center justify-between px-2 py-1"
                       >
                         <input
                           type="radio"
                           name="party"
                           checked={
-                            partyCode === item.partyCode &&
+                            partyCode === String(item.partyCode) &&
                             !cityCode &&
                             !stateId
                           }
@@ -166,7 +156,7 @@ export default function PermitSelect() {
                                 acessName: item.party,
                                 modules: item.modules,
                               },
-                              item.partyCode,
+                              String(item.partyCode),
                               '',
                               '',
                             )
@@ -175,9 +165,10 @@ export default function PermitSelect() {
                           value={item.party}
                           data-label={item.party}
                         />
+
                         <label
-                          htmlFor={String(item.partyCode)}
-                          className="text-slate-600 peer-checked/item:font-medium"
+                          htmlFor={String(String(item.partyCode))}
+                          className="text-slate-600 peer-checked/item:font-semibold"
                         >
                           {item.party}
                         </label>
@@ -194,41 +185,42 @@ export default function PermitSelect() {
 
               {isFilter?.acessState !== null ? (
                 <div>
-                  <span>Estadual</span>
+                  <span className="text-label">Estadual</span>
                   <ul>
                     {isFilter?.acessState.map((item) => (
                       <li
                         key={item.id}
-                        className={`relative flex cursor-pointer items-center justify-between p-1 text-xs hover:bg-slate-100`}
+                        className="text-select relative mr-1 flex cursor-pointer items-center justify-between px-2 py-1"
                       >
                         <input
                           type="radio"
                           name="party"
                           checked={
-                            partyCode === item.partyCode &&
+                            partyCode === String(item.partyCode) &&
                             !cityCode &&
                             stateId === item.stateId
                           }
                           onChange={() =>
                             handleChange(
                               {
-                                acessName: item.partyCode + ' - ' + item.state,
+                                acessName:
+                                  String(item.partyCode) + ' - ' + item.state,
                                 modules: item.modules,
                               },
-                              item.partyCode,
+                              String(item.partyCode),
                               item.stateId,
                               '',
                             )
                           }
                           className={`peer/item absolute inset-0 z-20 cursor-pointer opacity-0`}
-                          value={item.partyCode + ' - ' + item.state}
+                          value={String(item.partyCode) + ' - ' + item.state}
                           data-label={item.state}
                         />
                         <label
                           htmlFor={item.stateId}
-                          className="font-medium text-slate-600"
+                          className="text-slate-600 peer-checked/item:font-semibold"
                         >
-                          {item.partyCode} - {item.stateId}
+                          {String(item.partyCode)} - {item.stateId}
                         </label>
 
                         <Check
@@ -243,18 +235,18 @@ export default function PermitSelect() {
 
               {isFilter?.acessCity !== null ? (
                 <div>
-                  <span>Municipal</span>
+                  <span className="text-label">Municipal</span>
                   <ul>
                     {isFilter?.acessCity.map((item) => (
                       <li
                         key={item.id}
-                        className={`relative flex cursor-pointer items-center justify-between p-1 text-xs hover:bg-slate-100`}
+                        className="text-select relative mr-1 flex cursor-pointer items-center justify-between px-2 py-1"
                       >
                         <input
                           type="radio"
                           name="party"
                           checked={
-                            partyCode === item.partyCode &&
+                            partyCode === String(item.partyCode) &&
                             cityCode === item.cityCode &&
                             !stateId
                           }
@@ -262,7 +254,7 @@ export default function PermitSelect() {
                             handleChange(
                               {
                                 acessName:
-                                  item.partyCode +
+                                  String(item.partyCode) +
                                   ' - ' +
                                   item.city +
                                   '(' +
@@ -270,14 +262,14 @@ export default function PermitSelect() {
                                   ')',
                                 modules: item.modules,
                               },
-                              item.partyCode,
+                              String(item.partyCode),
                               '',
                               item.cityCode,
                             )
                           }
                           className={`peer/item absolute inset-0 z-20 cursor-pointer opacity-0`}
                           value={
-                            item.partyCode +
+                            String(item.partyCode) +
                             ' - ' +
                             item.city +
                             ' (' +
@@ -288,9 +280,9 @@ export default function PermitSelect() {
                         />
                         <label
                           htmlFor={item.cityCode}
-                          className="font-medium text-slate-600"
+                          className="text-slate-600 peer-checked/item:font-semibold"
                         >
-                          {item.partyCode} - {item.city} ({item.state})
+                          {String(item.partyCode)} - {item.city} ({item.state})
                         </label>
 
                         <Check
@@ -308,7 +300,7 @@ export default function PermitSelect() {
       )}
 
       <NavigationModule
-        modules={modulesArray !== null ? modulesArray.modules : []}
+        modules={modulesArray !== undefined ? modulesArray?.modules : []}
       />
     </div>
   )

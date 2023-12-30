@@ -1,17 +1,7 @@
 import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
-import { Modules } from '@/provider/context.provider'
+import { CityData } from '@/interfaces/modules'
 import { Edit3, Trash2 } from 'lucide-react'
 import { useRef } from 'react'
-
-export interface CityData {
-  id: number
-  cityCode: string
-  partyCode: number
-  party: string
-  city: string
-  state: string
-  modules: Modules[]
-}
 
 interface ArrayCity {
   data: CityData[] | null

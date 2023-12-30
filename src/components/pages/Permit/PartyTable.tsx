@@ -1,14 +1,7 @@
 import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
-import { Modules } from '@/provider/context.provider'
+import { PartyData } from '@/interfaces/modules'
 import { Edit3, Trash2 } from 'lucide-react'
 import { useRef } from 'react'
-
-export interface PartyData {
-  id: number
-  partyCode: number
-  party: string
-  modules: Modules[]
-}
 
 interface ArrayParty {
   data: PartyData[] | null

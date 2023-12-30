@@ -1,5 +1,5 @@
 import { CheckCircle2, MoveRight } from 'lucide-react'
-import LinkPrimary from '../../Links/LinkPrimary'
+import LinkPrimary from '../../../Links/LinkPrimary'
 import Image from 'next/image'
 import imgContablue from '../../../../assets/contablue.svg'
 import Navbar from '../../Headers/Navbar'
@@ -91,7 +91,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="flex w-full justify-center">
+        <section id="planos" className="flex w-full justify-center">
           <div className="mx-5 flex max-w-6xl flex-1 justify-between gap-20 py-10">
             <div className="flex w-[60%] flex-col gap-5">
               <h1 className="text-4xl font-bold leading-[42px]">

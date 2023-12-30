@@ -3,6 +3,10 @@ export type NavigationItem = {
   href: string
 }
 
+export interface LinkSitesProps {
+  url: string
+  logoUrl: string
+}
 export interface PartyProps {
   code: string
 

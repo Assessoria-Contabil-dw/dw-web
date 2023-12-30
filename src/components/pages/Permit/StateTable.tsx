@@ -1,16 +1,8 @@
 'use client'
-import { Modules } from '@/provider/context.provider'
 import { Edit3, Trash2 } from 'lucide-react'
 import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
 import { useRef } from 'react'
-export interface StateData {
-  id: number
-  stateId: string
-  partyCode: number
-  party: string
-  state: string
-  modules: Modules[]
-}
+import { StateData } from '@/interfaces/modules'
 
 interface ArrayState {
   data: StateData[] | null

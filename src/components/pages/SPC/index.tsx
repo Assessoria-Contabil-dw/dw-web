@@ -86,7 +86,7 @@ export function SPC() {
             state: search.state,
             status: search.status,
             year: search.year,
-            partyCode: partyCode === 0 ? undefined : partyCode,
+            partyCode: Number(partyCode),
             cityCode,
             stateId,
           },

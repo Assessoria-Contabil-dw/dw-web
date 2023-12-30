@@ -1,6 +1,4 @@
 import React from 'react'
-import ToastProvider from '@/provider/toast.provider'
-import Providers from '@/provider/query.provider'
 import { inter, montserrat } from '@/app/fonts'
 import '@/app/globals.css'
 
@@ -20,9 +18,7 @@ export default function RootLayout({
       <body
         className={`${inter.className}  ${montserrat.className} flex flex-col bg-gray-50 font-sans`}
       >
-        <Providers>
-          <ToastProvider>{children}</ToastProvider>
-        </Providers>
+        {children}
       </body>
     </html>
   )

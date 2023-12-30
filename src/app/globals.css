@@ -12,149 +12,88 @@
     box-sizing: border-box;
     list-style-type: none;
     list-style: none;
+    text-decoration: none;
   }
 
-  /* html {
-      @apply text-[62.5%] overflow-x-hidden;
-    } */
+  html{
+    scroll-behavior: smooth !important; 
+  }
+  html ::-webkit-scrollbar {
+    @apply h-2 w-2;
+  }
 
-  #painel body {
+  html ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-200;
+  }
+
+  html ::-webkit-scrollbar-track {
+    @apply bg-slate-100;
+  }
+
+
+  /* table */
+  table {
+    @apply w-full;
+  }
+
+  table thead tr th,
+  table tbody tr td {
+    @apply mr-9;
+  }
+
+  thead tr th,
+  tbody tr {
+    @apply border-b-[1px] border-dashed border-slate-200;
+  }
+
+  thead th {
+    @apply whitespace-nowrap p-2 text-left font-alt text-xs font-bold uppercase text-zinc-600;
+  }
+
+  tbody tr td {
+    @apply p-2 text-left font-sans text-[0.7rem] font-medium text-gray-400;
+  }
+
+  tbody tr:last-child {
+    @apply border-b-0;
+  }
+
+  tbody tr td ul {
+    @apply flex flex-row justify-start gap-2;
+  }
+
+  tbody tr td ul li a {
+    @apply cursor-pointer rounded bg-slate-200 px-2 py-1 font-semibold text-white;
+  }
+
+  select {
+    cursor: pointer;
+  }
+
+
+  body {
     @apply h-[100vh] w-[100vw] bg-slate-50 font-sans text-slate-900;
   }
 
-  #painel footer {
-    @apply padding-main mt-16 h-16 w-full;
-  }
 
-  /* i svg {
-      @apply w-[2.4rem] h-[2.4rem];
-    }
-   */
 
-  #painel option[value=""][disabled] {
+
+
+
+  /* #painel option[value=""][disabled] {
     @apply hidden text-slate-300;
   }
 
   #painel option {
     @apply text-zinc-600;
-  }
+  } */
 
-  /* table */
-  #painel table {
-    @apply w-full;
-  }
 
-  #painel table thead tr th,
-  #painel table tbody tr td {
-    @apply mr-9;
-  }
-
-  #painel thead tr th,
-  #painel tbody tr {
-    @apply border-b-[1px] border-dashed border-slate-200;
-  }
-
-  #painel thead th {
-    @apply whitespace-nowrap p-2 text-left font-alt text-xs font-bold uppercase text-zinc-600;
-  }
-
-  #painel tbody tr td {
-    @apply p-2 text-left font-sans text-[0.7rem] font-medium text-gray-400;
-  }
-
-  /*
-  tbody tr td:first-child {
-    @apply text-zinc-600 hover:text-primary cursor-pointer uppercase;
-  }
-*/
-
-  #painel tbody tr:last-child {
-    @apply border-b-0;
-  }
-
-  #painel tbody tr td ul {
-    @apply flex flex-row justify-start gap-2;
-  }
-
-  #painel tbody tr td ul li a {
-    @apply cursor-pointer rounded bg-slate-200 px-2 py-1 font-semibold text-white;
-  }
 
   #painel ul li {
     @apply text-xs font-normal text-slate-800;
   }
 
-  /* text */
-  /* h2 {
-      @apply font-sans text-base font-medium uppercase text-zinc-600 mb-2;
-    }
-    h4 {
-      font-family: sans;
-      font-size: 1rem;
-      font-weight: 400;
-      text-transform: uppercase;
-  
-      color: var(--slate-800);
-    }
-    a {
-      text-decoration: none;
-    }
-   */
-  /* buttons */
-  #painel button:disabled,
-  #painel button:disabled:hover,
-  #painel button:disabled:focus,
-  #painel button:disabled:active {
-    pointer-events: none;
-    background: var(--slate-100);
-  }
-
-  /* scroll */
-
-  #painel html {
-    overflow: hidden;
-  }
-
-  #painel html ::-webkit-scrollbar {
-    @apply h-2 w-2;
-  }
-
-  #painel html ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-slate-200;
-  }
-
-  #painel html ::-webkit-scrollbar-track {
-    @apply bg-slate-100;
-  }
-
-  /* form */
-  #painel h1 {
-    @apply font-alt text-xl font-semibold text-slate-900;
-  }
-
-  #painel h2 {
-    @apply font-alt text-lg font-semibold text-slate-900;
-  }
-
-  #painel h3 {
-    @apply font-alt text-base font-semibold text-slate-900;
-  }
-
-  #painel h4 {
-    @apply font-alt text-sm font-semibold text-slate-900;
-  }
-
-  #painel h5 {
-    @apply font-alt text-xs font-semibold text-slate-900;
-  }
-
-  #painel h6 {
-    @apply font-alt text-[10px] font-semibold text-slate-900;
-  }
-
-  #painel span {
-    @apply font-sans text-xs font-normal text-slate-400;
-  }
 
   #painel .form,
   fieldset {
@@ -164,34 +103,72 @@
   #painel legend {
     @apply font-sans text-xs font-medium text-zinc-600;
   }
-
-  #painel label {
-    @apply font-sans font-medium text-slate-700;
-  }
-
-  #painel select,
-  #painel input[type="text"],
-  #painel input[type="email"],
-  #painel input[type="password"],
-  #painel input[type="number"],
-  #painel input[type="time"],
-  #painel input[type="date"],
-  #painel input[type="datetime-local"],
-  #painel textarea,
-  #painel .inputStyle {
-    @apply h-10 w-full rounded border border-slate-300 bg-white px-3 font-sans text-sm font-normal text-zinc-600;
-  }
-
-  #painel select {
-    cursor: pointer;
-  }
-
-  #painel button {
-    @apply flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-4 py-2 font-sans text-sm font-semibold transition-colors;
-  }
 }
 
 @layer components {
+
+  /* text */
+ .text-h1 {
+    @apply font-alt text-xl font-semibold text-slate-900;
+  }
+
+  .text-h2 {
+    @apply font-montserrat text-lg leading-3 font-semibold text-slate-900;
+  }
+
+  .text-h3 {
+    @apply font-montserrat text-base font-semibold text-slate-900;
+  }
+
+  .text-h4 {
+    @apply font-montserrat text-sm font-semibold text-slate-900;
+  }
+
+  .text-h5 {
+    @apply font-montserrat text-xs font-semibold text-slate-900;
+  } 
+
+  .text-h6 {
+    @apply font-montserrat text-[10px] font-semibold text-slate-900;
+  }
+ 
+
+  .text-label{
+    @apply font-lexend text-slate-700 text-xs font-medium;
+  }
+
+  .text-select{
+    @apply  font-montserrat text-xs font-medium text-slate-600 hover:bg-slate-100;
+  }
+
+  .text-span{
+    @apply font-medium text-xs text-slate-400
+  }
+
+
+  /* button */
+  .button-icon {
+    @apply bg-white text-slate-700 hover:text-slate-800 hover:bg-primary hover:border-primary p-2 rounded-md border-slate-200 border-solid border-[1px];
+  }
+
+  .button-primary {
+    @apply bg-primary text-slate-800 hover:bg-primaryHover disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed;
+  }
+
+  .button-primary-outline {
+    @apply bg-white text-slate-800 border-[1px] border-slate-200 hover:border-transparent hover:bg-slate-100 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed;
+  }
+
+  /* input */
+  .input-style {
+    @apply h-10 w-full rounded border border-slate-300 bg-white px-3 font-sans text-sm font-normal text-slate-600;
+  }
+
+
+
+/* ---------- */
+  
+
   #root {
     @apply mb-16 flex h-full w-full flex-col overflow-auto;
   }
@@ -199,8 +176,6 @@
   .padding-main {
     @apply px-32 py-0 max-md:px-4;
   }
-
-
 
   .bnt-sub {
     @apply rounded-xl border-none bg-primary px-4 py-2 font-sans text-lg font-medium capitalize tracking-widest text-white;
@@ -212,17 +187,17 @@
 
 
 
-  .button-primary {
-    @apply bg-primary text-slate-800 hover:bg-primaryHover disabled:bg-slate-400 disabled:text-white;
-  }
+
 
   .button-second {
-    @apply bg-second text-white hover:bg-secondHover disabled:bg-slate-400 disabled:text-white;
+    @apply bg-second  text-white hover:bg-secondHover disabled:bg-slate-400 disabled:text-white;
   }
 
   .button-tertiary {
     @apply bg-white text-slate-700 h-fit hover:text-slate-800 p-2 hover:bg-primary hover:border-primary rounded-md border-slate-200 border-solid border-[1px];
   }
+
+
 
   .button-arrow {
     @apply h-fit rounded-md border-slate-300 border-solid border-[1px] px-1 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-500 disabled:cursor-not-allowed disabled:opacity-30;
