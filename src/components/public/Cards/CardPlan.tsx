@@ -22,30 +22,30 @@ const SERVICES: string[] = [
 
 export default function CardPlan(props: CardPlanProps) {
   return (
-    <div className={`${inter.className} shadow-sm text-[14px] px-7 py-10 flex-1 w-[350px]  border rounded-[4px]`}>
+    <div className={`${inter.className} shadow-sm text-[14px] px-7 py-10 flex-1 w-[310px]  border rounded-lg`}>
       <div className="flex flex-1 flex-col border-b pb-5" >
         <h3 className="text-violet-600 text-[1em] font-semibold uppercase">
-          {props.title}
+          {props.descrition}
         </h3>
-        <div className="flex  h-[53px] w-full justify-between gap-3  items-center mb-5 ">
+        <div className="flex flex-col w-full  ">
           <h2 className="text-[1.8em] font-semibold">
             {props.title}
           </h2>
-          <div className="flex flex-col">
-
+          <div className="flex h-[85px] flex-col mb-5 ">
             {!props.annualValue && !props.monthlyValue &&
-              <b className="text-[1.3em] font-semibold">
+              <b className="text-[3em] font-semibold">
                 Negociável
               </b>
             }
-            {props.monthlyValue &&
-              <span>
-                R$  <b className="text-[1.2em] font-semibold">{props.monthlyValue.toFixed(2).replaceAll(".", ",")}</b>/mês
-              </span>
-            }
+
             {props.annualValue &&
               <span>
-                R$ <b className="text-[1.3em] font-semibold">{props.annualValue.toFixed(2).replaceAll(".", ",")}</b>/ano
+                <b className="text-[3em] font-semibold">  R$ {props.annualValue.toFixed(2).replaceAll(".", ",")}</b>/ano
+              </span>
+            }
+            {props.monthlyValue &&
+              <span>
+                <b className="text-[1.5em] font-semibold">  R$  {props.monthlyValue.toFixed(2).replaceAll(".", ",")}</b>/mês
               </span>
             }
           </div>

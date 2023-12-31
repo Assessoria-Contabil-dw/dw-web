@@ -69,35 +69,13 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="flex w-full justify-center">
-                    <div className="mx-5 flex max-w-7xl flex-1 justify-between gap-20 py-10">
-                        <div className="flex flex-1 justify-center">
-                            <Image
-                                className="h-auto"
-                                src={imgContablue}
-                                alt="Figura de contabilidade"
-                            />
-                        </div>
-                        <div className="flex w-[60%] flex-col gap-5">
-                            <h1 className="text-4xl font-bold leading-[42px]">
-                                <span className="text-secondHover">Módulo Diretório </span>
-                                centralize suas informações
-                            </h1>
-                            <p className=" leading-6">
-                                Concenliza as informações cadastradas no SGIP/TSE, como endereço
-                                e composição da agremiação. Além de emitir alertas do vencimento
-                                da composição, garantindo uma gestão eficiente e proativa.
-                            </p>
-                        </div>
-                    </div>
-                </section>
 
                 <section id='planos' className='flex w-full justify-center'>
                     <div className="mx-5 flex flex-col max-w-7xl flex-1 items-center">
                         <h2 className='w-full text-5xl font-bold text-start  leading-[55px]  my-14 '>
                             Conheças nossos planos
                         </h2>
-                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7 my-10'>
                             <CardPlan
                                 title='Operacional'
                                 descrition='Para você começar'
@@ -131,6 +109,31 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+
+                <section className="flex w-full justify-center">
+                    <div className="mx-5 flex max-w-7xl flex-1 justify-between gap-20 py-10">
+                        <div className="flex flex-1 justify-center">
+                            <Image
+                                className="h-auto"
+                                src={imgContablue}
+                                alt="Figura de contabilidade"
+                            />
+                        </div>
+                        <div className="flex w-[60%] flex-col gap-5">
+                            <h1 className="text-4xl font-bold leading-[42px]">
+                                <span className="text-secondHover">Módulo Diretório </span>
+                                centralize suas informações
+                            </h1>
+                            <p className=" leading-6">
+                                Concenliza as informações cadastradas no SGIP/TSE, como endereço
+                                e composição da agremiação. Além de emitir alertas do vencimento
+                                da composição, garantindo uma gestão eficiente e proativa.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+
 
                 <section className="flex w-full justify-center">
                     <div className="mx-5 flex max-w-7xl flex-1 justify-between gap-20 py-10">
