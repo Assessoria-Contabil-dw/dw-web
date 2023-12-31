@@ -21,10 +21,10 @@ const NAVIGATION: NavigationItem[] = [
 
 export default function Navbar() {
   return (
-    <header className="flex h-20 w-full justify-center border-b text-base">
-      <div className="mx-5 flex  max-w-7xl flex-1  items-center justify-between">
+    <header className="flex h-20 w-full justify-center border-b text-base px-5">
+      <div className="flex  max-w-7xl flex-1  items-center justify-between">
         <div className="flex items-center">
-          <div className="pr-5">
+          <div className="pr-5 -ml-6">
             <Image src={logo} className="h-12" alt="Figura de contabilidade" />
           </div>
           <ul className="flex">

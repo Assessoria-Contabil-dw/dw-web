@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className}  ${montserrat.className} flex flex-col bg-gray-50 font-sans`}
+        className={`${inter.className}  ${montserrat.className} flex  flex-col bg-gray-50 font-sans`}
       >
         <Providers>
           <ToastProvider>{children}</ToastProvider>
