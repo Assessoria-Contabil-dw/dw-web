@@ -11,12 +11,12 @@ import { LoadingPrimary } from '@/components/Loading/primary'
 import { AccessContext } from '@/provider/context.provider'
 import { useRouter } from 'next/navigation'
 import { useNotify } from '@/components/Toast/toast'
-import SearchParty from '@/components/Search/party'
-import SearchState from '@/components/Search/state'
-import SearchCity from '@/components/Search/city'
-import SearchVigency from '@/components/Search/status'
-import SearchLegend from '@/components/Search/legend'
-import { RefreshButton } from '@/components/Buttons/refresh'
+import SearchParty from '@/components/private/Search/party'
+import SearchState from '@/components/private/Search/state'
+import SearchCity from '@/components/private/Search/city'
+import SearchVigency from '@/components/private/Search/status'
+import SearchLegend from '@/components/private/Search/legend'
+import { RefreshButton } from '@/components/Buttons/ButtonRefresh'
 
 interface SearchProps {
   legend?: number

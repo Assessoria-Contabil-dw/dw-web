@@ -8,17 +8,16 @@ import {
   useImperativeHandle,
   useState,
 } from 'react'
-import { X } from 'lucide-react'
-import { LoadingSecond } from '../Loading/second'
+import { AlertTriangle, X } from 'lucide-react'
 import { useNotify } from '../Toast/toast'
 import { queryClient } from '@/provider/query.provider'
-// import { ToastContainer, toast } from 'react-toastify'
+import ButtonPrimary from '../Buttons/ButtonPrimary'
 
 export interface DeleteRef {
   openModal: (
     id: string,
     path: string,
-    msg: string | undefined,
+    msg: string | 'Deseja excluir o registro?',
     query: string | undefined,
   ) => void
   closeModal: () => void
@@ -83,34 +82,50 @@ const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
 
   return (
     <div className="model-bg">
-      <fieldset className="w-auto">
-        <div className="flex w-full items-center justify-between">
-          <h4>Deletar registro</h4>
-          <button
-            onClick={() => closeModal()}
-            className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
-          >
-            <X size={20} />
-          </button>
-        </div>
-        <div className="mb-4">
-          <span>Deseja realmente apagar o regitro {params.msg} ?</span>
-        </div>
-        <div className="flex gap-4">
-          <button
-            onClick={() => closeModal()}
-            type="button"
-            className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={() => handleDelete(params.id, params.path, params.query)}
-            type="button"
-            className="bg-red-500 text-white hover:bg-red-600 "
-          >
-            {isSubmitting ? <LoadingSecond /> : 'Deletar'}
-          </button>
+      <fieldset className="model-size model-size-min">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-end">
+            <button
+              onClick={() => closeModal()}
+              className="w-fit rounded-full p-0 text-slate-400 hover:text-gray-600"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          <div className="space-y-6">
+            <div className="flex flex-col items-center gap-6">
+              <AlertTriangle className="stroke-red-500 " />
+              <div className="flex flex-col items-center gap-2">
+                <h4 className="text-h4">Deletar registro</h4>
+                <p className="w-52 text-center font-montserrat text-xs text-slate-600">
+                  {params.msg}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <ButtonPrimary
+                title="Cancelar"
+                variant="outline"
+                onClick={() => closeModal()}
+                type="button"
+                className=" justify-center rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300"
+              >
+                Não, manter
+              </ButtonPrimary>
+              <ButtonPrimary
+                title="Deletar"
+                loading={isSubmitting}
+                variant="container"
+                onClick={() =>
+                  handleDelete(params.id, params.path, params.query)
+                }
+                type="button"
+                className=" justify-center rounded-full bg-red-500 text-white hover:bg-red-600 disabled:bg-red-400 disabled:text-white"
+              >
+                Sim, deletar
+              </ButtonPrimary>
+            </div>
+          </div>
         </div>
       </fieldset>
     </div>

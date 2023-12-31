@@ -5,32 +5,39 @@ import { AccessContext } from '@/provider/context.provider'
 import { useAuth } from '@/lib/auth'
 import NavigationModule from './NavModule'
 import { AccessModuleData, AccessProps } from '@/interfaces/modules'
-import { useAccessData } from '@/hooks/useAccessData'
+import { queryClient } from '@/provider/query.provider'
+import { useAccessModuleData } from '@/hooks/useAccessModules'
 
 export default function PermitSelect() {
   const {
     partyCode,
     cityCode,
     stateId,
-    modulesArray,
-    setModulesArray,
     setPartyCode,
     setStateId,
     setCityCode,
   } = useContext(AccessContext)
   const user = useAuth()
-  const { data, isLoading } = useAccessData()
   const [isSelect, setIsSelect] = useState(false)
   const [isFilter, setIsFilter] = useState<AccessProps>()
 
+  const accessData: AccessProps = queryClient.getQueryData(
+    'accessData',
+  ) as AccessProps
+  const { data: moduleData, isLoading } = useAccessModuleData(
+    partyCode,
+    stateId,
+    cityCode,
+  )
+
   function handleChange(
-    modules: AccessModuleData,
+    module: AccessModuleData,
     party: string,
     state: string,
     city: string,
   ) {
     setPartyCode(party)
-    setModulesArray(modules)
+    queryClient.setQueryData('accessModuleData', module)
 
     setIsSelect(!isSelect)
 
@@ -52,29 +59,29 @@ export default function PermitSelect() {
   }
 
   useEffect(() => {
-    setIsFilter(data)
+    setIsFilter(accessData)
   }, [])
 
   if (isLoading) return null
 
   function handleFilter(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.value.length < 2) {
-      setIsFilter(data)
+      setIsFilter(accessData)
       return
     }
-    const filterParty = data?.acessParty?.filter((item) =>
+    const filterParty = accessData?.acessParty?.filter((item) =>
       item.party.startsWith(e.target.value.toUpperCase()),
     )
 
-    const filterState = data?.acessState?.filter((item) =>
+    const filterState = accessData?.acessState?.filter((item) =>
       item.state.startsWith(e.target.value.toUpperCase()),
     )
 
-    const filterCity = data?.acessCity?.filter((item) =>
+    const filterCity = accessData?.acessCity?.filter((item) =>
       item.city.startsWith(e.target.value.toUpperCase()),
     )
 
-    const filterDistrict = data?.acessDistrict?.filter((item) =>
+    const filterDistrict = accessData?.acessDistrict?.filter((item) =>
       item.city.startsWith(e.target.value.toUpperCase()),
     )
 
@@ -112,9 +119,9 @@ export default function PermitSelect() {
 
             <div className="input-style flex items-center justify-between">
               <div>
-                {modulesArray === undefined
+                {moduleData === undefined || moduleData === null
                   ? 'Selecione o acesso'
-                  : modulesArray.acessName}
+                  : moduleData.acessName}
               </div>
               <ChevronsUpDown size={16} className="text-slate-400" />
             </div>
@@ -300,7 +307,11 @@ export default function PermitSelect() {
       )}
 
       <NavigationModule
-        modules={modulesArray !== undefined ? modulesArray?.modules : []}
+        modules={
+          moduleData !== null && moduleData !== undefined
+            ? moduleData.modules
+            : []
+        }
       />
     </div>
   )

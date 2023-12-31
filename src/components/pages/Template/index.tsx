@@ -1,4 +1,4 @@
-import SearchTemplate from '@/components/Search/template'
+import SearchTemplate from '@/components/private/Search/template'
 import { EditorTemplate } from './Editor'
 import { ChangeEvent, useState } from 'react'
 

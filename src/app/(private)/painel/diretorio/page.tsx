@@ -1,5 +1,5 @@
-import { DirectoryTable } from '@/components/pages/Directory'
+import Directory from '@/components/private/pages/Directory'
 
 export default function DirectoryPage() {
-  return <DirectoryTable />
+  return <Directory />
 }

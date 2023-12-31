@@ -1,6 +1,5 @@
 'use client'
 import { LoadingPrimary } from '@/components/Loading/primary'
-import { useAuth } from '@/lib/auth'
 import { AccessProvider } from '@/provider/context.provider'
 import ToastProvider from '@/provider/toast.provider'
 import { redirect } from 'next/navigation'
@@ -8,10 +7,10 @@ import { ReactNode } from 'react'
 import HeaderPrivate from '@/components/private/Header'
 import { useAccessData } from '@/hooks/useAccessData'
 import Fab from '@/components/private/Fab'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
   const user = useAuth()
-
   const { isLoading } = useAccessData()
 
   if (user === undefined || isLoading) {

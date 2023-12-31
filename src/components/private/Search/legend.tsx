@@ -2,7 +2,7 @@ import { ColorProps } from '@/interfaces/types'
 import { api } from '@/lib/api'
 import { ChangeEvent } from 'react'
 import { useQuery } from 'react-query'
-import { LoadingSecond } from '../Loading/second'
+import { LoadingSecond } from '../../Loading/second'
 
 interface SearchPartyProps {
   handleSearchOnChange: (e: ChangeEvent<HTMLSelectElement>) => void

@@ -4,13 +4,13 @@ import { api } from '@/lib/api'
 import { Circle, Trash2, Plus } from 'lucide-react'
 import { ChangeEvent, useCallback, useContext, useRef, useState } from 'react'
 import { PaddingButtons } from '@/components/Buttons/next'
-import { RefreshButton } from '@/components/Buttons/refresh'
+import { RefreshButton } from '@/components/Buttons/ButtonRefresh'
 import { LoadingPrimary } from '@/components/Loading/primary'
 import { AccessContext } from '@/provider/context.provider'
-import SearchParty from '@/components/Search/party'
-import SearchState from '@/components/Search/state'
-import SearchCity from '@/components/Search/city'
-import SearchVigency from '@/components/Search/status'
+import SearchParty from '@/components/private/Search/party'
+import SearchState from '@/components/private/Search/state'
+import SearchCity from '@/components/private/Search/city'
+import SearchVigency from '@/components/private/Search/status'
 import { User } from '@/lib/auth'
 import { queryClient } from '@/provider/query.provider'
 import DirectoryForm, { RegisterDirectoryModalProps } from './RegisterDirectory'
@@ -120,8 +120,6 @@ export function DirectoryTable() {
         )}
 
         <SearchVigency handleSearchOnChange={handleSearchOnChange} />
-
-        <RefreshButton isLoading={isFetching} queryName="directoryData" />
 
         {user?.role === 'ADMIN' && (
           <button

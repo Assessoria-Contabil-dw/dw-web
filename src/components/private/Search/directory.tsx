@@ -4,7 +4,7 @@ import { AccessContext } from '@/provider/context.provider'
 import { DirectoryService } from '@/services/directory.service'
 import { ChangeEvent, useContext } from 'react'
 import { useQuery } from 'react-query'
-import { LoadingSecond } from '../Loading/second'
+import { LoadingSecond } from '../../Loading/second'
 
 interface SearchDirectoryProps {
   party?: string

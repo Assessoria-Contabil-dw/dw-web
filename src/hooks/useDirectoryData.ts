@@ -11,10 +11,10 @@ export function useDirectoryData(
   party?: string,
   state?: string,
   city?: string,
-  vigencyStatus?: string,
-  partyCode?: number,
-  cityCode?: string,
+  status?: string,
+  partyCode?: string,
   stateId?: string,
+  cityCode?: string,
 ) {
   const partyService = new DirectoryService()
   const notify = useNotify()
@@ -27,10 +27,10 @@ export function useDirectoryData(
       party,
       state,
       city,
-      vigencyStatus,
+      status,
       partyCode,
-      cityCode,
       stateId,
+      cityCode,
     ],
     () =>
       partyService.getAll(
@@ -39,10 +39,10 @@ export function useDirectoryData(
         party,
         state,
         city,
-        vigencyStatus,
+        status,
         partyCode,
-        cityCode,
         stateId,
+        cityCode,
       ),
     {
       keepPreviousData: true,
