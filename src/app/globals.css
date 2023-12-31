@@ -15,9 +15,10 @@
     text-decoration: none;
   }
 
-  html{
-    scroll-behavior: smooth !important; 
+  html {
+    scroll-behavior: smooth !important;
   }
+
   html ::-webkit-scrollbar {
     @apply h-2 w-2;
   }
@@ -75,7 +76,7 @@
 
 
   body {
-    @apply h-[100vh] w-[100vw] bg-slate-50 font-sans text-slate-900;
+    @apply h-full w-full bg-slate-50 font-sans text-slate-900;
   }
 
 
@@ -111,7 +112,7 @@
 @layer components {
 
   /* text */
- .text-h1 {
+  .text-h1 {
     @apply font-alt text-xl font-semibold text-slate-900;
   }
 
@@ -129,22 +130,22 @@
 
   .text-h5 {
     @apply font-montserrat text-xs font-semibold text-slate-900;
-  } 
+  }
 
   .text-h6 {
     @apply font-montserrat text-[10px] font-semibold text-slate-900;
   }
- 
 
-  .text-label{
+
+  .text-label {
     @apply font-lexend text-slate-700 text-xs font-medium;
   }
 
-  .text-select{
-    @apply  font-montserrat text-xs font-medium text-slate-600 hover:bg-slate-100;
+  .text-select {
+    @apply font-montserrat text-xs font-medium text-slate-600 hover:bg-slate-100;
   }
 
-  .text-span{
+  .text-span {
     @apply font-medium text-xs text-slate-400
   }
 
@@ -169,8 +170,8 @@
 
 
 
-/* ---------- */
-  
+  /* ---------- */
+
 
   #root {
     @apply mb-16 flex h-full w-full flex-col overflow-auto;
@@ -193,7 +194,7 @@
 
 
   .button-second {
-    @apply bg-second  text-white hover:bg-secondHover disabled:bg-slate-400 disabled:text-white;
+    @apply bg-second text-white hover:bg-secondHover disabled:bg-slate-400 disabled:text-white;
   }
 
   .button-tertiary {
