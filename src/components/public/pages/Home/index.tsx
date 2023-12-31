@@ -71,42 +71,49 @@ export default function Home() {
                 </section>
 
                 <section id='planos' className='flex w-full justify-center'>
-                    <div className="mx-5 flex flex-col max-w-7xl flex-1 items-center">
-                        <h2 className='w-full text-5xl font-bold text-start  leading-[55px]  my-14 '>
-                            Conheças nossos planos
-                        </h2>
-                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7 my-10'>
-                            <CardPlan
-                                title='Operacional'
-                                descrition='Para você começar'
-                                annualValue={60}
-                                active={[0, 1, 2]}
-                            />
-
-                            <CardPlan
-                                title='Supervisor'
-                                descrition='Para você começar'
-                                label='Sem cobrança de implantação'
-                                monthlyValue={20}
-                                annualValue={200}
-                                active={[0, 1, 2, 3]}
-                            />
-
-                            <CardPlan
-                                title='Diretor'
-                                descrition='Para você começar'
-                                label='Suporte técnico'
-                                monthlyValue={50}
-                                annualValue={600}
-                                active={[0, 1, 2, 3, 4]}
-                            />
-
-                            <CardPlan
-                                title='Geral'
-                                descrition='Junto com você'
-                                active={[0, 1, 2, 3, 4]}
-                            />
+                    <div className="mx-5 flex flex-col max-w-7xl flex-1">
+                        <div className='flex w-full flex-col items-start gap-3 max-w-[600px]'>
+                            <h2 className='w-full text-5xl font-bold text-start  leading-[55px] '>
+                                Conheças nossos planos
+                            </h2>
+                            <p>Escolha o plano que melhor atende às necessidades do seu partido e simplifique sua contabilidade.</p>
                         </div>
+
+                        <div className='flex flex-1 justify-center'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-10'>
+                                <CardPlan
+                                    title='Operacional'
+                                    descrition='Para você começar'
+                                    annualValue={60}
+                                    active={[0, 1, 2]}
+                                />
+
+                                <CardPlan
+                                    title='Supervisor'
+                                    descrition='Para você começar'
+                                    label='Sem cobrança de implantação'
+                                    monthlyValue={20}
+                                    annualValue={200}
+                                    active={[0, 1, 2, 3]}
+                                />
+
+                                <CardPlan
+                                    title='Diretor'
+                                    descrition='Para você começar'
+                                    label='Suporte técnico'
+                                    monthlyValue={50}
+                                    annualValue={600}
+                                    active={[0, 1, 2, 3, 4]}
+                                />
+
+                                <CardPlan
+                                    title='Geral'
+                                    descrition='Junto com você'
+                                    active={[0, 1, 2, 3, 4]}
+                                />
+                            </div>
+                        </div>
+
                     </div>
                 </section>
 
