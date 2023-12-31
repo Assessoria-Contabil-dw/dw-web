@@ -22,7 +22,7 @@ const SERVICES: string[] = [
 
 export default function CardPlan(props: CardPlanProps) {
   return (
-    <div className={`${inter.className} shadow-sm text-[14px] px-7 py-10 flex-1 w-[300px]  border rounded-lg`}>
+    <div className={`${inter.className} shadow-sm text-[14px] px-7 py-10 flex-1 min-w-[300px]  border rounded-lg`}>
       <div className="flex flex-1 flex-col border-b pb-5" >
         <h3 className="text-violet-600 text-[1em] font-semibold uppercase">
           {props.descrition}

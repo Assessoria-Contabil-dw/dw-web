@@ -77,10 +77,11 @@ export default function Home() {
                                 Conheças nossos planos
                             </h2>
                             <p>Escolha o plano que melhor atende às necessidades do seu partido e simplifique sua contabilidade.</p>
+
                         </div>
 
-                        <div className='flex flex-1 justify-center'>
-                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-10'>
+                        <div className='flex flex-1 w-full justify-center'>
+                            <div className='grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-10'>
                                 <CardPlan
                                     title='Operacional'
                                     descrition='Para você começar'
