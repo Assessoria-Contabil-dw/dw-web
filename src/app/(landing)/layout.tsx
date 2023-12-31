@@ -1,6 +1,8 @@
 import React from 'react'
 import { inter, montserrat } from '@/app/fonts'
 import '@/app/globals.css'
+import Footer from '@/components/public/Footer'
+import Navbar from '@/components/public/Headers/Navbar'
 
 export const metadata = {
   title: 'DW',
@@ -16,9 +18,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className}  ${montserrat.className} flex flex-col bg-gray-50 font-sans`}
+        className={`${inter.className} flex flex-col bg-gray-50`}
       >
-        {children}
+        <>
+          <Navbar />
+          {children}
+          <Footer />
+        </>
+
       </body>
     </html>
   )

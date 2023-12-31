@@ -8,7 +8,6 @@ import CardPlan from '../../Cards/CardPlan'
 export default function Home() {
     return (
         <>
-            <Navbar />
             <main className=" flex h-full flex-1 flex-col items-center">
                 <section className="flex w-full justify-center">
                     <div className="mx-5 flex max-w-7xl flex-1 justify-between gap-20 py-10">
@@ -127,7 +126,7 @@ export default function Home() {
                                 alt="Figura de contabilidade"
                             />
                         </div>
-                        <div className="flex w-[60%] flex-col gap-5">
+                        <div className="flex w-[40%] flex-col gap-5">
                             <h1 className="text-4xl font-bold leading-[42px]">
                                 <span className="text-secondHover">Módulo Diretório </span>
                                 centralize suas informações
@@ -145,7 +144,7 @@ export default function Home() {
 
                 <section className="flex w-full justify-center">
                     <div className="mx-5 flex max-w-7xl flex-1 justify-between gap-20 py-10">
-                        <div className="flex w-[60%] flex-col gap-5">
+                        <div className="flex w-[40%] flex-col gap-5">
                             <h1 className="text-4xl font-bold leading-[42px]">
                                 <span className="text-secondHover">Módulo SPC </span>
                                 atualize suas informações
@@ -192,7 +191,7 @@ export default function Home() {
                             />
                         </div>
 
-                        <div className="flex w-[60%] flex-col gap-5">
+                        <div className="flex w-[40%] flex-col gap-5">
                             <h1 className="text-4xl font-bold leading-[42px]">
                                 <span className="text-secondHover">Módulo Emissor </span>
                                 facilita a emissão de documentos
