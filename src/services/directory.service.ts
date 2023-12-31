@@ -5,10 +5,10 @@ export class DirectoryService {
     skip?: number,
     take?: number,
     party?: string,
-    city?: string,
     state?: string,
-    vigencyStatus?: string,
-    partyCode?: number,
+    city?: string,
+    status?: string,
+    partyCode?: string,
     cityCode?: string,
     stateId?: string,
   ) {
@@ -18,14 +18,23 @@ export class DirectoryService {
           skip,
           take,
           party,
-          city,
           state,
-          vigencyStatus,
-          partyCode: partyCode === 0 ? undefined : partyCode,
-          cityCode,
+          city,
+          status,
+          partyCode,
           stateId,
+          cityCode,
         },
       })
+      return response.data
+    } catch (error) {
+      return error
+    }
+  }
+
+  public async deleteById(id: string) {
+    try {
+      const response = await api.delete(`/directories/${id}`)
       return response.data
     } catch (error) {
       return error

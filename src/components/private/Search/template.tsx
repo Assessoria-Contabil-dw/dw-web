@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react'
 import { useQuery } from 'react-query'
-import { LoadingSecond } from '../Loading/second'
+import { LoadingSecond } from '../../Loading/second'
 import { api } from '@/lib/api'
 
 interface TemplateProps {

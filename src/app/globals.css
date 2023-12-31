@@ -32,6 +32,9 @@
 
 
   /* table */
+  .fieldset{
+    @apply border-[1px] border-slate-300 bg-white overflow-x-auto min-w-[18rem] h-auto rounded-lg px-3 py-2;
+  }
   table {
     @apply w-full;
   }
@@ -95,10 +98,10 @@
   }
 
 
-  #painel .form,
+  /* #painel .form,
   fieldset {
     @apply rounded-[0.8rem] border-[1px] border-slate-300 bg-white px-5 py-4 overflow-x-auto min-w-[18rem];
-  }
+  } */
 
   #painel legend {
     @apply font-sans text-xs font-medium text-zinc-600;
@@ -161,7 +164,7 @@
 
   /* input */
   .input-style {
-    @apply h-10 w-full rounded border border-slate-300 bg-white px-3 font-sans text-sm font-normal text-slate-600;
+    @apply p-2 w-full rounded border border-slate-300 bg-white font-sans text-sm font-normal text-slate-600;
   }
 
 
@@ -218,8 +221,16 @@
   }
 
   .model-size {
-    @apply max-md:w-[80%] w-2/4 h-[80%] px-5 py-4 bg-white rounded-xl border-[1px] border-slate-300 overflow-hidden;
+    @apply px-5 py-4 bg-white rounded-xl border-[1px] border-slate-300 ;
   }
+
+  .model-size-min{
+    @apply overflow-x-auto min-w-[18rem];
+  }
+  .model-size-full{
+    @apply overflow-hidden max-md:w-[80%] w-2/4 h-[80%];
+  }
+
 
   .model-card {
     @apply flex h-full w-full flex-col items-start justify-start gap-2;

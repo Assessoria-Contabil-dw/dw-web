@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useAuth } from './useAuth'
 
 export function useSetRouter(
+  url?: string,
   partyCode?: string,
   stateId?: string,
   cityCode?: string,
@@ -11,16 +12,23 @@ export function useSetRouter(
   const user = useAuth()
   const path = usePathname()
 
-  console.log(partyCode, stateId, cityCode, path, user?.role)
-  useEffect(() => {
+  const setRouter = (p: string) => {
     if (user?.role === 'ADMIN') {
-      router.push(path)
+      router.push(p)
     } else if (partyCode && !stateId && !cityCode) {
-      router.push(`${path}?partido=${partyCode}`)
+      router.push(`${p}?partido=${partyCode}`)
     } else if (partyCode && stateId && !cityCode) {
-      router.push(`${path}?partido=${partyCode}&estado=${stateId}`)
+      router.push(`${p}?partido=${partyCode}&estado=${stateId}`)
     } else if (partyCode && !stateId && cityCode) {
-      router.push(`${path}?partido=${partyCode}&cidade=${cityCode}`)
+      router.push(`${p}?partido=${partyCode}&cidade=${cityCode}`)
     }
-  }, [user, partyCode, stateId, cityCode, path, router])
+  }
+
+  useEffect(() => {
+    if (url) setRouter(url)
+    else setRouter(path)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [partyCode, stateId, cityCode])
+
+  return setRouter
 }
