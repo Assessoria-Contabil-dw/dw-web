@@ -64,9 +64,17 @@ export default function Footer() {
                     <ul className="flex flex-col gap-3 text-lg">
                         <li>
                             <Link
-                                href="/politica"
+                                href="/politica-de-privacidade"
                             >
                                 Política de Privacidade
+                            </Link>
+
+                        </li>
+                        <li>
+                            <Link
+                                href="/termos-de-uso"
+                            >
+                                Termos de Uso
                             </Link>
                         </li>
                     </ul>

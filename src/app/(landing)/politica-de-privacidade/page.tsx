@@ -2,9 +2,13 @@ import "./style.scss"
 export default function Page() {
     return (
         <div id="politica" className="w-full flex justify-center my-10">
-            <div className=" flex flex-col w-full max-w-7xl gap-3">
-                <div className="flex flex-col gap-3">
+            <div className=" flex flex-col w-full max-w-7xl gap-4">
+                <div className="flex flex-col gap-4">
                     <h1 className="text-3xl">Política de Privacidade</h1>
+
+                    <p>
+                        <b> Última alteração:</b>  31/12/2023
+                    </p>
                     <p>
                         A sua privacidade é importante para nós. É política do site DW Contabilidade Partidária respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site <a href="https://www.contabilidadepartidaria.com.br" target="_blank" rel="noopener">DW Contabilidade Partidária</a>, e outros sites que possuímos e operamos.
                     </p>
@@ -33,7 +37,7 @@ export default function Page() {
 
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-4">
                     <h2 className="text-2xl">Política de Cookies</h2>
                     <h3>O que são cookies?</h3>
                     <p>Como é prática comum em quase todos os sites profissionais, este site usa cookies, que são pequenos arquivos baixados no seu computador, para melhorar sua experiência. Esta página descreve quais informações eles coletam, como as usamos e por que às vezes precisamos armazenar esses cookies. Também compartilharemos como você pode impedir que esses cookies sejam armazenados, no entanto, isso pode fazer o downgrade ou 'quebrar' certos elementos da funcionalidade do site.</p>
@@ -88,10 +92,6 @@ export default function Page() {
                     </ol>
                 </div>
 
-
-                <div>
-
-                </div>
                 <h2>Direitos do titular de dados</h2>
                 <p>O titular de dados pessoais possui o direito de solicitar do site DW Contabilidade Partidária, através do canal específico de tratamento, a qualquer momento, mediante requisição formal, informações referentes aos seus dados.</p>
                 <p>Os pedidos serão analisados conforme previsto em legislação vigente dentro de um prazo de 72 horas, salvo determinação legal e/ou objeto de lei.</p>
