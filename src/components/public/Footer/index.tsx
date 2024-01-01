@@ -31,21 +31,31 @@ export default function Footer() {
                     </h2>
                     <ul className="flex flex-col gap-3 text-lg">
                         <li className="flex items-center gap-3">
-                            <span className="text-xl w-[24px]">
-                                <BsFillSendFill />
-                            </span>
+                            <Link
+                                className="flex items-center gap-3"
+                                href="mailto:contato@contabilidadepartidaria.com.br">
 
-                            <span>
-                                contato@contabilidadepartidaria.com.br
-                            </span>
+                                <span className="text-xl w-[24px]">
+                                    <BsFillSendFill />
+                                </span>
+
+                                <span>
+                                    contato@contabilidadepartidaria.com.br
+                                </span>
+                            </Link>
                         </li>
-                        <li className="flex items-center gap-3">
-                            <span className="text-xl w-[24px]">
-                                <FaPhoneAlt />
-                            </span>
-                            <span>
-                                +55 99 9XXXX-XXXX
-                            </span>
+                        <li >
+                            <Link
+                                className="flex items-center gap-3"
+                                href="tel:5599991014072">
+
+                                <span className="text-xl w-[24px]">
+                                    <FaPhoneAlt />
+                                </span>
+                                <span>
+                                    +55 99 99101-4072
+                                </span>
+                            </Link>
                         </li>
                         <li className="flex items-center gap-3">
                             <span className="text-xl w-[24px]">
