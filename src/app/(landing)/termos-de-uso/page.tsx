@@ -2,7 +2,7 @@ import "./style.scss"
 import Link from "next/link"
 export default function Page() {
     return (
-        <div id="termo" className="w-full flex justify-center my-10">
+        <div id="termo" className="w-full flex justify-center my-10 px-5">
             <div className=" flex flex-col w-full max-w-7xl gap-4">
 
                 <div className="flex flex-col gap-4">
@@ -197,10 +197,6 @@ export default function Page() {
                     </p>
                     <p>
                         Em caso que ocorra eventuais conflitos judiciais entre o VISITANTE e a EMPRESA, o foro elegido para a devida ação será o da comarca da Empresa, mesmo que haja outro mais privilegiado.
-
-                    </p>
-                    <p>
-                        Este Termo de uso é valido a partir de 14 de setembro de 2021.
 
                     </p>
 

@@ -1,7 +1,7 @@
 import "./style.scss"
 export default function Page() {
     return (
-        <div id="politica" className="w-full flex justify-center my-10">
+        <div id="politica" className="w-full flex justify-center my-10 px-5">
             <div className=" flex flex-col w-full max-w-7xl gap-4">
                 <div className="flex flex-col gap-4">
                     <h1 className="text-3xl">Política de Privacidade</h1>
