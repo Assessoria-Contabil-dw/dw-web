@@ -5,10 +5,14 @@ import { BsFillSendFill } from "react-icons/bs";
 import Link from "next/link";
 import Image from 'next/image'
 import logo from '@/assets/logo_v2.svg'
+import { PopupCookieConsent } from "../Popups/PopupCookieConsent";
 
 export default function Footer() {
     return (
         <footer className={`flex flex-col flex-1 items-center bg-neutral-700 text-gray-300 overflow-hidden px-5`}>
+
+            <PopupCookieConsent />
+
             <div className="flex gap-[70px] flex-wrap  w-full max-w-7xl py-14 pb-32">
                 <div className="flex flex-col gap-3 flex-1 justify-start">
                     <div>
