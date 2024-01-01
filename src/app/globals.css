@@ -33,9 +33,10 @@
 
 
   /* table */
-  .fieldset{
+  .fieldset {
     @apply border-[1px] border-slate-300 bg-white overflow-x-auto min-w-[18rem] h-auto rounded-lg px-3 py-2;
   }
+
   table {
     @apply w-full;
   }
@@ -222,13 +223,14 @@
   }
 
   .model-size {
-    @apply px-5 py-4 bg-white rounded-xl border-[1px] border-slate-300 ;
+    @apply px-5 py-4 bg-white rounded-xl border-[1px] border-slate-300;
   }
 
-  .model-size-min{
+  .model-size-min {
     @apply overflow-x-auto min-w-[18rem];
   }
-  .model-size-full{
+
+  .model-size-full {
     @apply overflow-hidden max-md:w-[80%] w-2/4 h-[80%];
   }
 

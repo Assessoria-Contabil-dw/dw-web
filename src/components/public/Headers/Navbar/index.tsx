@@ -21,13 +21,13 @@ const NAVIGATION: NavigationItem[] = [
 
 export default function Navbar() {
   return (
-    <header className="flex h-20 w-full justify-center border-b text-base px-5">
+    <header className="flex h-20 w-full justify-center border-b text-base overflow-x-hidden px-5">
       <div className="flex  max-w-7xl flex-1  items-center justify-between">
         <div className="flex items-center">
           <div className="pr-5 -ml-6">
             <Image src={logo} className="h-12" alt="Figura de contabilidade" />
           </div>
-          <ul className="flex">
+          <ul className="hidden lg:flex">
             <li className="flex gap-3 px-4 ">
               {NAVIGATION.map((item, index) => {
                 return <ActiveLink key={index} {...item} />
@@ -41,6 +41,7 @@ export default function Navbar() {
             target="_blank"
             variant="outline"
             href="https://api.whatsapp.com/send?phone=559991014072"
+            className='hidden xs:flex'
           >
             Fale Conosco
           </LinkPrimary>

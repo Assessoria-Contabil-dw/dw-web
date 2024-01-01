@@ -20,12 +20,11 @@ export default function RootLayout({
       <body
         className={`${inter.className} flex flex-col bg-gray-50`}
       >
-        <>
-          <Navbar />
+        <Navbar />
+        <main className='overflow-x-hidden'>
           {children}
-          <Footer />
-        </>
-
+        </main>
+        <Footer />
       </body>
     </html>
   )
