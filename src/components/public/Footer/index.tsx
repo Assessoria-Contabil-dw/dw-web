@@ -15,12 +15,15 @@ export default function Footer() {
 
             <div className="flex gap-[70px] flex-wrap  w-full max-w-7xl py-14 pb-32 px-5">
                 <div className="flex flex-col gap-3 flex-1 justify-start">
-                    <div>
+                    <Link
+                        href="/"
+                        aria-label="Inicio"
+                    >
                         <Image
                             src={logo}
                             alt="Logo Footer"
                         />
-                    </div>
+                    </Link>
                     <p className="text-lg text-justify"
                     >
                         Somos a DW Assessoria Contábel, especializados em simplificar a contabilidade partidária.
