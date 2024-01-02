@@ -23,7 +23,7 @@ export default function Footer() {
                     </div>
                     <p className="text-lg text-justify"
                     >
-                        Somos a DW Contabilidade Partidária, especializados em simplificar a contabilidade partidária.
+                        Somos a DW Assessoria Contábel, especializados em simplificar a contabilidade partidária.
 
                     </p>
 
@@ -127,7 +127,7 @@ export default function Footer() {
 
             <div className="flex w-full justify-center py-7 border-t border-neutral-500 px-5">
                 <div className="w-full max-w-7xl text-center">
-                    Copyright © 2023-{(new Date()).getFullYear()} <b className="text-yellow-300">DW Contabilidade Partidária                       </b> . Todos os direitos reservados.
+                    Copyright © 2023-{(new Date()).getFullYear()} <b className="text-yellow-300">DW Assessoria Contábel                       </b> . Todos os direitos reservados.
                 </div>
             </div>
 

@@ -10,7 +10,7 @@ export default function Page() {
                         <b> Última alteração:</b>  31/12/2023
                     </p>
                     <p>
-                        A sua privacidade é importante para nós. É política do site DW Contabilidade Partidária respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site <a href="https://www.contabilidadepartidaria.com.br" target="_blank" rel="noopener">DW Contabilidade Partidária</a>, e outros sites que possuímos e operamos.
+                        A sua privacidade é importante para nós. É política do site DW Assessoria Contábel respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site <a href="https://www.contabilidadepartidaria.com.br" target="_blank" rel="noopener">DW Assessoria Contábel</a>, e outros sites que possuímos e operamos.
                     </p>
 
                     <p>Trabalhamos com base na Lei de Proteção de Dados (13.709/2018) que traz garantias de privacidade, confidencialidade, retenção, proteção aos direitos fundamentais de liberdade e  o livre desenvolvimento da personalidade da pessoa. Além disso, respeitamos a Constituição Federal da República Federativa do Brasil, o Código de Defesa do Consumidor (Lei 8.078/90), Marco Civil da Internet (Lei 12.965/14).</p><p>
@@ -31,9 +31,9 @@ export default function Page() {
 
                     <p>Nossa política é atualizada de forma constante.</p>
 
-                    <p>Fica, desde já, o titular de dados ciente que o conteúdo desta Política de Privacidade pode ser alterado a critério do site DW Contabilidade Partidária, independente de aviso ou notificação.  Em caso de alteração, as modificações produzem todos os efeitos a partir do momento da disponibilização no site. </p>
+                    <p>Fica, desde já, o titular de dados ciente que o conteúdo desta Política de Privacidade pode ser alterado a critério do site DW Assessoria Contábel, independente de aviso ou notificação.  Em caso de alteração, as modificações produzem todos os efeitos a partir do momento da disponibilização no site. </p>
 
-                    <p>O site DW Contabilidade Partidária não se responsabiliza caso você venha utilizar seus dados de forma incorreta ou inverídica, ficando excluído de qualquer responsabilidade neste sentido.</p>
+                    <p>O site DW Assessoria Contábel não se responsabiliza caso você venha utilizar seus dados de forma incorreta ou inverídica, ficando excluído de qualquer responsabilidade neste sentido.</p>
 
                 </div>
 
@@ -81,19 +81,19 @@ export default function Page() {
                     </ul>
                     <h3>Compromisso do Usuário</h3>
 
-                    <p>O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o site DW Contabilidade Partidária oferece e com caráter enunciativo, mas não limitativo:</p>
+                    <p>O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o site DW Assessoria Contábel oferece e com caráter enunciativo, mas não limitativo:</p>
 
                     <ol>
                         <li> Não se envolver em atividades que sejam ilegais ou contrárias à boa fé e à ordem pública;</li>
                         <li> Respeito a todas as legislações nacionais ou internacionais em que o Brasil é signatário;</li>
                         <li> Não difundir propaganda ou conteúdo de natureza racista, xenofóbica, casas de apostas, jogos de sorte e azar, qualquer tipo de pornografia ilegal, de apologia ao terrorismo ou contra os direitos humanos;</li>
-                        <li> Não causar danos aos sistemas físicos (hardwares) e lógicos (softwares) do site DW Contabilidade Partidária, de seus fornecedores ou terceiros, para introduzir ou disseminar vírus informáticos ou quaisquer outros sistemas de hardware ou software que sejam capazes de causar danos anteriormente mencionados;</li>
+                        <li> Não causar danos aos sistemas físicos (hardwares) e lógicos (softwares) do site DW Assessoria Contábel, de seus fornecedores ou terceiros, para introduzir ou disseminar vírus informáticos ou quaisquer outros sistemas de hardware ou software que sejam capazes de causar danos anteriormente mencionados;</li>
                         <li> Os conteúdos publicados, possuem direitos autorais e de propriedade intelectual reservados, conforme estabelece a Lei de Direitos Autorais n. 9.610, de 19.2.1998 do Governo Federal Brasileiro e correlatas. Qualquer infringência, serão comunicados às autoridades competentes.</li>
                     </ol>
                 </div>
 
                 <h2>Direitos do titular de dados</h2>
-                <p>O titular de dados pessoais possui o direito de solicitar do site DW Contabilidade Partidária, através do canal específico de tratamento, a qualquer momento, mediante requisição formal, informações referentes aos seus dados.</p>
+                <p>O titular de dados pessoais possui o direito de solicitar do site DW Assessoria Contábel, através do canal específico de tratamento, a qualquer momento, mediante requisição formal, informações referentes aos seus dados.</p>
                 <p>Os pedidos serão analisados conforme previsto em legislação vigente dentro de um prazo de 72 horas, salvo determinação legal e/ou objeto de lei.</p>
 
                 <p>Os titulares de dados, segundo o texto da LGPD, podem exercer os seus direitos por meio de:</p>
@@ -130,7 +130,7 @@ export default function Page() {
                 <h2>Mais informações</h2>
                 <p>Esperamos que esteja esclarecido e, como mencionado anteriormente, se houver algo que você não tem certeza se precisa ou não, geralmente é mais seguro deixar os cookies ativados, caso interaja com um dos recursos que você usa em nosso site.</p>
 
-                <p>O site DW Contabilidade Partidária empregará esforços para resguardar as informações e dados coletados do usuário pelo site. Todavia, considerando que não há meio de transmissão e retenção de dados eletrônicos plenamente eficaz e seguro, o site DW Contabilidade Partidária não pode assegurar que terceiros não autorizados não logrem êxito no acesso indevido, eximindo-se de qualquer responsabilidade por danos e prejuízos decorrentes da conduta de terceiros, ataques externos ao site como: vírus, invasão ao banco de dados, vícios ou defeitos técnicos, assim como operacionais resultante da utilização do site e em razão de falhas de conexão.</p>
+                <p>O site DW Assessoria Contábel empregará esforços para resguardar as informações e dados coletados do usuário pelo site. Todavia, considerando que não há meio de transmissão e retenção de dados eletrônicos plenamente eficaz e seguro, o site DW Assessoria Contábel não pode assegurar que terceiros não autorizados não logrem êxito no acesso indevido, eximindo-se de qualquer responsabilidade por danos e prejuízos decorrentes da conduta de terceiros, ataques externos ao site como: vírus, invasão ao banco de dados, vícios ou defeitos técnicos, assim como operacionais resultante da utilização do site e em razão de falhas de conexão.</p>
 
 
 

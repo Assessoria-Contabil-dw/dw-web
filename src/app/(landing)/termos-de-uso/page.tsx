@@ -12,11 +12,11 @@ export default function Page() {
                     </p>
 
                     <p>
-                        Seja bem-vindo ao site da DW Contabilidade Partidária. Por favor, leia atentamente todos os termos abaixo.
+                        Seja bem-vindo ao site da DW Assessoria Contábel. Por favor, leia atentamente todos os termos abaixo.
                     </p>
 
                     <p>
-                        Este documento, juntamente com todo o conteúdo do site, é disponibilizado pela DW Contabilidade Partidária, doravante referida como "EMPRESA", e regulamenta todos os direitos e obrigações para os visitantes do site, doravante referidos como "VISITANTE". Todos os direitos previstos na legislação são respeitados, e as cláusulas abaixo são requisitos para o acesso e visita ao site, localizado no endereço <Link href="https://www.contabilidadepartidaria.com.be">https://www.contabilidadepartidaria.com.be</Link>.
+                        Este documento, juntamente com todo o conteúdo do site, é disponibilizado pela DW Assessoria Contábel, doravante referida como "EMPRESA", e regulamenta todos os direitos e obrigações para os visitantes do site, doravante referidos como "VISITANTE". Todos os direitos previstos na legislação são respeitados, e as cláusulas abaixo são requisitos para o acesso e visita ao site, localizado no endereço <Link href="https://www.contabilidadepartidaria.com.be">https://www.contabilidadepartidaria.com.be</Link>.
                     </p>
                     <p>
                         A permanência no website implica automaticamente na leitura e aceitação tácita dos termos de uso a seguir.
