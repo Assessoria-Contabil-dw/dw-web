@@ -51,7 +51,7 @@ export default function Footer() {
                         <li >
                             <Link
                                 className="flex items-center gap-3 hover:underline"
-                                href="tel:5599991014072">
+                                href="tel:+5599991014072">
 
                                 <span className="text-xl w-[24px]">
                                     <FaPhoneAlt />
