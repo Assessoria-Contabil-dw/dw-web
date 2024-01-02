@@ -61,7 +61,7 @@ export default function RootLayout({
         {/* End Google Tag Manager (noscript) */}
 
         <Navbar />
-        <main className='overflow-x-hidden'>
+        <main>
           {children}
         </main>
         <Footer />
