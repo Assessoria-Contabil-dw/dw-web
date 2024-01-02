@@ -9,11 +9,11 @@ import { PopupCookieConsent } from "../Popups/PopupCookieConsent";
 
 export default function Footer() {
     return (
-        <footer className={`flex flex-col flex-1 items-center bg-neutral-700 text-gray-300 overflow-hidden px-5`}>
+        <footer className={`flex flex-col flex-1 items-center bg-neutral-700 text-gray-300 overflow-hidden `}>
 
             <PopupCookieConsent />
 
-            <div className="flex gap-[70px] flex-wrap  w-full max-w-7xl py-14 pb-32">
+            <div className="flex gap-[70px] flex-wrap  w-full max-w-7xl py-14 pb-32 px-5">
                 <div className="flex flex-col gap-3 flex-1 justify-start">
                     <div>
                         <Image
@@ -36,7 +36,7 @@ export default function Footer() {
                     <ul className="flex flex-col gap-3 text-lg">
                         <li className="flex items-center gap-3">
                             <Link
-                                className="flex items-center gap-3"
+                                className="flex items-center gap-3 hover:underline"
                                 href="mailto:contato@contabilidadepartidaria.com.br">
 
                                 <span className="text-xl w-[24px]">
@@ -50,7 +50,7 @@ export default function Footer() {
                         </li>
                         <li >
                             <Link
-                                className="flex items-center gap-3"
+                                className="flex items-center gap-3 hover:underline"
                                 href="tel:5599991014072">
 
                                 <span className="text-xl w-[24px]">
@@ -79,6 +79,7 @@ export default function Footer() {
                         <li>
                             <Link
                                 href="/politica-de-privacidade"
+                                className="hover:underline"
                             >
                                 Política de Privacidade
                             </Link>
@@ -87,6 +88,7 @@ export default function Footer() {
                         <li>
                             <Link
                                 href="/termos-de-uso"
+                                className="hover:underline"
                             >
                                 Termos de Uso
                             </Link>
@@ -97,13 +99,33 @@ export default function Footer() {
                     <h2 className="text-3xl">
                         <span>Redes Sociais</span>
                     </h2>
-                    <div>
+                    <div className="flex gap-5">
+                        <Link
+                            aria-label="Signa-nos no Facebook"
+                            href="https://www.instagram.com/dwassessoriacontabil"
+                            target="_blank"
+                            className="w-12 h-12 bg-contain"
+                            style={{
+                                backgroundImage: "url('/assets/logo_instagram.svg"
+                            }}
+                        >
+                        </Link>
 
+                        <Link
+                            aria-label="Signa-nos no instagram"
+                            href="https://www.instagram.com/dwassessoriacontabil"
+                            target="_blank"
+                            className="w-12 h-12 bg-contain"
+                            style={{
+                                backgroundImage: "url('/assets/logo_facebook.svg"
+                            }}
+                        >
+                        </Link>
                     </div>
                 </div>
             </div>
 
-            <div className="flex w-full justify-center py-7 border-t border-neutral-500">
+            <div className="flex w-full justify-center py-7 border-t border-neutral-500 px-5">
                 <div className="w-full max-w-7xl text-center">
                     Copyright © 2023-{(new Date()).getFullYear()} <b className="text-yellow-300">DW Contabilidade Partidária                       </b> . Todos os direitos reservados.
                 </div>
