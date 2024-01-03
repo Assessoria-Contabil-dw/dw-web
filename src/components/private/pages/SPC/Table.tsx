@@ -1,22 +1,24 @@
-import { DirectorySPCProps } from '@/interfaces/types'
-import { Edit3, Eye } from 'lucide-react'
+import { SPCProps } from '@/interfaces/types'
 import { useCallback, useRef, useState } from 'react'
-import PopObservation, { ObservationRef } from './PopObservation'
-import UpdateDirectory, { UpdateDirectoryRef } from './UpdateDirectory'
-import ViewSPC, { ViewSPCRef } from './ViewSPC'
+import UpdateSPC, { UpdateSPCRef } from './Update'
+import ViewSPC, { ViewSPCRef } from './View'
 import dayjs from 'dayjs'
+import { LoadingSecond } from '@/components/Loading/second'
+import { TableOptions } from '../../Tools/TableOptions'
 
-interface SPCProps {
-  data: DirectorySPCProps[] | null
+interface TableSPCProps {
+  role: string
+  data?: SPCProps[] | null
+  loading?: boolean
 }
-export function TableSPC({ data }: SPCProps) {
+export function TableSPC({ role, data, loading }: TableSPCProps) {
+  const [selectedCheckbox, setSelectedCheckbox] = useState(0)
+
   const [isLinkTwo, setIsLinkTwo] = useState(false)
-
-  const modalUpdateRef = useRef<UpdateDirectoryRef>(null)
+  const modalUpdateRef = useRef<UpdateSPCRef>(null)
   const modalViewRef = useRef<ViewSPCRef>(null)
-  const popObservationRef = useRef<ObservationRef>(null)
 
-  const handleUpdateModal = useCallback((id: string) => {
+  const handleEditDirectory = useCallback((id: string) => {
     modalUpdateRef.current?.openModal(id)
   }, [])
 
@@ -24,11 +26,15 @@ export function TableSPC({ data }: SPCProps) {
     modalViewRef.current?.openModal(id)
   }, [])
 
-  const handleViewObservation = useCallback((message: string) => {
-    popObservationRef.current?.openModal(message)
-  }, [])
+  const handleCheckboxChange = (checkboxId: number) => {
+    if (checkboxId === selectedCheckbox) {
+      setSelectedCheckbox(0)
+      return
+    }
+    setSelectedCheckbox(checkboxId)
+  }
 
-  const generateSPCAList = (spc: DirectorySPCProps) => {
+  const generateSPCAList = (spc: SPCProps) => {
     const spcaList = []
 
     for (let i = 2017; i <= dayjs().year(); i++) {
@@ -49,16 +55,27 @@ export function TableSPC({ data }: SPCProps) {
             <div className="w-10" />
           )}
           {spca?.observation && (
-            <button
-              type="button"
-              className="h-fit w-fit p-0"
-              onClick={() => handleViewObservation(spca.observation)}
-            >
-              <span className="absolute -right-1 -top-2 z-0 flex h-3 w-3 ">
+            <>
+              <input
+                type="checkbox"
+                name="observation"
+                id={spca.id.toString()}
+                checked={selectedCheckbox === spca.id}
+                onChange={() => handleCheckboxChange(spca.id)}
+                className="peer/popper absolute -right-1 -top-2 z-10 h-3 w-3 cursor-pointer opacity-0"
+              />
+              <span className="z-1 absolute -right-1 -top-2 flex h-3 w-3 ">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-second opacity-75"></span>
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
               </span>
-            </button>
+              <div className="absolute z-10 mt-[2px] hidden w-full transition duration-1000 peer-checked/popper:block">
+                <div className="w-[18em] rounded-md border-[1px] border-zinc-200 bg-white p-2 shadow-sm">
+                  <span className="whitespace-normal break-words font-montserrat text-xs text-slate-700 ">
+                    {spca.observation}
+                  </span>
+                </div>
+              </div>
+            </>
           )}
         </li>,
       )
@@ -66,7 +83,7 @@ export function TableSPC({ data }: SPCProps) {
     return spcaList
   }
 
-  const generateSPCEList = (spc: DirectorySPCProps) => {
+  const generateSPCEList = (spc: SPCProps) => {
     const spceList = []
 
     for (let i = 2018; i <= dayjs().year(); i += 2) {
@@ -96,25 +113,35 @@ export function TableSPC({ data }: SPCProps) {
 
   return (
     <div>
-      <UpdateDirectory ref={modalUpdateRef} />
+      <UpdateSPC ref={modalUpdateRef} />
       <ViewSPC ref={modalViewRef} />
-      <PopObservation ref={popObservationRef} />
 
-      <fieldset className="h-auto w-full rounded-lg px-3 py-2">
+      <fieldset className="fieldset">
         <table>
           <thead>
             <tr>
-              <th>Direção</th>
+              <th>
+                <div className="flex gap-2">
+                  {loading && <LoadingSecond />} Direção
+                </div>
+              </th>
               <th className="flex items-center gap-2 ">
                 SPCA
                 <button
                   type="button"
                   onClick={() => setIsLinkTwo(!isLinkTwo)}
-                  className={`h-auto p-1 text-xs transition-shadow duration-200 ${
-                    isLinkTwo ? 'bg-primary text-white' : 'bg-gray-300'
+                  className={`h-full rounded-lg p-1  font-inter text-xs transition-shadow duration-200 ${
+                    isLinkTwo
+                      ? 'bg-primary text-blue-950'
+                      : 'bg-slate-200 text-slate-400'
                   }`}
                 >
-                  PJE
+                  PJ
+                  <span
+                    className={isLinkTwo ? `text-orange-500` : `text-slate-500`}
+                  >
+                    e
+                  </span>
                 </button>
               </th>
               <th>Vigência</th>
@@ -123,7 +150,7 @@ export function TableSPC({ data }: SPCProps) {
             </tr>
           </thead>
           <tbody>
-            {data !== null && data?.length > 0 ? (
+            {data ? (
               data?.map((spc, index) => (
                 <tr key={index}>
                   <td>
@@ -159,21 +186,15 @@ export function TableSPC({ data }: SPCProps) {
                     </ul>
                   </td>
 
-                  <td className="w-12">
-                    <div className="flex items-center ">
-                      <button className="h-full w-auto p-1 hover:text-green-500">
-                        <Eye
-                          onClick={() => handleViewModal(spc.id.toString())}
-                          className="w-4"
-                        />
-                      </button>
-                      <button
-                        onClick={() => handleUpdateModal(spc.id.toString())}
-                        className="h-full w-auto rounded p-1 hover:text-primary"
-                      >
-                        <Edit3 className="w-4" />
-                      </button>
-                    </div>
+                  <td>
+                    <TableOptions
+                      role={role || ''}
+                      isView
+                      isEdit
+                      isDelete={false}
+                      handleView={() => handleViewModal(spc.id.toString())}
+                      handleEdit={() => handleEditDirectory(spc.id.toString())}
+                    />
                   </td>
                 </tr>
               ))

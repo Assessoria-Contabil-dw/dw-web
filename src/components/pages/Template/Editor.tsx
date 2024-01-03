@@ -5,6 +5,8 @@ import { useNotify } from '@/components/Toast/toast'
 import { Trash } from 'lucide-react'
 import DeleteModel, { DeleteRef } from '../../Model/Delete'
 import { queryClient } from '@/provider/query.provider'
+import ButtonIcon from '@/components/Buttons/ButtonIcon'
+import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 
 interface CreateTemplateProps {
   content?: string
@@ -21,12 +23,14 @@ export function EditorTemplate({
   const notify = useNotify()
 
   const modalDeleteRef = useRef<DeleteRef>(null)
-  const handleDeleteModal = useCallback(
-    (id: string, path: string, msg: string | undefined, query: string) => {
-      modalDeleteRef.current?.openModal(id, path, msg, query)
-    },
-    [],
-  )
+  const handleDeleteModal = useCallback((id: string, name?: string) => {
+    modalDeleteRef.current?.openModal(
+      id,
+      'templates',
+      `Deseja deletar o template "${name}"?`,
+      'templatesData',
+    )
+  }, [])
 
   async function handleCreateTemplate(
     name: string | undefined,
@@ -154,18 +158,19 @@ export function EditorTemplate({
       />
       <div className="flex justify-between">
         <div className="flex gap-2">
-          <button
-            className=" button-primary "
-            type="button"
+          <ButtonPrimary
+            title="Criar template"
+            variant="container"
             onClick={() =>
               handleCreateTemplate(name, editorRef.current.getContent())
             }
           >
-            Criar
-          </button>
+            Criar template
+          </ButtonPrimary>
 
-          <button
-            className="w-fit border-[1px]  border-gray-200 bg-white text-gray-700"
+          <ButtonPrimary
+            title="Atualizar template"
+            variant="outline"
             onClick={() =>
               handleUpdateTemplate(
                 templateId,
@@ -175,23 +180,16 @@ export function EditorTemplate({
             }
           >
             Atualizar
-          </button>
+          </ButtonPrimary>
         </div>
 
-        <button
-          onClick={() =>
-            handleDeleteModal(
-              String(templateId),
-              'templates',
-              name,
-              'templates',
-            )
-          }
-          className="button-primary bg-red-400 text-white hover:bg-red-600"
+        <ButtonIcon
+          title="Deletar template"
+          icon={<Trash size={16} />}
+          className="border-none bg-red-500 text-white hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-red-500 disabled:hover:text-white"
+          onClick={() => handleDeleteModal(String(templateId), name)}
           disabled={!templateId}
-        >
-          <Trash size={16} />
-        </button>
+        />
       </div>
     </div>
   )

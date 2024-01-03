@@ -11,7 +11,7 @@ import {
 import { AlertTriangle, X } from 'lucide-react'
 import { useNotify } from '../Toast/toast'
 import { queryClient } from '@/provider/query.provider'
-import ButtonPrimary from '../Buttons/ButtonPrimary'
+import ButtonSecond from '../Buttons/ButtonSecond'
 
 export interface DeleteRef {
   openModal: (
@@ -63,7 +63,6 @@ const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
 
   async function handleDelete(id: string, path: string, query: string) {
     setIsSubmitting(true)
-    console.log(id, path)
     try {
       await api.delete(`/${path}/${id}`)
       setIsSubmitting(false)
@@ -103,27 +102,27 @@ const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
               </div>
             </div>
             <div className="flex gap-2">
-              <ButtonPrimary
+              <ButtonSecond
                 title="Cancelar"
-                variant="outline"
+                variant="cancel"
                 onClick={() => closeModal()}
                 type="button"
                 className=" justify-center rounded-full bg-gray-200 text-gray-500 hover:bg-gray-300"
               >
                 Não, manter
-              </ButtonPrimary>
-              <ButtonPrimary
+              </ButtonSecond>
+              <ButtonSecond
                 title="Deletar"
                 loading={isSubmitting}
-                variant="container"
+                variant="delete"
                 onClick={() =>
                   handleDelete(params.id, params.path, params.query)
                 }
                 type="button"
-                className=" justify-center rounded-full bg-red-500 text-white hover:bg-red-600 disabled:bg-red-400 disabled:text-white"
+                className=" "
               >
                 Sim, deletar
-              </ButtonPrimary>
+              </ButtonSecond>
             </div>
           </div>
         </div>

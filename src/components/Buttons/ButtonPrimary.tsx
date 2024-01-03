@@ -14,8 +14,14 @@ const ButtonPrimary = forwardRef<Ref, ButtonPrimaryProps>(function Button(
     <ButtonBase
       ref={ref}
       className={`
-      ${variant === 'container' && 'button-primary'} 
-      ${variant === 'outline' && 'button-primary-outline'}
+      ${
+        variant === 'container' &&
+        'bg-primary text-slate-800 hover:bg-primaryHover disabled:cursor-not-allowed disabled:bg-slate-500 disabled:text-slate-50'
+      } 
+      ${
+        variant === 'outline' &&
+        'border-[1px] border-slate-200 bg-white text-slate-800 hover:border-transparent hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400'
+      }
       
       ${className}`}
       {...atr}

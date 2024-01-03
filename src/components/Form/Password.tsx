@@ -23,7 +23,7 @@ export function PasswordInput({ placeholder, name, ...props }: TextInputProps) {
         {...props}
         placeholder={placeholder}
         {...register(name)}
-        className="border-none !bg-transparent"
+        className="input-style w-full"
       />
       <button
         type="button"

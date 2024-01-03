@@ -146,26 +146,13 @@
   }
 
   .text-span {
-    @apply font-medium text-xs text-slate-400
+    @apply font-normal text-xs text-slate-400
   }
 
-
-  /* button */
-  .button-icon {
-    @apply bg-white text-slate-700 hover:text-slate-800 hover:bg-primary hover:border-primary p-2 rounded-md border-slate-200 border-solid border-[1px];
-  }
-
-  .button-primary {
-    @apply bg-primary text-slate-800 hover:bg-primaryHover disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed;
-  }
-
-  .button-primary-outline {
-    @apply bg-white text-slate-800 border-[1px] border-slate-200 hover:border-transparent hover:bg-slate-100 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed;
-  }
 
   /* input */
   .input-style {
-    @apply p-2 w-full rounded border border-slate-300 bg-white font-sans text-sm font-normal text-slate-600;
+    @apply p-2 w-full h-9 rounded border border-slate-300 bg-white font-sans text-sm font-normal text-slate-600;
   }
 
 
@@ -241,8 +228,11 @@
     @apply flex w-full items-center justify-between leading-3 pb-1 border-b-[1px];
   }
 
+  .model-close{
+    @apply w-fit rounded-full p-0 text-slate-400 hover:text-slate-600
+  }
   .model-body {
-    @apply flex w-full flex-col justify-start gap-8 overflow-auto h-full pr-4;
+    @apply flex w-full flex-col justify-start gap-8 overflow-y-auto h-full pr-1;
   }
 
   .model-loading {

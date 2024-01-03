@@ -34,7 +34,7 @@ export default function TableDirectory({
   const handleDeleteDirectory = (id: number, surname: string) => {
     modelDeleteRef.current?.openModal(
       String(id),
-      '/directories',
+      'directories',
       `Deseja excluir o diretório ${surname}?`,
       'directoryData',
     )

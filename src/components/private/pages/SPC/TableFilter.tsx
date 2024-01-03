@@ -3,8 +3,10 @@ import SelectParty from '../../Search/Select/SelectParty'
 import SelectState from '../../Search/Select/SelectState'
 import SelectCity from '../../Search/Select/SelectCity'
 import SelectStatus from '../../Search/Select/SelectStatus'
+import SelectLegend from '../../Search/Select/SelectLegend'
+import InputYear from '../../Search/Input/InputYear'
 
-interface FilterDirectoryProps {
+interface FilterSPCProps {
   partyCode?: string
   cityCode?: string
   stateId?: string
@@ -14,13 +16,13 @@ interface FilterDirectoryProps {
   ) => void
 }
 
-export default function TableFilterDirectory({
+export default function TableFilterSPC({
   partyCode,
   cityCode,
   stateId,
   stateSearch,
   onChange,
-}: FilterDirectoryProps) {
+}: FilterSPCProps) {
   return (
     <div className="flex gap-2">
       {!partyCode && (
@@ -42,6 +44,10 @@ export default function TableFilterDirectory({
       )}
 
       <SelectStatus handleSearchOnChange={onChange} />
+      <InputYear handleSearchOnChange={onChange} />
+      <SelectLegend handleSearchOnChange={onChange}>
+        <option value="">Todos</option>
+      </SelectLegend>
     </div>
   )
 }

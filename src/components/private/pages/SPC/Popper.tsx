@@ -7,15 +7,12 @@ import {
   useState,
 } from 'react'
 
-export interface ObservationRef {
+export interface PopperSPCRef {
   openModal: (message: string) => void
   closeModal: () => void
 }
 
-const PopObservation: ForwardRefRenderFunction<ObservationRef> = (
-  props,
-  ref,
-) => {
+const PopperSPC: ForwardRefRenderFunction<PopperSPCRef> = (props, ref) => {
   const [isModalView, setIsModalView] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -38,7 +35,7 @@ const PopObservation: ForwardRefRenderFunction<ObservationRef> = (
   }
 
   return (
-    <div className="absolute bottom-5 right-10 z-50 flex w-96 flex-col rounded-md border-[1px] border-zinc-200 bg-white text-gray-800 shadow-lg">
+    <div className="absolute z-50 flex w-96 flex-col rounded-md border-[1px] border-zinc-200 bg-white text-gray-800 shadow-lg">
       <div className="flex flex-row justify-between bg-gray-200 p-3 text-gray-600">
         <h5>Observação</h5>
         <button className="h-fit w-fit p-0" onClick={closeModal}>
@@ -51,4 +48,4 @@ const PopObservation: ForwardRefRenderFunction<ObservationRef> = (
     </div>
   )
 }
-export default forwardRef(PopObservation)
+export default forwardRef(PopperSPC)

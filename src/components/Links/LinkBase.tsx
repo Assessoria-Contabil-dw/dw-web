@@ -19,7 +19,7 @@ const LinkBase = forwardRef<Ref, LinkBaseProps>(function LinkBase(
     <Link
       {...atr}
       ref={ref}
-      className={`flex h-[50px]  items-center justify-center gap-2 text-base font-medium transition ${className}`}
+      className={`flex h-[50px] items-center justify-center gap-2 text-base transition ${className}`}
     >
       <>
         {startIcon && (

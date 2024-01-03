@@ -1,3 +1,5 @@
+import ButtonIcon from '@/components/Buttons/ButtonIcon'
+import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 import { LoadingSecond } from '@/components/Loading/second'
 import { api } from '@/lib/api'
 import { Edit2Icon } from 'lucide-react'
@@ -54,22 +56,29 @@ export function ViewDocuments({ content, onClick }: TemplateProps) {
           />
         ) : (
           <div className="p-4">
-            <span>Selecione um modelo de documento</span>
+            <span className="font-inter text-sm text-slate-400">
+              Selecione um modelo de documento
+            </span>
           </div>
         )}
       </div>
       <div className="flex gap-2">
-        <button
+        <ButtonPrimary
+          title="Gerar PDF"
+          variant="container"
           disabled={isFetching}
           className="button-primary"
           onClick={handleButtonClick}
         >
           {isFetching && <LoadingSecond />}
           Gerar PDF
-        </button>
-        <button onClick={onClick} className="button-tertiary">
-          <Edit2Icon size={20} />
-        </button>
+        </ButtonPrimary>
+        <ButtonIcon
+          icon={<Edit2Icon size={20} />}
+          title="Deletar"
+          onClick={onClick}
+          className="h-full w-fit"
+        />
       </div>
     </div>
   )

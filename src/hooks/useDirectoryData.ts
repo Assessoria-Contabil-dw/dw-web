@@ -16,7 +16,7 @@ export function useDirectoryData(
   stateId?: string,
   cityCode?: string,
 ) {
-  const partyService = new DirectoryService()
+  const directoryService = new DirectoryService()
   const notify = useNotify()
   const router = useRouter()
 
@@ -33,7 +33,7 @@ export function useDirectoryData(
       cityCode,
     ],
     () =>
-      partyService.getAll(
+      directoryService.getAll(
         skip,
         take,
         party,

@@ -180,11 +180,11 @@ export interface SPCEProps {
   numPge: string
   year: string
   link: string
-  colorId: string
+  color: string
 
   observation: string
   directory: DirectoryProps
-  color: ColorProps
+  // color: ColorProps
 }
 
 export interface SPCAProps {
@@ -198,14 +198,14 @@ export interface SPCAProps {
   year: string
   link1: string
   link2: string
-  colorId: string
+  color: string
 
   observation: string
   directory: DirectoryProps
-  color: ColorProps
+  // color: ColorProps
 }
 
-export interface DirectorySPCProps {
+export interface SPCProps {
   id: number
   city: string
   state: string
@@ -215,4 +215,11 @@ export interface DirectorySPCProps {
   surname: string
   SPCA: SPCAProps[] | null
   SPCE: SPCEProps[] | null
+}
+
+export interface SPCUpdateProps {
+  numPge: string
+  year: string
+  status: number
+  observation: string
 }

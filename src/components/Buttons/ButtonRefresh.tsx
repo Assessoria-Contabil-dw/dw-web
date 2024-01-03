@@ -2,6 +2,7 @@ import { queryClient } from '@/provider/query.provider'
 import { RotateCcw } from 'lucide-react'
 import { LoadingSecond } from '../Loading/second'
 import { ButtonHTMLAttributes } from 'react'
+import ButtonPrimary from './ButtonPrimary'
 
 interface RefreshProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   queryName: string
@@ -14,14 +15,18 @@ export function RefreshButton({ queryName, isLoading, ...atr }: RefreshProps) {
   }
 
   return (
-    <button
+    <ButtonPrimary
+      title="Atualizar dados"
+      variant="outline"
       type="button"
+      startIcon={
+        isLoading ? <LoadingSecond /> : <RotateCcw className="h-fit w-4" />
+      }
       onClick={handleRefreshData}
-      className="button-icon flex h-fit items-center gap-2 font-montserrat text-xs font-semibold "
+      className="h-9 font-montserrat text-xs"
       {...atr}
     >
-      {isLoading ? <LoadingSecond /> : <RotateCcw className="h-fit w-4" />}
       Atualizar
-    </button>
+    </ButtonPrimary>
   )
 }

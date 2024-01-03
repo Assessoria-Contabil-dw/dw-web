@@ -41,3 +41,9 @@ export interface AccessModuleData {
   acessName: string | null
   modules: Modules[]
 }
+
+export interface TemplateProps {
+  id: number
+  name: string
+  content: string
+}

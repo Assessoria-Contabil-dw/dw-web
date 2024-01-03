@@ -34,6 +34,7 @@ export function TextInput({
   }
   return (
     <input
+      className="input-style"
       id={name}
       type={type}
       {...props}

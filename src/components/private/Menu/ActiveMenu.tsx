@@ -23,7 +23,7 @@ export default function ActiveMenu({ openMenu, setOpenMenu }: ActiveMenuProps) {
         </i>
       }
       title="Menu"
-      className="h-fit rounded-none rounded-r-full border-l-0 bg-white px-0  py-3 md:hidden"
+      className="h-fit w-fit rounded-none rounded-r-full border-l-0 bg-white px-0  py-3 md:hidden"
     />
   )
 }

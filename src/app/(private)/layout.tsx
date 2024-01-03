@@ -12,7 +12,7 @@ export const metadata = {
 }
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt_BR">
       <body
         className={`${montserrat.variable} ${inter.variable} ${lexend.variable} bg-gray-50 font-sans`}
       >

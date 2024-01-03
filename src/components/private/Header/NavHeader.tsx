@@ -61,8 +61,8 @@ export default function NavigationHeader() {
                   className={` 
                   ${
                     pathnameCurrent.match(item.href) !== null
-                      ? 'border-primary text-slate-800'
-                      : 'border-transparent'
+                      ? 'border-primary font-medium text-slate-800'
+                      : 'border-transparent font-normal'
                   }`}
                 >
                   {item.label}

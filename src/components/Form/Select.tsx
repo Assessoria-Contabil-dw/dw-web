@@ -21,6 +21,7 @@ export function SelectInput({
 
   return (
     <select
+      className="input-style"
       value={value}
       {...register(name)}
       onChange={onChange}

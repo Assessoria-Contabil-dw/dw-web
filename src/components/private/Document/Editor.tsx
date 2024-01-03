@@ -2,6 +2,7 @@
 import { useRef, useState } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 import { LoadingSecond } from '@/components/Loading/second'
+import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 
 interface EditorDocumentProps {
   content?: string
@@ -79,14 +80,16 @@ export default function EditorDocument({
       />
 
       {!loading && (
-        <button
-          className="w-fit border-[1px]  border-gray-200 bg-white text-gray-700"
+        <ButtonPrimary
+          title="Salvar documento"
+          variant="outline"
+          className="w-fit "
           type="button"
           disabled={loading}
           onClick={() => onSubmit({ content: editorRef.current.getContent() })}
         >
           Salvar
-        </button>
+        </ButtonPrimary>
       )}
     </div>
   )

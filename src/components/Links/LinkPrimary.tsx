@@ -15,15 +15,15 @@ const LinkPrimary = forwardRef<Ref, ButtonPrimaryProps>(function (
       className={`
                 ${
                   variant === 'container' &&
-                  'h-10 rounded-lg bg-primary px-6 text-slate-800 hover:bg-primaryHover'
+                  'rounded-lg bg-primary px-6 font-medium text-slate-800 hover:bg-primaryHover'
                 } 
                 ${
                   variant === 'outline' &&
-                  'h-10 rounded-lg border-[1px] border-slate-200 bg-transparent px-6 text-slate-800 hover:border-transparent hover:bg-slate-100 hover:text-slate-800'
+                  'rounded-lg border-[1px] border-slate-200 bg-transparent px-6 font-medium text-slate-800 hover:border-transparent hover:bg-slate-100 hover:text-slate-800'
                 }
                 ${
                   variant === 'line' &&
-                  'h-full border-b-4 text-slate-400 hover:text-slate-800'
+                  'h-full border-b-4 text-sm text-slate-400 hover:text-slate-800'
                 }
                 ${className}
                 `}

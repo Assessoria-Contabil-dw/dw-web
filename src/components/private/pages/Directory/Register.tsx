@@ -12,7 +12,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 import { api } from '@/lib/api'
-import { Form } from '../../Form'
+import { Form } from '../../../Form'
 import {
   CityProps,
   PartyProps,
@@ -23,6 +23,7 @@ import { LoadingSecond } from '@/components/Loading/second'
 import { queryClient } from '@/provider/query.provider'
 import { Page } from '@/interfaces/page'
 import { directoryFormShema } from '@/interfaces/validation'
+import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 
 interface DirectoryProps {
   id: number
@@ -52,7 +53,7 @@ export interface RegisterDirectoryModalProps {
   closeModal: () => void
 }
 
-const PopRegisterModel: ForwardRefRenderFunction<
+const RegisterDirectoryModel: ForwardRefRenderFunction<
   RegisterDirectoryModalProps
 > = (props, ref) => {
   const [error, setError] = useState<string | null>(null)
@@ -163,7 +164,7 @@ const PopRegisterModel: ForwardRefRenderFunction<
 
   return (
     <div className="model-bg">
-      <div className="model-size">
+      <div className="model-size model-size-full">
         <FormProvider {...createDirectoryForm}>
           <form
             onSubmit={handleSubmit(handleDirectory)}
@@ -172,13 +173,10 @@ const PopRegisterModel: ForwardRefRenderFunction<
             <div className="model-card">
               <div className="model-header">
                 <div>
-                  <h4>Cadastrar Diretório</h4>
-                  <span>Cadastre um diretório</span>
+                  <h4 className="text-h4">Cadastrar Diretório</h4>
+                  <span className="text-span">Cadastre um diretório</span>
                 </div>
-                <button
-                  onClick={closeModal}
-                  className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
-                >
+                <button onClick={closeModal} className="model-close">
                   <X size={20} />
                 </button>
               </div>
@@ -362,19 +360,22 @@ const PopRegisterModel: ForwardRefRenderFunction<
 
                 {error && <span className="text-red-500">{error}</span>}
                 <div className="flex gap-4">
-                  <button
+                  <ButtonPrimary
+                    title="Cancelar"
+                    variant="outline"
                     onClick={closeModal}
-                    className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
+                    // className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
                   >
                     Cancelar
-                  </button>
-                  <button
+                  </ButtonPrimary>
+                  <ButtonPrimary
+                    title="Cadastrar"
+                    variant="container"
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
                   >
                     {isSubmitting ? <LoadingSecond /> : `Cadastrar`}
-                  </button>
+                  </ButtonPrimary>
                 </div>
               </div>
             </div>
@@ -385,4 +386,4 @@ const PopRegisterModel: ForwardRefRenderFunction<
   )
 }
 
-export default forwardRef(PopRegisterModel)
+export default forwardRef(RegisterDirectoryModel)
