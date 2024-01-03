@@ -1,0 +1,38 @@
+#termo {
+    h1 {
+        font-size: 34px;
+        font-weight: 600;
+    }
+
+    h2 {
+        font-size: 26px;
+        font-weight: 500;
+    }
+
+    h3 {
+        font-size: 22px;
+        font-weight: 400;
+    }
+
+    p {
+        // line-height: 26px;
+    }
+
+    ol,
+    ul {
+        margin-left: 40px;
+    }
+
+    ul {
+        li {
+            list-style: disc;
+        }
+    }
+
+    ol {
+        li {
+            list-style: upper-alpha;
+        }
+    }
+
+}

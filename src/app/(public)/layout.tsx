@@ -3,6 +3,9 @@ import ToastProvider from '@/provider/toast.provider'
 import Providers from '@/provider/query.provider'
 import { inter, montserrat } from '@/app/fonts'
 import '@/app/globals.css'
+import Footer from '@/components/public/Footer'
+
+
 
 export const metadata = {
   title: 'DW',

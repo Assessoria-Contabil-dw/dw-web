@@ -6,7 +6,6 @@ import React from 'react'
 
 export default function ActiveLink({ name, href }: NavigationItem) {
   const pathname = usePathname()
-  console.log(pathname)
   return (
     <Link
       href={href}
