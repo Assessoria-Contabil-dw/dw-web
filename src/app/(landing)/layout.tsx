@@ -1,5 +1,5 @@
 import React from 'react'
-import { inter, lexend, montserrat } from '@/app/fonts'
+import { inter } from '@/app/fonts'
 import '@/app/globals.css'
 import Footer from '@/components/public/Footer'
 import Navbar from '@/components/public/Headers/Navbar'
@@ -44,9 +44,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${inter.className}  ${montserrat.className} ${lexend.className}  flex flex-col bg-gray-50`}
-      >
+      <body className={`${inter.className} flex flex-col bg-gray-50`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

@@ -5,9 +5,8 @@ import ToastProvider from '@/provider/toast.provider'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
 import HeaderPrivate from '@/components/private/Header'
-import { useAccessData } from '@/hooks/useAccessData'
-import Fab from '@/components/private/Fab'
 import { useAuth } from '@/hooks/useAuth'
+import { useAccessData } from '@/hooks/useAccess'
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
   const user = useAuth()
@@ -31,7 +30,6 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
         <div className="relative flex h-screen flex-col">
           <HeaderPrivate />
           {children}
-          <Fab />
         </div>
       </AccessProvider>
     </ToastProvider>

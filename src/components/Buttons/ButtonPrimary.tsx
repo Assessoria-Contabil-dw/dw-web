@@ -16,7 +16,7 @@ const ButtonPrimary = forwardRef<Ref, ButtonPrimaryProps>(function Button(
       className={`
       ${
         variant === 'container' &&
-        'bg-primary text-slate-800 hover:bg-primaryHover disabled:cursor-not-allowed disabled:bg-slate-500 disabled:text-slate-50'
+        'bg-primary text-zinc-900 hover:bg-primaryHover disabled:cursor-not-allowed disabled:opacity-70'
       } 
       ${
         variant === 'outline' &&

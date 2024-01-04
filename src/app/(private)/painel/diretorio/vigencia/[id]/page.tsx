@@ -1,4 +1,4 @@
-import { VigencyTable } from '@/components/pages/Vigency'
+import { VigencyTable } from '@/components/private/pages/modulos/Vigency'
 
 export default function VigencyPage() {
   return <VigencyTable />

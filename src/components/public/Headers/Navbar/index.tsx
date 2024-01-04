@@ -6,7 +6,6 @@ import { NavigationItem } from '@/interfaces/types'
 import MenuBar from './MenuBar'
 import Link from 'next/link'
 
-
 const NAVIGATION: NavigationItem[] = [
   {
     name: 'Início',
@@ -25,19 +24,15 @@ const NAVIGATION: NavigationItem[] = [
 export default function Navbar() {
   return (
     <header
-      id='header'
-      className="relative flex h-20 w-full justify-center border-b text-base overflow-x-hidden px-5"
+      id="header"
+      className="relative flex h-20 w-full justify-center overflow-x-hidden border-b px-5 text-base"
     >
       <div className="flex max-w-7xl flex-1  items-center justify-between">
         <div className="flex items-center">
-          <Link
-            href='/'
-            aria-label="Inicio"
-            className="pr-5 -ml-6"
-          >
+          <Link href="/" aria-label="Inicio" className="-ml-6 pr-5">
             <Image src={logo} className="h-12" alt="Figura de contabilidade" />
           </Link>
-          <ul className="hidden lg:flex gap-3 px-4  ">
+          <ul className="hidden gap-3 px-4 lg:flex  ">
             {NAVIGATION.map((item, index) => {
               return (
                 <li key={index} className="flex ">
@@ -53,7 +48,7 @@ export default function Navbar() {
             target="_blank"
             variant="outline"
             href="https://api.whatsapp.com/send?phone=559991014072"
-            className='hidden xs:flex'
+            className="hidden xs:flex"
           >
             Fale Conosco
           </LinkPrimary>
@@ -62,9 +57,7 @@ export default function Navbar() {
             Entrar
           </LinkPrimary>
 
-          <MenuBar
-            menu={NAVIGATION}
-          />
+          <MenuBar menu={NAVIGATION} />
         </div>
       </div>
     </header>

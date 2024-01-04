@@ -4,9 +4,9 @@ import { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { AccessContext } from '@/provider/context.provider'
 import { useAuth } from '@/lib/auth'
 import NavigationModule from './NavModule'
-import { AccessModuleData, AccessProps } from '@/interfaces/modules'
 import { queryClient } from '@/provider/query.provider'
-import { useAccessModuleData } from '@/hooks/useAccessModules'
+import { AccessModuleData, AccessProps } from '@/interfaces/access.interface'
+import { useAccessModuleData } from '@/hooks/useAccess'
 
 export default function PermitSelect() {
   const {
@@ -139,7 +139,7 @@ export default function PermitSelect() {
               className="input-style"
             />
 
-            <div className="mt-2 h-48 w-full overflow-x-auto">
+            <div className="mt-2 h-fit max-h-48 w-full overflow-x-auto">
               {isFilter?.acessParty !== null ? (
                 <div>
                   <span className="text-label">Nacional</span>

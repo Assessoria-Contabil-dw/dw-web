@@ -25,6 +25,7 @@ export function TextInput({
         type={type}
         mask={mask || ''}
         alwaysShowMask={false}
+        className="input-style"
         maskChar=""
         {...props}
         placeholder={placeholder}

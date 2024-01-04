@@ -54,7 +54,6 @@ export function useDirectoryData(
           notify({ type: 'warning', message: error.response.data.message })
           router.push('/painel')
         }
-        console.log(error)
       },
     },
   )

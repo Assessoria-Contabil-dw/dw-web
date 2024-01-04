@@ -1,5 +1,5 @@
-import Permit from '@/components/pages/Permit'
+import Access from '@/components/private/pages/admin/Access'
 
-export default function PermitsPage() {
-  return <Permit />
+export default function AccessPage() {
+  return <Access />
 }

@@ -1,7 +1,7 @@
 import { api } from '@/lib/api'
 
 export class AccessService {
-  public async getAccessAll() {
+  public async getAll() {
     try {
       const response = await api.get('/access')
       return response.data
@@ -10,7 +10,7 @@ export class AccessService {
     }
   }
 
-  public async getAccessModules(
+  public async getModulesById(
     partyCode?: string,
     stateId?: string,
     cityCode?: string,
@@ -23,6 +23,15 @@ export class AccessService {
           cityCode,
         },
       })
+      return response.data
+    } catch (error) {
+      return error
+    }
+  }
+
+  public async getUserById(id: string) {
+    try {
+      const response = await api.get(`/access/user/${id}`)
       return response.data
     } catch (error) {
       return error

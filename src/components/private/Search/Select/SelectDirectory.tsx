@@ -5,8 +5,8 @@ import { useDirectoryData } from '@/hooks/useDirectoryData'
 
 interface SelectDirectoryProps extends SelectHTMLAttributes<HTMLSelectElement> {
   party?: string
-  city?: string
   state?: string
+  city?: string
   children?: ReactNode
   loading?: boolean
   handleSearchOnChange: (e: ChangeEvent<HTMLSelectElement>) => void
@@ -15,8 +15,8 @@ interface SelectDirectoryProps extends SelectHTMLAttributes<HTMLSelectElement> {
 export default function SelectDirectory({
   handleSearchOnChange,
   party,
-  city,
   state,
+  city,
   loading,
   children,
   ...atr
@@ -27,12 +27,12 @@ export default function SelectDirectory({
     undefined,
     undefined,
     party,
-    city,
     state,
+    city,
     undefined,
     partyCode,
-    cityCode,
     stateId,
+    cityCode,
   )
 
   return (
@@ -44,21 +44,28 @@ export default function SelectDirectory({
       {...atr}
     >
       {children}
-      {data !== undefined && data.results ? (
-        data.results.map((directory) => (
-          <option
-            key={directory.id}
-            value={JSON.stringify({
-              directoryId: directory.id,
-              city: directory.city,
-            })}
-          >
-            {directory.surname}
-          </option>
-        ))
+      {data?.results == null ? (
+        <option selected value="" disabled>
+          Não encontrado
+        </option>
       ) : (
-        <option>Não encontrado</option>
+        <option value="" disabled selected>
+          Selecione
+        </option>
       )}
+      {data !== undefined && data.results
+        ? data.results.map((directory) => (
+            <option
+              key={directory.id}
+              value={JSON.stringify({
+                directoryId: directory.id,
+                city: directory.city,
+              })}
+            >
+              {directory.party} -{directory.surname}
+            </option>
+          ))
+        : null}
     </SelectBase>
   )
 }

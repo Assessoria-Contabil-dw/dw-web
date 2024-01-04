@@ -22,7 +22,7 @@ export default function ButtonIcon({
     <button
       {...atr}
       disabled={disabled || loading}
-      className={`h-9 w-9 rounded-md border-[1px] border-solid border-slate-200 p-2 text-slate-700 hover:border-primary hover:bg-primary hover:text-slate-800 
+      className={`h-10 w-10 rounded-md border-[1px] border-solid border-slate-200 px-2 text-slate-700 hover:border-primary hover:bg-primary hover:text-slate-800 
       disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
       title={title}
     >

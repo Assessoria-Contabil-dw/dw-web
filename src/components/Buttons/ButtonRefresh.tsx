@@ -19,11 +19,9 @@ export function RefreshButton({ queryName, isLoading, ...atr }: RefreshProps) {
       title="Atualizar dados"
       variant="outline"
       type="button"
-      startIcon={
-        isLoading ? <LoadingSecond /> : <RotateCcw className="h-fit w-4" />
-      }
+      startIcon={isLoading ? <LoadingSecond /> : <RotateCcw size={16} />}
       onClick={handleRefreshData}
-      className="h-9 font-montserrat text-xs"
+      className="h-10 font-montserrat text-xs"
       {...atr}
     >
       Atualizar

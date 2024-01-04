@@ -1,4 +1,5 @@
 import { Edit3, Eye, Trash2 } from 'lucide-react'
+import { ReactNode } from 'react'
 
 interface TableOptionsProps {
   role: string
@@ -10,6 +11,7 @@ interface TableOptionsProps {
   handleView?: () => void
   handleEdit?: () => void
   handleDelete?: () => void
+  children?: ReactNode
 }
 
 export function TableOptions({
@@ -20,13 +22,14 @@ export function TableOptions({
   handleView,
   handleEdit,
   handleDelete,
+  children,
 }: TableOptionsProps) {
   if (role === '') {
     return null
   }
 
   return (
-    <div className="flex h-6 w-fit items-center">
+    <div className="flex h-6 w-full items-center justify-end">
       {isView && (
         <button
           onClick={handleView}
@@ -54,6 +57,7 @@ export function TableOptions({
           <Trash2 size={16} />
         </button>
       )}
+      {children}
     </div>
   )
 }

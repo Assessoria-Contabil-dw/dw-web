@@ -9,8 +9,8 @@ export class DirectoryService {
     city?: string,
     status?: string,
     partyCode?: string,
-    cityCode?: string,
     stateId?: string,
+    cityCode?: string,
   ) {
     try {
       const response = await api.get('/directories', {

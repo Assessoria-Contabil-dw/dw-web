@@ -1,4 +1,4 @@
-import { LawFirmProps } from './types'
+import { AdvocateProps, LawFirmProps } from './types'
 
 export interface Leader {
   id: number
@@ -24,4 +24,84 @@ export interface VigencyDirectoryProps {
   surname: string
   vigencyActive: Vigency[]
   vigencyInactive: Vigency[]
+}
+
+export interface VigencyProps {
+  vigency: {
+    vigencyId: number
+    dateFirst: string
+    dateLast: string
+    directory: {
+      address: string
+      cnpj: string
+      email: string
+      phone: string
+      vigencyStatus: boolean
+      city: string
+      uf: string
+      surname: string
+    }
+    party: {
+      code: number
+      name: string
+      abbreviation: string
+      logoUrl: string
+      colorCode: string
+    }
+  }
+
+  president: {
+    id: number
+
+    office: string
+    name: string
+    cpf: string
+    birthday: string
+    rg: string
+    email: string
+    phone: string
+    address: string
+    title: string
+    nationality: string
+    status: string
+    profession: string
+    signatureUrl: string
+  }
+  vicePresident: {
+    id: number
+
+    office: string
+    name: string
+    cpf: string
+    birthday: string
+    rg: string
+    email: string
+    phone: string
+    address: string
+    title: string
+    nationality: string
+    status: string
+    profession: string
+    signatureUrl: string
+  }
+  treasurer: {
+    id: number
+
+    office: string
+    name: string
+    cpf: string
+    birthday: string
+    rg: string
+    email: string
+    phone: string
+    address: string
+    title: string
+    nationality: string
+    status: string
+    profession: string
+    signatureUrl: string
+  }
+
+  advocates: AdvocateProps[]
+  lawFirm: LawFirmProps[]
 }

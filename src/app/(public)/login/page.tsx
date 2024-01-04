@@ -1,5 +1,5 @@
 'use client'
-import { SignInForm } from '@/components/pages/SignIn'
+import { SignInForm } from '@/components/public/SignIn'
 import Image from 'next/image'
 import imgContablue from '../../../assets/bgLogin.svg'
 import { redirect } from 'next/navigation'
