@@ -130,7 +130,7 @@ export default function PermitSelect() {
           <div
             className={` ${
               isSelect ? 'block' : 'hidden'
-            } absolute mt-1  rounded border-[1px] border-slate-300 bg-white p-1 shadow-md`}
+            } absolute z-10 mt-1 rounded border-[1px] border-slate-300 bg-white p-1 shadow-md`}
           >
             <input
               type="text"

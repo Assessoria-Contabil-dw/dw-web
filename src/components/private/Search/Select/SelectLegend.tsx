@@ -27,6 +27,7 @@ export default function SelectLegend({
       {...atr}
     >
       {children}
+      {valueSelect && <option value="">Selecione</option>}
       {data !== undefined
         ? data.map((legend) => (
             <option

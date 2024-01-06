@@ -53,7 +53,7 @@ export class SPCService {
     observation: string,
   ) {
     try {
-      const response = api.put(`/spcs/${id}`, {
+      const response = api.put(`/spc/${id}`, {
         params: {
           year,
           numPge,

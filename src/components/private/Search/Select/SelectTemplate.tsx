@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactNode, SelectHTMLAttributes } from 'react'
-import { useTemplateData } from '@/hooks/useTemplateData'
+import { useTemplateData } from '@/hooks/useTemplate'
 import SelectBase from './SelectBase'
 
 interface SelectTemplateProps extends SelectHTMLAttributes<HTMLSelectElement> {

@@ -37,8 +37,8 @@ export default function Directory() {
     search.city,
     search.status,
     partyCode,
-    cityCode,
     stateId,
+    cityCode,
   )
 
   const prevPage = useCallback(() => {

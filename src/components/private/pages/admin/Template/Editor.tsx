@@ -1,12 +1,10 @@
 import { Editor } from '@tinymce/tinymce-react'
 import { useCallback, useRef } from 'react'
-import { api } from '@/lib/api'
-import { useNotify } from '@/components/Toast/toast'
 import { Trash } from 'lucide-react'
 import DeleteModel, { DeleteRef } from '../../../../Model/Delete'
-import { queryClient } from '@/provider/query.provider'
 import ButtonIcon from '@/components/Buttons/ButtonIcon'
 import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
+import { useTemplateCreate, useTemplateUpdate } from '@/hooks/useTemplate'
 
 interface CreateTemplateProps {
   content?: string
@@ -20,7 +18,12 @@ export function EditorTemplate({
   name,
 }: CreateTemplateProps) {
   const editorRef = useRef<any>()
-  const notify = useNotify()
+
+  const { isLoading: loadingUpdate, refetch: refetchUpdate } =
+    useTemplateUpdate(editorRef.current?.getContent(), templateId, name)
+
+  const { isLoading: loadingCreate, refetch: refetchCreate } =
+    useTemplateCreate(name, editorRef.current?.getContent())
 
   const modalDeleteRef = useRef<DeleteRef>(null)
   const handleDeleteModal = useCallback((id: string, name?: string) => {
@@ -28,53 +31,17 @@ export function EditorTemplate({
       id,
       'templates',
       `Deseja deletar o template "${name}"?`,
-      'templatesData',
+      'templateData',
     )
   }, [])
 
-  async function handleCreateTemplate(
-    name: string | undefined,
-    content: string,
-  ) {
-    if (!name) return
-    if (!content) return
-
-    try {
-      const response = await api.post('/templates', {
-        name,
-        content,
-      })
-      console.log(response)
-
-      notify({ type: 'success', message: 'Template criado com sucesso' })
-      queryClient.invalidateQueries('templates')
-    } catch (error) {
-      console.log(error)
-      notify({ type: 'error', message: 'Erro ao criar template' })
-    }
+  async function handleCreate() {
+    console.log(editorRef.current?.getContent(), templateId, name)
+    await refetchCreate()
   }
 
-  function handleUpdateTemplate(
-    templateId: number | undefined,
-    name: string | undefined,
-    content: string,
-  ) {
-    if (!templateId) return
-    if (!name) return
-    if (!content) return
-
-    api
-      .put(`/templates/${templateId}`, {
-        name,
-        content,
-      })
-      .then(() => {
-        notify({ type: 'success', message: 'Template atualizado com sucesso' })
-        queryClient.invalidateQueries('templates')
-      })
-      .catch(() => {
-        notify({ type: 'error', message: 'Erro ao atualizar template' })
-      })
+  async function handleUpdate() {
+    await refetchUpdate()
   }
 
   return (
@@ -109,7 +76,6 @@ export function EditorTemplate({
             'quickbars',
             'pagebreak',
             'template',
-            'print',
             'table',
             'fullpage',
           ],
@@ -123,24 +89,36 @@ export function EditorTemplate({
             {
               title: 'Simples',
               description: 'Cabeçalho e rodapé simples',
-              content: ` <div style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between;
-              width: 21.59cm; height: 30.85cm; position: relative;" size="A4">
-                  
-                  <header style="width: 100%; height: 0.8cm; background: #01eaa0; ">
-                  <div  style="width: 100%; padding: 0.1cm 0.4cm; height: 100%; background: {PARTIDO_COR}; color: white; display: flex; justify-content: space-between; align-items: center;">
-                   <p style="line-height: 0;">{PARTIDO_NOME}</p>
-                    <p style="line-height: 0;">{DIRETORIO_SURNAME}</p>
+              content: `
+              <div
+              style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; width: 50rem; height: 62.5rem; position: relative;">
+              <header
+                  style="width: 100%; height: 3rem; background: #d0d0d0;">
+                  <div
+                      style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: PARTIDO_COR;">
+                     <div style="margin: 0rem 3rem; width: 100%; height: 100%;  display: flex; justify-content: space-between; align-items: center;">
+                          <p style="line-height: 0;">{PARTIDO_NOME}</p>
+                          <p style="line-height: 0;">{DIRETORIO_SURNAME}</p>
+                     </div>
                   </div>
-                  </header>
+              </header>
               
-                  <main style="padding: 0 4rem; height: 100%; flex: 1">Conteúdo</main>
-              
-                  <footer style="width: 100%; margin-top:0; height: 0.8cm; background: #01eaa0; padding-left: 0px; padding-right: 0px;  ">
-                  <div  style="width: 100%; padding: 0.1cm; line-height: 0; margin-top:0; height: 100%; background: {PARTIDO_COR}; color: white; display: flex; justify-content: center;  align-items: center;">
-                    <p>{DIRETORIO_ENDEREÇO} - {DIRETORIO_CNPJ} - {DIRETORIO_TELEFONE}</p>
-                  </div> 
-                  </footer>
-                </div>`,
+              <main style="padding: 0 4rem; height: 100%; flex: 1;">
+                 Conteúdo
+              </main>
+              <footer
+                  style="width: 100%; height: 3rem; background: #d0d0d0;">
+                  <div
+                      style="color: white; background: PARTIDO_COR;">
+                      <div style="margin: 0rem 3rem; text-align: center;">
+                          <p>{DIRETORIO_ENDERE&Ccedil;O} - {DIRETORIO_CNPJ} -
+                              {DIRETORIO_TELEFONE}</p>
+                      </div>
+                    
+                  </div>
+              </footer>
+              </div>
+              `,
             },
           ],
           content_style: ` 
@@ -161,9 +139,8 @@ export function EditorTemplate({
           <ButtonPrimary
             title="Criar template"
             variant="container"
-            onClick={() =>
-              handleCreateTemplate(name, editorRef.current.getContent())
-            }
+            loading={loadingCreate}
+            onClick={handleCreate}
           >
             Criar template
           </ButtonPrimary>
@@ -171,13 +148,8 @@ export function EditorTemplate({
           <ButtonPrimary
             title="Atualizar template"
             variant="outline"
-            onClick={() =>
-              handleUpdateTemplate(
-                templateId,
-                name,
-                editorRef.current.getContent(),
-              )
-            }
+            loading={loadingUpdate}
+            onClick={handleUpdate}
           >
             Atualizar
           </ButtonPrimary>

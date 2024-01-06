@@ -11,7 +11,7 @@ import SelectVigency from '../../../Search/Select/SelectVigency'
 import InputBase from '../../../Search/Input/InputBase'
 import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 import SelectTemplate from '../../../Search/Select/SelectTemplate'
-import { useTemplateVigencyPDF } from '@/hooks/useTemplateData'
+import { useTemplateVigencyPDF } from '@/hooks/useTemplate'
 
 interface Search {
   party: string | undefined
