@@ -45,3 +45,43 @@ export function useTemplateVigencyPDF(
 
   return query
 }
+
+export function useTemplateUpdate(
+  content: string | undefined,
+  id?: number,
+  name?: string,
+) {
+  const templateService = new TemplateService()
+
+  const query = useQuery<TemplateProps>(
+    ['templateUpdate'],
+    () => templateService.putById(content, id, name),
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: 1,
+      refetchOnWindowFocus: false,
+      enabled: false,
+    },
+  )
+
+  return query
+}
+
+export function useTemplateCreate(name?: string, content?: string) {
+  const templateService = new TemplateService()
+
+  const query = useQuery<TemplateProps>(
+    ['templateCreate'],
+    () => templateService.post(name, content),
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: 1,
+      refetchOnWindowFocus: false,
+      enabled: false,
+    },
+  )
+
+  return query
+}

@@ -76,9 +76,9 @@ const UpdateSPC: ForwardRefRenderFunction<UpdateSPCRef> = (props, ref) => {
   const handleDeleteSPC = useCallback((id: number, year: string) => {
     modalDeleteRef.current?.openModal(
       String(id),
-      'spcs',
+      'spc',
       `Deseja excluir o SPC ${year}`,
-      'spcData',
+      'spcDataById',
     )
   }, [])
 

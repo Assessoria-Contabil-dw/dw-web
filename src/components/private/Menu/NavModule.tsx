@@ -103,7 +103,7 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
           ${
             params === item.href || (item.sub && params.match(item.sub) != null)
               ? ''
-              : 'bg-transparent'
+              : 'bg-transparent hover:bg-transparent'
           }`}
           endIcon={
             <i className="hidden group-disabled:block">
