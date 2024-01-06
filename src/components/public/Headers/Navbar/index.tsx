@@ -29,9 +29,9 @@ export default function Navbar() {
     >
       <div className="flex max-w-7xl flex-1  items-center justify-between">
         <div className="flex items-center">
-          <Link href="/" aria-label="Inicio" className="-ml-6 pr-5">
+          <a href="/" aria-label="Inicio" className="-ml-6 pr-5">
             <Image src={logo} className="h-12" alt="Figura de contabilidade" />
-          </Link>
+          </a>
           <ul className="hidden gap-3 px-4 lg:flex  ">
             {NAVIGATION.map((item, index) => {
               return (
