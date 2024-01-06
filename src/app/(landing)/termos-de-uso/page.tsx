@@ -12,13 +12,13 @@ export default function Page() {
           </p>
 
           <p>
-            Seja bem-vindo ao site daCDW Contabilidade Partidária. Por favor, leia
+            Seja bem-vindo ao site da CDW Contabilidade Partidária. Por favor, leia
             atentamente todos os termos abaixo.
           </p>
 
           <p>
             Este documento, juntamente com todo o conteúdo do site, é
-            disponibilizado pelaCDW Contabilidade Partidária, doravante referida como
+            disponibilizado pela CDW Contabilidade Partidária, doravante referida como
             "EMPRESA", e regulamenta todos os direitos e obrigações para os
             visitantes do site, doravante referidos como "VISITANTE". Todos os
             direitos previstos na legislação são respeitados, e as cláusulas

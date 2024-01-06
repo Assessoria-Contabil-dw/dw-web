@@ -107,7 +107,7 @@ export default function Footer() {
       <div className="flex w-full justify-center border-t border-neutral-500 px-5 py-7">
         <div className="w-full max-w-7xl text-center">
           Copyright © 2023-{new Date().getFullYear()}{' '}
-          <b className="text-yellow-300">DW Assessoria Contábel </b> . Todos os
+          <b className="text-yellow-300">CDW Contabilidade Partidária </b> . Todos os
           direitos reservados.
         </div>
       </div>

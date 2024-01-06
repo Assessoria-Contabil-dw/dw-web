@@ -99,7 +99,7 @@ export default function Page() {
           </p>
 
           <p>
-            O siteCDW Contabilidade Partidária não se responsabiliza caso você venha
+            O site CDW Contabilidade Partidária não se responsabiliza caso você venha
             utilizar seus dados de forma incorreta ou inverídica, ficando
             excluído de qualquer responsabilidade neste sentido.
           </p>
@@ -260,7 +260,7 @@ export default function Page() {
 
           <p>
             O usuário se compromete a fazer uso adequado dos conteúdos e da
-            informação que o siteCDW Contabilidade Partidária oferece e com caráter
+            informação que o site CDW Contabilidade Partidária oferece e com caráter
             enunciativo, mas não limitativo:
           </p>
 
@@ -285,7 +285,7 @@ export default function Page() {
             <li>
               {' '}
               Não causar danos aos sistemas físicos (hardwares) e lógicos
-              (softwares) do siteCDW Contabilidade Partidária, de seus fornecedores
+              (softwares) do site  Contabilidade Partidária, de seus fornecedores
               ou terceiros, para introduzir ou disseminar vírus informáticos ou
               quaisquer outros sistemas de hardware ou software que sejam
               capazes de causar danos anteriormente mencionados;
@@ -391,10 +391,10 @@ export default function Page() {
         </p>
 
         <p>
-          O siteCDW Contabilidade Partidária empregará esforços para resguardar as
+          O site CDW Contabilidade Partidária empregará esforços para resguardar as
           informações e dados coletados do usuário pelo site. Todavia,
           considerando que não há meio de transmissão e retenção de dados
-          eletrônicos plenamente eficaz e seguro, o siteCDW Contabilidade Partidária
+          eletrônicos plenamente eficaz e seguro, o site CDW Contabilidade Partidária
           não pode assegurar que terceiros não autorizados não logrem êxito no
           acesso indevido, eximindo-se de qualquer responsabilidade por danos e
           prejuízos decorrentes da conduta de terceiros, ataques externos ao
