@@ -2,7 +2,7 @@ import { FaPhoneAlt } from 'react-icons/fa'
 import { SiGooglemaps } from 'react-icons/si'
 import { BsFillSendFill } from 'react-icons/bs'
 import Image from 'next/image'
-import logo from '@/assets/logo_v2.svg'
+import logo from '@/assets/logo-vertical-color-full.svg'
 import { PopupCookieConsent } from '../Popups/PopupCookieConsent'
 
 export default function Footer() {

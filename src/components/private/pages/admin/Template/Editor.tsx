@@ -19,6 +19,7 @@ export function EditorTemplate({
 }: CreateTemplateProps) {
   const editorRef = useRef<any>()
 
+  console.log(editorRef.current?.getContent())
   const { isLoading: loadingUpdate, refetch: refetchUpdate } =
     useTemplateUpdate(editorRef.current?.getContent(), templateId, name)
 
@@ -41,6 +42,7 @@ export function EditorTemplate({
   }
 
   async function handleUpdate() {
+    console.log(editorRef.current?.getContent(), templateId, name)
     await refetchUpdate()
   }
 

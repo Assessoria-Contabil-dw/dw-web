@@ -2,7 +2,7 @@ import LinkLogo from '@/components/Links/LinkLogo'
 import ActiveHeader from './ActiveHeader'
 import ActiveLogout from './ActiveLogout'
 import NavigationHeader from './NavHeader'
-import imgLogo from '../../../assets/icon.svg'
+import imgLogo from '../../../assets/logo-horizontal-black.svg'
 
 export default function HeaderPrivate() {
   return (
