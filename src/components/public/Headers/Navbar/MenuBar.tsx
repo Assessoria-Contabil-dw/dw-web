@@ -1,5 +1,5 @@
 'use client'
-import logo from '@/assets/logo_v2.svg'
+import logo from '@/assets/logo-horizontal-black.svg'
 import { NavigationItem } from '@/interfaces/types'
 import { X } from 'lucide-react'
 import Image from 'next/image'
