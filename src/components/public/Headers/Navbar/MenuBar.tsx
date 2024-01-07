@@ -31,7 +31,7 @@ export default function MenuBar({ menu }: { menu: NavigationItem[] }) {
       </button>
 
       {!hidden && (
-        <div className="fixed  bottom-0 left-0 !h-screen w-screen bg-black bg-opacity-25 ">
+        <div className="fixed  inset-0 h-full  w-screen bg-black bg-opacity-25 ">
           <div className="flex flex-1 flex-col gap-5 bg-white p-5">
             <div className="flex flex-1 justify-between">
               <div className="-ml-6 pr-5">
@@ -58,9 +58,8 @@ export default function MenuBar({ menu }: { menu: NavigationItem[] }) {
                   <li key={index}>
                     <button
                       onClick={() => handleClickItem(item)}
-                      className={` ${
-                        pathname === item.href && 'font-extrabold'
-                      } px-2 text-xl`}
+                      className={` ${pathname === item.href && 'font-extrabold'
+                        } px-2 text-xl`}
                     >
                       {item.name}
                     </button>

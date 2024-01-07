@@ -6,7 +6,7 @@ import Navbar from '@/components/public/Headers/Navbar'
 import Script from 'next/script'
 
 export const metadata = {
-  title: 'DW',
+  title: 'CDW Contabilidade Partidária',
   description: 'Contabilidade para partidos políticos',
   icon: ['/favicon.icon'],
 }

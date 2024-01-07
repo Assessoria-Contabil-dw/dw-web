@@ -20,6 +20,7 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap gap-3 ">
                 <LinkPrimary
+                  target='_blank'
                   href="https://api.whatsapp.com/send?phone=559991014072"
                   variant="container"
                   className="w-full min-w-[150px] px-12 xs:w-fit"
@@ -28,7 +29,8 @@ export default function Home() {
                 </LinkPrimary>
 
                 <LinkPrimary
-                  href=""
+                  target='_blank'
+                  href="https://api.whatsapp.com/send?phone=559991014072"
                   variant="outline"
                   className="w-full max-w-full xs:max-w-[286px]"
                   endIcon={<MoveRight />}
@@ -58,7 +60,7 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="hidden w-[60%] w-full justify-center lg:flex">
+            <div className="hidden w-full justify-center lg:flex">
               <Image
                 className="h-auto "
                 src={imgContablue}
@@ -83,6 +85,7 @@ export default function Home() {
             <div className="flex w-full flex-1 justify-center">
               <div className="my-10 grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <CardPlan
+                  href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Operacional.'
                   title="Operacional"
                   descrition="Para você começar"
                   annualValue={60}
@@ -90,6 +93,7 @@ export default function Home() {
                 />
 
                 <CardPlan
+                  href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Supervisor.'
                   title="Supervisor"
                   descrition="Para você começar"
                   label="Sem cobrança de implantação"
@@ -99,6 +103,7 @@ export default function Home() {
                 />
 
                 <CardPlan
+                  href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Diretor.'
                   title="Diretor"
                   descrition="Para você começar"
                   label="Suporte técnico"
@@ -108,6 +113,7 @@ export default function Home() {
                 />
 
                 <CardPlan
+                  href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Geral.'
                   title="Geral"
                   descrition="Junto com você"
                   active={[0, 1, 2, 3, 4]}

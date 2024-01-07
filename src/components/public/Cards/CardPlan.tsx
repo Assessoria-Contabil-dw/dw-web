@@ -60,6 +60,7 @@ export default function CardPlan(props: CardPlanProps) {
           {props.annualValue || props.monthlyValue ? (
             <LinkBase
               href={props.href || ''}
+              target='_blank'
               className="h-14 rounded-[4px] border-2 border-black !text-[1.1em] shadow-sm hover:border-primary hover:bg-primary "
             >
               Assinar agora

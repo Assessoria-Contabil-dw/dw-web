@@ -1,7 +1,6 @@
 import { FaPhoneAlt } from 'react-icons/fa'
 import { SiGooglemaps } from 'react-icons/si'
 import { BsFillSendFill } from 'react-icons/bs'
-import Link from 'next/link'
 import Image from 'next/image'
 import logo from '@/assets/logo_v2.svg'
 import { PopupCookieConsent } from '../Popups/PopupCookieConsent'
@@ -9,18 +8,19 @@ import { PopupCookieConsent } from '../Popups/PopupCookieConsent'
 export default function Footer() {
   return (
     <footer
+      id='sobre'
       className={`flex flex-1 flex-col items-center overflow-hidden bg-neutral-700 text-gray-300 `}
     >
       <PopupCookieConsent />
 
       <div className="flex w-full max-w-7xl  flex-wrap gap-[70px] px-5 py-14 pb-32">
         <div className="flex flex-1 flex-col justify-start gap-3">
-          <Link href="/" aria-label="Inicio">
+          <a href="/" aria-label="Inicio">
             <Image src={logo} alt="Logo Footer" />
-          </Link>
+          </a>
           <p className="text-justify text-lg">
-            Somos a DW Assessoria Contábel, especializados em simplificar a
-            contabilidade partidária.
+            Somos a CDW Contabilidade Partidária, dedicados a tornar a contabilidade de partidos políticos mais simples e acessível.
+
           </p>
         </div>
         <div className="flex flex-col gap-10">
@@ -29,7 +29,7 @@ export default function Footer() {
           </h2>
           <ul className="flex flex-col gap-3 text-lg">
             <li className="flex items-center gap-3">
-              <Link
+              <a
                 className="flex items-center gap-3 hover:underline"
                 href="mailto:contato@contabilidadepartidaria.com.br"
               >
@@ -38,10 +38,10 @@ export default function Footer() {
                 </span>
 
                 <span>contato@contabilidadepartidaria.com.br</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link
+              <a
                 className="flex items-center gap-3 hover:underline"
                 href="tel:+5599991014072"
               >
@@ -49,7 +49,7 @@ export default function Footer() {
                   <FaPhoneAlt />
                 </span>
                 <span>+55 99 99101-4072</span>
-              </Link>
+              </a>
             </li>
             <li className="flex items-center gap-3">
               <span className="w-[24px] text-xl">
@@ -65,14 +65,14 @@ export default function Footer() {
           </h2>
           <ul className="flex flex-col gap-3 text-lg">
             <li>
-              <Link href="/politica-de-privacidade" className="hover:underline">
+              <a href="/politica-de-privacidade" className="hover:underline">
                 Política de Privacidade
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/termos-de-uso" className="hover:underline">
+              <a href="/termos-de-uso" className="hover:underline">
                 Termos de Uso
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
@@ -81,7 +81,7 @@ export default function Footer() {
             <span>Redes Sociais</span>
           </h2>
           <div className="flex gap-5">
-            <Link
+            <a
               aria-label="Signa-nos no Facebook"
               href="https://www.instagram.com/dwassessoriacontabil"
               target="_blank"
@@ -89,9 +89,9 @@ export default function Footer() {
               style={{
                 backgroundImage: "url('/assets/logo_instagram.svg",
               }}
-            ></Link>
+            ></a>
 
-            <Link
+            <a
               aria-label="Signa-nos no instagram"
               href="https://www.instagram.com/dwassessoriacontabil"
               target="_blank"
@@ -99,7 +99,7 @@ export default function Footer() {
               style={{
                 backgroundImage: "url('/assets/logo_facebook.svg",
               }}
-            ></Link>
+            ></a>
           </div>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function Footer() {
       <div className="flex w-full justify-center border-t border-neutral-500 px-5 py-7">
         <div className="w-full max-w-7xl text-center">
           Copyright © 2023-{new Date().getFullYear()}{' '}
-          <b className="text-yellow-300">DW Assessoria Contábel </b> . Todos os
+          <b className="text-yellow-300">CDW Contabilidade Partidária </b> . Todos os
           direitos reservados.
         </div>
       </div>
