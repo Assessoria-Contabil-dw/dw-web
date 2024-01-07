@@ -6,9 +6,9 @@ import '@/app/globals.css'
 import NavigationBody from '@/components/private/Header/NavBody'
 
 export const metadata = {
-  title: 'DW',
+  title: 'CDW Contabilidade Partidária',
   description: 'Contabilidade para partidos políticos',
-  icon: ['/favicon.icon'],
+  icon: ['/favicon.ico'],
 }
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

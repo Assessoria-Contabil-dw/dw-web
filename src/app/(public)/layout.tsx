@@ -5,9 +5,9 @@ import { inter, montserrat } from '@/app/fonts'
 import '@/app/globals.css'
 
 export const metadata = {
-  title: 'DW',
+  title: 'CDW Contabilidade Partidária',
   description: 'Contabilidade para partidos políticos',
-  icon: ['/favicon.icon'],
+  icon: ['/favicon.ico'],
 }
 
 export default function RootLayout({
