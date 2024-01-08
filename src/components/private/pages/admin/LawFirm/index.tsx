@@ -78,7 +78,7 @@ export function LawFirmTable() {
         </div>
       </div>
 
-      <fieldset className="h-auto w-full rounded-lg px-3 py-2">
+      <fieldset className="fieldset h-auto w-full rounded-lg px-3 py-2">
         <table>
           <thead>
             <tr>

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { RegisterAdvocate } from './RegisterAdvocate'
 import { AdvocateProps } from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
+import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 
 export function AdvocateTable() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -55,32 +56,22 @@ export function AdvocateTable() {
 
       <div className="flex justify-between">
         <div className="flex w-fit gap-4">
-          <input type="text" className="w-fit" placeholder="Buscar por nome" />
-          <button className="bg-secundary w-fit gap-2 text-white">
-            <Search className="w-4" />
-            Pesquisar
-          </button>
+          <input type="text" className="w-fit input-style" placeholder="Buscar por nome" />
         </div>
         <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={() => loadLeader()}
-            className="w-fit border-[1px]  border-gray-200 bg-white text-gray-700"
-          >
-            <RotateCcw className="w-4" />
-            Atualizar
-          </button>
-          <button
+          
+          <ButtonPrimary
+            title='Cadastrar'
+            variant='container'
+            startIcon={<Plus className="w-4" />}
             onClick={() => setIsModalOpen(true)}
-            className="w-fit bg-primary text-white"
           >
-            <Plus className="w-4" />
             Cadastrar
-          </button>
+          </ButtonPrimary>
         </div>
       </div>
 
-      <fieldset className="h-auto w-full rounded-lg px-3 py-2">
+      <fieldset className="h-auto w-full rounded-lg px-3 py-2 fieldset">
         <table>
           <thead>
             <tr>

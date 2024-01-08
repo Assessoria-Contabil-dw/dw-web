@@ -33,7 +33,12 @@ export default function CardPlan(props: CardPlanProps) {
           <h2 className="text-[1.8em] font-semibold">{props.title}</h2>
           <div className="mb-5 flex h-[85px] flex-col ">
             {!props.annualValue && !props.monthlyValue && (
-              <b className="text-[2.5em] font-semibold">Negociável</b>
+              <div>
+                <b className="text-[2.5em] font-semibold">Negociável</b>
+                <p> 
+                  Contabilidade e prestação de contas anual
+                  </p>
+              </div>
             )}
 
             {props.annualValue && (

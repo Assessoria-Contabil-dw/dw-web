@@ -83,7 +83,7 @@ export default function Footer() {
           <div className="flex gap-5">
             <a
               aria-label="Signa-nos no Facebook"
-              href="https://www.instagram.com/dwassessoriacontabil"
+              href="https://www.instagram.com/cdwcontabilidadepartidaria/"
               target="_blank"
               className="h-12 w-12 bg-contain"
               style={{
@@ -91,7 +91,7 @@ export default function Footer() {
               }}
             ></a>
 
-            <a
+            {/* <a
               aria-label="Signa-nos no instagram"
               href="https://www.instagram.com/dwassessoriacontabil"
               target="_blank"
@@ -99,7 +99,7 @@ export default function Footer() {
               style={{
                 backgroundImage: "url('/assets/logo_facebook.svg",
               }}
-            ></a>
+            ></a> */}
           </div>
         </div>
       </div>

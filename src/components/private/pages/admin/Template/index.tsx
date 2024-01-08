@@ -7,12 +7,16 @@ import TemplateDicionary from '@/components/private/Tools/TemplateDicionary'
 
 interface Search {
   templateId: number | undefined
-  content: string | undefined
-  name: string | undefined
+  content: string 
+  name: string 
 }
 
 export function Templates() {
-  const [search, setSearch] = useState<Search>({} as Search)
+  const [search, setSearch] = useState<Search>({
+    templateId: undefined,
+    content: '',
+    name: '',
+  })
   function handleSearchOnChange(
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
   ) {

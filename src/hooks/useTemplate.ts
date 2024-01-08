@@ -30,7 +30,6 @@ export function useTemplateVigencyPDF(
   date?: string,
 ) {
   const templateService = new TemplateService()
-
   const query = useQuery<DocumentData>(
     ['documentData'],
     () => templateService.getVigency(id, content, local, date),
@@ -54,7 +53,7 @@ export function useTemplateUpdate(
   const templateService = new TemplateService()
 
   const query = useQuery<TemplateProps>(
-    ['templateUpdate'],
+    ['templateUpdate', content, id, name],
     () => templateService.putById(content, id, name),
     {
       keepPreviousData: true,

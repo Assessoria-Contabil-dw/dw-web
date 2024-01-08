@@ -73,12 +73,14 @@ export function PartyTable() {
       <div className="flex items-center justify-between gap-2">
         <div className="flex w-fit items-center gap-2">
           <input
+          className='input-style'
             type="number"
             name="code"
             onChange={handleSearchOnChange}
             placeholder="Código"
           />
           <input
+          className='input-style'
             type="text"
             name="name"
             onChange={handleSearchOnChange}
@@ -92,7 +94,7 @@ export function PartyTable() {
         </div>
       </div>
 
-      <fieldset className="h-auto w-full rounded-lg px-3 py-2">
+      <fieldset className="h-auto w-full rounded-lg px-3 py-2 fieldset">
         <table>
           <thead>
             <tr>

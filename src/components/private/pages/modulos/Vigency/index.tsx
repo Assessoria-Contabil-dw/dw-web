@@ -17,7 +17,7 @@ export function VigencyTable() {
   const params = useParams()
   const { id } = params
 
-  const { partyCode, cityCode, stateId } = useContext(AccessContext)
+  const { partyCode, stateId, cityCode } = useContext(AccessContext)
   const user: User = queryClient.getQueryData('authUser') as User
 
   const modalRegisterRef = useRef<RegisterVigencyRef>(null)
@@ -28,8 +28,8 @@ export function VigencyTable() {
   const { data, isLoading, isFetching, error } = useVigencyData(
     Number(id),
     partyCode,
-    cityCode,
     stateId,
+    cityCode,
   )
 
   if (isLoading) {

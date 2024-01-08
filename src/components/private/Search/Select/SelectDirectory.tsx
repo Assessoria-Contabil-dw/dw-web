@@ -1,7 +1,7 @@
 import { AccessContext } from '@/provider/context.provider'
 import { ChangeEvent, ReactNode, SelectHTMLAttributes, useContext } from 'react'
 import SelectBase from './SelectBase'
-import { useDirectoryData } from '@/hooks/useDirectoryData'
+import { useDirectoryData, useDirectoryFilter } from '@/hooks/useDirectory'
 
 interface SelectDirectoryProps extends SelectHTMLAttributes<HTMLSelectElement> {
   party?: string
@@ -21,18 +21,11 @@ export default function SelectDirectory({
   children,
   ...atr
 }: SelectDirectoryProps) {
-  const { partyCode, cityCode, stateId } = useContext(AccessContext)
 
-  const { data, isLoading } = useDirectoryData(
-    undefined,
-    undefined,
+  const { data, isLoading } = useDirectoryFilter(
     party,
     state,
     city,
-    undefined,
-    partyCode,
-    stateId,
-    cityCode,
   )
 
   return (
@@ -44,7 +37,7 @@ export default function SelectDirectory({
       {...atr}
     >
       {children}
-      {data?.results == null ? (
+      {data == null ? (
         <option selected value="" disabled>
           Não encontrado
         </option>
@@ -53,13 +46,13 @@ export default function SelectDirectory({
           Selecione
         </option>
       )}
-      {data !== undefined && data.results
-        ? data.results.map((directory) => (
+      {data !== undefined && data
+        ? data.map((directory) => (
             <option
               key={directory.id}
               value={JSON.stringify({
                 directoryId: directory.id,
-                city: directory.city,
+                city: directory.city + '/' + directory.state,
               })}
             >
               {directory.party} -{directory.surname}

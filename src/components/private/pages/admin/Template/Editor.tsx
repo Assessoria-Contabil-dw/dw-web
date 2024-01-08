@@ -1,10 +1,11 @@
 import { Editor } from '@tinymce/tinymce-react'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Trash } from 'lucide-react'
 import DeleteModel, { DeleteRef } from '../../../../Model/Delete'
 import ButtonIcon from '@/components/Buttons/ButtonIcon'
 import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 import { useTemplateCreate, useTemplateUpdate } from '@/hooks/useTemplate'
+import { LoadingSecond } from '@/components/Loading/second'
 
 interface CreateTemplateProps {
   content?: string
@@ -18,13 +19,14 @@ export function EditorTemplate({
   name,
 }: CreateTemplateProps) {
   const editorRef = useRef<any>()
+  const [loading, setLoading] = useState(true)
+  const [contentTemplate, setContentTemplate] = useState('')
 
-  console.log(editorRef.current?.getContent())
   const { isLoading: loadingUpdate, refetch: refetchUpdate } =
-    useTemplateUpdate(editorRef.current?.getContent(), templateId, name)
+    useTemplateUpdate(contentTemplate, templateId, name)
 
   const { isLoading: loadingCreate, refetch: refetchCreate } =
-    useTemplateCreate(name, editorRef.current?.getContent())
+    useTemplateCreate(name, contentTemplate)
 
   const modalDeleteRef = useRef<DeleteRef>(null)
   const handleDeleteModal = useCallback((id: string, name?: string) => {
@@ -37,23 +39,35 @@ export function EditorTemplate({
   }, [])
 
   async function handleCreate() {
-    console.log(editorRef.current?.getContent(), templateId, name)
+    setContentTemplate(contentTemplate)
     await refetchCreate()
   }
 
   async function handleUpdate() {
-    console.log(editorRef.current?.getContent(), templateId, name)
+    setContentTemplate(contentTemplate)
     await refetchUpdate()
   }
+
 
   return (
     <div className="z-10 flex h-full w-full flex-col gap-2">
       <DeleteModel ref={modalDeleteRef} />
 
+      {loading && (
+        <div className="flex h-full w-full items-center justify-center ">
+          <LoadingSecond />
+        </div>
+      )}
       <Editor
         id="tiny-editor-Create"
         apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
-        onInit={(evt, editor) => (editorRef.current = editor)}
+        onInit={() => {
+          setLoading(false)
+        }}
+        onEditorChange={(content, editor) => {
+          console.log('Content was updated:', editor.getContent({format: 'text'}))
+          setContentTemplate(content)
+        }}
         initialValue={content}
         init={{
           height: 500,
@@ -79,7 +93,6 @@ export function EditorTemplate({
             'pagebreak',
             'template',
             'table',
-            'fullpage',
           ],
           menubar: 'file edit view insert format tools table',
           toolbar:
@@ -113,7 +126,7 @@ export function EditorTemplate({
                   <div
                       style="color: white; background: PARTIDO_COR;">
                       <div style="margin: 0rem 3rem; text-align: center;">
-                          <p>{DIRETORIO_ENDERE&Ccedil;O} - {DIRETORIO_CNPJ} -
+                          <p>{DIRETORIO_ENDERECO} - {DIRETORIO_CNPJ} -
                               {DIRETORIO_TELEFONE}</p>
                       </div>
                     

@@ -1,7 +1,7 @@
 import ActiveLink from './ActiveLink'
 import LinkPrimary from '../../../Links/LinkPrimary'
 import Image from 'next/image'
-import logo from '@/assets/logo-vertical-color.svg'
+import logo from '@/assets/cdw-horizontal.svg'
 import { NavigationItem } from '@/interfaces/types'
 import MenuBar from './MenuBar'
 

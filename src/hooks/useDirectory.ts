@@ -1,8 +1,6 @@
-import { useNotify } from '@/components/Toast/toast'
 import { Page } from '@/interfaces/page'
 import { DirectoryProps } from '@/interfaces/types'
 import { DirectoryService } from '@/services/directory.service'
-import { useRouter } from 'next/navigation'
 import { useQuery } from 'react-query'
 
 export function useDirectoryData(
@@ -17,8 +15,6 @@ export function useDirectoryData(
   cityCode?: string,
 ) {
   const directoryService = new DirectoryService()
-  const notify = useNotify()
-  const router = useRouter()
 
   const query = useQuery<Page<DirectoryProps>>(
     [
@@ -49,12 +45,41 @@ export function useDirectoryData(
       staleTime: 1000 * 60 * 60 * 12,
       retry: false,
       refetchOnWindowFocus: false,
-      onError: (error: any) => {
-        if (error.response.status === 403) {
-          notify({ type: 'warning', message: error.response.data.message })
-          router.push('/painel')
-        }
-      },
+    },
+  )
+
+  return query
+}
+
+
+export function useDirectoryFilter(
+  partyAbbreviation?: string,
+  stateSigla?: string,
+  cityName?: string,
+
+) {
+  const directoryService = new DirectoryService()
+
+  const query = useQuery<DirectoryProps[]>(
+    [
+      'directoryFilter',
+      partyAbbreviation,
+      stateSigla,
+      cityName,
+ 
+    ],
+    () =>
+      directoryService.getByFilter(
+        partyAbbreviation,
+        stateSigla,
+        cityName,
+       
+      ),
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: false,
+      refetchOnWindowFocus: false,
     },
   )
 

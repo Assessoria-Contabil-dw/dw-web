@@ -63,7 +63,7 @@ export default function SPC() {
     if (name === 'state' && value === '') {
       setSearch((old) => ({ ...old, city: undefined }))
     }
-
+    
     setPage(1)
     setSkip(0)
     setSearch((old) => ({ ...old, [name]: value || undefined }))

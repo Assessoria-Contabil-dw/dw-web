@@ -7,12 +7,10 @@ import { useQuery } from 'react-query'
 export function useVigencyData(
   id?: number,
   partyCode?: string,
-  cityCode?: string,
   stateId?: string,
+  cityCode?: string,
 ) {
   const vigencyService = new VigencyService()
-  const notify = useNotify()
-  const router = useRouter()
 
   const query = useQuery<VigencyDirectoryProps>(
     ['vigencyData', id, partyCode, stateId, cityCode],
@@ -23,12 +21,6 @@ export function useVigencyData(
       retry: false,
       refetchOnWindowFocus: false,
       enabled: !!id,
-      onError: (error: any) => {
-        if (error.response.status === 403) {
-          notify({ type: 'warning', message: error.response.data.message })
-          router.push('/painel')
-        }
-      },
     },
   )
 
@@ -37,8 +29,6 @@ export function useVigencyData(
 
 export function useVigencyOne(id?: number) {
   const vigencyService = new VigencyService()
-  const notify = useNotify()
-  const router = useRouter()
 
   const query = useQuery<VigencyProps>(
     ['vigencyData', id],
@@ -49,12 +39,6 @@ export function useVigencyOne(id?: number) {
       retry: false,
       refetchOnWindowFocus: false,
       enabled: !!id,
-      onError: (error: any) => {
-        if (error.response.status === 403) {
-          notify({ type: 'warning', message: error.response.data.message })
-          router.push('/painel')
-        }
-      },
     },
   )
 

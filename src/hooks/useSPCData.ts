@@ -1,8 +1,6 @@
-import { useNotify } from '@/components/Toast/toast'
 import { Page } from '@/interfaces/page'
 import { SPCProps } from '@/interfaces/types'
 import { SPCService } from '@/services/spc.service'
-import { useRouter } from 'next/navigation'
 import { useQuery } from 'react-query'
 
 export function useSPCData(
@@ -15,12 +13,11 @@ export function useSPCData(
   year?: string,
   legend?: string,
   partyCode?: string,
-  stateCode?: string,
+  stateId?: string,
   cityCode?: string,
 ) {
   const spcService = new SPCService()
-  const notify = useNotify()
-  const router = useRouter()
+  
 
   const query = useQuery<Page<SPCProps>>(
     [
@@ -34,7 +31,7 @@ export function useSPCData(
       year,
       legend,
       partyCode,
-      stateCode,
+      stateId,
       cityCode,
     ],
     () =>
@@ -48,21 +45,14 @@ export function useSPCData(
         year,
         legend,
         partyCode,
-        stateCode,
+        stateId,
         cityCode,
       ),
     {
       keepPreviousData: true,
       staleTime: 1000 * 60 * 60 * 12,
-      retry: false,
+      retry: 1,
       refetchOnWindowFocus: false,
-      onError: (error: any) => {
-        if (error.response.status === 403) {
-          notify({ type: 'warning', message: error.response.data.message })
-          router.push('/painel')
-        }
-        console.log(error)
-      },
     },
   )
 
@@ -94,7 +84,6 @@ export function useSPCUpdateById(
   observation: string,
 ) {
   const spcService = new SPCService()
-  const notify = useNotify()
 
   const query = useQuery(
     ['spcUpdateById', id, year, numPge, status, observation],
@@ -104,12 +93,6 @@ export function useSPCUpdateById(
       retry: false,
       refetchOnWindowFocus: false,
       enabled: false,
-      onSuccess: () => {
-        notify({ type: 'success', message: 'Atualizado com sucesso' })
-      },
-      onError: (error: any) => {
-        notify({ type: 'warning', message: error.response.data.message })
-      },
     },
   )
 

@@ -3,6 +3,7 @@ import LinkPrimary from '../../../Links/LinkPrimary'
 import Image from 'next/image'
 import imgContablue from '../../../../assets/contablue.svg'
 import CardPlan from '../../Cards/CardPlan'
+import imgSPC from '../../../../assets/modulo-spc.svg'
 
 export default function Home() {
   return (
@@ -89,13 +90,13 @@ export default function Home() {
                   title="Operacional"
                   descrition="Para você começar"
                   annualValue={60}
-                  active={[0, 1, 2]}
+                  active={[0, 1]}
                 />
 
                 <CardPlan
                   href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Supervisor.'
                   title="Supervisor"
-                  descrition="Para você começar"
+                  descrition="Para você crescer"
                   label="Sem cobrança de implantação"
                   monthlyValue={20}
                   annualValue={200}
@@ -105,7 +106,7 @@ export default function Home() {
                 <CardPlan
                   href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Diretor.'
                   title="Diretor"
-                  descrition="Para você começar"
+                  descrition="Lidere com eficiência"
                   label="Suporte técnico"
                   monthlyValue={50}
                   annualValue={600}
@@ -175,11 +176,11 @@ export default function Home() {
               </ul>
             </div>
 
-            <div className="hidden w-full max-w-[40%] justify-center lg:flex">
+            <div className="hidden w-full max-w-[60%] justify-center lg:flex">
               <Image
                 className="h-auto w-full"
-                src={imgContablue}
-                alt="Figura de contabilidade"
+                src={imgSPC}
+                alt="Figura do módulo SPC"
               />
             </div>
           </div>

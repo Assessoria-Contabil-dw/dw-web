@@ -23,18 +23,14 @@ export default function SelectVigency({
     <SelectBase
       name="vigency"
       label="Vigência"
-      loading={isLoading || loading}
+      loading={isLoading || loading }
       onChange={handleSearchOnChange}
       {...atr}
     >
       {children}
-      {data?.vigencyActive == null && data?.vigencyInactive == null ? (
+      {data?.vigencyActive == null && data?.vigencyInactive == null && (
         <option selected value="" disabled>
           Não encontrado
-        </option>
-      ) : (
-        <option value="" disabled selected>
-          Selecione
         </option>
       )}
       {data?.vigencyActive !== undefined && data.vigencyActive !== null

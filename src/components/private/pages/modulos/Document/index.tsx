@@ -45,6 +45,7 @@ export function DocumentsView() {
         <ActiveOptionsDocument option={option} setOption={setOption} />
         {option === 1 && (
           <FormDocument
+            editor={isEditor}
             content={formData.content}
             onSubmit={handleFormSubmit}
           />

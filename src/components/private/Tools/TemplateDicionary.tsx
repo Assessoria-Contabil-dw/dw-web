@@ -3,70 +3,114 @@ import { Copy } from 'lucide-react'
 export default function TemplateDicionary() {
   const dictionary = [
     {
-      informações: ['DATA', 'LOCAL', 'DATA_ANO', 'DATA_INICIAL', 'DATA_FINAL'],
+      informações: [
+        'DATA_EMISSAO',
+        'DATA_EMISSAO_EXTENSO',
+        'DATA_EMISSAO_ANO', 
+        'CIDADE_UF', 
+        'DATA_VIGENCIA_INICIAL', 
+        'DATA_VIGENCIA_FINAL'
+      ],
     },
     {
-      partido: ['PARTIDO_NOME', 'PARTIDO_SIGLA'],
+      partido: [
+        'PARTIDO_NUMERO',
+        'PARTIDO_NOME', 
+        'PARTIDO_SIGLA',
+        'PARTIDO_COR',
+        'PARTIDO_LOGO',
+      ],
     },
     {
       diretório: [
         'DIRETORIO_SURNAME',
         'DIRETORIO_SURNAME_EXTENSO',
         'DIRETORIO_CNPJ',
-        'DIRETORIO_ENDEREÇO',
+        'DIRETORIO_ENDERECO',
         'DIRETORIO_CIDADE',
         'DIRETORIO_UF',
+        'DIRETORIO_EMAIL',
+        'DIRETORIO_TELEFONE',
+        'DIRETORIO_TIPO_DE_ORGANIZACAO',
       ],
     },
     {
       presidente: [
         'PRESIDENTE_NOME',
-        'PRESIDENTE_QUALIFICAÇÃO',
         'PRESIDENTE_CPF',
-        'PRESIDENTE_ENDEREÇO',
-        'PRESIDENTE_TITULO',
         'PRESIDENTE_RG',
+        'PRESIDENTE_TITULO',
+        'PRESIDENTE_QUALIFICACAO',
+        'PRESIDENTE_NASCIMENTO',
+        'PRESIDENTE_ENDERECO',
+        'PRESIDENTE_TELEFONE',
+        'PRESIDENTE_EMAIL',
+        'PRESIDENTE_CARGO',
+        'PRESIDENTE_ASSINATURA',
+        
       ],
     },
     {
       vice: [
         'VICE_NOME',
-        'VICE_QUALIFICAÇÃO',
+        'VICE_ASSINATURA',
+        'VICE_QUALIFICACAO',
         'VICE_CPF',
-        'VICE_ENDEREÇO',
+        'VICE_ENDERECO',
         'VICE_TITULO',
         'VICE_RG',
+        'VICE_TELEFONE',
+        'VICE_EMAIL',
+        'VICE_NASCIMENTO',
+        'VICE_CARGO'
+
       ],
     },
     {
       tesoureiro: [
         'TESOUREIRO_NOME',
-        'TESOUREIRO_QUALIFICAÇÃO',
+        'TESOUREIRO_QUALIFICACAO',
         'TESOUREIRO_CPF',
         'TESOUREIRO_TITULO',
-        'TESOUREIRO_ENDEREÇO',
+        'TESOUREIRO_ENDERECO',
         'TESOUREIRO_RG',
+        'TESOUREIRO_ASSINATURA',
+        'TESOUREIRO_TELEFONE',
+        'TESOUREIRO_EMAIL',
+        'TESOUREIRO_NASCIMENTO',
+        'TESOUREIRO_CARGO'
       ],
     },
     {
       advogados: [
         'ADV_1_NOME',
         'ADV_1_OAB',
+        'ADV_1_NASCIMENTO',
+        'AVD_1_TITULO',
         'AVD_1_CPF',
         'ADV_1_EMAIL',
-        'ADV_1_ENDEREÇO',
+        'ADV_1_TELEFONE',
+        'ADV_1_ENDERECO',
+        'ADV_1_ASSINATURA',
+        'ADV_1_STATUS',
+
         'ADV_2_NOME',
         'ADV_2_OAB',
+        'ADV_2_NASCIMENTO',
+        'AVD_2_TITULO',
         'ADV_2_CPF',
         'ADV_2_EMAIL',
-        'ADV_2_ENDEREÇO',
+        'ADV_2_ENDERECO',
+        'ADV_2_TELEFONE',
+        'ADV_2_ASSINATURA',
+        'ADV_2_STATUS',
       ],
     },
   ]
 
   function copyPassword(index: string) {
     const password = document.querySelector(`#${index}`) as HTMLSpanElement
-    navigator.clipboard.writeText(password.innerText)
+    navigator.clipboard.writeText('${'+`${password.innerText}`+'}')
   }
 
   return (

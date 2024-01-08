@@ -91,9 +91,11 @@ export default function TableDirectory({
                       onClick={() => {
                         handleButtonClick(directory.id)
                       }}
-                      className="group flex items-center gap-1 whitespace-nowrap text-start font-medium text-secondHover disabled:cursor-not-allowed disabled:text-slate-400"
+                      className="group flex items-center gap-1 text-start font-medium text-secondHover disabled:cursor-not-allowed disabled:text-slate-400
+                      "
                     >
-                      {directory.surname}
+                      <span className='whitespace-nowrap overflow-hidden text-ellipsis max-w-[10rem]'>{directory.surname}</span>
+                      
                       <i className="hidden group-disabled:block">
                         <Lock size={12} />
                       </i>

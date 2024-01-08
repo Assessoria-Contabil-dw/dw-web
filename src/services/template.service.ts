@@ -1,5 +1,6 @@
 import { useNotify } from '@/components/Toast/toast'
 import { api } from '@/lib/api'
+import { queryClient } from '@/provider/query.provider'
 
 export class TemplateService {
   notify = useNotify()
@@ -77,6 +78,7 @@ export class TemplateService {
         message: 'Template atualizado com sucesso!',
       })
 
+      queryClient.invalidateQueries('templateData')
       return response.data
     } catch (error: any) {
       return this.notify({
