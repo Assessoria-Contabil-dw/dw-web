@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt_br">
+    <html lang="pt-br">
       <body
         className={`${inter.className}  ${montserrat.className} flex  flex-col bg-gray-50 font-sans`}
       >

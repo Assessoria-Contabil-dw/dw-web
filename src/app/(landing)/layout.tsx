@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt_br">
+    <html lang="pt-br">
       <head>
         <Script
           id="container-gtag"
