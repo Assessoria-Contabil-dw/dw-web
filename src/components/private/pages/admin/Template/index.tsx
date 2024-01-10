@@ -7,8 +7,8 @@ import TemplateDicionary from '@/components/private/Tools/TemplateDicionary'
 
 interface Search {
   templateId: number | undefined
-  content: string 
-  name: string 
+  content: string
+  name: string
 }
 
 export function Templates() {

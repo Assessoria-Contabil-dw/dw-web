@@ -3,7 +3,6 @@ import { useQuery } from 'react-query'
 
 export function useLogout() {
   const authService = new AuthService()
- 
 
   const query = useQuery('logout', () => authService.postLogout(), {
     keepPreviousData: true,

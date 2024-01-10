@@ -17,13 +17,13 @@ export default function SelectVigency({
   children,
   ...atr
 }: SelectVigencyProps) {
-  const { data, isLoading } = useVigencyData(directoryId)
+  const { data, isLoading, isFetching } = useVigencyData(directoryId)
 
   return (
     <SelectBase
       name="vigency"
       label="Vigência"
-      loading={isLoading || loading }
+      loading={isLoading || isFetching|| loading}
       onChange={handleSearchOnChange}
       {...atr}
     >

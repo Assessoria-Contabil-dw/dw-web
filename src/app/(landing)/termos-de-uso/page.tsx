@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import './style.scss'
 import Link from 'next/link'
-export default function Page() {
+export default function TermPage() {
   return (
     <div id="termo" className="my-10 flex w-full justify-center px-5">
       <div className=" flex w-full max-w-7xl flex-col gap-4">
@@ -12,18 +12,18 @@ export default function Page() {
           </p>
 
           <p>
-            Seja bem-vindo ao site da CDW Contabilidade Partidária. Por favor, leia
-            atentamente todos os termos abaixo.
+            Seja bem-vindo ao site da CDW Contabilidade Partidária. Por favor,
+            leia atentamente todos os termos abaixo.
           </p>
 
           <p>
             Este documento, juntamente com todo o conteúdo do site, é
-            disponibilizado pela CDW Contabilidade Partidária, doravante referida como
-            "EMPRESA", e regulamenta todos os direitos e obrigações para os
-            visitantes do site, doravante referidos como "VISITANTE". Todos os
-            direitos previstos na legislação são respeitados, e as cláusulas
-            abaixo são requisitos para o acesso e visita ao site, localizado no
-            endereço{' '}
+            disponibilizado pela CDW Contabilidade Partidária, doravante
+            referida como "EMPRESA", e regulamenta todos os direitos e
+            obrigações para os visitantes do site, doravante referidos como
+            "VISITANTE". Todos os direitos previstos na legislação são
+            respeitados, e as cláusulas abaixo são requisitos para o acesso e
+            visita ao site, localizado no endereço{' '}
             <Link href="https://www.contabilidadepartidaria.com.be">
               https://www.contabilidadepartidaria.com.be
             </Link>

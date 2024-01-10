@@ -1,5 +1,5 @@
 import React from 'react'
-import { inter } from '@/app/fonts'
+import { inter, montserrat } from '@/app/fonts'
 import '@/app/globals.css'
 import Footer from '@/components/public/Footer'
 import Navbar from '@/components/public/Headers/Navbar'
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt_BR">
+    <html lang="pt_br">
       <head>
         <Script
           id="container-gtag"
@@ -60,7 +60,7 @@ export default function RootLayout({
         {/* End Google Tag Manager (noscript) */}
 
         <Navbar />
-        <main>{children}</main>
+        <main className={montserrat.className}>{children}</main>
         <Footer />
       </body>
     </html>

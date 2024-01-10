@@ -13,12 +13,12 @@ interface CreateTemplateProps {
   name?: string
 }
 
+console.log('templeta')
 export function EditorTemplate({
   content,
   templateId,
   name,
 }: CreateTemplateProps) {
-  const editorRef = useRef<any>()
   const [loading, setLoading] = useState(true)
   const [contentTemplate, setContentTemplate] = useState('')
 
@@ -48,7 +48,6 @@ export function EditorTemplate({
     await refetchUpdate()
   }
 
-
   return (
     <div className="z-10 flex h-full w-full flex-col gap-2">
       <DeleteModel ref={modalDeleteRef} />
@@ -65,7 +64,10 @@ export function EditorTemplate({
           setLoading(false)
         }}
         onEditorChange={(content, editor) => {
-          console.log('Content was updated:', editor.getContent({format: 'text'}))
+          console.log(
+            'Content was updated:',
+            editor.getContent({ format: 'text' }),
+          )
           setContentTemplate(content)
         }}
         initialValue={content}

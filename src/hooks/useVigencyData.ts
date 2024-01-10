@@ -1,7 +1,5 @@
-import { useNotify } from '@/components/Toast/toast'
 import { VigencyDirectoryProps, VigencyProps } from '@/interfaces/vigency'
 import { VigencyService } from '@/services/vigency.service'
-import { useRouter } from 'next/navigation'
 import { useQuery } from 'react-query'
 
 export function useVigencyData(

@@ -4,6 +4,8 @@ import Image from 'next/image'
 import imgContablue from '../../../../assets/contablue.svg'
 import CardPlan from '../../Cards/CardPlan'
 import imgSPC from '../../../../assets/modulo-spc.svg'
+import imgDirectory from '../../../../assets/modulo-diretorio.svg'
+import imgEmissor from '../../../../assets/modulo-emissor.svg'
 
 export default function Home() {
   return (
@@ -16,12 +18,12 @@ export default function Home() {
                 Contabilidade para partidos políticos
               </h1>
               <p className="leading-6">
-                Simplifique a contabilidade partidarias, com um sistema que
+                Simplifique a contabilidade partidárias, com um sistema que
                 centraliza suas informações.
               </p>
               <div className="flex flex-wrap gap-3 ">
                 <LinkPrimary
-                  target='_blank'
+                  target="_blank"
                   href="https://api.whatsapp.com/send?phone=559991014072"
                   variant="container"
                   className="w-full min-w-[150px] px-12 xs:w-fit"
@@ -30,7 +32,7 @@ export default function Home() {
                 </LinkPrimary>
 
                 <LinkPrimary
-                  target='_blank'
+                  target="_blank"
                   href="https://api.whatsapp.com/send?phone=559991014072"
                   variant="outline"
                   className="w-full max-w-full xs:max-w-[286px]"
@@ -86,7 +88,7 @@ export default function Home() {
             <div className="flex w-full flex-1 justify-center">
               <div className="my-10 grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <CardPlan
-                  href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Operacional.'
+                  href="https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Operacional."
                   title="Operacional"
                   descrition="Para você começar"
                   annualValue={60}
@@ -94,7 +96,7 @@ export default function Home() {
                 />
 
                 <CardPlan
-                  href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Supervisor.'
+                  href="https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Supervisor."
                   title="Supervisor"
                   descrition="Para você crescer"
                   label="Sem cobrança de implantação"
@@ -104,7 +106,7 @@ export default function Home() {
                 />
 
                 <CardPlan
-                  href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Diretor.'
+                  href="https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Diretor."
                   title="Diretor"
                   descrition="Lidere com eficiência"
                   label="Suporte técnico"
@@ -114,7 +116,7 @@ export default function Home() {
                 />
 
                 <CardPlan
-                  href='https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Geral.'
+                  href="https://api.whatsapp.com/send?phone=559991014072&text=Ol%C3%A1%20CDW,%20quero%20conhecer%20o%20Plano%20Geral."
                   title="Geral"
                   descrition="Junto com você"
                   active={[0, 1, 2, 3, 4]}
@@ -125,21 +127,22 @@ export default function Home() {
         </section>
 
         <section className="flex w-full justify-center px-5">
-          <div className=" flex max-w-7xl flex-1 justify-between gap-20 py-10">
-            <div className="hidden w-full max-w-[40%] justify-center lg:flex">
+          <div className=" flex flex-col lg:max-w-7xl flex-1 items-center justify-between gap-8 py-10 
+          lg:gap-20 lg:flex-row">
+            <div className="w-full lg:max-w-[50%]">
               <Image
                 className="w-full"
-                src={imgContablue}
+                src={imgDirectory}
                 alt="Figura de contabilidade"
               />
             </div>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-1 flex-col gap-5 h-fit">
               <h1 className="text-4xl font-bold leading-[42px]">
                 <span className="text-secondHover">Módulo Diretório </span>
                 centralize suas informações
               </h1>
               <p className=" leading-6">
-                Concenliza as informações cadastradas no SGIP/TSE, como endereço
+                Centralize as informações cadastradas no SGIP/TSE, como endereço
                 e composição da agremiação. Além de emitir alertas do vencimento
                 da composição, garantindo uma gestão eficiente e proativa.
               </p>
@@ -148,15 +151,16 @@ export default function Home() {
         </section>
 
         <section className="flex w-full justify-center px-5">
-          <div className="flex max-w-7xl flex-1 justify-between gap-20 py-10">
-            <div className="flex flex-col gap-5">
+          <div className="flex flex-col-reverse lg:max-w-7xl flex-1 items-center justify-between gap-8 py-10 
+          lg:gap-20 lg:flex-row">
+            <div className="flex flex-1 flex-col gap-5 h-fit">
               <h1 className="text-4xl font-bold leading-[42px]">
                 <span className="text-secondHover">Módulo SPC </span>
                 atualize suas informações
               </h1>
               <p className=" leading-6">
                 Visualize as informações de cada prestações de contas
-                (SPCA/SPCE), incluindo status, parecer preliminar, data de
+                (SPCA/SPCE), incluindo situação, parecer preliminar, data de
                 vencimento e notificações sobre ela.
               </p>
 
@@ -176,7 +180,7 @@ export default function Home() {
               </ul>
             </div>
 
-            <div className="hidden w-full max-w-[60%] justify-center lg:flex">
+            <div className=" w-full lg:max-w-[50%]">
               <Image
                 className="h-auto w-full"
                 src={imgSPC}
@@ -187,16 +191,17 @@ export default function Home() {
         </section>
 
         <section className="flex w-full justify-center px-5">
-          <div className="flex max-w-7xl flex-1 flex-wrap justify-between gap-20 py-10">
-            <div className="hidden  w-full max-w-[40%] justify-center lg:flex">
+          <div className="flex flex-col lg:max-w-7xl flex-1 items-center justify-between gap-8 py-10 
+          lg:gap-20 lg:flex-row">
+            <div className=" w-full lg:max-w-[50%]">
               <Image
                 className="h-auto w-full"
-                src={imgContablue}
+                src={imgEmissor}
                 alt="Figura de contabilidade"
               />
             </div>
 
-            <div className="flex flex-1 flex-col gap-5">
+            <div className="flex flex-1 flex-col gap-5 h-fit">
               <h1 className="text-4xl font-bold leading-[42px]">
                 <span className="text-secondHover">Módulo Emissor </span>
                 facilita a emissão de documentos

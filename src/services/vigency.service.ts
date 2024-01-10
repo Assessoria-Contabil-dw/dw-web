@@ -21,7 +21,7 @@ export class VigencyService {
         },
       })
       return response.data
-    } catch (error:any) {
+    } catch (error: any) {
       if (error.response.status === 403) {
         this.notify({ type: 'warning', message: error.response.data.message })
         this.router.push('/painel')
@@ -34,7 +34,7 @@ export class VigencyService {
     try {
       const response = await api.get(`/vigencies/${id}`)
       return response.data
-    } catch (error:any) {
+    } catch (error: any) {
       if (error.response.status === 403) {
         this.notify({ type: 'warning', message: error.response.data.message })
         this.router.push('/painel')

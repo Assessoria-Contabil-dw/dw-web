@@ -35,9 +35,7 @@ export default function CardPlan(props: CardPlanProps) {
             {!props.annualValue && !props.monthlyValue && (
               <div>
                 <b className="text-[2.5em] font-semibold">Negociável</b>
-                <p> 
-                  Contabilidade e prestação de contas anual
-                  </p>
+                <p>Contabilidade e prestação de contas anual</p>
               </div>
             )}
 
@@ -65,7 +63,7 @@ export default function CardPlan(props: CardPlanProps) {
           {props.annualValue || props.monthlyValue ? (
             <LinkBase
               href={props.href || ''}
-              target='_blank'
+              target="_blank"
               className="h-14 rounded-[4px] border-2 border-black !text-[1.1em] shadow-sm hover:border-primary hover:bg-primary "
             >
               Assinar agora

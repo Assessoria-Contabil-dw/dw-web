@@ -6,16 +6,16 @@ export default function TemplateDicionary() {
       informações: [
         'DATA_EMISSAO',
         'DATA_EMISSAO_EXTENSO',
-        'DATA_EMISSAO_ANO', 
-        'CIDADE_UF', 
-        'DATA_VIGENCIA_INICIAL', 
-        'DATA_VIGENCIA_FINAL'
+        'DATA_EMISSAO_ANO',
+        'CIDADE_UF',
+        'DATA_VIGENCIA_INICIAL',
+        'DATA_VIGENCIA_FINAL',
       ],
     },
     {
       partido: [
         'PARTIDO_NUMERO',
-        'PARTIDO_NOME', 
+        'PARTIDO_NOME',
         'PARTIDO_SIGLA',
         'PARTIDO_COR',
         'PARTIDO_LOGO',
@@ -47,7 +47,6 @@ export default function TemplateDicionary() {
         'PRESIDENTE_EMAIL',
         'PRESIDENTE_CARGO',
         'PRESIDENTE_ASSINATURA',
-        
       ],
     },
     {
@@ -62,8 +61,7 @@ export default function TemplateDicionary() {
         'VICE_TELEFONE',
         'VICE_EMAIL',
         'VICE_NASCIMENTO',
-        'VICE_CARGO'
-
+        'VICE_CARGO',
       ],
     },
     {
@@ -78,7 +76,7 @@ export default function TemplateDicionary() {
         'TESOUREIRO_TELEFONE',
         'TESOUREIRO_EMAIL',
         'TESOUREIRO_NASCIMENTO',
-        'TESOUREIRO_CARGO'
+        'TESOUREIRO_CARGO',
       ],
     },
     {
@@ -110,7 +108,7 @@ export default function TemplateDicionary() {
 
   function copyPassword(index: string) {
     const password = document.querySelector(`#${index}`) as HTMLSpanElement
-    navigator.clipboard.writeText('${'+`${password.innerText}`+'}')
+    navigator.clipboard.writeText('${' + `${password.innerText}` + '}')
   }
 
   return (

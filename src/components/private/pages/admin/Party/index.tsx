@@ -28,7 +28,7 @@ export function Party() {
   //   msg: '',
   // })
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex w-full flex-col gap-4">
       {/* <RegisterParty
         isCreate={isModalCreate}
         onClose={() => setIsModalCreate(false)}

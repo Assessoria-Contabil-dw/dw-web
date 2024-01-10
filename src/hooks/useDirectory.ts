@@ -51,30 +51,16 @@ export function useDirectoryData(
   return query
 }
 
-
 export function useDirectoryFilter(
   partyAbbreviation?: string,
   stateSigla?: string,
   cityName?: string,
-
 ) {
   const directoryService = new DirectoryService()
 
   const query = useQuery<DirectoryProps[]>(
-    [
-      'directoryFilter',
-      partyAbbreviation,
-      stateSigla,
-      cityName,
- 
-    ],
-    () =>
-      directoryService.getByFilter(
-        partyAbbreviation,
-        stateSigla,
-        cityName,
-       
-      ),
+    ['directoryFilter', partyAbbreviation, stateSigla, cityName],
+    () => directoryService.getByFilter(partyAbbreviation, stateSigla, cityName),
     {
       keepPreviousData: true,
       staleTime: 1000 * 60 * 60 * 12,

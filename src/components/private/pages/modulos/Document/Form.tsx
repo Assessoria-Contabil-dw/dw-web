@@ -1,84 +1,84 @@
-"use client";
+'use client'
 
-import { ChangeEvent, useContext, useState } from "react";
-import { AccessContext } from "@/provider/context.provider";
-import dayjs from "dayjs";
-import SelectParty from "../../../Search/Select/SelectParty";
-import SelectState from "../../../Search/Select/SelectState";
-import SelectCity from "../../../Search/Select/SelectCity";
-import SelectDirectory from "../../../Search/Select/SelectDirectory";
-import SelectVigency from "../../../Search/Select/SelectVigency";
-import InputBase from "../../../Search/Input/InputBase";
-import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
-import SelectTemplate from "../../../Search/Select/SelectTemplate";
-import { useTemplateVigencyPDF } from "@/hooks/useTemplate";
+import { ChangeEvent, useContext, useState } from 'react'
+import { AccessContext } from '@/provider/context.provider'
+import dayjs from 'dayjs'
+import SelectParty from '../../../Search/Select/SelectParty'
+import SelectState from '../../../Search/Select/SelectState'
+import SelectCity from '../../../Search/Select/SelectCity'
+import SelectDirectory from '../../../Search/Select/SelectDirectory'
+import SelectVigency from '../../../Search/Select/SelectVigency'
+import InputBase from '../../../Search/Input/InputBase'
+import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
+import SelectTemplate from '../../../Search/Select/SelectTemplate'
+import { useTemplateVigencyPDF } from '@/hooks/useTemplate'
 
 interface Search {
-  party: string | undefined;
-  state: string | undefined;
-  city: string | undefined;
-  directory: number | undefined;
-  vigency: string | undefined;
-  local: string | undefined;
-  date: string | undefined;
-  template: number | undefined;
-  templateContent: string | undefined;
+  party: string | undefined
+  state: string | undefined
+  city: string | undefined
+  directory: number | undefined
+  vigency: string | undefined
+  local: string | undefined
+  date: string | undefined
+  template: number | undefined
+  templateContent: string | undefined
 }
 
 interface FormDocumentProps {
-  onSubmit: (data: any) => void;
-  content: string | undefined;
-  editor: boolean;
+  onSubmit: (data: any) => void
+  content: string | undefined
+  editor: boolean
 }
 
 export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
-  const [search, setSearch] = useState<Search>({} as Search);
-  const { partyCode, cityCode, stateId } = useContext(AccessContext);
+  const [search, setSearch] = useState<Search>({} as Search)
+  const { partyCode, cityCode, stateId } = useContext(AccessContext)
 
-  console.log(partyCode, stateId, cityCode);
+  console.log(partyCode, stateId, cityCode)
   function handleSearchOnChange(
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
   ) {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
-    if (name === "state" && value === "") {
-      setSearch((old) => ({ ...old, city: undefined }));
+    if (name === 'state' && value === '') {
+      setSearch((old) => ({ ...old, city: undefined }))
     }
 
-    if (name === "directory") {
-      const { directoryId, city } = JSON.parse(value);
+    if (name === 'directory') {
+      const { directoryId, city } = JSON.parse(value)
       return setSearch((old) => ({
         ...old,
         directory: directoryId,
         local: city,
-      }));
+      }))
     }
 
-    if (name === "template") {
-      const { id, content } = JSON.parse(value);
+    if (name === 'template') {
+      const { id, content } = JSON.parse(value)
 
       setSearch((old) => ({
         ...old,
         template: id,
         templateContent: content,
-      }));
-      return onSubmit({ content });
+      }))
+      return onSubmit({ content })
     }
-    setSearch((old) => ({ ...old, [name]: value || undefined }));
+    setSearch((old) => ({ ...old, [name]: value || undefined }))
   }
 
   const { refetch, isFetching } = useTemplateVigencyPDF(
     search.vigency,
     editor ? content : search.templateContent,
     search.local,
-    search.date
-  );
+    search.date,
+  )
 
   async function handleSearchOnSubmit(e: ChangeEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const response = await refetch();
+    e.preventDefault()
+    const response = await refetch()
 
-    onSubmit({ content: response.data });
+    onSubmit({ content: response.data })
   }
 
   return (
@@ -125,8 +125,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
             state={search.state}
             city={search.city}
             handleSearchOnChange={handleSearchOnChange}
-          >
-          </SelectDirectory>
+          ></SelectDirectory>
           <SelectVigency
             directoryId={search.directory ?? undefined}
             handleSearchOnChange={handleSearchOnChange}
@@ -140,7 +139,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
               label="Data da emissão"
               type="date"
               name="date"
-              defaultValue={dayjs().format("YYYY-MM-DD")}
+              defaultValue={dayjs().format('YYYY-MM-DD')}
               onChange={handleSearchOnChange}
             />
             <InputBase
@@ -167,5 +166,5 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
         </ButtonPrimary>
       </div>
     </form>
-  );
+  )
 }

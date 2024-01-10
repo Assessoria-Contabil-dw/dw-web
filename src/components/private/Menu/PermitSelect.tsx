@@ -110,7 +110,7 @@ export default function PermitSelect() {
           <input
             onClick={() => setIsSelect(!isSelect)}
             type="checkbox"
-            className="peer/access absolute inset-0 z-20 cursor-pointer opacity-0"
+            className="peer/access absolute inset-0 z-20 cursor-pointer opacity-0 h-full w-full"
           />
           <div>
             <label htmlFor="access" className="text-label cursor-pointer">
@@ -168,7 +168,7 @@ export default function PermitSelect() {
                               '',
                             )
                           }
-                          className={`peer/item absolute inset-0 z-20 cursor-pointer opacity-0`}
+                          className={`peer/item absolute inset-0 z-20 cursor-pointer opacity-0 h-full w-full`}
                           value={item.party}
                           data-label={item.party}
                         />

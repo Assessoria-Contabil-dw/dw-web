@@ -6,7 +6,6 @@ export class SPCService {
   notify = useNotify()
   router = useRouter()
 
-  
   public async getAll(
     skip?: number,
     take?: number,
@@ -37,7 +36,7 @@ export class SPCService {
         },
       })
       return response.data
-    } catch (error:any) {
+    } catch (error: any) {
       if (error.response.status === 403) {
         this.notify({ type: 'warning', message: error.response.data.message })
         this.router.push('/painel')
@@ -73,8 +72,11 @@ export class SPCService {
       })
       this.notify({ type: 'success', message: 'Atualizado com sucesso' })
       return response
-    } catch (error:any) {
-      return this.notify({ type: 'warning', message: error.response.data.message })
+    } catch (error: any) {
+      return this.notify({
+        type: 'warning',
+        message: error.response.data.message,
+      })
     }
   }
 }

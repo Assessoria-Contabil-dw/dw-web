@@ -58,8 +58,9 @@ export default function MenuBar({ menu }: { menu: NavigationItem[] }) {
                   <li key={index}>
                     <button
                       onClick={() => handleClickItem(item)}
-                      className={` ${pathname === item.href && 'font-extrabold'
-                        } px-2 text-xl`}
+                      className={` ${
+                        pathname === item.href && 'font-extrabold'
+                      } px-2 text-xl`}
                     >
                       {item.name}
                     </button>

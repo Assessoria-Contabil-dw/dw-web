@@ -2,7 +2,7 @@
 import { LoadingPrimary } from '@/components/Loading/primary'
 import { useSPCData } from '@/hooks/useSPCData'
 import { TableSPC } from './Table'
-import { ChangeEvent, useCallback, useContext, useState } from 'react'
+import { ChangeEvent, useCallback, useContext, useRef, useState } from 'react'
 import { AccessContext } from '@/provider/context.provider'
 import { User } from '@/hooks/useAuth'
 import { queryClient } from '@/provider/query.provider'
@@ -11,7 +11,7 @@ import { RefreshButton } from '@/components/Buttons/ButtonRefresh'
 import ButtonIcon from '@/components/Buttons/ButtonIcon'
 import { Plus } from 'lucide-react'
 import TableFilterSPC from './Filter'
-// import CreateSPCModel, { CreateSPCRef } from './Create'
+import CreateSPCModel, { CreateSPCRef } from './Create'
 
 interface Search {
   party?: string
@@ -27,10 +27,10 @@ export default function SPC() {
   const { partyCode, cityCode, stateId } = useContext(AccessContext)
   const [search, setSearch] = useState<Search>({} as Search)
 
-  // const modalCreateRef = useRef<CreateSPCRef>(null)
-  // const handleRegisterSPCModal = useCallback(() => {
-  //   modalCreateRef.current?.openModal()
-  // }, [])
+  const modalCreateRef = useRef<CreateSPCRef>(null)
+  const handleRegisterSPCModal = useCallback(() => {
+    modalCreateRef.current?.openModal()
+  }, [])
 
   const [page, setPage] = useState(1)
   const [skip, setSkip] = useState(0)
@@ -63,7 +63,7 @@ export default function SPC() {
     if (name === 'state' && value === '') {
       setSearch((old) => ({ ...old, city: undefined }))
     }
-    
+
     setPage(1)
     setSkip(0)
     setSearch((old) => ({ ...old, [name]: value || undefined }))
@@ -97,7 +97,7 @@ export default function SPC() {
 
   return (
     <>
-      {/* <CreateSPCModel ref={modalCreateRef} /> */}
+      <CreateSPCModel ref={modalCreateRef} />
       <div className="flex flex-col gap-2">
         <div className="flex items-end justify-between gap-4">
           <TableFilterSPC
@@ -114,7 +114,7 @@ export default function SPC() {
               <ButtonIcon
                 className="border-none bg-second text-white hover:bg-secondHover hover:text-white"
                 title="Cadastrar"
-                // onClick={handleRegisterSPCModal}
+                onClick={handleRegisterSPCModal}
                 icon={<Plus size={16} className="h-fit w-4" />}
               />
             )}

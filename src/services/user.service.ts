@@ -3,7 +3,6 @@ import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 
 export class UserService {
-
   notify = useNotify()
   router = useRouter()
 

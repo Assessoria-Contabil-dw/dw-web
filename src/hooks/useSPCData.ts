@@ -17,7 +17,6 @@ export function useSPCData(
   cityCode?: string,
 ) {
   const spcService = new SPCService()
-  
 
   const query = useQuery<Page<SPCProps>>(
     [

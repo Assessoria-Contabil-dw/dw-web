@@ -8,7 +8,7 @@ import { PopupCookieConsent } from '../Popups/PopupCookieConsent'
 export default function Footer() {
   return (
     <footer
-      id='sobre'
+      id="sobre"
       className={`flex flex-1 flex-col items-center overflow-hidden bg-neutral-700 text-gray-300 `}
     >
       <PopupCookieConsent />
@@ -19,8 +19,8 @@ export default function Footer() {
             <Image src={logo} alt="Logo Footer" />
           </a>
           <p className="text-justify text-lg">
-            Somos a CDW Contabilidade Partidária, dedicados a tornar a contabilidade de partidos políticos mais simples e acessível.
-
+            Somos a CDW Contabilidade Partidária, dedicados a tornar a
+            contabilidade de partidos políticos mais simples e acessível.
           </p>
         </div>
         <div className="flex flex-col gap-10">
@@ -89,6 +89,7 @@ export default function Footer() {
               style={{
                 backgroundImage: "url('/assets/logo_instagram.svg",
               }}
+              rel="noreferrer"
             ></a>
 
             {/* <a
@@ -107,8 +108,8 @@ export default function Footer() {
       <div className="flex w-full justify-center border-t border-neutral-500 px-5 py-7">
         <div className="w-full max-w-7xl text-center">
           Copyright © 2023-{new Date().getFullYear()}{' '}
-          <b className="text-yellow-300">CDW Contabilidade Partidária </b> . Todos os
-          direitos reservados.
+          <b className="text-yellow-300">CDW Contabilidade Partidária </b> .
+          Todos os direitos reservados.
         </div>
       </div>
     </footer>

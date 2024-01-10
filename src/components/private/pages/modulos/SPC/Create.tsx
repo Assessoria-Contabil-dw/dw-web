@@ -20,6 +20,7 @@ import { spcFormShema } from '@/interfaces/validation'
 import { ColorProps, DirectoryProps, SPCProps } from '@/interfaces/types'
 import ButtonSecond from '@/components/Buttons/ButtonSecond'
 import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
+import SelectDirectory from '@/components/private/Search/Select/SelectDirectory'
 
 export interface CreateSPCRef {
   openModal: () => void
@@ -126,6 +127,7 @@ const CreateSPCModel: ForwardRefRenderFunction<CreateSPCRef> = (props, ref) => {
               <div className="model-body">
                 <div className="flex flex-col gap-3">
                   <div className="flex gap-4">
+                 
                     <Form.Field>
                       <Form.SelectInput
                         onChange={(e) => setSelectedDirectory(e.target.value)}
@@ -134,13 +136,13 @@ const CreateSPCModel: ForwardRefRenderFunction<CreateSPCRef> = (props, ref) => {
                         placeholder="Selecione o diretório"
                         name="directoryId"
                       >
-                        {directory.map((directory, index) => {
+                        {/* { directory && directory..map((directory, index) => {
                           return (
                             <option key={index} value={directory.id.toString()}>
                               {directory.surname}
                             </option>
                           )
-                        })}
+                        })} */}
                       </Form.SelectInput>
                       <Form.ErrorMessage field="directoryId" />
                     </Form.Field>

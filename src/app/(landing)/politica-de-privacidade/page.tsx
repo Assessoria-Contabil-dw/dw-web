@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-irregular-whitespace */
 import './style.scss'
-export default function Page() {
+export default function PoliticPage() {
   return (
     <div id="politica" className="my-10 flex w-full justify-center px-5">
       <div className=" flex w-full max-w-7xl flex-col gap-4">
@@ -49,9 +49,9 @@ export default function Page() {
           <p>
             Apenas retemos as informações coletadas pelo tempo necessário para
             fornecer o serviço solicitado. Quando armazenamos dados, protegemos
-            dentro de meios comercialmente aceitáveis pela legislação atual
-            para evitar perdas e roubos, bem como acesso, divulgação, cópia,
-            uso ou modificação não autorizados.
+            dentro de meios comercialmente aceitáveis pela legislação atual para
+            evitar perdas e roubos, bem como acesso, divulgação, cópia, uso ou
+            modificação não autorizados.
           </p>
 
           <p>
@@ -99,8 +99,8 @@ export default function Page() {
           </p>
 
           <p>
-            O site CDW Contabilidade Partidária não se responsabiliza caso você venha
-            utilizar seus dados de forma incorreta ou inverídica, ficando
+            O site CDW Contabilidade Partidária não se responsabiliza caso você
+            venha utilizar seus dados de forma incorreta ou inverídica, ficando
             excluído de qualquer responsabilidade neste sentido.
           </p>
         </div>
@@ -260,8 +260,8 @@ export default function Page() {
 
           <p>
             O usuário se compromete a fazer uso adequado dos conteúdos e da
-            informação que o site CDW Contabilidade Partidária oferece e com caráter
-            enunciativo, mas não limitativo:
+            informação que o site CDW Contabilidade Partidária oferece e com
+            caráter enunciativo, mas não limitativo:
           </p>
 
           <ol>
@@ -285,7 +285,7 @@ export default function Page() {
             <li>
               {' '}
               Não causar danos aos sistemas físicos (hardwares) e lógicos
-              (softwares) do site  Contabilidade Partidária, de seus fornecedores
+              (softwares) do site Contabilidade Partidária, de seus fornecedores
               ou terceiros, para introduzir ou disseminar vírus informáticos ou
               quaisquer outros sistemas de hardware ou software que sejam
               capazes de causar danos anteriormente mencionados;
@@ -391,16 +391,16 @@ export default function Page() {
         </p>
 
         <p>
-          O site CDW Contabilidade Partidária empregará esforços para resguardar as
-          informações e dados coletados do usuário pelo site. Todavia,
+          O site CDW Contabilidade Partidária empregará esforços para resguardar
+          as informações e dados coletados do usuário pelo site. Todavia,
           considerando que não há meio de transmissão e retenção de dados
-          eletrônicos plenamente eficaz e seguro, o site CDW Contabilidade Partidária
-          não pode assegurar que terceiros não autorizados não logrem êxito no
-          acesso indevido, eximindo-se de qualquer responsabilidade por danos e
-          prejuízos decorrentes da conduta de terceiros, ataques externos ao
-          site como: vírus, invasão ao banco de dados, vícios ou defeitos
-          técnicos, assim como operacionais resultante da utilização do site e
-          em razão de falhas de conexão.
+          eletrônicos plenamente eficaz e seguro, o site CDW Contabilidade
+          Partidária não pode assegurar que terceiros não autorizados não logrem
+          êxito no acesso indevido, eximindo-se de qualquer responsabilidade por
+          danos e prejuízos decorrentes da conduta de terceiros, ataques
+          externos ao site como: vírus, invasão ao banco de dados, vícios ou
+          defeitos técnicos, assim como operacionais resultante da utilização do
+          site e em razão de falhas de conexão.
         </p>
       </div>
     </div>

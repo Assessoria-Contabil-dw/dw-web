@@ -1,7 +1,6 @@
-import { AccessContext } from '@/provider/context.provider'
-import { ChangeEvent, ReactNode, SelectHTMLAttributes, useContext } from 'react'
+import { ChangeEvent, ReactNode, SelectHTMLAttributes } from 'react'
 import SelectBase from './SelectBase'
-import { useDirectoryData, useDirectoryFilter } from '@/hooks/useDirectory'
+import { useDirectoryFilter } from '@/hooks/useDirectory'
 
 interface SelectDirectoryProps extends SelectHTMLAttributes<HTMLSelectElement> {
   party?: string
@@ -21,18 +20,13 @@ export default function SelectDirectory({
   children,
   ...atr
 }: SelectDirectoryProps) {
-
-  const { data, isLoading } = useDirectoryFilter(
-    party,
-    state,
-    city,
-  )
+  const { data, isLoading, isFetching } = useDirectoryFilter(party, state, city)
 
   return (
     <SelectBase
       name="directory"
       label="Diretório"
-      loading={isLoading || loading}
+      loading={isLoading || isFetching || loading}
       onChange={handleSearchOnChange}
       {...atr}
     >

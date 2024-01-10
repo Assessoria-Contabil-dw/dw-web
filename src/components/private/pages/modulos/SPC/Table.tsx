@@ -69,7 +69,7 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
               </span>
               <div className="absolute z-10 mt-[2px] hidden w-full transition duration-1000 peer-checked/popper:block">
-                <div className="w-[18em] rounded-md border-[1px] border-zinc-200 bg-white p-2 shadow-sm fixed">
+                <div className="fixed w-[18em] rounded-md border-[1px] border-zinc-200 bg-white p-2 shadow-sm">
                   <span className="whitespace-normal break-words font-montserrat text-xs text-slate-700 ">
                     {spca.observation}
                   </span>

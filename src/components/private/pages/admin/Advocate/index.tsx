@@ -1,7 +1,7 @@
 'use client'
 
 import { api } from '@/lib/api'
-import { Edit3, Eye, Plus, RotateCcw, Search, Trash2 } from 'lucide-react'
+import { Edit3, Eye, Plus, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { RegisterAdvocate } from './RegisterAdvocate'
 import { AdvocateProps } from '@/interfaces/types'
@@ -56,13 +56,16 @@ export function AdvocateTable() {
 
       <div className="flex justify-between">
         <div className="flex w-fit gap-4">
-          <input type="text" className="w-fit input-style" placeholder="Buscar por nome" />
+          <input
+            type="text"
+            className="input-style w-fit"
+            placeholder="Buscar por nome"
+          />
         </div>
         <div className="flex gap-3">
-          
           <ButtonPrimary
-            title='Cadastrar'
-            variant='container'
+            title="Cadastrar"
+            variant="container"
             startIcon={<Plus className="w-4" />}
             onClick={() => setIsModalOpen(true)}
           >
@@ -71,7 +74,7 @@ export function AdvocateTable() {
         </div>
       </div>
 
-      <fieldset className="h-auto w-full rounded-lg px-3 py-2 fieldset">
+      <fieldset className="fieldset h-auto w-full rounded-lg px-3 py-2">
         <table>
           <thead>
             <tr>
