@@ -6,6 +6,9 @@ interface SelectVigencyProps extends SelectHTMLAttributes<HTMLSelectElement> {
   directoryId?: number
   children?: ReactNode
   loading?: boolean
+  partyCode?: string,
+  stateId?: string,
+  cityCode?: string,
 
   handleSearchOnChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }
@@ -14,10 +17,18 @@ export default function SelectVigency({
   handleSearchOnChange,
   directoryId,
   loading,
+  partyCode,
+  stateId,
+  cityCode,
   children,
   ...atr
 }: SelectVigencyProps) {
-  const { data, isLoading, isFetching } = useVigencyData(directoryId)
+  const { data, isLoading, isFetching } = useVigencyData(
+    directoryId, 
+    partyCode,
+    stateId,
+    cityCode
+    )
 
   return (
     <SelectBase

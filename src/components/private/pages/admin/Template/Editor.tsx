@@ -107,34 +107,22 @@ export function EditorTemplate({
               title: 'Simples',
               description: 'Cabeçalho e rodapé simples',
               content: `
-              <div
-              style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; width: 50rem; height: 62.5rem; position: relative;">
-              <header
-                  style="width: 100%; height: 3rem; background: #d0d0d0;">
-                  <div
-                      style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: PARTIDO_COR;">
-                     <div style="margin: 0rem 3rem; width: 100%; height: 100%;  display: flex; justify-content: space-between; align-items: center;">
-                          <p style="line-height: 0;">{PARTIDO_NOME}</p>
-                          <p style="line-height: 0;">{DIRETORIO_SURNAME}</p>
-                     </div>
-                  </div>
-              </header>
-              
-              <main style="padding: 0 4rem; height: 100%; flex: 1;">
-                 Conteúdo
-              </main>
-              <footer
-                  style="width: 100%; height: 3rem; background: #d0d0d0;">
-                  <div
-                      style="color: white; background: PARTIDO_COR;">
-                      <div style="margin: 0rem 3rem; text-align: center;">
-                          <p>{DIRETORIO_ENDERECO} - {DIRETORIO_CNPJ} -
-                              {DIRETORIO_TELEFONE}</p>
-                      </div>
-                    
-                  </div>
-              </footer>
+              <div style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; width: 50rem; height: 70.75rem; position: relative;"><header style="width: 100%; height: 3rem; background: #d0d0d0;">
+              <div style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: PARTIDO_COR;">
+              <div style="margin: 0rem 3rem; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center;">
+              <p style="line-height: 0; font-size: 10px;">{PARTIDO_NOME}</p>
+              <p style="line-height: 0; font-size: 10px;">{DIRETORIO_SURNAME_EXTENSO}</p>
               </div>
+              </div>
+              </header><main style="padding: 0 4rem; height: 100%; flex: 1;">
+              <p style="text-align: center;">&nbsp;Conteudo</p>
+              </main><footer style="width: 100%; height: 3rem; background: #d0d0d0;">
+              <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; background: PARTIDO_COR;">
+              <div style="margin: 0rem 3rem; text-align: center;">
+              <p style="line-height: 0; font-size: 10px;">{DIRETORIO_ENDERECO} - {DIRETORIO_CNPJ} - {DIRETORIO_TELEFONE}</p>
+              </div>
+              </div>
+              </footer></div>
               `,
             },
           ],

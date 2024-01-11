@@ -35,7 +35,6 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
   const [search, setSearch] = useState<Search>({} as Search)
   const { partyCode, cityCode, stateId } = useContext(AccessContext)
 
-  console.log(partyCode, stateId, cityCode)
   function handleSearchOnChange(
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
   ) {
@@ -102,7 +101,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
                 </option>
               </SelectParty>
             )}
-            {(stateId == null || cityCode == null) && (
+            {(stateId == null && cityCode == null) && (
               <SelectState handleSearchOnChange={handleSearchOnChange}>
                 <option value="" selected>
                   Todos
@@ -124,9 +123,15 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
             party={search.party}
             state={search.state}
             city={search.city}
+            partyCode={partyCode}
+            stateId={stateId}
+            cityCode={cityCode}
             handleSearchOnChange={handleSearchOnChange}
           ></SelectDirectory>
           <SelectVigency
+           partyCode={partyCode}
+           stateId={stateId}
+           cityCode={cityCode}
             directoryId={search.directory ?? undefined}
             handleSearchOnChange={handleSearchOnChange}
           >
@@ -152,6 +157,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
               onChange={handleSearchOnChange}
             />
           </div>
+         
         </div>
 
         <ButtonPrimary

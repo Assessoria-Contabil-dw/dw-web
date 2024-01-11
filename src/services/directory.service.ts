@@ -48,13 +48,21 @@ export class DirectoryService {
     partyAbbreviation?: string,
     stateSigla?: string,
     cityName?: string,
+    partyCode?: string,
+    stateId?: string,
+    cityCode?: string,
   ) {
+
+
     try {
       const response = await api.get(`/directories/filter`, {
         params: {
           partyAbbreviation,
           stateSigla,
           cityName,
+          partyCode,
+          stateId,
+          cityCode,
         },
       })
       return response.data

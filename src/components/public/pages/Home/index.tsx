@@ -68,6 +68,8 @@ export default function Home() {
                 className="h-auto "
                 src={imgContablue}
                 alt="Figura de contabilidade"
+                width={400}
+                height={300}
               />
             </div>
           </div>
@@ -134,6 +136,8 @@ export default function Home() {
                 className="w-full"
                 src={imgDirectory}
                 alt="Figura de contabilidade"
+                width={400}
+                height={300}
               />
             </div>
             <div className="flex flex-1 flex-col gap-5 h-fit">
@@ -185,6 +189,8 @@ export default function Home() {
                 className="h-auto w-full"
                 src={imgSPC}
                 alt="Figura do módulo SPC"
+                width={400}
+                height={300}
               />
             </div>
           </div>
@@ -198,6 +204,8 @@ export default function Home() {
                 className="h-auto w-full"
                 src={imgEmissor}
                 alt="Figura de contabilidade"
+                width={400}
+                height={300}
               />
             </div>
 

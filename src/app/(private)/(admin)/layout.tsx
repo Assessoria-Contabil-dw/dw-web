@@ -9,7 +9,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
   if (user?.role !== 'ADMIN') {
     router.push('/painel')
-    return <></>
+    return null
   }
 
   return (

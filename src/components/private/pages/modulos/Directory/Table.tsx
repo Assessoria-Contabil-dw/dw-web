@@ -4,28 +4,35 @@ import { DirectoryProps } from '@/interfaces/types'
 import { Circle, Lock } from 'lucide-react'
 import { TableOptions } from '../../../Tools/TableOptions'
 import { LoadingSecond } from '@/components/Loading/second'
-import { queryClient } from '@/provider/query.provider'
 
 import { useContext, useRef } from 'react'
 import { AccessContext } from '@/provider/context.provider'
 import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
-import { AccessModuleData } from '@/interfaces/access.interface'
+import { useAccessModuleData } from '@/hooks/useAccess'
 
 interface TableDirectoryProps {
   role: string
   data?: DirectoryProps[] | null
   loading?: boolean
+  partyCode?: string,
+  stateId?: string,
+  cityCode?: string,
 }
 
 export default function TableDirectory({
   role,
   data,
   loading,
+  partyCode,
+  stateId,
+  cityCode,
 }: TableDirectoryProps) {
   const { setRouter } = useContext(AccessContext)
-  const modulesData: AccessModuleData = queryClient.getQueryData(
-    'accessModuleData',
-  ) as AccessModuleData
+  const { data: modulesData } = useAccessModuleData(
+    partyCode,
+    stateId,
+    cityCode,
+  )
 
   const handleButtonClick = (id: number) => {
     setRouter(`/painel/diretorio/vigencia/${id}`)
@@ -41,6 +48,7 @@ export default function TableDirectory({
     )
   }
 
+  console.log(modulesData?.modules)
   function handleViewDirectory() {}
   function handleEditDirectory() {}
 

@@ -106,6 +106,9 @@ export default function Directory() {
           role={user?.role ?? 'CLIENT'}
           loading={isFetching}
           data={data?.results}
+          partyCode={partyCode}
+          stateId={stateId}
+          cityCode={cityCode}
         />
 
         <PaddingTable

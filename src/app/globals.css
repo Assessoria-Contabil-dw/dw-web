@@ -120,7 +120,7 @@
   }
 
   .text-h3 {
-    @apply font-montserrat text-base font-semibold text-slate-900;
+    @apply font-montserrat text-base font-medium text-slate-900;
   }
 
   .text-h4 {
