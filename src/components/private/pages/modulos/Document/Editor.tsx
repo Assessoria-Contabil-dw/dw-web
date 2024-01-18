@@ -47,15 +47,9 @@ export default function EditorDocument({
             'anchor',
             'searchreplace',
             'visualblocks',
-            'code',
             'fullscreen',
-            'insertdatetime',
             'media',
             'code',
-            'wordcount',
-            'quickbars',
-            'template',
-            'print',
           ],
 
           menubar: 'file edit view insert format',
@@ -64,18 +58,6 @@ export default function EditorDocument({
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat ',
-
-          content_style: ` 
-          header, footer{
-            background-color: #01eaa0;
-          }
-          body{
-            text-align: center;
-            align-items: center;
-            display: flex;
-            justify-content: center;
-          }
-         `,
         }}
       />
 

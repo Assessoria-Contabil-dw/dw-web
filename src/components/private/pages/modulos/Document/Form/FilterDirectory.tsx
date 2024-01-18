@@ -32,20 +32,20 @@ export default function FilterDirectory({partyCode, stateId, cityCode, handleSea
               partyCode={partyCode}
               stateId={stateId}
               cityCode={cityCode}
-              handleSearchOnChange={handleSearchOnChange}
+              handleSearchOnChange={handleSearchOnChange}      
             />
-            <div className='relative'>
+            <div className='relative '>
               <ButtonIcon 
                 data-count={countNonEmptyVariables} 
                 type='button' 
                 title='Filtrar' 
                 icon={<FilterIcon size={18}/>} 
-                className="before:content-[attr(data-count)] before:bg-primary before:w-[12px] before:h-[12px] 
+                className=" before:content-[attr(data-count)] before:bg-primary before:w-[12px] before:h-[12px] 
                     before:absolute before:rounded-full before:-top-1 before:-right-1 
                     before:flex before:text-[10px] before:justify-center before:items-center before:font-semibold before:p-2"
                 onClick={()=> setIsFilter(!isFilter)}
               />
-              <div className={`flex flex-col z-10 w-52 rounded-md right-0 mt-1 gap-1 absolute bg-white border-[1px] p-2
+              <div onMouseLeave={()=> setIsFilter(!isFilter)} className={`flex flex-col z-10 w-52 rounded-md right-0 mt-1 gap-1 absolute bg-white border-[1px] p-2
               ${isFilter ? "block" : "hidden"}`}>
               {partyCode == null && (
                 <SelectParty handleSearchOnChange={(e)=> setSearch({...search, party: e.target.value})}>

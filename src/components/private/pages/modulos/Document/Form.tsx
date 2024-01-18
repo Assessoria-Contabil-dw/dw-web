@@ -86,7 +86,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
 
   const { refetch, isFetching } = useTemplateVigencyPDF(
     search.vigency,
-    editor ? content : search.templateContent,
+    content,
     search.local,
     search.date
   );
@@ -108,7 +108,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
         <div className=" flex items-center justify-between">
       <h4 className="text-h4">Emitir documento</h4>
 
-      {/* <div className="relative">
+      <div className="relative">
         <button
           type="button"
           className="rounded-md p-1 transition-all duration-200 hover:bg-slate-100"
@@ -118,6 +118,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
         </button>
 
         <div 
+          onMouseLeave={() => setIsTools(!isTools)}
           className={`absolute right-0 mt-1 flex w-52 z-10 flex-col gap-1 rounded-md border-[1px] bg-white p-2
           ${isTools ? "block" : "hidden transition-all  duration-1000"}`}
         >
@@ -128,6 +129,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
           </div>
           <div  className="flex items-center gap-2 justify-between">
             <label className="text-sm text-slate-600">Variavel Extra</label>
+
             <input 
               onChange={handleSearchOnChange} 
               name="countExtra" 
@@ -139,7 +141,8 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
               />
           </div>
         </div>
-      </div> */}
+
+      </div>
     </div>
 
     <div className="flex flex-col gap-2 ">
@@ -241,9 +244,9 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
           variant="container"
           loading={isFetching}
           className="w-full justify-center"
-          disabled={!(search.template && search.vigency && search.local)}
+          disabled={!(search.template && search.vigency && search.local && !editor)}
         >
-          Preencher
+          {editor ? "Salve o documento" : "Preencher"}
         </ButtonPrimary>
       </div>
     </form>
