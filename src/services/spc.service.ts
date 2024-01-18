@@ -1,4 +1,5 @@
 import { useNotify } from '@/components/Toast/toast'
+import { SPCForm } from '@/interfaces/spc.interface'
 import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 
@@ -77,6 +78,19 @@ export class SPCService {
         type: 'warning',
         message: error.response.data.message,
       })
+    }
+  }
+
+  public async postAll(directoryId: string, spc: SPCForm[]){
+    try{
+      const response = await api.post('/spcs', {
+        directoryId,
+        spc,
+      })
+      this.notify({ type: 'success', message: 'Cadastrado com sucesso' })
+      return response
+    }catch(error){
+      return error
     }
   }
 }

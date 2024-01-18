@@ -21,12 +21,10 @@ export class TemplateService {
     date?: string,
   ) {
     try {
-      const response = await api.get(`/template/vigency/${String(id)}`, {
-        params: {
+      const response = await api.post(`/template/vigency/${String(id)}`, {
           content,
           local,
           date,
-        },
       })
       return response.data
     } catch (error) {

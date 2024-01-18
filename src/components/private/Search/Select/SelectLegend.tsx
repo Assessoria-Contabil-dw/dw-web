@@ -7,6 +7,7 @@ interface SelectLegendProps extends SelectHTMLAttributes<HTMLSelectElement> {
   children?: ReactNode
   loading?: boolean
   valueSelect?: string
+  name?: string
 }
 
 export default function SelectLegend({
@@ -14,13 +15,14 @@ export default function SelectLegend({
   children,
   loading,
   valueSelect,
+  name,
   ...atr
 }: SelectLegendProps) {
   const { data, isLoading } = useLegendData()
 
   return (
     <SelectBase
-      name="legend"
+      name={name ? name : "legend"}
       label="Status"
       loading={isLoading || loading}
       onChange={handleSearchOnChange}

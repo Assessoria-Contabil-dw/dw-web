@@ -3,7 +3,7 @@ import InputBase from './InputBase'
 import dayjs from 'dayjs'
 
 interface InputYearProps {
-  handleSearchOnChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleSearchOnChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function InputYear({
@@ -14,6 +14,7 @@ export default function InputYear({
     <InputBase
       name="year"
       label="Ano"
+      className='w-20'
       onChange={handleSearchOnChange}
       type="number"
       min={2017}

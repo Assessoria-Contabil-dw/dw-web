@@ -24,7 +24,7 @@ export default function TableFilterSPC({
   onChange,
 }: FilterSPCProps) {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 ">
       {!partyCode && (
         <SelectParty handleSearchOnChange={onChange}>
           <option value="">Todos</option>

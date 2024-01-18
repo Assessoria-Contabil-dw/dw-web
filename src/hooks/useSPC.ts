@@ -1,4 +1,5 @@
 import { Page } from '@/interfaces/page'
+import { SPCForm } from '@/interfaces/spc.interface'
 import { SPCProps } from '@/interfaces/types'
 import { SPCService } from '@/services/spc.service'
 import { useQuery } from 'react-query'
@@ -87,6 +88,24 @@ export function useSPCUpdateById(
   const query = useQuery(
     ['spcUpdateById', id, year, numPge, status, observation],
     () => spcService.putOne(id, year, numPge, Number(status), observation),
+    {
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: false,
+      refetchOnWindowFocus: false,
+      enabled: false,
+    },
+  )
+
+  return query
+}
+
+
+export function useSPCCreate(directoryId: string, spc: SPCForm[]){
+  const spcService = new SPCService()
+
+  const query = useQuery(
+    ['spcCreate'],
+    () => spcService.postAll( directoryId, spc),
     {
       staleTime: 1000 * 60 * 60 * 12,
       retry: false,

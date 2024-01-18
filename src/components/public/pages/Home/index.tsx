@@ -79,7 +79,7 @@ export default function Home() {
           <div className="flex max-w-7xl flex-1 flex-col">
             <div className="flex w-full max-w-[600px] flex-col items-start gap-3">
               <h2 className="w-full text-start text-5xl font-bold  leading-[55px] ">
-                Conheças nossos planos
+                Conheça nossos planos
               </h2>
               <p>
                 Escolha o plano que melhor atende às necessidades do seu partido

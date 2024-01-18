@@ -4,11 +4,13 @@ import '@/app/globals.css'
 import Footer from '@/components/public/Footer'
 import Navbar from '@/components/public/Headers/Navbar'
 import Script from 'next/script'
+import Fab from '@/components/private/Fab'
 
 export const metadata = {
   title: 'CDW Contabilidade Partidária',
   description: 'Contabilidade para partidos políticos',
   icon: ['/favicon.ico'],
+  favicon: '/favicon.ico',
 }
 
 export default function RootLayout({
@@ -45,7 +47,6 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} flex flex-col bg-gray-50`}>
-        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-TZX294CT"
@@ -57,11 +58,14 @@ export default function RootLayout({
             }}
           ></iframe>
         </noscript>
-        {/* End Google Tag Manager (noscript) */}
 
         <Navbar />
-        <main className={montserrat.className}>{children}</main>
+        <main className={montserrat.className}>{children}
+        <Fab />
+        </main>
         <Footer />
+
+
       </body>
     </html>
   )

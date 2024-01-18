@@ -45,6 +45,12 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
       sub: null,
       replace: true,
     },
+    // {
+    //   href: `/painel/relatorio`,
+    //   label: 'Relatório',
+    //   sub: null,
+    //   replace: true,
+    // },
   ]
 
   function isMenuItemDisabled({ role, href, modules, party }: MenuItemProps) {
@@ -99,7 +105,7 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
           key={index}
           title={item.label}
           variant="container"
-          className={`group items-start justify-between text-left
+          className={`group items-start font-semibold justify-between text-left
           ${
             params === item.href || (item.sub && params.match(item.sub) != null)
               ? ''

@@ -9,6 +9,7 @@ export const metadata = {
   title: 'CDW Contabilidade Partidária',
   description: 'Contabilidade para partidos políticos',
   icon: ['/favicon.ico'],
+  favicon: '/favicon.ico',
 }
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

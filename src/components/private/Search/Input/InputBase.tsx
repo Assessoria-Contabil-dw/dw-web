@@ -11,7 +11,7 @@ const InputBase = forwardRef<Ref, InputBaseProps>(function InputBase(
   ref,
 ) {
   return (
-    <div className="flex w-full flex-col gap-1">
+    <div className="flex flex-col gap-1">
       <div className="flex gap-1">
         <label htmlFor={name} className="text-label">
           {label}

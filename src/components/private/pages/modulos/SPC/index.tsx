@@ -1,6 +1,6 @@
 'use client'
 import { LoadingPrimary } from '@/components/Loading/primary'
-import { useSPCData } from '@/hooks/useSPCData'
+import { useSPCData } from '@/hooks/useSPC'
 import { TableSPC } from './Table'
 import { ChangeEvent, useCallback, useContext, useRef, useState } from 'react'
 import { AccessContext } from '@/provider/context.provider'
@@ -8,8 +8,8 @@ import { User } from '@/hooks/useAuth'
 import { queryClient } from '@/provider/query.provider'
 import PaddingTable from '../../../Tools/TablePadding'
 import { RefreshButton } from '@/components/Buttons/ButtonRefresh'
-import ButtonIcon from '@/components/Buttons/ButtonIcon'
-import { Plus } from 'lucide-react'
+// import ButtonIcon from '@/components/Buttons/ButtonIcon'
+// import { Plus } from 'lucide-react'
 import TableFilterSPC from './Filter'
 import CreateSPCModel, { CreateSPCRef } from './Create'
 
@@ -53,7 +53,6 @@ export default function SPC() {
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
   ) {
     const { name, value } = e.target
-    console.log(name, value)
 
     if (name === 'year' && value.length < 4) {
       setSearch((old) => ({ ...old, [name]: undefined }))
@@ -110,14 +109,14 @@ export default function SPC() {
 
           <div className="flex gap-2">
             <RefreshButton isLoading={isFetching} queryName="spcData" />
-            {user?.role === 'ADMIN' && (
+            {/* {user?.role === 'ADMIN' && (
               <ButtonIcon
                 className="border-none bg-second text-white hover:bg-secondHover hover:text-white"
                 title="Cadastrar"
                 onClick={handleRegisterSPCModal}
                 icon={<Plus size={16} className="h-fit w-4" />}
               />
-            )}
+            )} */}
           </div>
         </div>
 

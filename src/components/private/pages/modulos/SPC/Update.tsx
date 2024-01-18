@@ -10,7 +10,7 @@ import {
 } from 'react'
 import DeleteModel, { DeleteRef } from '../../../../Model/Delete'
 import { LoadingSecond } from '@/components/Loading/second'
-import { useSPCDataById, useSPCUpdateById } from '@/hooks/useSPCData'
+import { useSPCDataById, useSPCUpdateById } from '@/hooks/useSPC'
 import InputBase from '../../../Search/Input/InputBase'
 import dayjs from 'dayjs'
 import SelectLegend from '../../../Search/Select/SelectLegend'
@@ -244,7 +244,7 @@ const UpdateSPC: ForwardRefRenderFunction<UpdateSPCRef> = (props, ref) => {
                     </thead>
                     <tbody>
                       {spcData?.SPCE != null ? (
-                        spcData.SPCE.map((s) =>
+                        spcData.SPCE.map((s:any) =>
                           id === s.id ? (
                             <tr key={s.id}>
                               <td colSpan={4}>

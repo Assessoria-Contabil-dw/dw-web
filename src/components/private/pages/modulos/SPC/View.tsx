@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
   useState,
 } from 'react'
-import { useSPCDataById } from '@/hooks/useSPCData'
+import { useSPCDataById } from '@/hooks/useSPC'
 import { LoadingSecond } from '@/components/Loading/second'
 import TableMinSPC from './TableMinView'
 

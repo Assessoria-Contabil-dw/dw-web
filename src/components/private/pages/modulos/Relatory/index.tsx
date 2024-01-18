@@ -41,7 +41,7 @@ export function DocumentsView() {
         )}
       </div>
 
-      <div className="h-2/3 w-3/12 space-y-2 max-xl:min-w-[200px] ">
+      <div className="h-[72%] w-3/12 space-y-2 max-xl:min-w-[200px] ">
         <ActiveOptionsDocument option={option} setOption={setOption} />
         {option === 1 && (
           <FormDocument

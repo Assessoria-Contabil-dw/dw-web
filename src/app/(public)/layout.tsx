@@ -4,10 +4,12 @@ import Providers from '@/provider/query.provider'
 import { inter, montserrat } from '@/app/fonts'
 import '@/app/globals.css'
 
+
 export const metadata = {
   title: 'CDW Contabilidade Partidária',
   description: 'Contabilidade para partidos políticos',
   icon: ['/favicon.ico'],
+  favicon: '/favicon.ico',
 }
 
 export default function RootLayout({

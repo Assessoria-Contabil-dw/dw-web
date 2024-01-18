@@ -11,7 +11,8 @@ interface SelectDirectoryProps extends SelectHTMLAttributes<HTMLSelectElement> {
   cityCode?: string,
   children?: ReactNode
   loading?: boolean
-  handleSearchOnChange: (e: ChangeEvent<HTMLSelectElement>) => void
+  name?: string
+  handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
 export default function SelectDirectory({
@@ -24,13 +25,14 @@ export default function SelectDirectory({
   cityCode,
   loading,
   children,
+  name,
   ...atr
 }: SelectDirectoryProps) {
   const { data, isLoading, isFetching } = useDirectoryFilter(party, state, city, partyCode, stateId, cityCode)
 
   return (
     <SelectBase
-      name="directory"
+      name={name ? name : 'directory' }
       label="Diretório"
       loading={isLoading || isFetching || loading}
       onChange={handleSearchOnChange}
