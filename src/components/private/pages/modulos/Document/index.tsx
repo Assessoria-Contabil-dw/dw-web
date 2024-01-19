@@ -14,8 +14,10 @@ export function DocumentsView() {
   const [formData, setFormData] = useState<DocumentProps>({} as DocumentProps)
   const [isEditor, setIsEditor] = useState(false)
   const [option, setOption] = useState(1)
+  const [urlPDF, setUrlPDF] = useState('')
 
   const handleFormSubmit = (data: DocumentProps) => {
+
     setFormData(data)
   }
 
@@ -37,7 +39,12 @@ export function DocumentsView() {
             content={formData.content}
           />
         ) : (
-          <ViewDocuments onClick={handleEditor} content={formData.content} />
+          <ViewDocuments 
+            onSetUrl={setUrlPDF}
+            url={urlPDF} 
+            onClick={handleEditor} 
+            content={formData.content} 
+            />
         )}
       </div>
 
@@ -45,6 +52,7 @@ export function DocumentsView() {
         <ActiveOptionsDocument option={option} setOption={setOption} />
         {option === 1 && (
           <FormDocument
+            onSetUrl={setUrlPDF}
             editor={isEditor}
             content={formData.content}
             onSubmit={handleFormSubmit}

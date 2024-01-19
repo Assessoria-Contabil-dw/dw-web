@@ -25,11 +25,12 @@ interface Search {
 
 interface FormDocumentProps {
   onSubmit: (data: any) => void;
+  onSetUrl: (data: string) => void;
   content: string | undefined;
   editor: boolean;
 }
 
-export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
+export function FormDocument({ onSubmit, content, editor, onSetUrl }: FormDocumentProps) {
   const [search, setSearch] = useState<Search>({} as Search);
   const { partyCode, cityCode, stateId } = useContext(AccessContext);
   const [isLeader, setIsLeader] = useState(false);
@@ -72,6 +73,8 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
         template: id,
         templateContent: content,
       }));
+
+      onSetUrl('');
       return onSubmit({ content });
     }
 
@@ -95,6 +98,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
     e.preventDefault();
     const response = await refetch();
 
+    onSetUrl('');
     onSubmit({ content: response.data });
   }
 
@@ -223,7 +227,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
         } */}
         
       </div>
-      {
+      {/* {
           Array.from(Array(countExtra).keys()).map((i) => (
             <InputBase
               key={i}
@@ -235,7 +239,7 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
               onChange={handleSearchOnChange}
             />
           ))
-        }
+        } */}
     </div>
         </div>
         <ButtonPrimary

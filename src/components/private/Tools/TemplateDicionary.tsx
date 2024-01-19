@@ -130,6 +130,7 @@ export default function TemplateDicionary() {
                       <div
                       key={index}
                         draggable="true"
+                        // onTouchStart={(event)=> onDragStart(event)}
                         onDragStart={(event)=> onDragStart(event)}
                         id={`${Object.keys(table)}_${index.toString()}`}
                         className="float-left m-1 uppercase cursor-move text-slate-400 

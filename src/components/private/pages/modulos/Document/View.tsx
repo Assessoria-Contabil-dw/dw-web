@@ -8,10 +8,11 @@ import { useQuery } from 'react-query'
 interface TemplateProps {
   content?: string
   onClick?: () => void
+  url: string
+  onSetUrl: (data: string) => void
 }
 
-export function ViewDocuments({ content, onClick }: TemplateProps) {
-  const [urlPDF, setUrlPDF] = useState<string>('')
+export function ViewDocuments({ content, onClick, url, onSetUrl }: TemplateProps) {
 
   const { isFetching, refetch } = useQuery('linkPdf', generatePDF, {
     retry: 1,
@@ -34,8 +35,8 @@ export function ViewDocuments({ content, onClick }: TemplateProps) {
 
       const blob = new Blob([pdfResponse.data], { type: 'application/pdf' })
       const blobURL = URL.createObjectURL(blob)
-
-      setUrlPDF(blobURL)
+      
+      onSetUrl(blobURL)
       // window.open(blobURL, '_blank')
     } catch (error) {
       console.error('Error:', error)
@@ -50,9 +51,9 @@ export function ViewDocuments({ content, onClick }: TemplateProps) {
     <div className="flex h-full w-full flex-col gap-2 ">
       <div className="h-full w-full rounded-md border-[1px] bg-white p-1">
         {content ? (
-          urlPDF ? (
+          url ? (
             <iframe
-              src={urlPDF}
+              src={url}
               className="relative right-0 top-0 m-0 flex h-full w-full justify-center overflow-y-auto"
             />
           ) :(
