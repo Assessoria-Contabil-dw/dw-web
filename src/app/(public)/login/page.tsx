@@ -7,11 +7,11 @@ import { useAuth } from '@/lib/auth'
 import '@/app/globals.css'
 
 export default function Login() {
-  // const user = useAuth()
+  const user = useAuth()
 
-  // if (user !== null && user !== undefined) {
-  //   return redirect('/painel')
-  // }
+  if (user !== null && user !== undefined) {
+    return redirect('/painel')
+  }
 
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-slate-50">
