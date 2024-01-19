@@ -45,12 +45,12 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
       sub: null,
       replace: true,
     },
-    // {
-    //   href: `/painel/relatorio`,
-    //   label: 'Relatório',
-    //   sub: null,
-    //   replace: true,
-    // },
+    {
+      href: `/painel/relatorio`,
+      label: 'Relatório',
+      sub: null,
+      replace: true,
+    },
   ]
 
   function isMenuItemDisabled({ role, href, modules, party }: MenuItemProps) {

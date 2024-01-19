@@ -43,7 +43,7 @@ const PopperSPC: ForwardRefRenderFunction<PopperSPCRef> = (props, ref) => {
         </button>
       </div>
       <div className="p-3">
-        <p className="font-alt text-xs">{message}</p>
+        <p className="font-montserrat text-xs">{message}</p>
       </div>
     </div>
   )

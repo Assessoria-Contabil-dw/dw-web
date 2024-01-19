@@ -1,26 +1,23 @@
-import React from 'react'
-import { inter, montserrat } from '@/app/fonts'
-import '@/app/globals.css'
-import Footer from '@/components/public/Footer'
-import Navbar from '@/components/public/Headers/Navbar'
-import Script from 'next/script'
-import Fab from '@/components/private/Fab'
+import React from "react";
+import { inter, montserrat } from "@/app/fonts";
+import "@/app/globals.css";
+import Footer from "@/components/public/Footer";
+import Navbar from "@/components/public/Headers/Navbar";
+import Script from "next/script";
+import Fab from "@/components/private/Fab";
+import { METADATA } from "../metadata";
 
-export const metadata = {
-  title: 'CDW Contabilidade Partidária',
-  description: 'Contabilidade para partidos políticos',
-  icon: ['/favicon.ico'],
-  favicon: '/favicon.ico',
-}
+export const metadata = METADATA;
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="pt-br">
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <Script
           id="container-gtag"
           strategy="afterInteractive"
@@ -53,20 +50,19 @@ export default function RootLayout({
             height="0"
             width="0"
             style={{
-              display: 'none',
-              visibility: 'hidden',
+              display: "none",
+              visibility: "hidden",
             }}
           ></iframe>
         </noscript>
 
         <Navbar />
-        <main className={montserrat.className}>{children}
-        <Fab />
+        <main className={montserrat.className}>
+          {children}
+          <Fab />
         </main>
         <Footer />
-
-
       </body>
     </html>
-  )
+  );
 }

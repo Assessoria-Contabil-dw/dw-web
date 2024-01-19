@@ -1,5 +1,7 @@
+import { Relatory } from "@/components/private/pages/modulos/Relatory";
+
 export default function RelatoryPage(){
     return(
-        <h3>relatorio</h3>
+        <Relatory/>
     )
 }

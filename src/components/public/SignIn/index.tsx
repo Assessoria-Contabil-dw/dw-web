@@ -1,57 +1,57 @@
-'use client'
-import { useForm, FormProvider } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { Form } from '../../Form'
-import imgLogo from '../../../assets/cdw.svg'
-import Image from 'next/image'
-import { api } from '@/lib/api'
-import { useRouter } from 'next/navigation'
-import { useNotify } from '../../Toast/toast'
-import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
+"use client";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Form } from "../../Form";
+import imgLogo from "../../../assets/cdw.svg";
+import Image from "next/image";
+import { api } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import { useNotify } from "../../Toast/toast";
+import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 
 const signInUserFormShema = z
   .object({
     cpf: z.string().refine(
       (value) => {
-        const cleanedValue = value.replace(/[.-]/g, '')
-        return cleanedValue.length === 11 && /^\d{11}$/.test(cleanedValue)
+        const cleanedValue = value.replace(/[.-]/g, "");
+        return cleanedValue.length === 11 && /^\d{11}$/.test(cleanedValue);
       },
-      { message: 'CPF inválido' },
+      { message: "CPF inválido" }
     ),
-    passwordHash: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
+    passwordHash: z.string().min(8, "A senha deve ter no mínimo 8 caracteres"),
   })
   .transform((field) => ({
-    cpf: field.cpf.replace(/[^0-9]/g, ''),
+    cpf: field.cpf.replace(/[^0-9]/g, ""),
     passwordHash: field.passwordHash,
-  }))
+  }));
 
-type SignInUser = z.infer<typeof signInUserFormShema>
+type SignInUser = z.infer<typeof signInUserFormShema>;
 
 export function SignInForm() {
-  const router = useRouter()
-  const notify = useNotify()
+  const router = useRouter();
+  const notify = useNotify();
 
   const createLogin = useForm<SignInUser>({
     resolver: zodResolver(signInUserFormShema),
-  })
+  });
 
   const {
     formState: { isSubmitting },
     handleSubmit,
-  } = createLogin
+  } = createLogin;
 
   async function handleSignInUser({ cpf, passwordHash }: SignInUser) {
     try {
-      await api.post('/signIn', { cpf, passwordHash })
-      notify({ type: 'success', message: 'Acesso realizado!' })
-      router.push('/painel')
+      await api.post("/signIn", { cpf, passwordHash });
+      notify({ type: "success", message: "Acesso realizado!" });
+      router.push("/painel");
     } catch (error: any) {
       if (error.response) {
         return notify({
-          type: 'error',
-          message: error.response.data.message || 'Erro ao realizar acesso',
-        })
+          type: "error",
+          message: error.response.data.message || "Erro ao realizar acesso",
+        });
       }
     }
   }
@@ -97,8 +97,8 @@ export function SignInForm() {
             >
               Entrar
             </ButtonPrimary>
-            <p className="font-sans text-xs font-normal text-slate-500">
-              Ainda não tem uma conta?{' '}
+            <p className="font-inter text-xs font-normal text-slate-500">
+              Ainda não tem uma conta?{" "}
               <a
                 className="cursor-pointer text-second underline"
                 target="blank"
@@ -111,5 +111,5 @@ export function SignInForm() {
         </div>
       </form>
     </FormProvider>
-  )
+  );
 }

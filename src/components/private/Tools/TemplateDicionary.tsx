@@ -106,10 +106,12 @@ export default function TemplateDicionary() {
     },
   ]
 
-  function copyPassword(index: string) {
-    const password = document.querySelector(`#${index}`) as HTMLSpanElement
-    navigator.clipboard.writeText('${' + `${password.innerText}` + '}')
-  }
+  const onDragStart = (event: any) => {
+    event.dataTransfer.setData('text/html', 
+    `<p contenteditable="true">
+    ${"${" + event.target.textContent + "}"}
+    </p>`);
+  };
 
   return (
     <fieldset className="h-full w-full rounded-lg border-[1px] bg-white p-1">
@@ -125,26 +127,15 @@ export default function TemplateDicionary() {
               {Object.values(table).map((value, index) =>
                 value.map((value: any, index: number) => (
                   <tr key={index}>
-                    <td className="group mr-0 flex cursor-text items-center justify-start gap-2">
-                      <span
+                    <td>
+                      <p
+                        draggable="true"
+                        onDragStart={(event)=> onDragStart(event)}
                         id={`${Object.keys(table)}_${index.toString()}`}
-                        className="text-span uppercase"
+                        className="uppercase cursor-pointer text-slate-400 hover:text-slate-600"
                       >
                         {value}
-                      </span>
-                      <button
-                        onClick={() =>
-                          copyPassword(
-                            `${Object.keys(table)}_${index.toString()}`,
-                          )
-                        }
-                        className="h-full  opacity-0 group-hover:opacity-100"
-                      >
-                        <Copy
-                          size={12}
-                          className="cursor-pointer text-slate-500 transition-colors duration-100 hover:text-secondHover"
-                        />
-                      </button>
+                      </p>
                     </td>
                   </tr>
                 )),

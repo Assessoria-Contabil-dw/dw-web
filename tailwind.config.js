@@ -13,10 +13,9 @@ module.exports = {
         ...defaultTheme.screens,
       },
       fontFamily: {
-        montserrat: 'var(--font-montserrat)',
-        inter: 'var(--font-inter)',
-        lexend: 'var(--font-lexend)',
-        alt: 'var(--font-montserrat)',
+        montserrat: ['var(--font-montserrat)'],
+        inter: ['var(--font-inter)'],
+        lexend: ['var(--font-lexend)'],
       },
       colors: {
         primary: '#feea51',

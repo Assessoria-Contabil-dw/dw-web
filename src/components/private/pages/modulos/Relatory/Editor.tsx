@@ -15,10 +15,25 @@ export default function EditorDocument({
   const [loading, setLoading] = useState(true)
   const editorRef = useRef<any>()
 
-  const handleEditorInit = (evt: any, editor: any) => {
+
+  const handleEditorInit = (event: any, editor: any) => {
     editorRef.current = editor
     setLoading(false)
-  }
+    
+    editor.on('drop', (e:any) => {
+      const draggedText = e.dataTransfer.getData('text/html');
+      editor.insertContent(draggedText);
+    });
+  };
+
+
+  const onDragOver = (event: any) => {
+    event.preventDefault();
+  };
+
+  const onDrop = (event: any) => {
+    event.preventDefault();
+  };
 
   return (
     <div className="flex h-full w-full flex-col gap-2 pb-4">
@@ -33,7 +48,11 @@ export default function EditorDocument({
         apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
         onInit={handleEditorInit}
         initialValue={content}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+        
         init={{
+          extended_valid_elements: 'p[style|contenteditable]',
           height: '100%',
           quickbars_selection_toolbar: true,
           plugins: [
@@ -51,11 +70,7 @@ export default function EditorDocument({
             'fullscreen',
             'insertdatetime',
             'media',
-            'code',
-            'wordcount',
-            'quickbars',
-            'template',
-            'print',
+            'table',
           ],
 
           menubar: 'file edit view insert format',
@@ -64,19 +79,8 @@ export default function EditorDocument({
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat ',
-
-          content_style: ` 
-          header, footer{
-            background-color: #01eaa0;
-          }
-          body{
-            text-align: center;
-            align-items: center;
-            display: flex;
-            justify-content: center;
-          }
-         `,
         }}
+        
       />
 
       {!loading && (

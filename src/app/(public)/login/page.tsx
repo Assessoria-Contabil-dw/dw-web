@@ -7,11 +7,11 @@ import { useAuth } from '@/lib/auth'
 import '@/app/globals.css'
 
 export default function Login() {
-  const user = useAuth()
+  // const user = useAuth()
 
-  if (user !== null && user !== undefined) {
-    return redirect('/painel')
-  }
+  // if (user !== null && user !== undefined) {
+  //   return redirect('/painel')
+  // }
 
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-slate-50">
@@ -25,10 +25,10 @@ export default function Login() {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <h2 className="font-alt text-4xl font-bold text-white">
+            <h2 className="font-montserrat text-4xl font-bold text-white">
               Contabilidade para partidos políticos
             </h2>
-            <p className="font-alt text-base font-light">
+            <p className="font-montserrat text-base font-light">
               Deixe sua contabilidade partidária com uma equipe especializada.
             </p>
           </div>

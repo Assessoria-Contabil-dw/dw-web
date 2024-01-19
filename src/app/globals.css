@@ -50,7 +50,7 @@
   }
 
   thead th {
-    @apply whitespace-nowrap p-2 text-left font-alt text-xs font-bold uppercase text-zinc-600;
+    @apply whitespace-nowrap p-2 text-left font-montserrat text-xs font-bold uppercase text-zinc-600;
   }
 
   tbody tr td {
@@ -112,7 +112,7 @@
 
   /* text */
   .text-h1 {
-    @apply font-alt text-xl font-semibold text-slate-900;
+    @apply font-montserrat text-xl font-semibold text-slate-900;
   }
 
   .text-h2 {
