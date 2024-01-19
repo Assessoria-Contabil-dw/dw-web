@@ -8,7 +8,7 @@ import InputBase from "../../../Search/Input/InputBase";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import SelectTemplate from "../../../Search/Select/SelectTemplate";
 import { useTemplateVigencyPDF } from "@/hooks/useTemplate";
-import { MoreVertical, SlidersHorizontal, TouchpadOff, X } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import FilterDirectory from "./Form/FilterDirectory";
 
 interface Search {
@@ -51,6 +51,7 @@ export function FormDocument({ onSubmit, content, editor, onSetUrl }: FormDocume
       const { directoryId, city } = JSON.parse(value);
       return setSearch((old) => ({
         ...old,
+        vigency: undefined,
         directory: directoryId,
         local: city,
       }));
@@ -84,6 +85,7 @@ export function FormDocument({ onSubmit, content, editor, onSetUrl }: FormDocume
     if(name === "countExtra"){
       return setCountExtra( countExtra + 1)
     }
+    console.log(search);
     setSearch((old) => ({ ...old, [name]: value || undefined }));
   }
 
@@ -98,6 +100,7 @@ export function FormDocument({ onSubmit, content, editor, onSetUrl }: FormDocume
     e.preventDefault();
     const response = await refetch();
 
+    console.log(search);
     onSetUrl('');
     onSubmit({ content: response.data });
   }

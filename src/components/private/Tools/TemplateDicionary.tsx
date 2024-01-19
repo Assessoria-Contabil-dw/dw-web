@@ -116,9 +116,9 @@ export default function TemplateDicionary() {
       <div className="h-full w-full space-y-2 overflow-y-auto overflow-x-hidden p-3">
         {dictionary.map((table, index) => (
           <table key={index}>
-            <thead >
-              <tr >
-                <th  className="text-left border-none">{Object.keys(table)}</th>
+            <thead>
+              <tr>
+                <th className="text-left border-none">{Object.keys(table)}</th>
               </tr>
             </thead>
             <tbody>
@@ -130,7 +130,6 @@ export default function TemplateDicionary() {
                       <div
                       key={index}
                         draggable="true"
-                        // onTouchStart={(event)=> onDragStart(event)}
                         onDragStart={(event)=> onDragStart(event)}
                         id={`${Object.keys(table)}_${index.toString()}`}
                         className="float-left m-1 uppercase cursor-move text-slate-400 
