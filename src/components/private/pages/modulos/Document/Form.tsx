@@ -91,7 +91,7 @@ export function FormDocument({ onSubmit, content, editor, onSetUrl }: FormDocume
 
   const { refetch, isFetching } = useTemplateVigencyPDF(
     search.vigency,
-    content,
+    editor ? content : search.templateContent,
     search.local,
     search.date
   );
@@ -100,7 +100,7 @@ export function FormDocument({ onSubmit, content, editor, onSetUrl }: FormDocume
     e.preventDefault();
     const response = await refetch();
 
-    console.log(search);
+    console.log('conteudo',response.data);
     onSetUrl('');
     onSubmit({ content: response.data });
   }
