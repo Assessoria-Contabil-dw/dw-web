@@ -108,9 +108,7 @@ export default function TemplateDicionary() {
 
   const onDragStart = (event: any) => {
     event.dataTransfer.setData('text/html', 
-    `<p contenteditable="true">
-    ${"${" + event.target.textContent + "}"}
-    </p>`);
+    `${"${" + event.target.textContent + "}"}`);
   };
 
   return (
@@ -118,28 +116,35 @@ export default function TemplateDicionary() {
       <div className="h-full w-full space-y-2 overflow-y-auto overflow-x-hidden p-3">
         {dictionary.map((table, index) => (
           <table key={index}>
-            <thead>
-              <tr>
-                <th className="text-left">{Object.keys(table)}</th>
+            <thead >
+              <tr >
+                <th  className="text-left border-none">{Object.keys(table)}</th>
               </tr>
             </thead>
             <tbody>
-              {Object.values(table).map((value, index) =>
+              <tr>
+                <td>
+                  <div>
+                  {Object.values(table).map((value, index) =>
                 value.map((value: any, index: number) => (
-                  <tr key={index}>
-                    <td>
-                      <p
+                      <div
+                      key={index}
                         draggable="true"
                         onDragStart={(event)=> onDragStart(event)}
                         id={`${Object.keys(table)}_${index.toString()}`}
-                        className="uppercase cursor-pointer text-slate-400 hover:text-slate-600"
+                        className="float-left m-1 uppercase cursor-move text-slate-400 
+                        hover:text-slate-600 bg-white w-fit py-1 px-2 rounded-md 
+                        border-[1px] transition-all duration-100
+                        hover:shadow-sm hover:transition-all hover:duration-100"
                       >
                         {value}
-                      </p>
-                    </td>
-                  </tr>
-                )),
-              )}
+                      </div>
+                      )),
+                    )}
+                  </div>
+                </td>
+              </tr>
+             
             </tbody>
           </table>
         ))}
