@@ -11,8 +11,6 @@ export const METADATA: Metadata = {
         images: [
           {
             url: process.env.NEXT_PUBLIC_HOST_URL + '/og.png',
-            width: 1200,
-            height: 630,
           },
         ],
         locale: 'pt_BR',
