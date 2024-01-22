@@ -65,7 +65,7 @@ export function AdvocateTable() {
         <div className="flex gap-3">
           <ButtonPrimary
             title="Cadastrar"
-            variant="container"
+            variant="fill"
             startIcon={<Plus className="w-4" />}
             onClick={() => setIsModalOpen(true)}
           >

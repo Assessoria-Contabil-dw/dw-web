@@ -4,14 +4,8 @@ import { Globe } from 'lucide-react'
 
 export default function ActiveLinks() {
   const { data, isLoading } = useLinkData()
-  if (isLoading) {
-    return (
-      <div className="mt-4 flex items-center justify-center gap-2">
-        <LoadingSecond />
-      </div>
-    )
-  }
-  if (!data) {
+
+  if (!data || isLoading) {
     return null
   }
 
@@ -33,7 +27,7 @@ export default function ActiveLinks() {
                 <img
                   className="h-6 w-12 object-contain"
                   src={item.logoUrl}
-                  alt="Link utel"
+                  alt="Link útil"
                 />
               </picture>
             ) : (

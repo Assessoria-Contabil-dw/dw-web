@@ -248,7 +248,7 @@ export function FormDocument({ onSubmit, content, editor, onSetUrl }: FormDocume
         <ButtonPrimary
           title="Preencher documento"
           type="submit"
-          variant="container"
+          variant="fill"
           loading={isFetching}
           className="w-full justify-center"
           disabled={!(search.template && search.vigency && search.local && !editor)}

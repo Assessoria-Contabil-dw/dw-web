@@ -143,7 +143,7 @@ export function EditorTemplate({
         <div className="flex gap-2">
           <ButtonPrimary
             title="Criar template"
-            variant="container"
+            variant="fill"
             loading={loadingCreate}
             onClick={handleCreate}
           >

@@ -143,7 +143,7 @@ export default function FormUpdate({ closeModal, id }: UpdateUserRef) {
           </ButtonPrimary>
           <ButtonPrimary
             title="Cadastrar"
-            variant="container"
+            variant="fill"
             loading={isSubmitting}
             type="submit"
           >

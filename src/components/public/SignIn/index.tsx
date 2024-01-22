@@ -90,7 +90,7 @@ export function SignInForm() {
           <div className="flex w-full flex-col gap-4 text-center">
             <ButtonPrimary
               title="Entrar"
-              variant="container"
+              variant="fill"
               type="submit"
               loading={isSubmitting}
               className=" w-full justify-center"

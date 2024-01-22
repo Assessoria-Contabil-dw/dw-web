@@ -370,7 +370,7 @@ const RegisterDirectoryModel: ForwardRefRenderFunction<
                   </ButtonPrimary>
                   <ButtonPrimary
                     title="Cadastrar"
-                    variant="container"
+                    variant="fill"
                     type="submit"
                     disabled={isSubmitting}
                   >

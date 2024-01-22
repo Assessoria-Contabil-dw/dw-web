@@ -25,7 +25,6 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
       href: `/painel`,
       label: 'Pagina Inicial',
       sub: null,
-      replace: true,
     },
     {
       href: `/painel/diretorio`,
@@ -37,19 +36,16 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
       href: `/painel/spc`,
       label: 'SPC',
       sub: null,
-      replace: true,
     },
     {
       href: `/painel/emissor`,
       label: 'Emissor',
       sub: null,
-      replace: true,
     },
     {
       href: `/painel/relatorio`,
       label: 'Relatório',
       sub: null,
-      replace: true,
     },
   ]
 
@@ -104,13 +100,8 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
           }
           key={index}
           title={item.label}
-          variant="container"
-          className={`group items-start font-semibold justify-between text-left
-          ${
-            params === item.href || (item.sub && params.match(item.sub) != null)
-              ? ''
-              : 'bg-transparent hover:bg-transparent'
-          }`}
+          variant={params == item.href || (item.sub && params.match(item.sub) != null) ? "fill" : "ghost"}
+          className="group items-start justify-between text-left"
           endIcon={
             <i className="hidden group-disabled:block">
               <Lock size={12} />

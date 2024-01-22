@@ -22,9 +22,7 @@ export const AccessContext = createContext<ContextType>({} as ContextType)
 export function AccessProvider({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams()
 
-  const [partyCode, setPartyCode] = useState(
-    searchParams.get('partido') as string,
-  )
+  const [partyCode, setPartyCode] = useState(searchParams.get('partido') as string)
   const [stateId, setStateId] = useState(searchParams.get('estado') as string)
   const [cityCode, setCityCode] = useState(searchParams.get('cidade') as string)
 

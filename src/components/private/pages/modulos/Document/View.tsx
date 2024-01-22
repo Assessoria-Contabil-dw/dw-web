@@ -75,7 +75,7 @@ export function ViewDocuments({ content, onClick, url, onSetUrl }: TemplateProps
       <div className="flex gap-2 pb-4">
         <ButtonPrimary
           title="Gerar PDF"
-          variant="container"
+          variant="fill"
           loading={isFetching}
           onClick={handleButtonClick}
         >

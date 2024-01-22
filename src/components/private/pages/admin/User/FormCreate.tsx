@@ -111,7 +111,7 @@ export default function FormUser({ closeModal }: RegisterUserRef) {
           </ButtonPrimary>
           <ButtonPrimary
             title="Cadastrar"
-            variant="container"
+            variant="fill"
             type="submit"
             loading={isSubmitting}
           >

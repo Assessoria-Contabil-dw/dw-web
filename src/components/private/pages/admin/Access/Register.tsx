@@ -279,7 +279,7 @@ const RegisterPermitModel: ForwardRefRenderFunction<RegisterUserRef> = (
                   title="Cadastrar"
                   className="w-full justify-center"
                   type="button"
-                  variant="container"
+                  variant="fill"
                   onClick={handleSubmit}
                   disabled={
                     !search.acessType ||

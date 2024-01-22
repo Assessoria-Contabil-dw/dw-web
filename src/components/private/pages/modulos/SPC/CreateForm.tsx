@@ -220,7 +220,7 @@
 //               </ButtonSecond>
 //               <ButtonPrimary
 //                 title="Cadastrar"
-//                 variant="container"
+//                 variant="fill"
 //                 type="submit"
 //                 loading={isSubmitting}
 //               >
