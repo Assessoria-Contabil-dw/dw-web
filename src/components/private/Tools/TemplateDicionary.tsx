@@ -112,8 +112,8 @@ export default function TemplateDicionary() {
   };
 
   return (
-    <fieldset className="h-full w-full rounded-lg border-[1px] bg-white p-1">
-      <div className="h-full w-full space-y-2 overflow-y-auto overflow-x-hidden p-3">
+    <fieldset className="h-full w-full rounded-lg border-[1px] bg-white p-2">
+      <div className="h-full w-full space-y-2 overflow-y-auto overflow-x-hidden p-1">
         {dictionary.map((table, index) => (
           <table key={index}>
             <thead>

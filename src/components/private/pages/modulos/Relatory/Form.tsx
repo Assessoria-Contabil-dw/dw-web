@@ -83,16 +83,17 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
   return (
     <form
       onSubmit={handleSearchOnSubmit}
-      className="h-fit w-full rounded-lg border-[1px] bg-white p-1 "
-    >
+      className="h-fit w-full rounded-lg border-[1px] bg-white p-1">
       <div className="h-full w-full space-y-2 overflow-y-auto  p-3">
         <h3 className="text-h3">Emitir documento</h3>
         <div className="flex flex-col gap-2 ">
+          
           <SelectTemplate handleSearchOnChange={handleSearchOnChange}>
             <option value="" selected disabled>
               Selecione
             </option>
           </SelectTemplate>
+
           <div className="flex gap-1 max-2xl:flex-col">
             {partyCode == null && (
               <SelectParty handleSearchOnChange={handleSearchOnChange}>
@@ -157,7 +158,6 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
               onChange={handleSearchOnChange}
             />
           </div>
-         
         </div>
 
         <ButtonPrimary

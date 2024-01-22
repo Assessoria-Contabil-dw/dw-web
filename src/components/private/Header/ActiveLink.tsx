@@ -8,10 +8,12 @@ export default function ActiveLink({ name, href }: NavigationItem) {
     <a
       href={href}
       className={` ${
-        pathname === href && "font-semibold text-slate-800"
-      } px-2 text-slate-400 transition-colors duration-150 hover:text-slate-800`}
+        pathname.match(href) !== null &&
+        "border-b-primary font-medium text-slate-800"
+      } flex h-full items-center justify-center border-y-4 border-transparent px-1 text-slate-400 transition-colors  hover:text-slate-800`}
     >
       {name}
     </a>
   );
 }
+

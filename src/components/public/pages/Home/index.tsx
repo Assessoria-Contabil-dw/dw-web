@@ -25,8 +25,8 @@ export default function Home() {
                 <LinkPrimary
                   target="_blank"
                   href="https://api.whatsapp.com/send?phone=559991014072"
-                  variant="container"
-                  className="w-full min-w-[150px] px-12 xs:w-fit"
+                  variant="fill"
+                  className="w-full min-w-[150px] xs:w-fit"
                 >
                   Assinar agora
                 </LinkPrimary>
@@ -65,11 +65,9 @@ export default function Home() {
             </div>
             <div className="hidden w-full justify-center lg:flex">
               <Image
-                className="h-auto "
+                className="h-auto w-[400px]"
                 src={imgContablue}
                 alt="Figura de contabilidade"
-                width={400}
-                height={300}
               />
             </div>
           </div>

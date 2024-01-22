@@ -1,25 +1,25 @@
-import Link, { LinkProps } from 'next/link'
-import { AnchorHTMLAttributes, ReactNode, forwardRef } from 'react'
+import Link, { LinkProps } from "next/link";
+import { AnchorHTMLAttributes, ReactNode, forwardRef } from "react";
 
 export type LinkBaseProps = {
-  startIcon?: ReactNode
-  endIcon?: ReactNode
-  loading?: boolean
-  children?: ReactNode
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
+  loading?: boolean;
+  children?: ReactNode;
 } & LinkProps &
-  AnchorHTMLAttributes<HTMLAnchorElement>
+  AnchorHTMLAttributes<HTMLAnchorElement>;
 
-export type Ref = HTMLAnchorElement
+export type Ref = HTMLAnchorElement;
 
 const LinkBase = forwardRef<Ref, LinkBaseProps>(function LinkBase(
   { startIcon, endIcon, loading, className, children, ...atr },
-  ref,
+  ref
 ) {
   return (
     <Link
       {...atr}
       ref={ref}
-      className={`flex h-[50px] items-center justify-center gap-2 text-base transition ${className}`}
+      className={`flex h-[50px] items-center justify-center gap-2 rounded-lg px-6 text-base font-medium transition ${className}`}
     >
       <>
         {startIcon && (
@@ -36,7 +36,7 @@ const LinkBase = forwardRef<Ref, LinkBaseProps>(function LinkBase(
         )}
       </>
     </Link>
-  )
-})
+  );
+});
 
-export default LinkBase
+export default LinkBase;

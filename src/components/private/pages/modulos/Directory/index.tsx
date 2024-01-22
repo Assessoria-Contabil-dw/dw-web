@@ -18,6 +18,7 @@ interface Search {
   party?: string
   state?: string
   city?: string
+  typeOrgId?: number
   status?: string
 }
 
@@ -35,6 +36,7 @@ export default function Directory() {
     search.party,
     search.state,
     search.city,
+    search.typeOrgId,
     search.status,
     partyCode,
     stateId,

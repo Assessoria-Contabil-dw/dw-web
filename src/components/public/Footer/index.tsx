@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer
       id="sobre"
-      className={`flex flex-1 flex-col items-center overflow-hidden bg-neutral-700 text-gray-300 `}
+      className={`flex flex-1 flex-col items-center overflow-hidden bg-neutral-700 text-slate-50`}
     >
       <PopupCookieConsent />
 
@@ -85,22 +85,22 @@ export default function Footer() {
               aria-label="Signa-nos no Facebook"
               href="https://www.instagram.com/cdwcontabilidadepartidaria/"
               target="_blank"
-              className="h-12 w-12 bg-contain"
+              className="h-8 w-8 bg-contain bg-no-repeat"
               style={{
                 backgroundImage: "url('/assets/logo_instagram.svg",
               }}
               rel="noreferrer"
             ></a>
 
-            {/* <a
+            <a
               aria-label="Signa-nos no instagram"
               href="https://www.instagram.com/dwassessoriacontabil"
               target="_blank"
-              className="h-12 w-12 bg-contain"
+              className="h-8 w-8 bg-contain bg-no-repeat"
               style={{
                 backgroundImage: "url('/assets/logo_facebook.svg",
               }}
-            ></a> */}
+            ></a>
           </div>
         </div>
       </div>

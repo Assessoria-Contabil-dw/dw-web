@@ -90,7 +90,7 @@ export default function EditorDocument({
           className="w-fit "
           type="button"
           disabled={loading}
-          onClick={() => onSubmit({ content: editorRef.current.getContent() })}
+          onClick={() => onSubmit({ content: editorRef.current.getContent()})}
         >
           Salvar
         </ButtonPrimary>

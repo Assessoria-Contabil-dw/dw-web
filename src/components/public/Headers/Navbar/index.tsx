@@ -24,20 +24,20 @@ export default function Navbar() {
   return (
     <header
       id="header"
-      className="relative flex h-20 w-full justify-center overflow-x-hidden border-b px-5 text-base"
+      className="relative flex h-20 w-full justify-center border-b px-5 text-base"
     >
       <div className="flex max-w-7xl flex-1  items-center justify-between">
         <div className="flex items-center">
           <div>
             <a href="/" aria-label="Inicio" className="-ml-6 pr-5">
-              <Image src={logo} className="h-12" alt="Figura de contabilidade" />
+              <Image src={logo} className="h-8 w-auto" alt="Figura de contabilidade" />
             </a>
           </div>
          
-          <ul className="hidden gap-3 px-4 lg:flex  ">
+          <ul className="hidden gap-3 px-4 lg:flex">
             {NAVIGATION.map((item, index) => {
               return (
-                <li key={index} className="flex ">
+                <li key={index} className="flex">
                   <ActiveLink key={index} {...item} />
                 </li>
               )
@@ -55,7 +55,7 @@ export default function Navbar() {
             Fale Conosco
           </LinkPrimary>
 
-          <LinkPrimary variant="container" href="/login">
+          <LinkPrimary variant="fill" href="/login">
             Entrar
           </LinkPrimary>
 

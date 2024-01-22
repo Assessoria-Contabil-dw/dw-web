@@ -9,12 +9,13 @@ export class DirectoryService {
   public async getAll(
     skip?: number,
     take?: number,
-    party?: string,
-    state?: string,
-    city?: string,
-    status?: string,
+    partyAbbreviation?: string,
+    stateName?: string,
+    cityName?: string,
+    typeOrgId?: number,
+    vigencyStatus?: string,
     partyCode?: string,
-    stateId?: string,
+    stateUf?: string,
     cityCode?: string,
   ) {
     try {
@@ -22,12 +23,13 @@ export class DirectoryService {
         params: {
           skip,
           take,
-          party,
-          state,
-          city,
-          status,
+          partyAbbreviation,
+          stateName,
+          cityName,
+          typeOrgId,
+          vigencyStatus,
           partyCode,
-          stateId,
+          stateUf,
           cityCode,
         },
       })
@@ -41,6 +43,15 @@ export class DirectoryService {
         type: 'error',
         message: 'Não foi possível carregar as informações',
       })
+    }
+  }
+  
+  public async getById(id: string) {
+    try {
+      const response = await api.get(`/directories/${id}`)
+      return response.data
+    } catch (error) {
+      return error
     }
   }
 
@@ -70,6 +81,8 @@ export class DirectoryService {
       return error
     }
   }
+
+
 
   public async deleteById(id: string) {
     try {

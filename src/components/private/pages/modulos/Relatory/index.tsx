@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { ViewDocuments } from './View'
 import EditorDocument from './Editor'
 import TemplateDicionary from '@/components/private/Tools/TemplateDicionary'
+import ActiveOptions from './ActiveOptions'
+import { FormDocument } from './Form'
 
 interface DocumentProps {
   content?: string
@@ -11,6 +13,7 @@ interface DocumentProps {
 export function Relatory() {
   const [formData, setFormData] = useState<DocumentProps>({} as DocumentProps)
   const [isEditor, setIsEditor] = useState(false)
+  const [option, setOption] = useState(1)
 
   const handleSaveEditorDocument = (data: DocumentProps) => {
     setFormData(data)
@@ -34,8 +37,11 @@ export function Relatory() {
         )}
       </div>
 
-      <div className="h-[72%] w-3/12 space-y-2 max-xl:min-w-[200px] ">
-       <TemplateDicionary/>
+      <div className="h-[72%] w-3/12 space-y-2 max-xl:min-w-[200px]">
+        <ActiveOptions option={option} setOption={setOption}/>
+        {option === 1 && (<FormDocument content='' />
+        )}
+        {option === 2 && (<TemplateDicionary/>)}
       </div>
     </div>
   )
