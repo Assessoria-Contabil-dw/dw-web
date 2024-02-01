@@ -1,4 +1,3 @@
-import { LoadingSecond } from '@/components/Loading/second'
 import { useLinkData } from '@/hooks/useLinkData'
 import { Globe } from 'lucide-react'
 

@@ -15,7 +15,7 @@ export class DirectoryService {
     typeOrgId?: number,
     vigencyStatus?: string,
     partyCode?: string,
-    stateUf?: string,
+    stateId?: string,
     cityCode?: string,
   ) {
     try {
@@ -29,7 +29,7 @@ export class DirectoryService {
           typeOrgId,
           vigencyStatus,
           partyCode,
-          stateUf,
+          stateId,
           cityCode,
         },
       })

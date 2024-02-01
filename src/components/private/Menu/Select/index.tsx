@@ -3,7 +3,6 @@ import ActiveInput from "./ActiveInput";
 import { AccessModuleData, AccessProps } from "@/interfaces/access.interface";
 import { queryClient } from "@/provider/query.provider";
 import NavItem from "./NavItens";
-import { useAccessModuleData } from "@/hooks/useAccess";
 import { AccessContext } from "@/provider/context.provider";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -62,37 +61,37 @@ export default function SelectAccess({partyCode, stateUf, cityCode, moduleData}:
       setAccessArray(accessData);
       return;
     }
-    const filterParty = accessData?.acessParty?.filter((item) =>
+    const filterParty = accessData?.partyAccess?.filter((item) =>
       item.party.startsWith(e.target.value.toUpperCase())
     );
 
-    const filterState = accessData?.acessState?.filter((item) =>
+    const filterState = accessData?.stateAccess?.filter((item) =>
       item.state.startsWith(e.target.value.toUpperCase())
     );
 
-    const filterCity = accessData?.acessCity?.filter((item) =>
+    const filterCity = accessData?.cityAccess?.filter((item) =>
       item.city.startsWith(e.target.value.toUpperCase())
     );
 
-    const filterDistrict = accessData?.acessDistrict?.filter((item) =>
+    const filterDistrict = accessData?.districtAccess?.filter((item) =>
       item.city.startsWith(e.target.value.toUpperCase())
     );
 
     if (!filterParty && !filterState && !filterCity && !filterDistrict) {
       setAccessArray({
-        acessCity: null,
-        acessParty: null,
-        acessState: null,
-        acessDistrict: null,
+        cityAccess: null,
+        partyAccess: null,
+        stateAccess: null,
+        districtAccess: null,
       });
       return;
     }
 
     setAccessArray({
-      acessParty: filterParty?.length ? filterParty : null,
-      acessCity: filterCity?.length ? filterCity : null,
-      acessState: filterState?.length ? filterState : null,
-      acessDistrict: filterDistrict?.length ? filterDistrict : null,
+      partyAccess: filterParty?.length ? filterParty : null,
+      cityAccess: filterCity?.length ? filterCity : null,
+      stateAccess: filterState?.length ? filterState : null,
+      districtAccess: filterDistrict?.length ? filterDistrict : null,
     });
   }
 

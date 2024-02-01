@@ -14,24 +14,6 @@ export class TemplateService {
     }
   }
 
-  public async getVigency(
-    id?: string,
-    content?: string,
-    local?: string,
-    date?: string,
-  ) {
-    try {
-      const response = await api.post(`/template/vigency/${String(id)}`, {
-          content,
-          local,
-          date,
-      })
-      return response.data
-    } catch (error) {
-      return error
-    }
-  }
-
   public async post(name?: string, content?: string) {
     if (!name || !content) {
       return this.notify({
@@ -78,6 +60,25 @@ export class TemplateService {
 
       queryClient.invalidateQueries('templateData')
       return response.data
+    } catch (error: any) {
+      return this.notify({
+        type: 'error',
+        message: error.response.data.message,
+      })
+    }
+  }
+
+  public async deleteById(id: number) {
+    try {
+      const response = await api.delete(`/templates/${id}`)
+
+      this.notify({
+        type: 'success',
+        message: 'Template deletado com sucesso!',
+      })
+      queryClient.invalidateQueries('templateData')
+      return response.data
+      
     } catch (error: any) {
       return this.notify({
         type: 'error',

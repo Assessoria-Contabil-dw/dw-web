@@ -57,14 +57,18 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
         return false
       }
       switch (href) {
+        case '/painel':
+          return true
         case '/painel/diretorio':
           return party !== 0
         case '/painel/spc':
           return !!modules?.find((item) => item.module === 'Visualizar SPC')
         case '/painel/emissor':
           return !!modules?.find((item) => item.module === 'Visualizar Emissor')
+        case '/painel/relatorio':
+          return !!modules?.find((item) => item.module === 'Visualizar Relatório')
         default:
-          return true
+          return false  
       }
     }
     return true

@@ -37,7 +37,7 @@ export function ViewDocuments({ content, onClick, url, onSetUrl }: TemplateProps
       const blobURL = URL.createObjectURL(blob)
       
       onSetUrl(blobURL)
-      // window.open(blobURL, '_blank')
+      window.open(blobURL, '_blank')
     } catch (error) {
       console.error('Error:', error)
     }
@@ -59,9 +59,9 @@ export function ViewDocuments({ content, onClick, url, onSetUrl }: TemplateProps
           ) :(
           <div
             id="printArea"
-            className="relative right-0 top-0 m-0 flex h-full w-full justify-center overflow-y-auto"
+            className="relative right-0 top-0 m-0 flex h-full w-full justify-center overflow-auto"
             dangerouslySetInnerHTML={{
-              __html: `${content}`,
+              __html: `<div>${content}</div>`,
             }}
           />)
         ) : (

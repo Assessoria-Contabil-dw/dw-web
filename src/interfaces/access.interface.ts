@@ -29,16 +29,16 @@ export interface AccessUserProps {
   id: number
   name: string
   role: string
-  acessParty: PartyData[] | null
-  acessCity: CityData[] | null
-  acessState: StateData[] | null
+  partyAccess: PartyData[] | null
+  cityAccess: CityData[] | null
+  stateAccess: StateData[] | null
 }
 
 export interface AccessProps {
-  acessParty: PartyData[] | null
-  acessCity: CityData[] | null
-  acessState: StateData[] | null
-  acessDistrict: CityData[] | null
+  partyAccess: PartyData[] | null
+  cityAccess: CityData[] | null
+  stateAccess: StateData[] | null
+  districtAccess: CityData[] | null
 }
 
 export interface AccessModuleData {

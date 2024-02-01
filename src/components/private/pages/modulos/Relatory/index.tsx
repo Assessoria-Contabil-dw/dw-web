@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { ViewDocuments } from './View'
 import EditorDocument from './Editor'
-import TemplateDicionary from '@/components/private/Tools/TemplateDicionary'
+import Dicionary from '@/components/private/Tools/Dicionary'
 import ActiveOptions from './ActiveOptions'
 import { FormDocument } from './Form'
 
@@ -14,6 +14,11 @@ export function Relatory() {
   const [formData, setFormData] = useState<DocumentProps>({} as DocumentProps)
   const [isEditor, setIsEditor] = useState(false)
   const [option, setOption] = useState(1)
+
+  const handleFormSubmit = (data: DocumentProps) => {
+    console.log("index",data)
+    setFormData(data)
+  }
 
   const handleSaveEditorDocument = (data: DocumentProps) => {
     setFormData(data)
@@ -27,21 +32,29 @@ export function Relatory() {
   return (
     <div className="flex h-full w-full gap-4 ">
       <div className="h-[800px] w-full flex-1 ">
-        {isEditor ? (
+        {!isEditor ? (
           <EditorDocument
             onSubmit={handleSaveEditorDocument}
             content={formData.content}
           />
         ) : (
-          <ViewDocuments onClick={handleEditor} content={formData.content} />
+          <ViewDocuments 
+            onClick={handleEditor} 
+            content={formData.content} 
+          />
         )}
       </div>
 
       <div className="h-[72%] w-3/12 space-y-2 max-xl:min-w-[200px]">
         <ActiveOptions option={option} setOption={setOption}/>
-        {option === 1 && (<FormDocument content='' />
+        {option === 1 && (
+          <FormDocument 
+            content={formData.content} 
+            onSubmit={handleFormSubmit} 
+            editor={isEditor}
+            />
         )}
-        {option === 2 && (<TemplateDicionary/>)}
+        {option === 2 && (<Dicionary/>)}
       </div>
     </div>
   )

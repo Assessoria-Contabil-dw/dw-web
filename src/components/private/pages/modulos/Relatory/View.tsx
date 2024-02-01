@@ -58,7 +58,7 @@ export function ViewDocuments({ content, onClick }: TemplateProps) {
           ) :(
           <div
             id="printArea"
-            className="relative right-0 top-0 m-0 flex h-full w-full justify-center overflow-y-auto"
+            className="relative right-0 top-0 m-0 flex flex-col h-full w-full justify-center overflow-y-auto"
             dangerouslySetInnerHTML={{
               __html: `${content}`,
             }}

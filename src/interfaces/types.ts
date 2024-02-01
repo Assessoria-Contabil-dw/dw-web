@@ -162,7 +162,6 @@ export interface LawFirmProps {
 
 export interface OfficesProps {
   id: number
-
   name: string
 }
 

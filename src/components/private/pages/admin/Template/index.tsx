@@ -3,7 +3,7 @@ import { EditorTemplate } from './Editor'
 import { ChangeEvent, useState } from 'react'
 import SelectTemplate from '@/components/private/Search/Select/SelectTemplate'
 import InputBase from '@/components/private/Search/Input/InputBase'
-import TemplateDicionary from '@/components/private/Tools/TemplateDicionary'
+import TemplateDicionary from '@/components/private/Tools/Dicionary'
 
 interface Search {
   templateId: number | undefined

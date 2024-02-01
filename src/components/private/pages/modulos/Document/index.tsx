@@ -4,7 +4,7 @@ import { FormDocument } from './Form'
 import { ViewDocuments } from './View'
 import EditorDocument from './Editor'
 import ActiveOptionsDocument from './ActiveOptions'
-import TemplateDicionary from '@/components/private/Tools/TemplateDicionary'
+import Dicionary from '@/components/private/Tools/Dicionary'
 
 interface DocumentProps {
   content?: string
@@ -17,7 +17,6 @@ export function DocumentsView() {
   const [urlPDF, setUrlPDF] = useState('')
 
   const handleFormSubmit = (data: DocumentProps) => {
-
     setFormData(data)
   }
 
@@ -32,7 +31,7 @@ export function DocumentsView() {
 
   return (
     <div className="flex h-full w-full gap-4 ">
-      <div className="h-[800px] w-full flex-1 ">
+      <div className="h-full w-full flex-1 ">
         {isEditor ? (
           <EditorDocument
             onSubmit={handleSaveEditorDocument}
@@ -48,17 +47,16 @@ export function DocumentsView() {
         )}
       </div>
 
-      <div className="h-2/3 w-3/12 space-y-2 max-xl:min-w-[200px] ">
+      <div className="max-h-[80%] min-h-fit w-3/12 space-y-2 max-xl:min-w-[200px] ">
         <ActiveOptionsDocument option={option} setOption={setOption} />
-        {option === 1 && (
-          <FormDocument
+        <FormDocument
+            className={option === 1 ? 'block' : 'hidden'}
             onSetUrl={setUrlPDF}
             editor={isEditor}
             content={formData.content}
             onSubmit={handleFormSubmit}
           />
-        )}
-        {option === 2 && <TemplateDicionary />}
+        <Dicionary className={option === 2 ? 'block' : 'hidden'}/>
       </div>
     </div>
   )

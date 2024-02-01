@@ -1,6 +1,8 @@
-import { Copy } from 'lucide-react'
+interface DictionaryProps {
+  className?: string
+}
 
-export default function TemplateDicionary() {
+export default function Dicionary({ className }: DictionaryProps) {
   const dictionary = [
     {
       informações: [
@@ -112,8 +114,8 @@ export default function TemplateDicionary() {
   };
 
   return (
-    <fieldset className="h-full w-full rounded-lg border-[1px] bg-white p-2">
-      <div className="h-full w-full space-y-2 overflow-y-auto overflow-x-hidden p-1">
+    <div className={`h-full w-full rounded-lg border-[1px] bg-white p-2 ${className}`}>
+      <div className="h-full w-full space-y-2 overflow-auto p-1">
         {dictionary.map((table, index) => (
           <table key={index}>
             <thead>
@@ -149,6 +151,6 @@ export default function TemplateDicionary() {
           </table>
         ))}
       </div>
-    </fieldset>
+    </div>
   )
 }

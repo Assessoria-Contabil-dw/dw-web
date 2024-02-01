@@ -18,11 +18,11 @@ interface NavItemProps {
 export default function NavItem({ accessArray, partyCode, stateUf, cityCode, handleChange }: NavItemProps) {
   return (
     <div className="mt-2 h-fit max-h-48 w-full overflow-x-auto">
-      {accessArray?.acessParty !== null ? (
+      {accessArray?.partyAccess !== null ? (
         <div>
           <span className="text-label">Nacional</span>
           <ul>
-            {accessArray?.acessParty.map((item) => (
+            {accessArray?.partyAccess.map((item) => (
               <li
                 key={item.id}
                 className="text-select relative mr-1 flex cursor-pointer items-center justify-between px-2 py-1"
@@ -68,11 +68,11 @@ export default function NavItem({ accessArray, partyCode, stateUf, cityCode, han
         </div>
       ) : null}
 
-      {accessArray?.acessState !== null ? (
+      {accessArray?.stateAccess !== null ? (
         <div>
           <span className="text-label">Estadual</span>
           <ul>
-            {accessArray?.acessState.map((item) => (
+            {accessArray?.stateAccess.map((item) => (
               <li
                 key={item.id}
                 className="text-select relative mr-1 flex cursor-pointer items-center justify-between px-2 py-1"
@@ -117,11 +117,11 @@ export default function NavItem({ accessArray, partyCode, stateUf, cityCode, han
         </div>
       ) : null}
 
-      {accessArray?.acessCity !== null ? (
+      {accessArray?.cityAccess !== null ? (
         <div>
           <span className="text-label">Municipal</span>
           <ul>
-            {accessArray?.acessCity.map((item) => (
+            {accessArray?.cityAccess.map((item) => (
               <li
                 key={item.id}
                 className="text-select relative mr-1 flex cursor-pointer items-center justify-between px-2 py-1"

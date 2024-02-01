@@ -12,7 +12,7 @@ export function useDirectoryData(
   typeOrgId?: number,
   vigencyStatus?: string,
   partyCode?: string,
-  stateUf?: string,
+  stateId?: string,
   cityCode?: string,
 ) {
   const directoryService = new DirectoryService()
@@ -28,7 +28,7 @@ export function useDirectoryData(
       typeOrgId,
       vigencyStatus,
       partyCode,
-      stateUf,
+      stateId,
       cityCode,
     ],
     () =>
@@ -41,7 +41,7 @@ export function useDirectoryData(
         typeOrgId,
         vigencyStatus,
         partyCode,
-        stateUf,
+        stateId,
         cityCode,
       ),
     {

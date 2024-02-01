@@ -1,79 +1,114 @@
 import ButtonIcon from "@/components/Buttons/ButtonIcon";
-import SelectCity from "@/components/private/Search/Select/SelectCity";
-import SelectDirectory from "@/components/private/Search/Select/SelectDirectory";
-import SelectParty from "@/components/private/Search/Select/SelectParty";
-import SelectState from "@/components/private/Search/Select/SelectState";
+import SelectCity from "@/components/private/Form/Selects/SelectCity";
+import SelectDirectory from "@/components/private/Form/Selects/SelectDirectory";
+import SelectParty from "@/components/private/Form/Selects/SelectParty";
+import SelectState from "@/components/private/Form/Selects/SelectState";
 import { FilterIcon } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 
 interface FilterDirectoryProps {
-    partyCode?: string
-    stateId?: string    
-    cityCode?: string
-    handleSearchOnChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void
+  name: string;
+  label: string;
+  partyCode?: string;
+  stateId?: string;
+  cityCode?: string;
+  handleSearchOnChange: (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => void;
 }
 
-export default function FilterDirectory({partyCode, stateId, cityCode, handleSearchOnChange}: FilterDirectoryProps) {
-    const [search, setSearch] = useState({
-        party: "",
-        state: "",
-        city: "",
-    })
-    const countNonEmptyVariables = Object.values(search).filter(value => value !== "").length;
+export default function FilterDirectory({
+  name,
+  label,
+  partyCode,
+  stateId,
+  cityCode,
+  handleSearchOnChange,
+}: FilterDirectoryProps) {
+  const [search, setSearch] = useState({
+    partyAbbreviation: "",
+    stateName: "",
+    cityName: "",
+  });
+  const countNonEmptyVariables = Object.values(search).filter(
+    (value) => value !== ""
+  ).length;
 
-    const [isFilter, setIsFilter] = useState(false)
+  const [isFilter, setIsFilter] = useState(false);
 
-    return(
-        <div className='flex gap-2 items-end'>
-            <SelectDirectory
-              party={search.party}
-              state={search.state}
-              city={search.city}
-              partyCode={partyCode}
+  return (
+    <div className="flex items-end gap-2">
+      <SelectDirectory
+        defaultValue=""
+        name={name}
+        label={label}
+        partyAbbreviation={search.partyAbbreviation}
+        stateName={search.stateName}
+        cityName={search.cityName}
+        partyCode={partyCode}
+        stateId={stateId}
+        cityCode={cityCode}
+        handleSearchOnChange={handleSearchOnChange}
+      />
+      <div className="relative ">
+        <ButtonIcon
+          data-count={countNonEmptyVariables}
+          type="button"
+          title="Filtrar"
+          icon={<FilterIcon size={18} />}
+          className=" before:absolute before:-right-1 before:-top-1 before:flex 
+                    before:h-[12px] before:w-[12px] before:items-center before:justify-center 
+                    before:rounded-full before:bg-primary before:p-2 before:text-[10px] before:font-semibold before:content-[attr(data-count)]"
+          onClick={() => setIsFilter(!isFilter)}
+        />
+        <div
+          onMouseLeave={() => setIsFilter(!isFilter)}
+          className={`absolute right-0 z-10 mt-1 flex w-52 flex-col gap-1 rounded-md border-[1px] bg-white p-2
+              ${isFilter ? "block" : "hidden"}`}
+        >
+          {partyCode == null && (
+            <SelectParty
+              defaultValue=""
+              name="partyAbbreviation"
+              handleSearchOnChange={(e) =>
+                setSearch({ ...search, partyAbbreviation: e.target.value })
+              }
+            >
+              <option value="">
+                Todos
+              </option>
+            </SelectParty>
+          )}
+          {stateId == null && cityCode == null && (
+            <SelectState
+              defaultValue=""
+              name="stateName"
+              handleSearchOnChange={(e) =>
+                setSearch({ ...search, stateName: e.target.value })
+              }
+            >
+              <option value="">
+                Todos
+              </option>
+            </SelectState>
+          )}
+          {cityCode == null && (
+            <SelectCity
+              defaultValue=""
+              name="cityName"
+              stateName={search.stateName}
               stateId={stateId}
-              cityCode={cityCode}
-              handleSearchOnChange={handleSearchOnChange}      
-            />
-            <div className='relative '>
-              <ButtonIcon 
-                data-count={countNonEmptyVariables} 
-                type='button' 
-                title='Filtrar' 
-                icon={<FilterIcon size={18}/>} 
-                className=" before:content-[attr(data-count)] before:bg-primary before:w-[12px] before:h-[12px] 
-                    before:absolute before:rounded-full before:-top-1 before:-right-1 
-                    before:flex before:text-[10px] before:justify-center before:items-center before:font-semibold before:p-2"
-                onClick={()=> setIsFilter(!isFilter)}
-              />
-              <div onMouseLeave={()=> setIsFilter(!isFilter)} className={`flex flex-col z-10 w-52 rounded-md right-0 mt-1 gap-1 absolute bg-white border-[1px] p-2
-              ${isFilter ? "block" : "hidden"}`}>
-              {partyCode == null && (
-                <SelectParty handleSearchOnChange={(e)=> setSearch({...search, party: e.target.value})}>
-                  <option value="" selected>
-                    Todos
-                  </option>
-                </SelectParty>
-              )}
-              {(stateId == null && cityCode == null) && (
-                <SelectState handleSearchOnChange={(e)=> setSearch({...search, state: e.target.value})}>
-                  <option value="" selected>
-                    Todos
-                  </option>
-                </SelectState>
-              )}
-              {cityCode == null && (
-                <SelectCity
-                  stateId={search.state || stateId}
-                  handleSearchOnChange={(e)=> setSearch({...search, city: e.target.value})}
-                >
-                  <option value="" selected>
-                    Todos
-                  </option>
-                </SelectCity>
-              )}
-            </div>
-            </div>
-          </div>
-
-    )
+              handleSearchOnChange={(e) =>
+                setSearch({ ...search, cityName: e.target.value })
+              }
+            >
+              <option value="">
+                Todos
+              </option>
+            </SelectCity>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }

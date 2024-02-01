@@ -5,9 +5,11 @@ import {
 } from '@/interfaces/access.interface'
 import { AccessService } from '@/services/access.service'
 import { useQuery } from 'react-query'
+import { useAuth } from './useAuth'
 
 export function useAccessData() {
   const accessService = new AccessService()
+  const user = useAuth()
 
   const query = useQuery<AccessProps>(
     ['accessData'],
@@ -17,6 +19,7 @@ export function useAccessData() {
       staleTime: 1000 * 60 * 60 * 12,
       retry: 2,
       refetchOnWindowFocus: false,
+      enabled: user?.role === 'CLIENT',
     },
   )
 
@@ -29,6 +32,7 @@ export function useAccessModuleData(
   cityCode?: string,
 ) {
   const accessModuleService = new AccessService()
+  const user = useAuth()
 
   const query = useQuery<AccessModuleData>(
     ['accessModuleData', partyCode, stateId, cityCode],
@@ -38,6 +42,7 @@ export function useAccessModuleData(
       staleTime: 1000 * 60 * 60 * 12,
       retry: 2,
       refetchOnWindowFocus: false,
+      enabled: user?.role === 'CLIENT',
     },
   )
 
