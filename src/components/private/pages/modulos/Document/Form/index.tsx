@@ -3,18 +3,18 @@
 import { ChangeEvent, useCallback, useContext, useState } from "react";
 import { AccessContext } from "@/provider/context.provider";
 import dayjs from "dayjs";
-import InputBase from "../../../Search/Input/InputBase";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import { SlidersHorizontal } from "lucide-react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import SelectTemplate from "@/components/private/Form/Selects/SelectTemplate";
 import { useDocumentVigency } from "@/hooks/useDocument";
-import FilterVigency from "./Form/FilterVigency";
-import ItemArray from "./Form/ItemArray";
+import FilterVigency from "./FilterVigency";
+import ItemArray from "./ItemArray";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import SelectOffice from "@/components/private/Form/Selects/SelectOffice";
+import InputBase from "@/components/private/Search/Input/InputBase";
 interface FormInputs {
   date: string | undefined;
   templateId: string | undefined;
