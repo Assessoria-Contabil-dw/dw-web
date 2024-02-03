@@ -14,7 +14,7 @@ import { ButtomBack } from '@/components/Buttons/ButtonBack'
 import ButtonIcon from '@/components/Buttons/ButtonIcon'
 
 export function VigencyTable() {
-  const params = useParams()
+  const params = useParams<{id: string}>()
   const { id } = params
 
   const { partyCode, stateId, cityCode } = useContext(AccessContext)

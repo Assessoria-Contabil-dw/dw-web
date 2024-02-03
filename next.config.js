@@ -10,6 +10,7 @@ module.exports = {
   //     // },
   //   ]
   // },
+  // output:'standalone',
   images: {
     remotePatterns: [
       {
@@ -24,6 +25,10 @@ module.exports = {
         port: '',
         pathname: '/dfvdw6xvy/image/upload/**',
       },
+      // {
+      //   protocol: 'https',
+      //   hostname: process.env.NEXT_PUBLIC_HOST_URL,
+      // },
     ],
   },
 }

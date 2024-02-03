@@ -14,9 +14,10 @@ import { useAccessUserData } from '@/hooks/useAccess'
 import ActiveOptions from './ActiveOptions'
 import ButtonIcon from '@/components/Buttons/ButtonIcon'
 
+
 export default function Access() {
   const [option, setOption] = useState(1)
-  const params = useParams()
+  const params = useParams<{id: string}>()
   const { id } = params
 
   const { data, isLoading, isFetching } = useAccessUserData(id)
