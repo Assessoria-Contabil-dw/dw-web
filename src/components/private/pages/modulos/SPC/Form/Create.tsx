@@ -3,13 +3,13 @@ import SelectLegend from "@/components/private/Search/Select/SelectLegend";
 import { Plus, X } from "lucide-react";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import InputBase from "@/components/private/Search/Input/InputBase";
-import SelectDirectory from "@/components/private/Form/Selects/SelectDirectory";
 import { spcCreateSchema, spcCreateType } from "../@types/zod.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { useCallback } from "react";
 import dayjs from "dayjs";
 import { useSPCCreate } from "@/hooks/SPC/useSPC";
+import FilterDirectory from "../../Document/Form/FilterDirectory";
 
 export default function FormCreateSPC() {
   const methods = useForm<spcCreateType>({
@@ -70,12 +70,16 @@ export default function FormCreateSPC() {
     <FormProvider {...methods}>
       <form onSubmit={memoizedHandleSubmit} className="model-body">
         <div>
-          <div className="flex flex-row items-end justify-between gap-4">
-            <SelectDirectory
+          <div className="flex flex-row items-end justify-between gap-4 w-full">
+            <FilterDirectory
+              partyCode={undefined}
+              stateId={undefined}
+              cityCode={undefined}
               label="Diretório"
               {...register("directoryId")}
               name="directoryId"
             />
+
             <ButtonPrimary
               variant="fill"
               title="Adiconar"
@@ -147,11 +151,12 @@ export default function FormCreateSPC() {
                 <InputBase
                   {...register(`spcArray.${index}.year`)}
                   name={`spcArray.${index}.year`}
-                  min={2017}
+                  min={watch(`spcArray.${index}.type`) === "SPCA" ? 2017 : 2018}
                   max={dayjs().year()}
                   placeholder={String(dayjs().year())}
                   type="number"
                   label="Ano"
+                  step={watch(`spcArray.${index}.type`) === "SPCA" ? 1 : 2}
                 />
                 <ErrorMessage
                   errors={errors}
@@ -162,7 +167,9 @@ export default function FormCreateSPC() {
                 />
               </div>
 
-              <SelectLegend
+            
+             <div className="w-full">
+             <SelectLegend
                 {...register(`spcArray.${index}.colorId`)}
                 name={`spcArray.${index}.colorId`}
                 label="Status"
@@ -174,6 +181,15 @@ export default function FormCreateSPC() {
                   Selecione um status
                 </option>
               </SelectLegend>
+             <ErrorMessage
+                  errors={errors}
+                  name={`spcArray.${index}.colorId`}
+                  render={({ message }) => (
+                    <span className="text-span text-orange-500">{message}</span>
+                  )}
+                />
+             </div>
+           
             </div>
 
             <InputBase

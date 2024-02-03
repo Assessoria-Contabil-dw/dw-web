@@ -28,7 +28,7 @@ export const spcCreateSchema = z.object({
       type: z.string().min(1, "Tipo não informado"),
       numPge: z.string().optional(),
       year: z.string().min(4, "Não informado"),
-      colorId: z.string().optional(),
+      colorId: z.string().min(1, "Status não informado"),
       observation: z.string().optional(),
     })
   ).min(1, "Nenhum registro informado"),

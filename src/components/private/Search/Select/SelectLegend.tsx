@@ -43,6 +43,10 @@ export default function SelectLegend({
             <option
               key={item.id}
               value={String(item.id)}
+              style={{
+                color: `${item.hex}`,
+              }}
+              className='font-medium'
             >
               {item.name}
             </option>

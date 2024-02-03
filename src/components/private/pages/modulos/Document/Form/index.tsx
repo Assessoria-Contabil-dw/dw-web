@@ -95,8 +95,6 @@ export function FormDocument({
   } = methods;
 
   async function handleFormOnSubmit(data: any) {
-    console.log(data, watch("date"));
-
     const response = await refetch();
     onSetUrl("");
     onSubmit({ content: response.data });
@@ -256,7 +254,6 @@ export function FormDocument({
                     type="date"
                     name="date"
                     defaultValue={dayjs().format("YYYY-MM-DD")}
-                    onChange={() => onSubmit({ content: template.content })}
                   />
                 </div>
 
@@ -300,9 +297,6 @@ export function FormDocument({
                           type="text"
                           name={`variablesArray.${index}.text`}
                           placeholder={`Variável ${index + 1}`}
-                          onChange={() =>
-                            onSubmit({ content: template.content })
-                          }
                         />
                         <ErrorMessage
                           errors={errors}

@@ -12,7 +12,7 @@ interface FilterDirectoryProps {
   partyCode?: string;
   stateId?: string;
   cityCode?: string;
-  handleSearchOnChange: (
+  handleSearchOnChange?: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => void;
 }
@@ -37,7 +37,7 @@ export default function FilterDirectory({
   const [isFilter, setIsFilter] = useState(false);
 
   return (
-    <div className="flex items-end gap-2">
+    <div className="flex items-end gap-2 w-full">
       <SelectDirectory
         defaultValue=""
         name={name}

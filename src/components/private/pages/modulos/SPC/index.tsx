@@ -8,7 +8,7 @@ import { queryClient } from "@/provider/query.provider";
 import PaddingTable from "../../../Tools/TablePadding";
 import { RefreshButton } from "@/components/Buttons/ButtonRefresh";
 import TableFilterSPC from "./Filter";
-import CreateSPCModel, { CreateSPCRef } from "./Create";
+import CreateSPCModel, { CreateSPCRef } from "./ModelCreate";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

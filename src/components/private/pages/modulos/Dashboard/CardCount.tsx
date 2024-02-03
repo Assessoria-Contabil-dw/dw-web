@@ -87,7 +87,7 @@ export default function CardCount() {
 
       <div className="flex flex-col items-center justify-center rounded-md border-[1px] bg-white p-4">
         <h3 className="font-lexend text-lg font-bold text-slate-800">
-          {data.districtCount ?? "0"}
+          {data.cityCount ?? "0"}
         </h3>
         <p className="font-lexend text-xs text-slate-500">Municipal</p>
       </div>

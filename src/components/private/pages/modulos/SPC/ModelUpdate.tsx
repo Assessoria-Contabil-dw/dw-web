@@ -11,6 +11,7 @@ import { LoadingSecond } from "@/components/Loading/second";
 import FormUpdateSPC from "./Form/Update";
 import { useSPCDirectoryById } from "@/hooks/SPC/useSPC";
 import { AccessContext } from "@/provider/context.provider";
+import { queryClient } from "@/provider/query.provider";
 
 export interface UpdateSPCRef {
   openModal: (id: string) => void;
@@ -28,6 +29,8 @@ const UpdateSPC: ForwardRefRenderFunction<UpdateSPCRef> = (props, ref) => {
   }, []);
 
   const closeModal = useCallback(() => {
+    console.log("closeModal");
+    queryClient.invalidateQueries('spcData')
     setIsModalView(false);
   }, []);
 
