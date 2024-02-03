@@ -13,11 +13,12 @@ import ButtonIcon from '@/components/Buttons/ButtonIcon'
 import { Plus } from 'lucide-react'
 import RegisterDirectoryModal, { RegisterDirectoryModalProps } from './Create'
 import TableFilterDirectory from './Filter'
+import { FormProvider, useForm } from 'react-hook-form'
 
 interface Search {
-  party?: string
-  state?: string
-  city?: string
+  partyAbbreviation?: string
+  stateName?: string
+  cityName?: string
   typeOrgId?: number
   status?: string
 }
@@ -27,15 +28,19 @@ export default function Directory() {
   const { partyCode, cityCode, stateId } = useContext(AccessContext)
   const [search, setSearch] = useState<Search>({} as Search)
 
+  const methods = useForm<Search>({
+    mode: 'onSubmit',
+  })
+
   const [page, setPage] = useState(1)
   const [skip, setSkip] = useState(0)
   const take = 15
   const { data, isLoading, isFetching, isPreviousData } = useDirectoryData(
     skip,
     take,
-    search.party,
-    search.state,
-    search.city,
+    search.partyAbbreviation,
+    search.stateName,
+    search.cityName,
     search.typeOrgId,
     search.status,
     partyCode,
@@ -83,13 +88,17 @@ export default function Directory() {
       <RegisterDirectoryModal ref={registerDirectoryModalRef} />
       <div className="flex flex-col gap-2">
         <div className="flex items-end justify-between gap-4">
+        <FormProvider {...methods}>
+            <form>
           <TableFilterDirectory
             partyCode={partyCode}
             cityCode={cityCode}
             stateId={stateId}
-            stateSearch={stateId || search.state}
+            stateName={search.stateName}
             onChange={handleSearchOnChange}
           />
+          </form>
+          </FormProvider>
 
           <div className="flex gap-2">
             <RefreshButton isLoading={isFetching} queryName="directoryData" />

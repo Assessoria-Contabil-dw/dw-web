@@ -21,7 +21,7 @@ interface SPCProps {
   stateName?: string;
   cityName?: string;
   year?: string;
-  legendId?: string;
+  colorId?: string;
   vigencyStatus?: string;
 }
 
@@ -30,7 +30,7 @@ const schema = z.object({
   stateName: z.string().optional(),
   cityName: z.string().optional(),
   year: z.string().optional(),
-  legendId: z.string().optional(),
+  colorId: z.string().optional(),
   vigencyStatus: z.string().optional(),
 });
 
@@ -65,7 +65,7 @@ export default function SPC() {
     filter.stateName,
     filter.cityName,
     filter.year,
-    filter.legendId,
+    filter.colorId,
     filter.vigencyStatus
   );
 
@@ -83,7 +83,7 @@ export default function SPC() {
       setFilter((old) => ({ ...old, [name]: undefined }));
       return;
     }
-
+console.log(name, value);
     setFilter((old) => ({ ...old, [name]: value }));
     await refetch();
   }

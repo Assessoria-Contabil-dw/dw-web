@@ -52,7 +52,7 @@ export default function TableFilterSPC({
           stateId={stateId}
           handleSearchOnChange={onChange}
         >
-          <option value="">Todos</option>
+          <option value="" selected>Todos</option>
         </SelectCity>
       )}
 

@@ -17,7 +17,6 @@ export default function SelectCity({
   ...atr
 }: SelectCityProps) {
   const { data, isLoading } = useCityData(stateId)
-
   return (
     <SelectBase
       name="city"

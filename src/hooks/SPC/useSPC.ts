@@ -14,7 +14,7 @@ export function useSPCData(
   stateName?: string,
   cityName?: string,
   year?: string,
-  legendId?: string,
+  colorId?: string,
   vigencyStatus?: string
 ) {
   const spcService = new SPCService();
@@ -31,7 +31,7 @@ export function useSPCData(
       stateName,
       cityName,
       year,
-      legendId,
+      colorId,
       vigencyStatus,
     ],
     () =>
@@ -45,7 +45,7 @@ export function useSPCData(
         stateName,
         cityName,
         year,
-        legendId,
+        colorId,
         vigencyStatus
       ),
     {
