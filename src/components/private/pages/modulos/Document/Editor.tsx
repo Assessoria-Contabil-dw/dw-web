@@ -51,7 +51,17 @@ export default function EditorDocument({
             'media',
             'code',
           ],
-
+          content_style: ` 
+          header, footer{
+            background-color: #01eaa0;
+          }
+          body{
+            text-align: center;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+          }
+         `,
           menubar: 'file edit view insert format',
           toolbar:
             'undo redo | blocks | ' +
@@ -59,6 +69,7 @@ export default function EditorDocument({
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat ',
         }}
+        
       />
 
       {!loading && (

@@ -1,51 +1,51 @@
-import { Editor } from '@tinymce/tinymce-react'
-import { useCallback, useRef, useState } from 'react'
-import { Trash } from 'lucide-react'
-import DeleteModel, { DeleteRef } from '../../../../Model/Delete'
-import ButtonIcon from '@/components/Buttons/ButtonIcon'
-import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
-import { useTemplateCreate, useTemplateUpdate } from '@/hooks/useTemplate'
-import { LoadingSecond } from '@/components/Loading/second'
+import { Editor } from "@tinymce/tinymce-react";
+import { useCallback, useRef, useState } from "react";
+import { Trash } from "lucide-react";
+import DeleteModel, { DeleteRef } from "../../../../Model/Delete";
+import ButtonIcon from "@/components/Buttons/ButtonIcon";
+import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
+import { useTemplateCreate, useTemplateUpdate } from "@/hooks/useTemplate";
+import { LoadingSecond } from "@/components/Loading/second";
 
 interface CreateTemplateProps {
-  content?: string
-  templateId?: number
-  name?: string
+  content?: string;
+  templateId?: number;
+  name?: string;
 }
 
-console.log('templeta')
+console.log("templeta");
 export function EditorTemplate({
   content,
   templateId,
   name,
 }: CreateTemplateProps) {
-  const [loading, setLoading] = useState(true)
-  const [contentTemplate, setContentTemplate] = useState('')
+  const [loading, setLoading] = useState(true);
+  const [contentTemplate, setContentTemplate] = useState("");
 
   const { isLoading: loadingUpdate, refetch: refetchUpdate } =
-    useTemplateUpdate(contentTemplate, templateId, name)
+    useTemplateUpdate(contentTemplate, templateId, name);
 
   const { isLoading: loadingCreate, refetch: refetchCreate } =
-    useTemplateCreate(name, contentTemplate)
+    useTemplateCreate(name, contentTemplate);
 
-  const modalDeleteRef = useRef<DeleteRef>(null)
+  const modalDeleteRef = useRef<DeleteRef>(null);
   const handleDeleteModal = useCallback((id: string, name?: string) => {
     modalDeleteRef.current?.openModal(
       id,
-      'templates',
+      "templates",
       `Deseja deletar o template "${name}"?`,
-      'templateData',
-    )
-  }, [])
+      "templateData"
+    );
+  }, []);
 
   async function handleCreate() {
-    setContentTemplate(contentTemplate)
-    await refetchCreate()
+    setContentTemplate(contentTemplate);
+    await refetchCreate();
   }
 
   async function handleUpdate() {
-    setContentTemplate(contentTemplate)
-    await refetchUpdate()
+    setContentTemplate(contentTemplate);
+    await refetchUpdate();
   }
 
   return (
@@ -61,51 +61,98 @@ export function EditorTemplate({
         id="tiny-editor-Create"
         apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
         onInit={() => {
-          setLoading(false)
+          setLoading(false);
         }}
         onEditorChange={(content, editor) => {
           console.log(
-            'Content was updated:',
-            editor.getContent({ format: 'text' }),
-          )
-          setContentTemplate(content)
+            "Content was updated:",
+            editor.getContent({ format: "text" })
+          );
+          setContentTemplate(content);
         }}
         initialValue={content}
         init={{
           height: 500,
           quickbars_selection_toolbar: true,
           plugins: [
-            'advlist',
-            'autolink',
-            'lists',
-            'link',
-            'image',
-            'charmap',
-            'preview',
-            'anchor',
-            'searchreplace',
-            'visualblocks',
-            'code',
-            'fullscreen',
-            'insertdatetime',
-            'media',
-            'code',
-            'wordcount',
-            'quickbars',
-            'pagebreak',
-            'template',
-            'table',
+            "advlist",
+            "autolink",
+            "lists",
+            "link",
+            "image",
+            "charmap",
+            "preview",
+            "anchor",
+            "searchreplace",
+            "visualblocks",
+            "code",
+            "fullscreen",
+            "insertdatetime",
+            "media",
+            "code",
+            "wordcount",
+            "quickbars",
+            "pagebreak",
+            "template",
+            "table",
           ],
-          menubar: 'file edit view insert format tools table',
+          menubar: "file edit view insert format tools table",
           toolbar:
-            'undo redo | blocks | ' +
-            'bold italic forecolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat',
+            "undo redo | blocks | " +
+            "bold italic forecolor | alignleft aligncenter " +
+            "alignright alignjustify | bullist numlist outdent indent | " +
+            "removeformat",
           templates: [
             {
-              title: 'Simples',
-              description: 'Cabeçalho e rodapé simples',
+              title: "Simples - 1",
+              description: "Cabeçalho e rodapé simples",
+              content: `
+              <div style="display: flex; flex-direction: column;">
+              <table style="border-collapse: collapse; width: 50rem; height: 70.75rem; background-color: white;" rules="none" cellspacing="0">
+              <thead>
+              <tr style="height: 50px;">
+              <th style="background: {PARTIDO_COR};" colspan="3">
+              <div style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; position: relative; text-align: center;"><header style="width: 100%; height: 3rem; background: {PARTIDO_COR};">
+              <div style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: {PARTIDO_COR};">
+              <div style="margin: 0rem 3rem; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center;">
+              <p style="line-height: 0; font-size: 10px;">{PARTIDO_NOME}</p>
+              <p style="line-height: 0; font-size: 10px;">{DIRETORIO_SURNAME_EXTENSO}</p>
+              </div>
+              </div>
+              </header></div>
+              </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+              <td>&nbsp;</td>
+              <td style="background-color: white; width: 80%;">
+              <div style="height: 100%;">
+              <h3 style="text-align: center;">&nbsp;</h3>
+              <h3 style="text-align: center;">&nbsp;</h3>
+              <p style="text-align: center;">&nbsp;</p>
+              </div>
+              </td>
+              <td>&nbsp;</td>
+              </tr>
+              </tbody>
+              <tfoot>
+              <tr style="height: 50px;">
+              <td style="background: {PARTIDO_COR};" colspan="3"><footer style="width: 100%; height: 3rem; background: {PARTIDO_COR};">
+              <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white;">
+              <div style="margin: 0rem 3rem; text-align: center;">
+              <p style="line-height: 0; font-size: 10px;">{DIRETORIO_ENDERECO} - {DIRETORIO_TELEFONE}</p>
+              </div>
+              </div>
+              </footer></td>
+              </tr>
+              </tfoot>
+              </table>
+              </div>`,
+            },
+            {
+              title: "Simples - 2",
+              description: "Cabeçalho e rodapé simples",
               content: `
               <div style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; width: 50rem; height: 70.75rem; position: relative;"><header style="width: 100%; height: 3rem; background: #d0d0d0;">
               <div style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: PARTIDO_COR;">
@@ -169,5 +216,5 @@ export function EditorTemplate({
         />
       </div>
     </div>
-  )
+  );
 }

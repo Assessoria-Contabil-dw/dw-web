@@ -2,7 +2,6 @@ import ButtonIcon from '@/components/Buttons/ButtonIcon'
 import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 import { api } from '@/lib/api'
 import { Edit2Icon } from 'lucide-react'
-import { useState } from 'react'
 import { useQuery } from 'react-query'
 
 interface TemplateProps {

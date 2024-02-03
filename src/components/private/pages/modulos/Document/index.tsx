@@ -26,6 +26,7 @@ export function DocumentsView() {
   }
 
   const handleEditor = () => {
+    setUrlPDF('')
     setIsEditor((old) => !old)
   }
 
