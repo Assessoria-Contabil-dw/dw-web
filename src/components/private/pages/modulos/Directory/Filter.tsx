@@ -41,7 +41,7 @@ export default function TableFilterDirectory({
         </SelectCity>
       )}
 
-      <SelectStatus handleSearchOnChange={onChange} />
+      <SelectStatus name='status' label='Status' handleSearchOnChange={onChange} />
     </div>
   )
 }

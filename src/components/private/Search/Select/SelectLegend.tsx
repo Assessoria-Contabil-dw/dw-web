@@ -1,46 +1,54 @@
 import { ChangeEvent, ReactNode, SelectHTMLAttributes } from 'react'
-import SelectBase from './SelectBase'
 import { useLegendData } from '@/hooks/useLegendData'
+import { LoadingSecond } from '@/components/Loading/second'
 
 interface SelectLegendProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
-  children?: ReactNode
+  valueSelect?: number
+  name: string
+
+  label: string
   loading?: boolean
-  valueSelect?: string
-  name?: string
+  children?: ReactNode
 }
 
 export default function SelectLegend({
-  handleSearchOnChange,
   children,
   loading,
   valueSelect,
   name,
+  label,
+  className,
   ...atr
 }: SelectLegendProps) {
   const { data, isLoading } = useLegendData()
 
   return (
-    <SelectBase
-      name={name ? name : "legend"}
-      label="Status"
-      loading={isLoading || loading}
-      onChange={handleSearchOnChange}
-      {...atr}
-    >
-      {children}
-      {valueSelect && <option value="">Selecione</option>}
-      {data !== undefined
-        ? data.map((legend) => (
+    <div className="flex w-full min-w-[90px] flex-col gap-1">
+      <div className="flex gap-1">
+        <label htmlFor={name} className="text-label">
+          {label}
+        </label>
+        {loading && <LoadingSecond />}
+      </div>
+      <select
+        {...atr}
+        name={name}
+        disabled={loading || isLoading}
+        defaultValue={String(valueSelect)}
+        className={`input-style ${className || ''}`}
+      >
+        {children}
+        {data !== undefined
+        ? data.map((item) => (
             <option
-              key={legend.id}
-              selected={valueSelect === legend.name}
-              value={legend.id}
+              key={item.id}
+              value={String(item.id)}
             >
-              {legend.name}
+              {item.name}
             </option>
           ))
         : null}
-    </SelectBase>
+      </select>
+    </div>
   )
 }

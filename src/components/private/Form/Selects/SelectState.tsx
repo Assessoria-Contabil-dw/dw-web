@@ -7,7 +7,7 @@ interface SelectStateProps extends SelectHTMLAttributes<HTMLSelectElement> {
   children?: ReactNode
   loading?: boolean
   name: string
-  handleSearchOnChange: (e: ChangeEvent<HTMLSelectElement>) => void
+  handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
 export default function SelectState({

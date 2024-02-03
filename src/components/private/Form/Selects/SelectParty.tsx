@@ -4,7 +4,7 @@ import SelectBase from './SelectBase'
 import { useFormContext } from 'react-hook-form'
 
 interface SelectPartyProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  handleSearchOnChange: (e: ChangeEvent<HTMLSelectElement>) => void
+  handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
   children?: ReactNode
   loading?: boolean
   name: string
@@ -18,8 +18,9 @@ export default function SelectParty({
   ...atr
 }: SelectPartyProps) {
   const { data, isLoading } = usePartyData()
-  const { register } = useFormContext()
+  const { register } = useFormContext();
   
+
   return (
     <SelectBase
       {...register(name)}

@@ -1,6 +1,12 @@
 "use client";
 
-import { ChangeEvent, useCallback, useContext, useState } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { AccessContext } from "@/provider/context.provider";
 import dayjs from "dayjs";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
@@ -32,7 +38,7 @@ interface FormInputs {
 const schema = z.object({
   date: z.string().optional(),
   templateId: z.string().min(1, "Selecione um template"),
-  office: z.string().optional(),
+  officeId: z.string().optional(),
   directoryArray: z.array(
     z.object({ id: z.string().min(1, "Informe um valor") })
   ),
@@ -77,7 +83,7 @@ export function FormDocument({
         },
       ],
     },
-    mode: "onChange",
+    mode: "onSubmit",
     resolver: zodResolver(schema),
   });
 
@@ -88,6 +94,13 @@ export function FormDocument({
     formState: { errors, isSubmitting },
   } = methods;
 
+  async function handleFormOnSubmit(data: any) {
+    console.log(data, watch("date"));
+
+    const response = await refetch();
+    onSetUrl("");
+    onSubmit({ content: response.data });
+  }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedHandleSubmit = useCallback(handleSubmit(handleFormOnSubmit), [
     methods,
@@ -134,14 +147,6 @@ export function FormDocument({
     onSetUrl("");
     onSubmit({ content });
     return;
-  }
-
-  async function handleFormOnSubmit(data: any) {
-    console.log(data);
-
-    const response = await refetch();
-    onSetUrl("");
-    onSubmit({ content: response.data });
   }
 
   return (
@@ -238,10 +243,12 @@ export function FormDocument({
                       )}
                     />
                   </div>
-                  <SelectOffice defaultValue="" name="officeId">
-                    <option value="" >
-                      Todos
-                    </option>
+                  <SelectOffice
+                    defaultValue=""
+                    name="officeId"
+                    handleSearchOnChange={() => onSubmit({ content: template.content })}
+                  >
+                    <option value="">Todos</option>
                   </SelectOffice>
                   <InputBase
                     {...methods.register("date")}
@@ -249,9 +256,8 @@ export function FormDocument({
                     type="date"
                     name="date"
                     defaultValue={dayjs().format("YYYY-MM-DD")}
+                    onChange={() => onSubmit({ content: template.content })}
                   />
-
-                 
                 </div>
 
                 <div>
@@ -294,6 +300,9 @@ export function FormDocument({
                           type="text"
                           name={`variablesArray.${index}.text`}
                           placeholder={`Variável ${index + 1}`}
+                          onChange={() =>
+                            onSubmit({ content: template.content })
+                          }
                         />
                         <ErrorMessage
                           errors={errors}

@@ -35,6 +35,16 @@ export function RegisterAdvocate({
   const [lawFirm, setLawFirm] = useState<LawFirm[]>([])
   const [error, setError] = useState<string | null>(null)
 
+  const {
+    handleSubmit,
+    watch,
+    formState: { isSubmitting },
+  } = createAdvocateForm
+
+  useEffect(() => {
+    console.log(watch('address'), "ADV")
+  }, [watch("address")])
+  
   // pegar os escritorios
   useEffect(() => {
     async function getLawFirm() {
@@ -52,6 +62,7 @@ export function RegisterAdvocate({
     }
     getLawFirm()
   }, [onClose])
+
 
   if (!isOpen) {
     return null
@@ -156,10 +167,8 @@ export function RegisterAdvocate({
     }
   }
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = createAdvocateForm
+
+
 
   return (
     <div className="fixed right-0 top-0 flex h-screen w-screen items-center justify-center bg-black/50">
@@ -270,6 +279,7 @@ export function RegisterAdvocate({
                         placeholder="Selecione o escritório"
                         name="lawFirmId"
                       >
+                        <option value="oi">Selecione o escritório</option>
                         {lawFirm.map((law) => {
                           return (
                             <option key={law.id} value={law.id}>

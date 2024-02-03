@@ -1,14 +1,14 @@
-import { SPCProps } from '@/interfaces/types'
 import { useCallback, useRef, useState } from 'react'
-import UpdateSPC, { UpdateSPCRef } from './Update'
+import UpdateSPC, { UpdateSPCRef } from './ModelUpdate'
 import ViewSPC, { ViewSPCRef } from './View'
 import dayjs from 'dayjs'
 import { LoadingSecond } from '@/components/Loading/second'
 import { TableOptions } from '../../../Tools/TableOptions'
+import { SPCAllProps } from '@/hooks/SPC/@type'
 
 interface TableSPCProps {
   role: string
-  data?: SPCProps[] | null
+  data?: SPCAllProps[] | null
   loading?: boolean
 }
 export function TableSPC({ role, data, loading }: TableSPCProps) {
@@ -34,7 +34,7 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
     setSelectedCheckbox(checkboxId)
   }
 
-  const generateSPCAList = (spc: SPCProps) => {
+  const generateSPCAList = (spc: SPCAllProps) => {
     const spcaList = []
 
     for (let i = 2017; i <= dayjs().year(); i++) {
@@ -83,7 +83,7 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
     return spcaList
   }
 
-  const generateSPCEList = (spc: SPCProps) => {
+  const generateSPCEList = (spc: SPCAllProps) => {
     const spceList = []
 
     for (let i = 2018; i <= dayjs().year(); i += 2) {

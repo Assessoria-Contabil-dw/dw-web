@@ -3,12 +3,14 @@ import {
   ForwardRefRenderFunction,
   forwardRef,
   useCallback,
+  useContext,
   useImperativeHandle,
   useState,
 } from 'react'
-import { useSPCDataById } from '@/hooks/useSPC'
 import { LoadingSecond } from '@/components/Loading/second'
 import TableMinSPC from './TableMinView'
+import { useSPCDirectoryById } from '@/hooks/SPC/useSPC'
+import { AccessContext } from '@/provider/context.provider'
 
 export interface ViewSPCRef {
   openModal: (id: string) => void
@@ -33,7 +35,13 @@ const ViewSPCModel: ForwardRefRenderFunction<ViewSPCRef> = (props, ref) => {
     closeModal,
   }))
 
-  const { data: spcData, isLoading } = useSPCDataById(directoryId)
+  const { partyCode, cityCode, stateId } = useContext(AccessContext);
+  const { data: spcData, isLoading } = useSPCDirectoryById(
+    directoryId,
+    partyCode,
+    cityCode,
+    stateId
+  );
 
   if (!isModalView) {
     return null

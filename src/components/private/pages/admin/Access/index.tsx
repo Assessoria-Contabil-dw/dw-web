@@ -64,11 +64,11 @@ export default function Access() {
                 <LoadingSecond />
               </div>
             ) : option === 1 ? (
-              <AccessParty data={data === undefined ? null : data.acessParty} />
+              <AccessParty data={data === undefined ? null : data.partyAccess} />
             ) : option === 2 ? (
-              <AccessState data={data === undefined ? null : data.acessState} />
+              <AccessState data={data === undefined ? null : data.stateAccess} />
             ) : (
-              <AccessCity data={data === undefined ? null : data.acessCity} />
+              <AccessCity data={data === undefined ? null : data.cityAccess} />
             )}
           </section>
         </div>

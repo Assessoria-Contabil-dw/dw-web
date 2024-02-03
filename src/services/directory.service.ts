@@ -82,8 +82,6 @@ export class DirectoryService {
     }
   }
 
-
-
   public async deleteById(id: string) {
     try {
       const response = await api.delete(`/directories/${id}`)

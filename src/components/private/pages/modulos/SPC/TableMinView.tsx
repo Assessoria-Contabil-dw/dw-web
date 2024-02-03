@@ -1,11 +1,4 @@
-interface SPCOneData {
-  id: number
-  year: string
-  numPge: string
-  color: string
-  status: string
-  observation: string
-}
+import { SPCOneData } from "./@types/interface.type"
 
 interface TableMinSPCData {
   title: string
@@ -35,10 +28,10 @@ export default function TableMinSPC({ spc, title }: TableMinSPCData) {
                 <td>{s.numPge ?? '-'}</td>
                 <td>
                   <div
-                    style={{ backgroundColor: `${s.color}` }}
+                    style={{ backgroundColor: `${s.colorHex}` }}
                     className=" rounded-md p-1 text-center text-[10px] text-white"
                   >
-                    {s.status ?? '-'}
+                    {s.colorName ?? '-'}
                   </div>
                 </td>
                 <td>{s.observation ?? '-'}</td>

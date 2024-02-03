@@ -23,27 +23,27 @@ export function useTemplateData() {
   return query
 }
 
-export function useTemplateVigencyPDF(
-  id?: string,
-  content?: string,
-  local?: string,
-  date?: string,
-) {
-  const templateService = new TemplateService()
-  const query = useQuery<DocumentData>(
-    ['documentData'],
-    () => templateService.getVigency(id, content, local, date),
-    {
-      keepPreviousData: true,
-      staleTime: 1000 * 60 * 60 * 12,
-      retry: 1,
-      refetchOnWindowFocus: false,
-      enabled: false,
-    },
-  )
+// export function useTemplateVigencyPDF(
+//   id?: string,
+//   content?: string,
+//   local?: string,
+//   date?: string,
+// ) {
+//   const templateService = new TemplateService()
+//   const query = useQuery<DocumentData>(
+//     ['documentData'],
+//     () => templateService.getVigency(id, content, local, date),
+//     {
+//       keepPreviousData: true,
+//       staleTime: 1000 * 60 * 60 * 12,
+//       retry: 1,
+//       refetchOnWindowFocus: false,
+//       enabled: false,
+//     },
+//   )
 
-  return query
-}
+//   return query
+// }
 
 export function useTemplateUpdate(
   content: string | undefined,

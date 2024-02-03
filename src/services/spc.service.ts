@@ -1,96 +1,147 @@
-import { useNotify } from '@/components/Toast/toast'
-import { SPCForm } from '@/interfaces/spc.interface'
-import { api } from '@/lib/api'
-import { useRouter } from 'next/navigation'
+import { useNotify } from "@/components/Toast/toast";
+import { SPCCreateData } from "@/hooks/SPC/@type";
+import { api } from "@/lib/api";
+import { queryClient } from "@/provider/query.provider";
+import { useRouter } from "next/navigation";
 
 export class SPCService {
-  notify = useNotify()
-  router = useRouter()
+  notify = useNotify();
+  router = useRouter();
 
   public async getAll(
     skip?: number,
     take?: number,
-    party?: string,
-    state?: string,
-    city?: string,
-    status?: string,
+    partyCode?: string,
+    stateId?: string,
+    cityCode?: string,
+
+    partyAbbreviation?: string,
+    stateName?: string,
+    cityName?: string,
     year?: string,
-    legend?: string,
+    legendId?: string,
+    vigencyStatus?: string
+  ) {
+    try {
+      console.log(
+        skip,
+        take,
+        partyCode,
+        stateId,
+        cityCode,
+        partyAbbreviation,
+        stateName,
+        cityName,
+        year,
+        legendId,
+        vigencyStatus
+      );
+      const response = await api.get("/spcs", {
+        params: {
+          skip,
+          take,
+          partyCode,
+          stateId,
+          cityCode,
+          partyAbbreviation,
+          stateName,
+          cityName,
+          year,
+          legendId,
+          vigencyStatus,
+        },
+      });
+      return response.data;
+    } catch (error: any) {
+      if (error.response.status === 403) {
+        this.notify({ type: "warning", message: error.response.data.message });
+        this.router.push("/painel");
+      }
+      this.notify({ type: "warning", message: error.response.data.message });
+    }
+  }
+
+  public async getDirectoryById(
+    id: string,
     partyCode?: string,
     stateId?: string,
     cityCode?: string,
   ) {
     try {
-      const response = await api.get('/spcs', {
+      const response = await api.get(`/spcs/directory/${id}`, {
         params: {
-          skip,
-          take,
-          party,
-          state,
-          city,
-          status,
-          year,
-          legend,
           partyCode,
           stateId,
           cityCode,
         },
-      })
-      return response.data
+      });
+      return response.data;
     } catch (error: any) {
       if (error.response.status === 403) {
-        this.notify({ type: 'warning', message: error.response.data.message })
-        this.router.push('/painel')
+        this.notify({ type: "warning", message: error.response.data.message });
+        this.router.push("/painel");
       }
-      console.log(error)
+      this.notify({ type: "warning", message: error.response.data.message });
     }
   }
 
-  public async getOne(id: string) {
+  public async getById(id: string) {
     try {
-      const response = await api.get(`/spcs/directory/${id}`)
-      return response.data
+      const response = await api.get(`/spc/${id}`);
+      return response.data;
     } catch (error) {
-      return error
+      return error;
     }
   }
 
   public async putOne(
     id: string,
     year: string,
-    numPge: string,
-    status: number,
-    observation: string,
+    numPge?: string,
+    colorId?: string,
+    observation?: string 
   ) {
     try {
-      const response = api.put(`/spc/${id}`, {
-        params: {
+      const response = await api.put(`/spc/${id}`, {
           year,
           numPge,
-          status,
+          colorId,
           observation,
-        },
-      })
-      this.notify({ type: 'success', message: 'Atualizado com sucesso' })
-      return response
+      });
+
+      this.notify({ type: "success", message: response.data.message});
+      queryClient.invalidateQueries('spcData')
+      queryClient.invalidateQueries('spcDirectoryById')
+      return response;
     } catch (error: any) {
+      if (error.response.status === 404 || error.response.status === 400) {
+        this.notify({ type: "warning", message: error.response.data.message });
+      }
       return this.notify({
-        type: 'warning',
+        type: "error",
         message: error.response.data.message,
-      })
+      });
     }
   }
 
-  public async postAll(directoryId: string, spc: SPCForm[]){
-    try{
-      const response = await api.post('/spcs', {
+  public async postAll(directoryId: string, spcArray: SPCCreateData[]) {
+    try {
+      const response = await api.post("/spcs", {
         directoryId,
-        spc,
-      })
-      this.notify({ type: 'success', message: 'Cadastrado com sucesso' })
-      return response
-    }catch(error){
-      return error
+        spcArray,
+      });
+      this.notify({ type: "success", message: response.data.message });
+      queryClient.invalidateQueries('spcData')
+      return response;
+    } catch (error: any) {
+      if (error.response.status === 404 || error.response.status === 400) {
+        this.notify({ type: "warning", message: error.response.data.message });
+      }
+      
+      return this.notify({
+        type: "error",
+        message: error.response.data.message,
+      });
     }
   }
 }
