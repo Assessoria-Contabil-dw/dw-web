@@ -8,7 +8,7 @@ export default function NavigationHeader() {
 
   const HEADER_ITEM_LINK = [
     {
-      href: '/painel',
+      href:  '/' ,
       label: 'Painel',
       disable: false,
     },
@@ -33,7 +33,7 @@ export default function NavigationHeader() {
       disable: user?.role === 'ADMIN' ? false : true,
     },
     {
-      href: '/clientes' || '/clientes/acessos',
+      href: '/clientes',
       label: 'Clientes',
       disable: user?.role === 'ADMIN' ? false : true,
     },

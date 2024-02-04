@@ -35,7 +35,7 @@ export default function TableDirectory({
   )
 
   const handleButtonClick = (id: number) => {
-    setRouter(`/painel/diretorio/vigencia/${id}`)
+    setRouter(`/diretorio/vigencia/${id}`)
   }
 
   const modelDeleteRef = useRef<DeleteRef>(null)

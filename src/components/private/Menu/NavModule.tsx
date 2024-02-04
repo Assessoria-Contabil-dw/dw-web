@@ -22,28 +22,28 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
 
   const MENU_MODULOS = [
     {
-      href: `/painel`,
+      href: `/`,
       label: 'Pagina Inicial',
       sub: null,
     },
     {
-      href: `/painel/diretorio`,
+      href: `/diretorio`,
       sub: '/vigencia',
       label: 'Diretórios',
       replace: true,
     },
     {
-      href: `/painel/spc`,
+      href: `/spc`,
       label: 'SPC',
       sub: null,
     },
     {
-      href: `/painel/emissor`,
+      href: `/emissor`,
       label: 'Emissor',
       sub: null,
     },
     {
-      href: `/painel/relatorio`,
+      href: `/relatorio`,
       label: 'Relatório',
       sub: null,
     },
@@ -52,20 +52,20 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
   function isMenuItemDisabled({ role, href, modules, party }: MenuItemProps) {
     if (role === 'CLIENT') {
       if (modules === null || modules === undefined || modules.length === 0) {
-        if (href === '/painel') return true
-        if (href === '/painel/diretorio' && party !== 0) return true
+        if (href === '') return true
+        if (href === '/diretorio' && party !== 0) return true
         return false
       }
       switch (href) {
-        case '/painel':
+        case '':
           return true
-        case '/painel/diretorio':
+        case '/diretorio':
           return party !== 0
-        case '/painel/spc':
+        case '/spc':
           return !!modules?.find((item) => item.module === 'Visualizar SPC')
-        case '/painel/emissor':
+        case '/emissor':
           return !!modules?.find((item) => item.module === 'Visualizar Emissor')
-        case '/painel/relatorio':
+        case '/relatorio':
           return !!modules?.find((item) => item.module === 'Visualizar Relatório')
         default:
           return false  

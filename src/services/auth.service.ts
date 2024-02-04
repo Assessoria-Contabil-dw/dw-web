@@ -10,7 +10,7 @@ export class AuthService {
     try {
       await api.post('/logout')
       this.notify({ type: 'success', message: 'Você saiu da conta' })
-      return this.router.push('/')
+      return this.router.push('/login')
     } catch (error) {
       return this.notify({ type: 'error', message: 'Erro ao sair da conta' })
     }

@@ -8,7 +8,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const user: User = queryClient.getQueryData('authUser') as User
   const router = useRouter()
   if (user?.role !== 'ADMIN') {
-    router.push('/painel')
+    router.push('')
     return null
   }
 

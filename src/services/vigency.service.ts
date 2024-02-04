@@ -24,7 +24,7 @@ export class VigencyService {
     } catch (error: any) {
       if (error.response.status === 403) {
         this.notify({ type: 'warning', message: error.response.data.message })
-        this.router.push('/painel')
+        this.router.push('/')
       }
       return error
     }
@@ -37,7 +37,7 @@ export class VigencyService {
     } catch (error: any) {
       if (error.response.status === 403) {
         this.notify({ type: 'warning', message: error.response.data.message })
-        this.router.push('/painel')
+        this.router.push('/')
       }
       return error
     }

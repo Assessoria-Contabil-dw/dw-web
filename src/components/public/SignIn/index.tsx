@@ -45,7 +45,7 @@ export function SignInForm() {
     try {
       await api.post("/signIn", { cpf, passwordHash });
       notify({ type: "success", message: "Acesso realizado!" });
-      router.push("/painel");
+      router.push("");
     } catch (error: any) {
       if (error.response) {
         return notify({

@@ -10,7 +10,7 @@ export default function Login() {
   const user = useAuth()
 
   if (user !== null && user !== undefined) {
-    return redirect('/painel')
+    return redirect('/')
   }
 
   return (

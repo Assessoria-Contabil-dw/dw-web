@@ -12,7 +12,7 @@ export default function NavigationBody() {
 
   const HEADER_ITEM_LINK = [
     {
-      href: '/painel',
+      href: '/' ,
       label: 'Painel',
       disable: false,
     },

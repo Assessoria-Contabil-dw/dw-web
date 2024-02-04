@@ -55,7 +55,7 @@ export class SPCService {
     } catch (error: any) {
       if (error.response.status === 403) {
         this.notify({ type: "warning", message: error.response.data.message });
-       return this.router.push("/painel");
+       return this.router.push("/");
       }
       return this.notify({ type: "warning", message: error.response.data.message });
     }
@@ -79,7 +79,7 @@ export class SPCService {
     } catch (error: any) {
       if (error.response.status === 403) {
         this.notify({ type: "warning", message: error.response.data.message });
-       return this.router.push("/painel");
+       return this.router.push("/");
       }
       return this.notify({ type: "warning", message: error.response.data.message });
     }
