@@ -1,8 +1,8 @@
 import ActiveHeader from "./ActiveHeader";
-import ActiveLogout from "./ActiveLogout";
 import NavigationHeader from "./NavHeader";
 import imgLogo from "../../../assets/cdw-horizontal.svg";
 import Image from "next/image";
+import ActiveAccount from "./Account/ActiveAccount";
 
 export default function HeaderPrivate() {
   return (
@@ -14,7 +14,7 @@ export default function HeaderPrivate() {
         <NavigationHeader />
       </div>
       <div className="flex items-center justify-center gap-2">
-        <ActiveLogout />
+        <ActiveAccount/>
         <ActiveHeader />
       </div>
     </header>

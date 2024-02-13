@@ -39,8 +39,8 @@ const ViewSPCModel: ForwardRefRenderFunction<ViewSPCRef> = (props, ref) => {
   const { data: spcData, isLoading } = useSPCDirectoryById(
     directoryId,
     partyCode,
-    cityCode,
-    stateId
+    stateId,
+    cityCode
   );
 
   if (!isModalView) {

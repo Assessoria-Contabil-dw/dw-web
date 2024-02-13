@@ -28,7 +28,7 @@ export function PasswordInput({ placeholder, name, ...props }: TextInputProps) {
       <button
         type="button"
         onClick={handleHidden}
-        className="absolute right-0 top-0 flex h-full items-center justify-center p-2 hover:text-slate-400"
+        className="absolute text-slate-500 right-0 top-0 flex h-full items-center justify-center p-2 hover:text-slate-400"
       >
         {hidden ? <EyeOff size={18} /> : <Eye size={18} />}
       </button>

@@ -52,12 +52,13 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
   function isMenuItemDisabled({ role, href, modules, party }: MenuItemProps) {
     if (role === 'CLIENT') {
       if (modules === null || modules === undefined || modules.length === 0) {
-        if (href === '') return true
+        if (href === '/') return true
         if (href === '/diretorio' && party !== 0) return true
         return false
       }
+      console.log(href, modules, party)
       switch (href) {
-        case '':
+        case '/':
           return true
         case '/diretorio':
           return party !== 0

@@ -25,3 +25,23 @@ export function useUserData(
 
   return query
 }
+
+
+export function useUserPassword(
+  password?: string,
+) {
+  const userService = new UserService()
+
+  const query = useQuery(
+    ['userPassword', password],
+    () => userService.changePassword(password),
+    {
+      keepPreviousData: true,
+      retry: false,
+      enabled: false, 
+      refetchOnWindowFocus: false,
+    },
+  )
+
+  return query
+}

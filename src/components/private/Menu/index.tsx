@@ -11,7 +11,12 @@ export default function MenuPrivate() {
   const { openMenu, setOpenMenu } = useContext(AccessContext);
   const { partyCode, cityCode, stateId } = useContext(AccessContext);
 
-  const { data } = useAccessModuleData(partyCode, stateId, cityCode);
+  const { data, isLoading } = useAccessModuleData(partyCode, stateId, cityCode);
+
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <aside className="flex flex-row max-md:absolute max-md:z-10 max-md:h-full">

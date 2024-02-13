@@ -32,4 +32,21 @@ export class UserService {
       return error
     }
   }
+
+  //usruario mudar a senha
+  public async changePassword(password?: string) {
+    try {
+      const response = await api.put(`/user/password`, {
+        password,
+      })
+
+      return this.notify({ type: 'success', message: response.data.message })
+
+    } catch (error: any) {
+      this.notify({ type: 'warning', message: error.response.data.message })
+      return error
+    }
+  }
+
+
 }

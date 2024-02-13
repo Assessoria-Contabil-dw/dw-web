@@ -20,7 +20,7 @@ const ButtonPrimary = forwardRef<Ref, ButtonPrimaryProps>(function Button(
       } 
       ${
         variant === 'outline' &&
-        'border-2 border-slate-200 bg-white text-slate-800 hover:border-transparent hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400'
+        'border-[1px] border-slate-200 bg-white text-slate-800 hover:border-transparent hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400'
       }
       ${
         variant === 'ghost' &&
