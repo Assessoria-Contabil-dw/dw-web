@@ -8,13 +8,18 @@ import { queryClient } from '@/provider/query.provider'
 import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 import { Modules } from '@/interfaces/modules'
 
+
+interface NavigationProps {
+  modules: Modules[]
+}
 interface MenuItemProps {
+  
   role: string
   href: string
   modules: Modules[]
   party: number
 }
-export default function NavigationModule({ modules }: { modules: Modules[] }) {
+export default function NavigationModule( { modules } :NavigationProps) {
   const router = useRouter()
   const params = usePathname()
   const user: User = queryClient.getQueryData('authUser') as User
@@ -56,7 +61,6 @@ export default function NavigationModule({ modules }: { modules: Modules[] }) {
         if (href === '/diretorio' && party !== 0) return true
         return false
       }
-      console.log(href, modules, party)
       switch (href) {
         case '/':
           return true

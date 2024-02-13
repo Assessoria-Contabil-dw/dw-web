@@ -1,44 +1,44 @@
-import { useCallback, useRef, useState } from 'react'
-import UpdateSPC, { UpdateSPCRef } from './ModelUpdate'
-import ViewSPC, { ViewSPCRef } from './View'
-import dayjs from 'dayjs'
-import { LoadingSecond } from '@/components/Loading/second'
-import { TableOptions } from '../../../Tools/TableOptions'
-import { SPCAllProps } from '@/hooks/SPC/@type'
+import { useCallback, useRef, useState } from "react";
+import UpdateSPC, { UpdateSPCRef } from "./ModelUpdate";
+import ViewSPC, { ViewSPCRef } from "./View";
+import dayjs from "dayjs";
+import { LoadingSecond } from "@/components/Loading/second";
+import { TableOptions } from "../../../Tools/TableOptions";
+import { SPCAllProps } from "@/hooks/SPC/@type";
 
 interface TableSPCProps {
-  role: string
-  data?: SPCAllProps[] | null
-  loading?: boolean
+  role: string;
+  data?: SPCAllProps[] | null;
+  loading?: boolean;
 }
 export function TableSPC({ role, data, loading }: TableSPCProps) {
-  const [selectedCheckbox, setSelectedCheckbox] = useState(0)
+  const [selectedCheckbox, setSelectedCheckbox] = useState(0);
 
-  const [isLinkTwo, setIsLinkTwo] = useState(false)
-  const modalUpdateRef = useRef<UpdateSPCRef>(null)
-  const modalViewRef = useRef<ViewSPCRef>(null)
+  const [isLinkTwo, setIsLinkTwo] = useState(false);
+  const modalUpdateRef = useRef<UpdateSPCRef>(null);
+  const modalViewRef = useRef<ViewSPCRef>(null);
 
   const handleEditDirectory = useCallback((id: string) => {
-    modalUpdateRef.current?.openModal(id)
-  }, [])
+    modalUpdateRef.current?.openModal(id);
+  }, []);
 
   const handleViewModal = useCallback((id: string) => {
-    modalViewRef.current?.openModal(id)
-  }, [])
+    modalViewRef.current?.openModal(id);
+  }, []);
 
   const handleCheckboxChange = (checkboxId: number) => {
     if (checkboxId === selectedCheckbox) {
-      setSelectedCheckbox(0)
-      return
+      setSelectedCheckbox(0);
+      return;
     }
-    setSelectedCheckbox(checkboxId)
-  }
+    setSelectedCheckbox(checkboxId);
+  };
 
   const generateSPCAList = (spc: SPCAllProps) => {
-    const spcaList = []
+    const spcaList = [];
 
     for (let i = 2017; i <= dayjs().year(); i++) {
-      const spca = spc.SPCA?.find((spca) => spca?.year === String(i) || null)
+      const spca = spc.SPCA?.find((spca) => spca?.year === String(i) || null);
 
       spcaList.push(
         <li key={i} className="relative">
@@ -68,26 +68,26 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-second opacity-75"></span>
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
               </span>
-              <div className="absolute hidden z-1 w-full mt-[2px] transition duration-1000 peer-checked/popper:block">
-                <div className="w-fit min-w-[8rem] rounded-md border-[1px] border-zinc-200 bg-white p-2 shadow-sm">
-                  <span className="whitespace-normal break-words font-montserrat text-xs text-slate-700 ">
+              <div className="break-words absolute z-[5] mt-[2px] hidden  transition duration-1000 peer-checked/popper:block">
+                <div className="rounded-md border-[1px] border-zinc-200 bg-white p-2 shadow-lg ">
+                  <h2 className="whitespace-normal w-[100px] font-montserrat text-xs text-slate-700 ">
                     {spca.observation}
-                  </span>
+                  </h2>
                 </div>
               </div>
             </>
           )}
-        </li>,
-      )
+        </li>
+      );
     }
-    return spcaList
-  }
+    return spcaList;
+  };
 
   const generateSPCEList = (spc: SPCAllProps) => {
-    const spceList = []
+    const spceList = [];
 
     for (let i = 2018; i <= dayjs().year(); i += 2) {
-      const spce = spc.SPCE?.find((spce) => spce?.year === String(i) || null)
+      const spce = spc.SPCE?.find((spce) => spce?.year === String(i) || null);
 
       spceList.push(
         <li key={i} className="relative">
@@ -105,11 +105,11 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
           ) : (
             <div className="w-10" />
           )}
-        </li>,
-      )
+        </li>
+      );
     }
-    return spceList
-  }
+    return spceList;
+  };
 
   return (
     <div>
@@ -132,8 +132,8 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
                   onClick={() => setIsLinkTwo(!isLinkTwo)}
                   className={`h-full rounded-lg p-1  font-inter text-xs transition-shadow duration-200 ${
                     isLinkTwo
-                      ? 'bg-primary text-blue-950'
-                      : 'bg-slate-200 text-slate-400'
+                      ? "bg-primary text-blue-950"
+                      : "bg-slate-200 text-slate-400"
                   }`}
                 >
                   PJ
@@ -173,7 +173,7 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
                           : `rounded-xl bg-zinc-100 px-2 py-1 text-gray-400`
                       }
                     >
-                      {spc.vigency ? 'Ativa' : 'Inativa'}
+                      {spc.vigency ? "Ativa" : "Inativa"}
                     </span>
                   </td>
                   <td className="whitespace-nowrap">
@@ -188,7 +188,7 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
 
                   <td>
                     <TableOptions
-                      role={role || ''}
+                      role={role || ""}
                       isView
                       isEdit
                       isDelete={false}
@@ -209,5 +209,5 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
         </table>
       </fieldset>
     </div>
-  )
+  );
 }

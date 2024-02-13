@@ -11,8 +11,7 @@ export default function MenuPrivate() {
   const { openMenu, setOpenMenu } = useContext(AccessContext);
   const { partyCode, cityCode, stateId } = useContext(AccessContext);
 
-  const { data, isLoading } = useAccessModuleData(partyCode, stateId, cityCode);
-
+  const { data, isLoading, isFetching } = useAccessModuleData(partyCode, stateId, cityCode);
 
   if (isLoading) {
     return null;
@@ -25,11 +24,13 @@ export default function MenuPrivate() {
         ${openMenu ? "block" : "max-md:hidden"}`}
       >
         <div className="flex flex-col gap-2">
-          <SelectAccess 
-           partyCode={partyCode}
-           stateUf={stateId}
-           cityCode={cityCode}
-           moduleData={data}/>
+          <SelectAccess
+            loading={isLoading || isFetching}
+            partyCode={partyCode}
+            stateUf={stateId}
+            cityCode={cityCode}
+            moduleData={data}
+          />
 
           <NavigationModule
             modules={data !== null && data !== undefined ? data.modules : []}

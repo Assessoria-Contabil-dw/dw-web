@@ -7,13 +7,14 @@ import { AccessContext } from "@/provider/context.provider";
 import { useAuth } from "@/hooks/useAuth";
 
 interface SelectAccessProps {
+  loading: boolean;
   partyCode: string | undefined;
   stateUf: string | undefined;
   cityCode: string | undefined;
   moduleData: AccessModuleData | undefined;
 }
 
-export default function SelectAccess({partyCode, stateUf, cityCode, moduleData}: SelectAccessProps) {
+export default function SelectAccess({loading, partyCode, stateUf, cityCode, moduleData}: SelectAccessProps) {
   const user = useAuth();
 
   const accessData: AccessProps = queryClient.getQueryData(
@@ -100,6 +101,7 @@ export default function SelectAccess({partyCode, stateUf, cityCode, moduleData}:
   return (
     <div className="relative">
       <ActiveInput
+        loading={loading}
         onClick={() => setIsSelect(!isSelect)}
         moduleName={moduleData?.acessName}
       />
