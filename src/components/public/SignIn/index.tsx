@@ -59,19 +59,26 @@ export function SignInForm() {
     <FormProvider {...createLogin}>
       <form
         onSubmit={handleSubmit(handleSignInUser)}
-        className="flex flex-col items-center justify-center gap-4"
+        className="flex flex-col items-center justify-center gap-6"
       >
-        <div className="flex flex-col items-center gap-4">
-          <Image src={imgLogo} alt="Logo" className="w-28" />
+        <div className="flex flex-col items-center gap-2">
+          <Image
+            src={imgLogo}
+            alt="Logo"
+            className="h-auto w-[100px]"
+            width={100}
+            height={100}
+            priority={false}
+          />
           <h4 className="text-h4">Entre na sua conta</h4>
         </div>
-        <div className="flex w-72 flex-col items-center gap-8">
+        <div className="flex w-72 flex-col items-center gap-6">
           <div className="flex w-full flex-col gap-4">
             <Form.Field>
               <Form.Label>CPF</Form.Label>
               <Form.TextInput
                 mask="999.999.999-99"
-                placeholder="Digite seu CPF"
+                placeholder="000.000.000-00"
                 name="cpf"
                 type="text"
               />
@@ -87,7 +94,7 @@ export function SignInForm() {
             </Form.Field>
           </div>
 
-          <div className="flex w-full flex-col gap-4 text-center">
+          <div className="flex w-full flex-col gap-3 text-center">
             <ButtonPrimary
               title="Entrar"
               variant="fill"
@@ -97,10 +104,11 @@ export function SignInForm() {
             >
               Entrar
             </ButtonPrimary>
-            <p className="font-inter text-xs font-normal text-slate-500">
+            <p className="font-inter text-sm font-normal text-slate-500">
               Ainda não tem uma conta?{" "}
               <a
-                className="cursor-pointer text-second underline"
+                className="cursor-pointer text-second underline 
+                focus:ring-1 focus:ring-slate-800 focus:ring-offset-2  focus:rounded-sm"
                 target="blank"
                 href="https://api.whatsapp.com/send?phone=559991014072"
               >

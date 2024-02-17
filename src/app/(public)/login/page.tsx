@@ -1,29 +1,30 @@
-'use client'
-import { SignInForm } from '@/components/public/SignIn'
-import Image from 'next/image'
-import imgContablue from '../../../../public/assets/bgLogin.svg'
-import { redirect } from 'next/navigation'
-import { useAuth } from '@/lib/auth'
-import '@/app/globals.css'
+"use client";
+import { SignInForm } from "@/components/public/SignIn";
+import Image from "next/image";
+import imgContablue from "../../../../public/assets/bgLogin.svg";
+import { redirect } from "next/navigation";
+import { useAuth } from "@/lib/auth";
+import "@/app/globals.css";
 
 export default function Login() {
-  const user = useAuth()
+  const user = useAuth();
 
   if (user !== null && user !== undefined) {
-    return redirect('/')
+    return redirect("/");
   }
 
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-slate-50">
-      <div className="left-0 h-screen flex-1 bg-slate-900 p-12 text-white max-sm:hidden">
+      <div className="h-full flex-1 bg-slate-900 p-12 text-white max-sm:hidden">
         <div className="flex h-full w-5/6 flex-col items-start justify-center gap-8">
-          <div>
-            <Image
-              className="w-80"
-              src={imgContablue}
-              alt="Figura de contabilidade"
-            />
-          </div>
+          <Image
+            className="h-auto w-[400px]"
+            src={imgContablue}
+            alt="Figura de contabilidade"
+            width={400}
+            height={400}
+            priority
+          />
           <div className="flex flex-col gap-4">
             <h2 className="font-montserrat text-4xl font-bold text-white">
               Contabilidade para partidos políticos
@@ -39,5 +40,5 @@ export default function Login() {
         <SignInForm />
       </div>
     </div>
-  )
+  );
 }

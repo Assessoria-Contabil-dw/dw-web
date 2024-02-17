@@ -13,15 +13,15 @@
             cellspacing="0">
             <thead>
                 <tr style="height: 50px;">
-                    <th style="background: PARTIDO_COR;" colspan="3">
+                    <th style="padding: 0;" colspan="3">
                         <div
-                            style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; position: relative; text-align: center;">
-                            <header style="width: 100%; height: 3rem; background: PARTIDO_COR;">
+                            style="height: 100%; font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; position: relative; text-align: center;">
+                            <header style="width: 100%; height: 100%; background: #d0d0d0;">
                                 <div
-                                    style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: PARTIDO_COR;">
+                                    style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: {PARTIDO_COR};">
                                     <div
                                         style="margin: 0rem 3rem; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center;">
-                                        <p style="line-height: 0; font-size: 10px;">{PARTIDO_NOME}</p>
+                                        <p style="line-height: 0; font-size: 10px;">${PARTIDO_NOME}</p>
                                         <p style="line-height: 0; font-size: 10px;">{DIRETORIO_SURNAME_EXTENSO}</p>
                                     </div>
                                 </div>
@@ -34,45 +34,50 @@
                 <tr>
                     <td>&nbsp;</td>
                     <td style="background-color: white; width: 80%;">
-                        <div style="height: 100%; text-align: center;">
-                            <h3 style="text-align: center;">&nbsp;</h3>
-                            <h3 style="text-align: center;">PROCURA&Ccedil;&Atilde;O <em>AD JUDICIA ET EXTRA</em></h3>
+                        <div style="height: 100%; flex: 1;">
                             <p style="text-align: center;">&nbsp;</p>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <p style="text-align: justify;"><strong>OUTORGANTE</strong>:</p>
-                            <p style="text-align: justify;"><strong>${PARTIDO_NOME} - ${PARTIDO_SIGLA} /
-                                    ${DIRETORIO_SURNAME_EXTENSO} - CNPJ: ${DIRETORIO_CNPJ}</strong>, com endere&ccedil;o
-                                para notifica&ccedil;&atilde;o &agrave; ${DIRETORIO_ENDERECO}, neste ato representado
-                                por seu presidente, Sr(a). ${PRESIDENTE_NOME}, ${PRESIDENTE_QUALIFICACAO}, inscrita no
-                                CPF sob o n&ordm; ${PRESIDENTE_CPF}, residente e domiciliada &agrave;
-                                ${PRESIDENTE_ENDERECO}.</p>
-                            <p style="text-align: justify;"><strong>OUTORGADO</strong>:</p>
-                            <p style="text-align: justify;"><strong>Dr(a). ${ADV_1_NOME}</strong>, portador(a) do
-                                registro ${ADV_1_OAB}, e-mail: ${ADV_1_EMAIL}, com endere&ccedil;o profissional situado
-                                na ${ADV_1_ENDERECO}, concedendo-lhe poderes amplos, gerais, e irrevog&aacute;veis para,
-                                em conjunto ou separadamente, represent&aacute;-lo(a) em ju&iacute;zo ou fora dele&nbsp;
-                                (artigo 5&deg; da Lei 8.906/94), em qualquer inst&acirc;ncia, propor
-                                a&ccedil;&otilde;es, notifica&ccedil;&otilde;es, interpela&ccedil;&otilde;es, interpor
-                                recursos, reconvir, contestar a&ccedil;&otilde;es, apresentar defesas, chamar &agrave;
-                                autoria, alegar exce&ccedil;&otilde;es, confessar, transigir, desistir, renunciar ao
-                                direito a que se funda a a&ccedil;&atilde;o, firmar compromisso, receber, dar
-                                quita&ccedil;&atilde;o, assinar, substabelecer com ou sem reservas de poderes, receber
-                                notifica&ccedil;&otilde;es e intima&ccedil;&otilde;es, requerer
-                                informa&ccedil;&otilde;es, certid&otilde;es e registros perante qualquer
-                                &oacute;rg&atilde;o p&uacute;blico, valendo-se ainda da cl&aacute;usula "ad judicia" e
-                                de todos os poderes do art. 105 do CPC, podendo ainda o outorgado representar o(a)
-                                outorgante para os fins dispostos nos arts. 334 do C&oacute;digo de Processo Civil, bem
-                                com perante a Justi&ccedil;a Eleitoral, para quaisquer fins, inclusive,
-                                presta&ccedil;&atilde;o de contas, ratificando todos os atos at&eacute; ent&atilde;o
-                                pelo advogado constitu&iacute;do realizados.</p>
-                            <p style="text-align: right;">&nbsp;</p>
-                            <p style="text-align: right;">${CIDADE_UF}, ${DATA_EMISSAO_EXTENSO}.</p>
-                            <p style="text-align: justify;">&nbsp;&nbsp;</p>
+                            <h2 style="text-align: center;"><span style="color: rgb(0, 0, 0);">&nbsp;PARECER DA
+                                    COMISS&Atilde;O EXECUTIVA</span></h2>
+                            <p dir="ltr" style="text-align: justify;">&nbsp;</p>
+                            <p dir="ltr" style="text-align: justify;">&nbsp;</p>
+                            <p dir="ltr" style="text-align: justify;"><strong>A COMISS&Atilde;O EXECUTIVA DO
+                                    ${PARTIDO_NOME} - ${PARTIDO_SIGLA} / ${DIRETORIO_SURNAME_EXTENSO} - CNPJ:
+                                    ${DIRETORIO_CNPJ}</strong>, nos termos exigidos pelo art. 29, &sect;2&ordm;, I, da
+                                Resolu&ccedil;&atilde;o TSE n&ordm; 23.604/2019, conforme vig&ecirc;ncia SGIP/TSE:
+                                <strong>${DATA_VIGENCIA_INICIAL}</strong> - <strong>${DATA_VIGENCIA_FINAL}</strong>,
+                                reuniram-se visando examinar: livros, documentos e demonstra&ccedil;&otilde;es
+                                financeiras relativas ao exerc&iacute;cio social encerrado em 31 de dezembro de 2023,
+                                composta&nbsp;<span
+                                    style="font-size: 11.0pt; line-height: 115%; font-family: 'Lucida Sans Unicode',sans-serif; mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; color: black; mso-ansi-language: PT-BR; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">,</span>
+                                &nbsp;para decidir sobre o prosseguimento e o envio &agrave; Justi&ccedil;a Eleitoral.
+                            </p>
+                            <p dir="ltr" style="text-align: justify;">Ap&oacute;s an&aacute;lises e discuss&otilde;es
+                                sobre os dados apresentados pela contabilidade, encontrado tudo em perfeita ordem e
+                                exatid&atilde;o, emite-se&nbsp;<strong>PARECER </strong>pela integral
+                                aprova&ccedil;&atilde;o da Escritura&ccedil;&atilde;o Cont&aacute;bil, Extratos
+                                Banc&aacute;rios, Sistema de Presta&ccedil;&atilde;o de Contas Anual (SPCA/TSE) que se
+                                encontram conciliados, refletindo a evolu&ccedil;&atilde;o patrimonial e a
+                                movimenta&ccedil;&atilde;o financeira, merecendo por parte dos signat&aacute;rios que
+                                opinam pela sua <strong>APROVA&Ccedil;&Atilde;O</strong>.</p>
+                            <p dir="ltr" style="text-align: right;">${CIDADE_UF}, ${DATA_EMISSAO_EXTENSO}.</p>
                             <div style="text-align: center;">&nbsp;</div>
-                            <p style="text-align: center;">${PRESIDENTE_ASSINATURA}</p>
-                            <div style="padding: 0 4rem; flex: 1;">
-                                ${PRESIDENTE_NOME}<br><strong>T&iacute;tulo Eleitoral&nbsp;</strong><strong>n&ordm;
-                                    ${PRESIDENTE_TITULO}</strong></div>
+                            <div style="text-align: center;">${PRESIDENTE_ASSINATURA}
+                                <div style="padding: 0 4rem; flex: 1;">
+                                    ${PRESIDENTE_NOME}-${PRESIDENTE_CARGO}<br><strong>T&iacute;tulo
+                                        Eleitoral&nbsp;</strong><strong>n&ordm; ${PRESIDENTE_TITULO}</strong></div>
+                                <div style="padding: 0 4rem; flex: 1;">&nbsp;</div>
+                            </div>
+                            <div style="text-align: center;">${VICE_ASSINATURA}
+                                <div style="padding: 0 4rem; flex: 1;">
+                                    ${VICE_NOME}-${VICE_CARGO}<br><strong>T&iacute;tulo
+                                        Eleitoral&nbsp;</strong><strong>n&ordm; ${VICE_TITULO}</strong></div>
+                                <div style="padding: 0 4rem; flex: 1;">&nbsp;</div>
+                            </div>
+                            <div style="text-align: center;">${TESOUREIRO_ASSINATURA}
+                                <div style="padding: 0 4rem; flex: 1;">
+                                    ${TESOUREIRO_NOME}-${TESOUREIRO_CARGO}<br><strong>T&iacute;tulo
+                                        Eleitoral&nbsp;</strong><strong>n&ordm; ${TESOUREIRO_TITULO}</strong></div>
+                            </div>
                         </div>
                     </td>
                     <td>&nbsp;</td>
@@ -80,194 +85,25 @@
             </tbody>
             <tfoot>
                 <tr style="height: 50px;">
-                    <td style="background: PARTIDO_COR;" colspan="3">
-                        <footer style="width: 100%; height: 3rem; background: PARTIDO_COR;">
-                            <div
-                                style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white;">
-                                <div style="margin: 0rem 3rem; text-align: center;">
-                                    <p style="line-height: 0; font-size: 10px;">{DIRETORIO_ENDERECO} -
-                                        {DIRETORIO_TELEFONE}</p>
-                                </div>
-                            </div>
-                        </footer>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        <table style="border-collapse: collapse; width: 50rem; height: 70.75rem; background-color: white;" rules="none"
-            cellspacing="0">
-            <thead>
-                <tr style="height: 50px;">
-                    <th style="background: PARTIDO_COR;" colspan="3">
+                    <td style="padding: 0;" colspan="3">
                         <div
-                            style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; position: relative; text-align: center;">
-                            <header style="width: 100%; height: 3rem; background: PARTIDO_COR;">
+                            style="height: 100%; font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; position: relative; text-align: center;">
+                            <footer style="width: 100%; height: 100%; background: #d0d0d0;">
                                 <div
-                                    style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: PARTIDO_COR;">
-                                    <div
-                                        style="margin: 0rem 3rem; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center;">
-                                        <p style="line-height: 0; font-size: 10px;">{PARTIDO_NOME}</p>
-                                        <p style="line-height: 0; font-size: 10px;">{DIRETORIO_SURNAME_EXTENSO}</p>
+                                    style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; background: {PARTIDO_COR};">
+                                    <div style="margin: 0rem 3rem; text-align: center;">
+                                        <p style="line-height: 0; font-size: 10px;">{DIRETORIO_ENDERECO} -
+                                            {DIRETORIO_TELEFONE}</p>
                                     </div>
                                 </div>
-                            </header>
+                            </footer>
                         </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td style="background-color: white; width: 80%;">
-                        <div style="height: 100%; text-align: center;">
-                            <h3 style="text-align: center;">&nbsp;</h3>
-                            <h3 style="text-align: center;">PROCURA&Ccedil;&Atilde;O <em>AD JUDICIA ET EXTRA</em></h3>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <p dir="ltr" style="text-align: justify;"><strong>${PRESIDENTE_NOME}</strong>,
-                                ${PRESIDENTE_QUALIFICACAO}, presidente do ${PARTIDO_NOME} - ${PARTIDO_SIGLA} /
-                                ${DIRETORIO_SURNAME_EXTENSO} - ${DIRETORIO_CNPJ}, inscrito(a) no CPF sob o n&ordm;
-                                ${PRESIDENTE_CPF}, portador(a) do T&iacute;tulo Eleitoral n&ordm; ${PRESIDENTE_TITULO},
-                                residente e domiciliada &agrave; ${PRESIDENTE_ENDERECO}, nomeia e constitui como seu
-                                advogado e bastante procurador: o
-                                <strong>Dr(a)</strong>&nbsp;<strong>${ADV_1_NOME}</strong>, inscrito sob o registro
-                                ${ADV_1_OAB}, endere&ccedil;o eletr&ocirc;nico: ${ADV_1_EMAIL}, com endere&ccedil;o
-                                profissional na ${ADV_1_ENDERECO}, conferindo-lhe poderes amplos, gerais, e
-                                irrevog&aacute;veis para, em conjunto ou separadamente, represent&aacute;-lo(a) em
-                                ju&iacute;zo ou fora dele&nbsp; (artigo 5&deg; da Lei 8.906/94), em qualquer
-                                inst&acirc;ncia, propor a&ccedil;&otilde;es, notifica&ccedil;&otilde;es,
-                                interpela&ccedil;&otilde;es, interpor recursos, reconvir, contestar a&ccedil;&otilde;es,
-                                apresentar defesas, chamar &agrave; autoria, alegar exce&ccedil;&otilde;es, confessar,
-                                transigir, desistir, renunciar ao direito a que se funda a a&ccedil;&atilde;o, firmar
-                                compromisso, receber, dar quita&ccedil;&atilde;o, assinar, substabelecer com ou sem
-                                reservas de poderes, receber notifica&ccedil;&otilde;es e intima&ccedil;&otilde;es,
-                                requerer informa&ccedil;&otilde;es, certid&otilde;es e registros perante qualquer
-                                &oacute;rg&atilde;o p&uacute;blico, valendo-se ainda da cl&aacute;usula "<em>ad
-                                    judicia</em>" e de todos os poderes do art. 105 do CPC, podendo ainda o outorgado
-                                representar o(a) outorgante para os fins dispostos nos arts. 334 do C&oacute;digo de
-                                Processo Civil, bem com o is perante a Justi&ccedil;a Eleitoral, para quaisquer fins,
-                                inclusive, presta&ccedil;&atilde;o de contas, ratificando todos os atos at&eacute;
-                                ent&atilde;o pelo advogado constitu&iacute;do realizados.</p>
-                            <p style="text-align: right;"><strong><br><br></strong></p>
-                            <p dir="ltr" style="text-align: right;">${CIDADE_UF}, ${DATA_EMISSAO_EXTENSO}</p>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <div style="text-align: center; display: relative;">&nbsp;</div>
-                            <div style="text-align: center;">&nbsp;</div>
-                            ${PRESIDENTE_ASSINATURA}<div style="padding: 0 4rem; flex: 1;">
-                                ${PRESIDENTE_NOME}<br><strong>T&iacute;tulo Eleitoral&nbsp;</strong><strong>n&ordm;
-                                    ${PRESIDENTE_TITULO}</strong>
-                                <div style="text-align: center;">&nbsp;</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>&nbsp;</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr style="height: 50px;">
-                    <td style="background: PARTIDO_COR;" colspan="3">
-                        <footer style="width: 100%; height: 3rem; background: PARTIDO_COR;">
-                            <div
-                                style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white;">
-                                <div style="margin: 0rem 3rem; text-align: center;">
-                                    <p style="line-height: 0; font-size: 10px;">{DIRETORIO_ENDERECO} -
-                                        {DIRETORIO_TELEFONE}</p>
-                                </div>
-                            </div>
-                        </footer>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        <table style=" border-collapse: collapse; width: 50rem; height: 70.75rem; background-color: white;" rules="none"
-            cellspacing="0">
-            <thead>
-                <tr style="height: 50px;">
-                    <th style="background: PARTIDO_COR;" colspan="3">
-                        <div
-                            style="font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: space-between; position: relative; text-align: center;">
-                            <header style="width: 100%; height: 3rem; background: PARTIDO_COR;">
-                                <div
-                                    style="width: 100%; height: 100%; color: white; display: flex; align-items: center; background: PARTIDO_COR;">
-                                    <div
-                                        style="margin: 0rem 3rem; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center;">
-                                        <p style="line-height: 0; font-size: 10px;">{PARTIDO_NOME}</p>
-                                        <p style="line-height: 0; font-size: 10px;">{DIRETORIO_SURNAME_EXTENSO}</p>
-                                    </div>
-                                </div>
-                            </header>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td style="background-color: white; width: 80%;">
-                        <div style="height: 100%; text-align: center;">
-                            <h3 style="text-align: center;">&nbsp;</h3>
-                            <h3 style="text-align: center;">PROCURA&Ccedil;&Atilde;O <em>AD JUDICIA ET EXTRA</em></h3>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <p dir="ltr" style="text-align: justify;"><strong>${TESOUREIRO_NOME}</strong>,
-                                ${TESOUREIRO_QUALIFICACAO}, tesoureiro do ${PARTIDO_NOME} - ${PARTIDO_SIGLA} /
-                                ${DIRETORIO_SURNAME_EXTENSO} - ${DIRETORIO_CNPJ}, inscrito(a) no CPF sob o n&ordm;
-                                ${TESOUREIRO_CPF}, portador(a) do T&iacute;tulo Eleitoral n&ordm; ${TESOUREIRO_TITULO},
-                                residente e domiciliada &agrave; ${TESOUREIRO_ENDERECO}, nomeia e constitui como seu
-                                advogado e bastante procurador: o<strong> Dr(a) ${ADV_1_NOME}</strong>, inscrito sob o
-                                registro ${ADV_1_OAB}, endere&ccedil;o eletr&ocirc;nico: ${ADV_1_EMAIL}, com
-                                endere&ccedil;o profissional na ${ADV_1_ENDERECO}, conferindo-lhe poderes amplos,
-                                gerais, e irrevog&aacute;veis para, em conjunto ou separadamente,
-                                represent&aacute;-lo(a) em ju&iacute;zo ou fora dele &nbsp;(artigo 5&deg; da Lei
-                                8.906/94), em qualquer inst&acirc;ncia, propor a&ccedil;&otilde;es,
-                                notifica&ccedil;&otilde;es, interpela&ccedil;&otilde;es, interpor recursos, reconvir,
-                                contestar a&ccedil;&otilde;es, apresentar defesas, chamar &agrave; autoria, alegar
-                                exce&ccedil;&otilde;es, confessar, transigir, desistir, renunciar ao direito a que se
-                                funda a a&ccedil;&atilde;o, firmar compromisso, receber, dar quita&ccedil;&atilde;o,
-                                assinar, substabelecer com ou sem reservas de poderes, receber
-                                notifica&ccedil;&otilde;es e intima&ccedil;&otilde;es, requerer
-                                informa&ccedil;&otilde;es, certid&otilde;es e registros perante qualquer
-                                &oacute;rg&atilde;o p&uacute;blico, valendo-se ainda da cl&aacute;usula "ad judicia" e
-                                de todos os poderes do art. 105 do CPC, podendo ainda o outorgado representar o(a)
-                                outorgante para os fins dispostos nos arts. 334 do C&oacute;digo de Processo Civil, bem
-                                com o is perante a Justi&ccedil;a Eleitoral, para quaisquer fins, inclusive,
-                                presta&ccedil;&atilde;o de contas, ratificando todos os atos at&eacute; ent&atilde;o
-                                pelo advogado constitu&iacute;do realizados.</p>
-                            <p style="text-align: right;"><strong><br><br></strong></p>
-                            <p dir="ltr" style="text-align: right;">${CIDADE_UF}, ${DATA_EMISSAO_EXTENSO}</p>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <p style="text-align: center;">&nbsp;</p>
-                            <div style="text-align: center; display: relative;">&nbsp;</div>
-                            <div style="text-align: center;">&nbsp;</div>
-                            ${TESOUREIRO_ASSINATURA}
-                            <div style="padding: 0 4rem; flex: 1;">
-                                ${TESOUREIRO_NOME}<br><strong>T&iacute;tulo Eleitoral&nbsp;</strong><strong>n&ordm;
-                                    ${TESOUREIRO_TITULO}</strong>
-                            </div>
-                        </div>
-                    </td>
-                    <td>&nbsp;</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr style="height: 50px;">
-                    <td style="background: PARTIDO_COR;" colspan="3">
-                        <footer style="width: 100%; height: 3rem; background: PARTIDO_COR;">
-                            <div
-                                style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white;">
-                                <div style="margin: 0rem 3rem; text-align: center;">
-                                    <p style="line-height: 0; font-size: 10px;">{DIRETORIO_ENDERECO} -
-                                        {DIRETORIO_TELEFONE}</p>
-                                </div>
-                            </div>
-                        </footer>
                     </td>
                 </tr>
             </tfoot>
         </table>
     </div>
+
 </body>
 
 </html>

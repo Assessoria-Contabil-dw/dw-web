@@ -20,8 +20,8 @@ module.exports = {
       colors: {
         primary: '#feea51',
         primaryHover: '#f9dd04',
-        second: '#01eaa0',
-        secondHover: '#05be84',
+        second: '#22C55E',
+        secondHover: '#16A34A',
       },
       slate: {
         50: '#f8fafc',
