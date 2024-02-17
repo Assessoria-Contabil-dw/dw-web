@@ -20,8 +20,8 @@ const ButtonBase = forwardRef<Ref, ButtonBaseProps>(function ButtonBase(
       ref={ref}
       title={title}
       disabled={disabled || loading}
-      className={`flex h-10 items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 font-montserrat text-sm font-semibold transition-colors duration-150 
-      focus:outline-none focus:ring-2  focus:ring-slate-800
+      className={`flex h-10 items-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 font-montserrat text-sm font-medium transition-colors duration-150 
+     
       ${
         className || ""
       }`}

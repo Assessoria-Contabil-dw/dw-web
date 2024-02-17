@@ -30,14 +30,14 @@ export function PasswordInput({ placeholder, name, ...props }: TextInputProps) {
           outline-none"
       />
       <div className="input-style absolute right-0 top-0 h-full w-full bg-transparent 
-      peer-focus:ring-2 peer-focus:ring-primary " />
+      peer-focus-visible:ring-2 peer-focus-visible:ring-primary " />
 
       <button
         title="Mostrar senha"
         type="button"
         onClick={handleHidden}
         className="absolute right-0 top-0 flex h-full items-center justify-center rounded-sm p-2  text-slate-500 hover:text-slate-400
-        focus:outline-none focus:ring-2 focus:ring-primary"
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         {hidden ? <EyeOff size={18} /> : <Eye size={18} />}
       </button>

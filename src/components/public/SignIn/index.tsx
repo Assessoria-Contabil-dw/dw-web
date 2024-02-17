@@ -108,7 +108,7 @@ export function SignInForm() {
               Ainda não tem uma conta?{" "}
               <a
                 className="cursor-pointer text-second underline 
-                focus:ring-1 focus:ring-slate-800 focus:ring-offset-2  focus:rounded-sm"
+                focus-visible:ring-1 focus-visible:ring-slate-800 focus-visible:ring-offset-2  focus-visible:rounded-sm"
                 target="blank"
                 href="https://api.whatsapp.com/send?phone=559991014072"
               >

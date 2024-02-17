@@ -1,11 +1,11 @@
-import { useLinkData } from '@/hooks/useLinkData'
-import { Globe } from 'lucide-react'
+import { useLinkData } from "@/hooks/useLinkData";
+import { Globe } from "lucide-react";
 
 export default function ActiveLinks() {
-  const { data, isLoading } = useLinkData()
+  const { data, isLoading } = useLinkData();
 
   if (!data || isLoading) {
-    return null
+    return null;
   }
 
   return (
@@ -13,11 +13,12 @@ export default function ActiveLinks() {
       {data.map((item, index) => (
         <li
           key={index}
-          className="flex items-center justify-center border-[1px] border-dashed"
+          className="flex items-center justify-center border-[1px] border-dashed p-1"
         >
           <a
             href={item.url}
-            className="m-1 flex h-full w-full items-center justify-center"
+            className=" flex h-full w-full items-center justify-center 
+               rounded-sm focus-visible:outline-none  focus-visible:ring-2 focus-visible:ring-slate-800 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             target="_blank"
             rel="noreferrer"
           >
@@ -38,5 +39,5 @@ export default function ActiveLinks() {
         </li>
       ))}
     </ul>
-  )
+  );
 }

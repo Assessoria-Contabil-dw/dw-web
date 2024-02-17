@@ -34,10 +34,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className={`${montserrat.variable} bg-gray-50`}>
+      <body className={`${montserrat.variable} font-montserrat bg-gray-50`}>
         <Providers>
           <PrivateLayout>
-            <main className={`${inter.variable} relative flex h-[calc(100vh-3.5rem)]`}>
+            <main className={`${inter.variable} font-inter relative flex h-[calc(100vh-3.5rem)]`}>
               {children}
               <NavigationBody />
             </main>
