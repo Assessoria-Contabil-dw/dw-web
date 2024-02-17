@@ -42,7 +42,7 @@ export default function TableVigency({
       <div className="flex flex-col gap-2">
         <h4 className="text-h4">{title}</h4>
         <fieldset className="fieldset">
-          <table>
+          <table id='table-style'>
             <thead>
               <tr>
                 <th>Data Inicial</th>

@@ -55,8 +55,8 @@ export default function TableDirectory({
   return (
     <>
       <DeleteModel ref={modelDeleteRef} />
-      <fieldset className=" fieldset ">
-        <table>
+      <fieldset className="fieldset">
+        <table id='table-style'>
           <thead>
             <tr>
               <th>{loading && <LoadingSecond />}</th>

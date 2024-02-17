@@ -11,7 +11,7 @@ export default function TableMinSPC({ spc, title }: TableMinSPCData) {
       <div className="rounded-t-xl bg-blue-100 p-1">
         <h5 className="text-h5 text-center text-slate-600">{title}</h5>
       </div>
-      <table>
+      <table id='table-style'>
         <thead>
           <tr>
             <th className="text-[10px]">Ano</th>

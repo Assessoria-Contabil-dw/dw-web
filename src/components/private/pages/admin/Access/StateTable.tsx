@@ -24,7 +24,7 @@ export default function PermitState({ data }: ArrayState) {
       <DeleteModel ref={deleteRef} />
 
       <fieldset className="fieldset">
-        <table>
+        <table id='table-style'>
           <thead>
             <tr>
               <th>Estado</th>

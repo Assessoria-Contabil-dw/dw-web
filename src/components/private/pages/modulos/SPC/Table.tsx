@@ -117,7 +117,7 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
       <ViewSPC ref={modalViewRef} />
 
       <fieldset className="fieldset">
-        <table>
+        <table id='table-style'>
           <thead>
             <tr>
               <th>

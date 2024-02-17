@@ -75,7 +75,7 @@ export function AdvocateTable() {
       </div>
 
       <fieldset className="fieldset h-auto w-full rounded-lg px-3 py-2">
-        <table>
+        <table id='table-style'>
           <thead>
             <tr>
               <th>Nome</th>

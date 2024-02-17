@@ -23,7 +23,7 @@ export default function PermitParty({ data }: ArrayParty) {
       <DeleteModel ref={deleteRef} />
 
       <fieldset className="fieldset">
-        <table>
+        <table id='table-style'>
           <thead>
             <tr>
               <th>Partido</th>

@@ -23,7 +23,7 @@ export default function PermitCity({ data }: ArrayCity) {
       <DeleteModel ref={deleteRef} />
 
       <fieldset className="fieldset">
-        <table>
+        <table id='table-style'>
           <thead>
             <tr>
               <th>Minicipio</th>

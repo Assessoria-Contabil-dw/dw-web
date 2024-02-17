@@ -85,7 +85,7 @@ const UpdateSPC: ForwardRefRenderFunction<UpdateSPCRef> = (props, ref) => {
                       Dados SPCA
                     </h5>
                   </div>
-                  <table>
+                  <table id='table-style'>
                     <thead>
                       <tr>
                         <th className="text-[10px]">Ano</th>
@@ -147,7 +147,7 @@ const UpdateSPC: ForwardRefRenderFunction<UpdateSPCRef> = (props, ref) => {
                       Dados SPCE
                     </h5>
                   </div>
-                  <table>
+                  <table id='table-style'>
                     <thead>
                       <tr>
                         <th className="text-[10px]">Ano</th>

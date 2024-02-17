@@ -40,7 +40,7 @@ export function TableUser({ loading, data }: TableUserProps) {
       <PasswordUser ref={modelPassordRef} />
       <DeleteModel ref={modelDeleteRef} />
       <fieldset className="fieldset">
-        <table>
+        <table id='table-style'>
           <thead>
             <tr>
               <th></th>

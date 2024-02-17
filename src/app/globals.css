@@ -13,9 +13,7 @@
     list-style-type: none;
     list-style: none;
     text-decoration: none;
-  } 
-
-
+  }
 
   html ::-webkit-scrollbar {
     @apply h-2 w-2;
@@ -27,45 +25,44 @@
 
   html ::-webkit-scrollbar-track {
     @apply bg-slate-100;
-  } 
-
+  }
 
   /* table */
   .fieldset {
-    @apply border-[1px] border-slate-300 bg-white overflow-x-auto min-w-[18rem] h-auto rounded-lg px-3 py-2;
+    @apply h-auto min-w-[18rem] overflow-x-auto rounded-lg border-[1px] border-slate-300 bg-white px-3 py-2;
   }
 
   table {
     @apply w-full;
   }
 
-  table thead tr th,
-  table tbody tr td {
+  #table-style table thead tr th,
+  #table-style table tbody tr td {
     @apply mr-9;
   }
 
-  thead tr th,
-  tbody tr {
+  #table-style thead tr th,
+  #table-style tbody tr {
     @apply border-b-[1px] border-dashed border-slate-200;
   }
 
-  thead th {
+  #table-style thead th {
     @apply whitespace-nowrap p-2 text-left font-montserrat text-xs font-bold uppercase text-zinc-600;
   }
 
-  tbody tr td {
+  #table-style tbody tr td {
     @apply p-2 text-left font-sans text-[0.7rem] font-medium text-gray-400;
   }
 
-  tbody tr:last-child {
+  #table-style tbody tr:last-child {
     @apply border-b-0;
   }
 
-  tbody tr td ul {
+  #table-style tbody tr td ul {
     @apply flex flex-row justify-start gap-2;
   }
 
-  tbody tr td ul li a {
+  #table-style tbody tr td ul li a {
     @apply cursor-pointer rounded bg-slate-200 px-2 py-1 font-semibold text-white;
   }
 
@@ -73,15 +70,9 @@
     cursor: pointer;
   }
 
-
   body {
     @apply h-full w-full bg-slate-50 font-sans text-slate-900;
   }
-
-
-
-
-
 
   /* #painel option[value=""][disabled] {
     @apply hidden text-slate-300;
@@ -91,12 +82,9 @@
     @apply text-zinc-600;
   } */
 
-
-
   #painel ul li {
     @apply text-xs font-normal text-slate-800;
   }
-
 
   /* #painel .form,
   fieldset {
@@ -109,14 +97,13 @@
 }
 
 @layer components {
-
   /* text */
   .text-h1 {
     @apply font-montserrat text-xl font-semibold text-slate-900;
   }
 
   .text-h2 {
-    @apply font-montserrat text-lg leading-3 font-semibold text-slate-900;
+    @apply font-montserrat text-lg font-semibold leading-3 text-slate-900;
   }
 
   .text-h3 {
@@ -135,9 +122,8 @@
     @apply font-montserrat text-[10px] font-semibold text-slate-900;
   }
 
-
   .text-label {
-    @apply font-lexend text-slate-700 text-xs font-medium;
+    @apply font-lexend text-xs font-medium text-slate-700;
   }
 
   .text-select {
@@ -145,20 +131,16 @@
   }
 
   .text-span {
-    @apply font-normal text-xs text-slate-400
+    @apply text-xs font-normal text-slate-400;
   }
-
 
   /* input */
   .input-style {
-    @apply p-2 w-full h-10 rounded border border-slate-200 bg-white font-sans text-sm font-normal text-slate-600 
-    focus-visible:outline-none focus-visible:border-none focus-visible:ring-2 focus-visible:ring-primary;
+    @apply h-10 w-full rounded border border-slate-200 bg-white p-2 font-sans text-sm font-normal text-slate-600 
+    focus-visible:border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary;
   }
 
-
-
   /* ---------- */
-
 
   #root {
     @apply mb-16 flex h-full w-full flex-col overflow-auto;
@@ -176,71 +158,61 @@
     @apply rounded-[0.8rem] border-[1px] border-slate-300 bg-white p-8;
   }
 
-
-
-
-
   .button-second {
     @apply bg-second text-white hover:bg-secondHover disabled:bg-slate-400 disabled:text-white;
   }
 
   .button-tertiary {
-    @apply bg-white text-slate-700 h-fit hover:text-slate-800 p-2 hover:bg-primary hover:border-primary rounded-md border-slate-200 border-solid border-[1px];
+    @apply h-fit rounded-md border-[1px] border-solid border-slate-200 bg-white p-2 text-slate-700 hover:border-primary hover:bg-primary hover:text-slate-800;
   }
 
-
-
   .button-arrow {
-    @apply h-fit rounded-md border-slate-300 border-solid border-[1px] px-1 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-500 disabled:cursor-not-allowed disabled:opacity-30;
+    @apply h-fit rounded-md border-[1px] border-solid border-slate-300 px-1 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-500 disabled:cursor-not-allowed disabled:opacity-30;
   }
 
   .button-tool {
-    @apply h-6 w-fit rounded p-1 hover:bg-slate-100 hover:text-slate-500
+    @apply h-6 w-fit rounded p-1 hover:bg-slate-100 hover:text-slate-500;
   }
 
   .button-min {
-    @apply h-fit cursor-pointer hover:bg-primary bg-slate-300 px-1 py-1 text-xs text-slate-700
+    @apply h-fit cursor-pointer bg-slate-300 px-1 py-1 text-xs text-slate-700 hover:bg-primary;
   }
-
-
 
   .model-bg {
     @apply fixed right-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/50;
   }
 
   .model-size {
-    @apply px-5 py-4 bg-white rounded-xl border-[1px] border-slate-300;
+    @apply rounded-xl border-[1px] border-slate-300 bg-white px-5 py-4;
   }
 
   .model-size-min {
-    @apply overflow-x-auto min-w-[18rem];
+    @apply min-w-[18rem] overflow-x-auto;
   }
 
   .model-size-full {
-    @apply overflow-hidden max-md:w-[80%] w-2/4 h-[80%];
+    @apply h-[80%] w-2/4 overflow-hidden max-md:w-[80%];
   }
-
 
   .model-card {
     @apply flex h-full w-full flex-col items-start justify-start gap-2;
   }
 
   .model-header {
-    @apply flex w-full items-center justify-between leading-3 pb-1 border-b-[1px];
+    @apply flex w-full items-center justify-between border-b-[1px] pb-1 leading-3;
   }
 
-  .model-close{
-    @apply w-fit rounded-full p-0 text-slate-400 hover:text-slate-600
+  .model-close {
+    @apply w-fit rounded-full p-0 text-slate-400 hover:text-slate-600;
   }
   .model-body {
-    @apply flex w-full flex-col justify-start gap-8 overflow-y-auto h-full pr-1;
+    @apply flex h-full w-full flex-col justify-start gap-8 overflow-y-auto pr-1;
   }
 
   .model-loading {
-    @apply flex w-full h-full items-center justify-center;
+    @apply flex h-full w-full items-center justify-center;
   }
 }
-
 
 html,
 body {

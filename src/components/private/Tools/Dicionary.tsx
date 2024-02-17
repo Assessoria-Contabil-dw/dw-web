@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import InputBase from "../Search/Input/InputBase";
 import { DICIONARY_VARIABLES, Table } from "./dicionary.variables";
 
@@ -57,7 +57,7 @@ export default function Dicionary({ className }: DictionaryProps) {
         />
         {dictionary.map((table, index) => (
           Object.values(table)[0] &&
-          <table key={index}>
+          <table key={index } id='table-style'>
             <thead>
               <tr>
                 <th className="border-none text-left">{Object.keys(table)}</th>
