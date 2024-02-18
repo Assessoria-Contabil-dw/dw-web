@@ -60,15 +60,15 @@ export default function TableVigency({
                     <td>{v.dateFirst != null ? v.dateFirst : '-'}</td>
                     <td>{v.dateLast != null ? v.dateLast : '-'}</td>
                     <td>
-                      {v.president?.name != null ? v.president.name : '-'}
+                      {v.president?.name ? v.president.name : '-'}
                     </td>
                     <td>
-                      {v.vicePresident?.name != null
+                      {v.vicePresident?.name
                         ? v.vicePresident.name
                         : '-'}
                     </td>
                     <td>
-                      {v.treasurer?.name != null ? v.treasurer.name : '-'}
+                      {v.treasurer?.name ? v.treasurer.name : '-'}
                     </td>
 
                     <td className="text-right">

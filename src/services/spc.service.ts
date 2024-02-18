@@ -23,19 +23,6 @@ export class SPCService {
     vigencyStatus?: string
   ) {
     try {
-      console.log(
-        skip,
-        take,
-        partyCode,
-        stateId,
-        cityCode,
-        partyAbbreviation,
-        stateName,
-        cityName,
-        year,
-        legendId,
-        vigencyStatus
-      );
       const response = await api.get("/spcs", {
         params: {
           skip,

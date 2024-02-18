@@ -1,16 +1,16 @@
-import { useNotify } from '@/components/Toast/toast'
-import { api } from '@/lib/api'
-import { useRouter } from 'next/navigation'
+import { useNotify } from "@/components/Toast/toast";
+import { api } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 export class VigencyService {
-  notify = useNotify()
-  router = useRouter()
+  notify = useNotify();
+  router = useRouter();
 
   public async getAllById(
     id?: number,
     partyCode?: string,
     stateId?: string,
-    cityCode?: string,
+    cityCode?: string
   ) {
     try {
       const response = await api.get(`/vigencies/directory/${id}`, {
@@ -19,27 +19,38 @@ export class VigencyService {
           stateId,
           cityCode,
         },
-      })
-      return response.data
+      });
+      return response.data;
     } catch (error: any) {
       if (error.response.status === 403) {
-        this.notify({ type: 'warning', message: error.response.data.message })
-        this.router.push('/')
+        this.notify({ type: "warning", message: error.response.data.message });
+        this.router.push("/");
       }
-      return error
+      return error;
     }
   }
 
-  public async getVigencyById(id?: number) {
+  public async getVigencyById(
+    id?: number,
+    partyCode?: string,
+    stateId?: string,
+    cityCode?: string
+  ) {
     try {
-      const response = await api.get(`/vigencies/${id}`)
-      return response.data
+      const response = await api.get(`/vigency/${id}`, {
+        params: {
+          partyCode,
+          stateId,
+          cityCode,
+        },
+      });
+      return response.data;
     } catch (error: any) {
       if (error.response.status === 403) {
-        this.notify({ type: 'warning', message: error.response.data.message })
-        this.router.push('/')
+        this.notify({ type: "warning", message: error.response.data.message });
+        this.router.push("/");
       }
-      return error
+      return error;
     }
   }
 }

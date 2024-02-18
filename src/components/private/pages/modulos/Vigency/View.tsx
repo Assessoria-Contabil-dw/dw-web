@@ -1,45 +1,54 @@
-'use client'
-import { X } from 'lucide-react'
+"use client";
+import { X } from "lucide-react";
 import React, {
   ForwardRefRenderFunction,
   useCallback,
   useState,
   useImperativeHandle,
   forwardRef,
-} from 'react'
-import { LoadingSecond } from '@/components/Loading/second'
-import { useVigencyOne } from '@/hooks/useVigencyData'
+  useContext,
+} from "react";
+import { LoadingSecond } from "@/components/Loading/second";
+import { useVigencyOne } from "@/hooks/useVigencyData";
+import { AccessContext } from "@/provider/context.provider";
+import Image from "next/image";
 
 export interface ViewVigencyRef {
-  openModal: (id: string) => void
-  closeModal: () => void
+  openModal: (id: string) => void;
+  closeModal: () => void;
 }
 
 const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
   props,
-  ref,
+  ref
 ) => {
-  const [isModalView, setIsModalView] = useState(false)
-  const [vigencyId, setVigencyId] = useState('')
+  const [isModalView, setIsModalView] = useState(false);
+  const [vigencyId, setVigencyId] = useState("");
 
   const openModal = useCallback((id: string) => {
-    setVigencyId(id)
-    setIsModalView(true)
-  }, [])
+    setVigencyId(id);
+    setIsModalView(true);
+  }, []);
 
   const closeModal = useCallback(() => {
-    setIsModalView(false)
-  }, [])
+    setIsModalView(false);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     openModal,
     closeModal,
-  }))
+  }));
 
-  const { data: vigencyData, isLoading } = useVigencyOne(Number(vigencyId))
+  const { partyCode, cityCode, stateId } = useContext(AccessContext);
+  const { data: vigencyData, isLoading } = useVigencyOne(
+    Number(vigencyId),
+    partyCode,
+    stateId,
+    cityCode
+  );
 
   if (!isModalView) {
-    return null
+    return null;
   }
 
   return (
@@ -48,10 +57,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
         <div className="model-card">
           <div className="model-header">
             <div>
-              <h4 className="text-h4">Detalhes da vigência</h4>
+              <h4 className="text-h2">Detalhes da vigência</h4>
               <span className="text-span">
-                {vigencyData?.vigency.dateFirst} -{' '}
-                {vigencyData?.vigency.dateLast}
+                Visualize os detalhes da vigência
               </span>
             </div>
             <button onClick={closeModal} className="model-close">
@@ -64,108 +72,353 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
             </div>
           ) : (
             <div className="model-body">
-              <ul className="grid grid-cols-2 space-y-2 font-lexend text-sm text-slate-600 max-sm:grid-cols-1">
-                <li>
-                  <h5 className="text-h5">Partido</h5>
-                  <h4>
-                    {vigencyData?.vigency.party.abbreviation} -{' '}
-                    {vigencyData?.vigency.directory.surname}
-                  </h4>
-                </li>
-                <li>
-                  <h5 className="text-h5">CNPJ</h5>
-                  {vigencyData?.vigency.directory.cnpj != null ? (
-                    <h4>{vigencyData?.vigency.directory.cnpj}</h4>
-                  ) : (
-                    <span className="text-span">Não cadastrado</span>
-                  )}
-                </li>
-                <li>
-                  <h5 className="text-h5">Endereço</h5>
-                  {vigencyData?.vigency.directory.address != null ? (
-                    <h4>{vigencyData?.vigency.directory.address}</h4>
-                  ) : (
-                    <span className="text-span">Não cadastrado</span>
-                  )}
-                </li>
-                <li>
-                  <h5 className="text-h5">E-mail</h5>
-                  {vigencyData?.vigency.directory.email != null ? (
-                    <h4>{vigencyData?.vigency.directory.email}</h4>
-                  ) : (
-                    <span className="text-span">Não cadastrado</span>
-                  )}
-                </li>
-                <li>
-                  <h5 className="text-h5">Telefone</h5>
-                  {vigencyData?.vigency.directory.phone != null ? (
-                    <h4>{vigencyData?.vigency.directory.phone}</h4>
-                  ) : (
-                    <span className="text-span">Não cadastrado</span>
-                  )}
-                </li>
-              </ul>
+              <div className=" flex w-full flex-col gap-6">
+                <div className="flex w-full flex-col gap-4 rounded-md bg-slate-50 p-3">
+                  <div className="flex w-full flex-col justify-between gap-4 sm:flex-row">
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Período</h5>
+                      <p className="text-xs text-slate-500">
+                        De {vigencyData?.vigency.dateFirst} à{" "}
+                        {vigencyData?.vigency.dateLast}
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Status</h5>
+                      <p className="text-xs text-slate-500">
+                        {vigencyData?.vigency.status ? "Ativo" : "Inativo"}
+                      </p>
+                    </div>
 
-              <ul className="grid grid-cols-3 space-y-2  font-lexend text-sm text-slate-600 max-sm:grid-cols-1">
-                <li>
-                  <h5 className="text-h5">Presidente</h5>
-                  {vigencyData?.president != null ? (
-                    <h4>{vigencyData.president.name}</h4>
-                  ) : (
-                    <span className="text-span">Não cadastrado</span>
-                  )}
-                </li>
-                <li>
-                  <h5 className="text-h5"> Vice-Presidente</h5>
-                  {vigencyData?.vicePresident != null ? (
-                    <h4>{vigencyData.vicePresident.name}</h4>
-                  ) : (
-                    <span className="text-span">Não cadastrado</span>
-                  )}
-                </li>
-                <li>
-                  <h5 className="text-h5">Tesoureiro</h5>
-                  {vigencyData?.treasurer != null ? (
-                    <h4>{vigencyData?.treasurer.name}</h4>
-                  ) : (
-                    <span className="text-span">Não cadastrado</span>
-                  )}
-                </li>
-              </ul>
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Partido</h5>
+                      <p className="text-xs text-slate-500">
+                        {vigencyData?.vigency.party.abbreviation} -{" "}
+                        {vigencyData?.vigency.directory.surname}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h5 className="text-h5">Endereço</h5>
+                    {vigencyData?.vigency.directory.address != null ? (
+                      <p className="text-xs text-slate-500">
+                        {vigencyData?.vigency.directory.address}
+                      </p>
+                    ) : (
+                      <span className="text-span">Não cadastrado</span>
+                    )}
+                  </div>
+                  <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">CNPJ</h5>
+                      {vigencyData?.vigency.directory.cnpj != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.vigency.directory.cnpj}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
 
-              <ul className="grid grid-cols-2 space-y-2  font-lexend text-sm text-slate-600 max-sm:grid-cols-1">
-                <li>
-                  <h5 className="text-h5">Advogados</h5>
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">E-mail</h5>
+                      {vigencyData?.vigency.directory.email != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.vigency.directory.email}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Telefone</h5>
+                      {vigencyData?.vigency.directory.phone != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.vigency.directory.phone}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <fieldset className="flex flex-col gap-2 rounded-md border-[1px] p-3">
+                  <legend className="text-label">
+                    Informações do Presidente
+                  </legend>
+
+                  <div className="flex items-start justify-between gap-4 max-sm:flex-col">
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Nome</h5>
+                      {vigencyData?.president.name != null ? (
+                        <p className="text-xs font-semibold text-secondHover">
+                          {vigencyData?.president.name}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">E-mail</h5>
+                      {vigencyData?.president.email != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.president.email}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <h5 className="text-h5">Endereço</h5>
+                    {vigencyData?.president.address != null ? (
+                      <p className="text-xs text-slate-500">
+                        {vigencyData?.president.address}
+                      </p>
+                    ) : (
+                      <span className="text-span">Não cadastrado</span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Telefone</h5>
+                      {vigencyData?.president.phone != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.president.phone}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Status</h5>
+                      {vigencyData?.president.status != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.president.status}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Profissão</h5>
+                      {vigencyData?.president.profession != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.president.profession}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+                  </div>
+                </fieldset>
+
+                <fieldset className="flex flex-col gap-2 rounded-md border-[1px] p-3">
+                  <legend className="text-label">
+                    Informações do Vice-Presidente
+                  </legend>
+
+                  <div className="flex items-start justify-between gap-4 max-sm:flex-col">
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Nome</h5>
+                      {vigencyData?.vicePresident.name != null ? (
+                        <p className="text-xs font-semibold text-secondHover">
+                          {vigencyData?.vicePresident.name}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">E-mail</h5>
+                      {vigencyData?.vicePresident.email != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.vicePresident.email}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <h5 className="text-h5">Endereço</h5>
+                    {vigencyData?.vicePresident.address != null ? (
+                      <p className="text-xs text-slate-500">
+                        {vigencyData?.vicePresident.address}
+                      </p>
+                    ) : (
+                      <span className="text-span">Não cadastrado</span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Telefone</h5>
+                      {vigencyData?.vicePresident.phone != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.vicePresident.phone}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Status</h5>
+                      {vigencyData?.vicePresident.status != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.vicePresident.status}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Profissão</h5>
+                      {vigencyData?.vicePresident.profession != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.vicePresident.profession}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+                  </div>
+                </fieldset>
+
+                <fieldset className="flex flex-col gap-2 rounded-md border-[1px] p-3">
+                  <legend className="text-label">
+                    Informações do Tesoureiro
+                  </legend>
+
+                  <div className="flex items-start justify-between gap-4 max-sm:flex-col">
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5 ">Nome</h5>
+                      {vigencyData?.treasurer.name != null ? (
+                        <p className="text-xs font-semibold text-secondHover">
+                          {vigencyData?.treasurer.name}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">E-mail</h5>
+                      {vigencyData?.treasurer.email != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.treasurer.email}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <h5 className="text-h5">Endereço</h5>
+                    {vigencyData?.treasurer.address != null ? (
+                      <p className="text-xs text-slate-500">
+                        {vigencyData?.treasurer.address}
+                      </p>
+                    ) : (
+                      <span className="text-span">Não cadastrado</span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Telefone</h5>
+                      {vigencyData?.treasurer.phone != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.treasurer.phone}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Status</h5>
+                      {vigencyData?.treasurer.status != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.treasurer.status}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h5 className="text-h5">Profissão</h5>
+                      {vigencyData?.treasurer.profession != null ? (
+                        <p className="text-xs text-slate-500">
+                          {vigencyData?.treasurer.profession}
+                        </p>
+                      ) : (
+                        <span className="text-span">Não cadastrado</span>
+                      )}
+                    </div>
+                  </div>
+                </fieldset>
+
+                <fieldset className="flex flex-col gap-2 rounded-md border-[1px] p-3">
+                  <legend className="text-label">Advogados</legend>
 
                   {vigencyData?.advocates === null ? (
                     <span className="text-span">Não cadastrado</span>
                   ) : (
-                    vigencyData?.advocates.map((advocate, index) => (
-                      <h4 key={index}>
-                        {advocate.name} - {advocate.oab}
-                      </h4>
-                    ))
-                  )}
-                </li>
+                    <ul>
+                      {vigencyData?.advocates.map((advocate, index) => (
+                        <li key={index} className="rounded bg-slate-100 p-1">
+                          <div className="flex gap-4">
+                            <div className="flex flex-col gap-1">
+                              <h5 className="text-h5 ">Nome</h5>
+                              {advocate.name != null ? (
+                                <p className="text-xs text-slate-500">
+                                  {advocate.name}
+                                </p>
+                              ) : (
+                                <span className="text-span">
+                                  Não cadastrado
+                                </span>
+                              )}
+                            </div>
 
-                <li>
-                  <h5 className="text-h5">Escritorio</h5>
-
-                  {vigencyData?.lawFirm === null ? (
-                    <span className="text-span">Não cadastrado</span>
-                  ) : (
-                    vigencyData?.lawFirm.map((lawfirm, index) => (
-                      <h4 key={index}>{lawfirm.name}</h4>
-                    ))
+                            <div className="flex flex-col gap-1">
+                              <h5 className="text-h5 ">OAB</h5>
+                              {advocate.oab != null ? (
+                                <p className="text-xs text-slate-500">
+                                  {advocate.oab}
+                                </p>
+                              ) : (
+                                <span className="text-span">
+                                  Não cadastrado
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
                   )}
-                </li>
-              </ul>
+                </fieldset>
+              </div>
             </div>
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default forwardRef(ViewVigencyModel)
+export default forwardRef(ViewVigencyModel);

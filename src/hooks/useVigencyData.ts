@@ -25,12 +25,12 @@ export function useVigencyData(
   return query
 }
 
-export function useVigencyOne(id?: number) {
+export function useVigencyOne(id?: number, partyCode?: string, stateId?: string, cityCode?: string) {
   const vigencyService = new VigencyService()
 
   const query = useQuery<VigencyProps>(
     ['vigencyData', id],
-    () => vigencyService.getVigencyById(id),
+    () => vigencyService.getVigencyById(id, partyCode, stateId, cityCode),
     {
       keepPreviousData: true,
       staleTime: 1000 * 60 * 60 * 12,

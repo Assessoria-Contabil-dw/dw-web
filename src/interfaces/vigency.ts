@@ -31,6 +31,7 @@ export interface VigencyProps {
     vigencyId: number
     dateFirst: string
     dateLast: string
+    status: boolean
     directory: {
       address: string
       cnpj: string
