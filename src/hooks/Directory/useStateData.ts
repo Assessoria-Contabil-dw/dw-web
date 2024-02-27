@@ -1,5 +1,5 @@
 import { StateProps } from '@/interfaces/types'
-import { StateService } from '@/services/state.service'
+import { StateService } from '@/services/Directory/state.service'
 import { useQuery } from 'react-query'
 
 export function useStateData() {

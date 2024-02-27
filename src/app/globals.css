@@ -47,11 +47,11 @@
   }
 
   #table-style thead th {
-    @apply whitespace-nowrap p-2 text-left font-montserrat text-xs font-bold uppercase text-zinc-600;
+    @apply whitespace-nowrap p-2 text-left font-mono text-xs font-bold uppercase text-zinc-600;
   }
 
   #table-style tbody tr td {
-    @apply p-2 text-left font-sans text-[0.7rem] font-medium text-gray-400;
+    @apply p-2 text-left font-sans text-[0.7rem] font-semibold text-slate-400;
   }
 
   #table-style tbody tr:last-child {
@@ -99,31 +99,31 @@
 @layer components {
   /* text */
   .text-h1 {
-    @apply font-montserrat text-xl font-semibold text-slate-900;
+    @apply font-mono text-xl font-semibold text-slate-900;
   }
 
   .text-h2 {
-    @apply font-montserrat text-lg font-semibold text-slate-900;
+    @apply font-mono text-lg font-semibold text-slate-900;
   }
 
   .text-h3 {
-    @apply font-montserrat text-base font-semibold text-slate-900;
+    @apply font-mono text-base font-semibold text-slate-900;
   }
 
   .text-h4 {
-    @apply font-montserrat text-sm font-semibold text-slate-900;
+    @apply font-mono text-sm font-semibold text-slate-900;
   }
 
   .text-h5 {
-    @apply font-montserrat text-xs font-semibold text-slate-900;
+    @apply font-mono text-xs font-semibold text-slate-900;
   }
 
   .text-h6 {
-    @apply font-montserrat text-[10px] font-semibold text-slate-900;
+    @apply font-mono text-[10px] font-semibold text-slate-900;
   }
 
   .text-label {
-    @apply font-montserrat text-xs font-normal text-slate-600;
+    @apply font-serif text-sm font-medium text-slate-600;
   }
 
   .text-select {
@@ -191,7 +191,7 @@
   }
 
   .model-size-full {
-    @apply h-[80%] w-2/4 overflow-hidden max-md:w-[80%];
+    @apply h-[70%] w-2/4 overflow-hidden max-md:w-[80%];
   }
 
   .model-card {
@@ -206,7 +206,7 @@
     @apply w-fit rounded-full p-0 text-slate-400 hover:text-slate-600;
   }
   .model-body {
-    @apply flex h-full w-full flex-col justify-start gap-8 overflow-y-auto pr-1;
+    @apply flex h-full w-full flex-col justify-start gap-8  overflow-y-auto px-4;
   }
 
   .model-loading {

@@ -9,9 +9,8 @@ import React, {
   useContext,
 } from "react";
 import { LoadingSecond } from "@/components/Loading/second";
-import { useVigencyOne } from "@/hooks/useVigencyData";
 import { AccessContext } from "@/provider/context.provider";
-import Image from "next/image";
+import { useVigencyOne } from "@/hooks/Directory/useVigency";
 
 export interface ViewVigencyRef {
   openModal: (id: string) => void;
@@ -53,7 +52,7 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
   return (
     <div className="model-bg">
-      <div className="model-size model-size-full">
+      <div className="model-size  model-size-full">
         <div className="model-card">
           <div className="model-header">
             <div>
@@ -82,6 +81,16 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                         {vigencyData?.vigency.dateLast}
                       </p>
                     </div>
+                    {
+                      vigencyData?.vigency.daysVenciment ? (
+                        <div className="flex flex-col gap-1">
+                          <h5 className="text-h5">Vencimento</h5>
+                          <p className="text-xs text-slate-500">
+                            Faltam {vigencyData?.vigency.daysVenciment}
+                          </p>
+                        </div>
+                      ) : null
+                    }
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Status</h5>
                       <p className="text-xs text-slate-500">
@@ -89,17 +98,18 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                       </p>
                     </div>
 
-                    <div className="flex flex-col gap-1">
+                    
+                  </div>
+                  <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Partido</h5>
                       <p className="text-xs text-slate-500">
                         {vigencyData?.vigency.party.abbreviation} -{" "}
                         {vigencyData?.vigency.directory.surname}
                       </p>
                     </div>
-                  </div>
                   <div className="flex flex-col gap-1">
                     <h5 className="text-h5">Endereço</h5>
-                    {vigencyData?.vigency.directory.address != null ? (
+                    {vigencyData?.vigency.directory.address ? (
                       <p className="text-xs text-slate-500">
                         {vigencyData?.vigency.directory.address}
                       </p>
@@ -110,7 +120,7 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                   <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">CNPJ</h5>
-                      {vigencyData?.vigency.directory.cnpj != null ? (
+                      {vigencyData?.vigency.directory.cnpj ? (
                         <p className="text-xs text-slate-500">
                           {vigencyData?.vigency.directory.cnpj}
                         </p>
@@ -121,7 +131,7 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">E-mail</h5>
-                      {vigencyData?.vigency.directory.email != null ? (
+                      {vigencyData?.vigency.directory.email ? (
                         <p className="text-xs text-slate-500">
                           {vigencyData?.vigency.directory.email}
                         </p>
@@ -132,7 +142,7 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Telefone</h5>
-                      {vigencyData?.vigency.directory.phone != null ? (
+                      {vigencyData?.vigency.directory.phone ? (
                         <p className="text-xs text-slate-500">
                           {vigencyData?.vigency.directory.phone}
                         </p>
@@ -151,9 +161,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                   <div className="flex items-start justify-between gap-4 max-sm:flex-col">
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Nome</h5>
-                      {vigencyData?.president.name != null ? (
+                      {vigencyData?.president?.name ? (
                         <p className="text-xs font-semibold text-secondHover">
-                          {vigencyData?.president.name}
+                          {vigencyData?.president?.name}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -162,9 +172,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">E-mail</h5>
-                      {vigencyData?.president.email != null ? (
+                      {vigencyData?.president?.email ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.president.email}
+                          {vigencyData?.president?.email}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -174,9 +184,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                   <div className="flex flex-col gap-1">
                     <h5 className="text-h5">Endereço</h5>
-                    {vigencyData?.president.address != null ? (
+                    {vigencyData?.president?.address ? (
                       <p className="text-xs text-slate-500">
-                        {vigencyData?.president.address}
+                        {vigencyData?.president?.address}
                       </p>
                     ) : (
                       <span className="text-span">Não cadastrado</span>
@@ -186,9 +196,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                   <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Telefone</h5>
-                      {vigencyData?.president.phone != null ? (
+                      {vigencyData?.president?.phone ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.president.phone}
+                          {vigencyData?.president?.phone}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -197,9 +207,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Status</h5>
-                      {vigencyData?.president.status != null ? (
+                      {vigencyData?.president?.status ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.president.status}
+                          {vigencyData?.president?.status}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -208,9 +218,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Profissão</h5>
-                      {vigencyData?.president.profession != null ? (
+                      {vigencyData?.president?.profession ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.president.profession}
+                          {vigencyData?.president?.profession}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -227,9 +237,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                   <div className="flex items-start justify-between gap-4 max-sm:flex-col">
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Nome</h5>
-                      {vigencyData?.vicePresident.name != null ? (
+                      {vigencyData?.vicePresident?.name ? (
                         <p className="text-xs font-semibold text-secondHover">
-                          {vigencyData?.vicePresident.name}
+                          {vigencyData?.vicePresident?.name}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -238,9 +248,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">E-mail</h5>
-                      {vigencyData?.vicePresident.email != null ? (
+                      {vigencyData?.vicePresident?.email ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.vicePresident.email}
+                          {vigencyData?.vicePresident?.email}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -250,9 +260,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                   <div className="flex flex-col gap-1">
                     <h5 className="text-h5">Endereço</h5>
-                    {vigencyData?.vicePresident.address != null ? (
+                    {vigencyData?.vicePresident?.address ? (
                       <p className="text-xs text-slate-500">
-                        {vigencyData?.vicePresident.address}
+                        {vigencyData?.vicePresident?.address}
                       </p>
                     ) : (
                       <span className="text-span">Não cadastrado</span>
@@ -262,9 +272,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                   <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Telefone</h5>
-                      {vigencyData?.vicePresident.phone != null ? (
+                      {vigencyData?.vicePresident?.phone ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.vicePresident.phone}
+                          {vigencyData?.vicePresident?.phone}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -273,9 +283,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Status</h5>
-                      {vigencyData?.vicePresident.status != null ? (
+                      {vigencyData?.vicePresident?.status ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.vicePresident.status}
+                          {vigencyData?.vicePresident?.status}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -284,9 +294,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Profissão</h5>
-                      {vigencyData?.vicePresident.profession != null ? (
+                      {vigencyData?.vicePresident?.profession ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.vicePresident.profession}
+                          {vigencyData?.vicePresident?.profession}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -303,9 +313,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                   <div className="flex items-start justify-between gap-4 max-sm:flex-col">
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5 ">Nome</h5>
-                      {vigencyData?.treasurer.name != null ? (
+                      {vigencyData?.treasurer?.name ? (
                         <p className="text-xs font-semibold text-secondHover">
-                          {vigencyData?.treasurer.name}
+                          {vigencyData?.treasurer?.name}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -314,9 +324,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">E-mail</h5>
-                      {vigencyData?.treasurer.email != null ? (
+                      {vigencyData?.treasurer?.email ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.treasurer.email}
+                          {vigencyData?.treasurer?.email}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -326,9 +336,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                   <div className="flex flex-col gap-1">
                     <h5 className="text-h5">Endereço</h5>
-                    {vigencyData?.treasurer.address != null ? (
+                    {vigencyData?.treasurer?.address ? (
                       <p className="text-xs text-slate-500">
-                        {vigencyData?.treasurer.address}
+                        {vigencyData?.treasurer?.address}
                       </p>
                     ) : (
                       <span className="text-span">Não cadastrado</span>
@@ -338,9 +348,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                   <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Telefone</h5>
-                      {vigencyData?.treasurer.phone != null ? (
+                      {vigencyData?.treasurer?.phone ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.treasurer.phone}
+                          {vigencyData?.treasurer?.phone}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -349,9 +359,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Status</h5>
-                      {vigencyData?.treasurer.status != null ? (
+                      {vigencyData?.treasurer?.status ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.treasurer.status}
+                          {vigencyData?.treasurer?.status}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -360,9 +370,9 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                     <div className="flex flex-col gap-1">
                       <h5 className="text-h5">Profissão</h5>
-                      {vigencyData?.treasurer.profession != null ? (
+                      {vigencyData?.treasurer?.profession ? (
                         <p className="text-xs text-slate-500">
-                          {vigencyData?.treasurer.profession}
+                          {vigencyData?.treasurer?.profession}
                         </p>
                       ) : (
                         <span className="text-span">Não cadastrado</span>
@@ -383,7 +393,7 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                           <div className="flex gap-4">
                             <div className="flex flex-col gap-1">
                               <h5 className="text-h5 ">Nome</h5>
-                              {advocate.name != null ? (
+                              {advocate.name ? (
                                 <p className="text-xs text-slate-500">
                                   {advocate.name}
                                 </p>
@@ -396,10 +406,54 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
 
                             <div className="flex flex-col gap-1">
                               <h5 className="text-h5 ">OAB</h5>
-                              {advocate.oab != null ? (
+                              {advocate.oab ? (
                                 <p className="text-xs text-slate-500">
                                   {advocate.oab}
                                 </p>
+                              ) : (
+                                <span className="text-span">
+                                  Não cadastrado
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </fieldset>
+
+                <fieldset className="flex flex-col gap-2 rounded-md border-[1px] p-3">
+                  <legend className="text-label">Escritorios</legend>
+
+                  {vigencyData?.lawFirm === null ? (
+                    <span className="text-span">Não cadastrado</span>
+                  ) : (
+                    <ul>
+                      {vigencyData?.lawFirm.map((item, index) => (
+                        <li key={index} className="rounded bg-slate-100 p-1">
+                          <div className="flex gap-4">
+                            <div className="flex flex-col gap-1">
+                              <h5 className="text-h5 ">Nome</h5>
+                              {item.name ? (
+                                <p className="text-xs text-slate-500">
+                                  {item.name}
+                                </p>
+                              ) : (
+                                <span className="text-span">
+                                  Não cadastrado
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="flex flex-col gap-1">
+                              <h5 className="text-h5 ">Advogados</h5>
+                              {item.advocates.length > 0  ? (
+                              item.advocates.map((advocate, index) => (
+                                <p key={index} className="text-xs text-slate-500">
+                                  {advocate.name}
+                                </p>
+                              ))
                               ) : (
                                 <span className="text-span">
                                   Não cadastrado

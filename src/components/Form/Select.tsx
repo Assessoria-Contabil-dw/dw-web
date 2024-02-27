@@ -4,9 +4,9 @@ import { useFormContext } from 'react-hook-form'
 interface TextInputProps extends SelectHTMLAttributes<HTMLSelectElement> {
   placeholder?: string
   type: string
-  value: string
+  value?: string
   name: string
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void
+  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
 export function SelectInput({

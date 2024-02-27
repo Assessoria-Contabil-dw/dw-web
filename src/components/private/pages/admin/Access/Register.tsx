@@ -1,9 +1,10 @@
 import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
 import { LoadingSecond } from '@/components/Loading/second'
 import { useNotify } from '@/components/Toast/toast'
-import { useCityData } from '@/hooks/useCityData'
-import { usePartyData } from '@/hooks/usePartyData'
-import { useStateData } from '@/hooks/useStateData'
+import { useCityData } from '@/hooks/Directory/useCityData'
+import { usePartyData } from '@/hooks/Directory/usePartyData'
+import { useStateData } from '@/hooks/Directory/useStateData'
+
 import { api } from '@/lib/api'
 import { queryClient } from '@/provider/query.provider'
 import { X } from 'lucide-react'

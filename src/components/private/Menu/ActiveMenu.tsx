@@ -19,11 +19,11 @@ export default function ActiveMenu({ openMenu, setOpenMenu }: ActiveMenuProps) {
               : 'rotate-0 transition duration-300'
           }`}
         >
-          <ChevronRight />
+          <ChevronRight size={18} />
         </i>
       }
       title="Menu"
-      className="h-fit w-fit rounded-none rounded-r-full border-l-0 bg-white px-0  py-3 md:hidden"
+      className="h-fit w-fit rounded-none rounded-r-full border-l-0 bg-white pl-0 pr-0 py-2 md:hidden"
     />
   )
 }

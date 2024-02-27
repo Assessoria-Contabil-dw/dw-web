@@ -47,12 +47,18 @@ export function SignInForm() {
       notify({ type: "success", message: "Acesso realizado!" });
       router.push("");
     } catch (error: any) {
-      if (error.response) {
+      if (error.status === 500) {
+        console.error(error);
         return notify({
           type: "error",
-          message: error.response.data.message || "Erro ao realizar acesso",
+          message: "Erro interno, tente novamente mais tarde",
         });
       }
+
+      return notify({
+        type: "error",
+        message: error.message || "Erro inesperado, tente novamente mais tarde",
+      });
     }
   }
   return (
@@ -104,7 +110,7 @@ export function SignInForm() {
             >
               Entrar
             </ButtonPrimary>
-            <p className="font-inter text-sm font-normal text-slate-500">
+            <p className="font-sans text-xs font-normal text-slate-500">
               Ainda não tem uma conta?{" "}
               <a
                 className="cursor-pointer text-second underline 

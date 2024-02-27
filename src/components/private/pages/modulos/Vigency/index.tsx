@@ -8,10 +8,10 @@ import { AccessContext } from '@/provider/context.provider'
 import { RefreshButton } from '@/components/Buttons/ButtonRefresh'
 import { User } from '@/lib/auth'
 import { queryClient } from '@/provider/query.provider'
-import { useVigencyData } from '@/hooks/useVigencyData'
 import TableVigency from './Table'
 import { ButtomBack } from '@/components/Buttons/ButtonBack'
 import ButtonIcon from '@/components/Buttons/ButtonIcon'
+import { useVigencyData } from '@/hooks/Directory/useVigency'
 
 export function VigencyTable() {
   const params = useParams()
@@ -26,7 +26,7 @@ export function VigencyTable() {
   }, [])
 
   const { data, isLoading, isFetching, error } = useVigencyData(
-    Number(id),
+    id,
     partyCode,
     stateId,
     cityCode,
@@ -60,7 +60,7 @@ export function VigencyTable() {
         </div>
 
         <div className="flex gap-2">
-          <RefreshButton isLoading={isFetching} queryName="vigencyData" />
+          <RefreshButton isLoading={isFetching} queryName="vigenciesData" />
           {user?.role === 'ADMIN' && (
             <ButtonIcon
               title="Adicionar Vigência"

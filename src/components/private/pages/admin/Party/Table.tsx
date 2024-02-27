@@ -4,8 +4,8 @@ import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import DeleteModel, { DeleteRef } from '../../../../Model/Delete'
 import { RefreshButton } from '../../../../Buttons/ButtonRefresh'
 import { LoadingSecond } from '@/components/Loading/second'
-import { usePartyData } from '@/hooks/usePartyData'
 import PaddingTable from '@/components/private/Tools/TablePadding'
+import { usePartyData } from '@/hooks/Directory/usePartyData'
 
 export function PartyTable() {
   const [page, setPage] = useState(0)
@@ -177,6 +177,7 @@ export function PartyTable() {
             nextPage={nextPage}
             prevPage={prevPage}
             next={data?.info?.next ?? null}
+            
           />
         ) : null}
       </div>

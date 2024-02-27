@@ -4,7 +4,7 @@ export class PartyService {
   public async getAll(
     skip?: number,
     take?: number,
-    name?: string,
+    abbreviation?: string,
     code?: string,
   ) {
     try {
@@ -12,7 +12,7 @@ export class PartyService {
         params: {
           skip,
           take,
-          name,
+          abbreviation,
           code,
         },
       })

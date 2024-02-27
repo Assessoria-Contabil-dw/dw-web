@@ -1,22 +1,24 @@
-'use client'
+"use client";
 
-import { DirectoryProps } from '@/interfaces/types'
-import { Circle, Lock } from 'lucide-react'
-import { TableOptions } from '../../../Tools/TableOptions'
-import { LoadingSecond } from '@/components/Loading/second'
+import { DirectoryProps } from "@/interfaces/types";
+import { Bell, BellDot, BellRing, Circle, Lock, SirenIcon } from "lucide-react";
+import { TableOptions } from "../../../Tools/TableOptions";
+import { LoadingSecond } from "@/components/Loading/second";
 
-import { useContext, useRef } from 'react'
-import { AccessContext } from '@/provider/context.provider'
-import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
-import { useAccessModuleData } from '@/hooks/useAccess'
+import { useCallback, useContext, useRef } from "react";
+import { AccessContext } from "@/provider/context.provider";
+import DeleteModel, { DeleteRef } from "@/components/Model/Delete";
+import { useAccessModuleData } from "@/hooks/useAccess";
+import ViewModel, { ViewRef } from "./View";
+import { CalendarClock } from "lucide-react";
 
 interface TableDirectoryProps {
-  role: string
-  data?: DirectoryProps[] | null
-  loading?: boolean
-  partyCode?: string,
-  stateId?: string,
-  cityCode?: string,
+  role: string;
+  data?: DirectoryProps[] | null;
+  loading?: boolean;
+  partyCode?: string;
+  stateId?: string;
+  cityCode?: string;
 }
 
 export default function TableDirectory({
@@ -27,36 +29,42 @@ export default function TableDirectory({
   stateId,
   cityCode,
 }: TableDirectoryProps) {
-  const { setRouter } = useContext(AccessContext)
+  const { setRouter } = useContext(AccessContext);
   const { data: modulesData } = useAccessModuleData(
     partyCode,
     stateId,
-    cityCode,
-  )
+    cityCode
+  );
 
   const handleButtonClick = (id: number) => {
-    setRouter(`/diretorio/vigencia/${id}`)
-  }
+    setRouter(`/diretorio/vigencia/${id}`);
+  };
 
-  const modelDeleteRef = useRef<DeleteRef>(null)
+  const modelDeleteRef = useRef<DeleteRef>(null);
   const handleDeleteDirectory = (id: number, surname: string) => {
     modelDeleteRef.current?.openModal(
       String(id),
-      'directories',
+      "directory",
       `Deseja excluir o diretório ${surname}?`,
-      'directoryData',
-    )
-  }
+      "directoryData"
+    );
+  };
 
-  console.log(modulesData?.modules)
-  function handleViewDirectory() {}
-  function handleEditDirectory() {}
+  const modelViewRef = useRef<ViewRef>(null);
+  const handleViewModal = useCallback((id: number) => {
+    modelViewRef.current?.openModal(String(id));
+  }, []);
+
+  function handleEditDirectory() {
+    alert("Em andamento");
+  }
 
   return (
     <>
       <DeleteModel ref={modelDeleteRef} />
+      <ViewModel ref={modelViewRef} />
       <fieldset className="fieldset">
-        <table id='table-style'>
+        <table id="table-style">
           <thead>
             <tr>
               <th>{loading && <LoadingSecond />}</th>
@@ -75,7 +83,7 @@ export default function TableDirectory({
                 <tr key={directory.id}>
                   <td
                     className="cursor-pointer"
-                    title={directory.vigencyStatus ? 'Ativo' : 'Inativo'}
+                    title={directory.vigencyStatus ? "Ativo" : "Inativo"}
                   >
                     <Circle
                       className={
@@ -90,21 +98,29 @@ export default function TableDirectory({
                     <button
                       title="Visualizar Vigências"
                       disabled={
-                        role === 'CLIENT'
+                        role === "CLIENT"
                           ? !modulesData?.modules.find(
-                              (item) => item.module === 'Visualizar Vigências',
+                              (item) => item.module === "Visualizar Vigências"
                             )
                           : false
                       }
                       onClick={() => {
-                        handleButtonClick(directory.id)
+                        handleButtonClick(directory.id);
                       }}
-                      className="group flex items-center gap-1 text-start font-medium text-secondHover disabled:cursor-not-allowed disabled:text-slate-400
-                      "
+                      className="group relative flex items-center gap-1 text-start font-semibold text-secondHover disabled:cursor-not-allowed disabled:text-slate-400"
                     >
-                      <span className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap">
+                      <span
+                        title={directory.surname}
+                        className="max-w-[10rem] overflow-hidden text-ellipsis whitespace-nowrap "
+                      >
                         {directory.surname}
                       </span>
+
+                      {directory._vigencyCountVeciment > 0 ? (
+                        <i title="Data de vencimento próxima">
+                          <BellRing className="text-red-500" size={16} />
+                        </i>
+                      ) : null}
 
                       <i className="hidden group-disabled:block">
                         <Lock size={12} />
@@ -113,26 +129,26 @@ export default function TableDirectory({
                   </td>
                   <td className="uppercase">{directory.party}</td>
                   <td className="uppercase">
-                    {directory.state == null ? '-' : directory.state}
+                    {directory.state == null ? "-" : directory.state}
                   </td>
                   <td className="capitalize">
                     {directory.address == null
-                      ? '-'
+                      ? "-"
                       : directory.address.toLocaleLowerCase()}
                   </td>
                   <td className="whitespace-nowrap">
-                    {directory.cnpj == null ? '-' : directory.cnpj}
+                    {directory.cnpj == null ? "-" : directory.cnpj}
                   </td>
                   <td className="whitespace-nowrap">
-                    {directory.email == null ? '-' : directory.email}
+                    {directory.email == null ? "-" : directory.email}
                   </td>
                   <td>
                     <TableOptions
-                      role={role || ''}
+                      role={role || ""}
                       isView
                       isEdit
                       isDelete
-                      handleView={handleViewDirectory}
+                      handleView={() => handleViewModal(directory.id)}
                       handleEdit={handleEditDirectory}
                       handleDelete={() =>
                         handleDeleteDirectory(directory.id, directory.surname)
@@ -152,5 +168,5 @@ export default function TableDirectory({
         </table>
       </fieldset>
     </>
-  )
+  );
 }

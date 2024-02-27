@@ -15,7 +15,7 @@ export default function ItemArray({
 }: ItemArrayProps) {
   return (
     <div className="flex items-center justify-between gap-2">
-      <label className="text-sm font-inter font-medium text-slate-600">{label}</label>
+      <label className="text-sm font-sans font-medium text-slate-600">{label}</label>
 
       <div className="flex gap-1 justify-center items-center text-slate-500">
         <button className="hover:bg-slate-100 rounded" onClick={remover}>

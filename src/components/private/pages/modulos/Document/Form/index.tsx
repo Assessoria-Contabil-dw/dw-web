@@ -4,7 +4,6 @@ import {
   ChangeEvent,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import { AccessContext } from "@/provider/context.provider";

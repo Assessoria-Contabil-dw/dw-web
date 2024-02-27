@@ -1,5 +1,5 @@
 import { CityProps } from '@/interfaces/types'
-import { CityService } from '@/services/city.service'
+import { CityService } from '@/services/Directory/city.service'
 import { useQuery } from 'react-query'
 
 export function useCityData(stateId?: string, stateName?: string) {

@@ -26,10 +26,10 @@ export default function Login() {
             priority
           />
           <div className="flex flex-col gap-4">
-            <h2 className="font-montserrat text-4xl font-bold text-white">
+            <h2 className="font-mono text-4xl font-bold text-white">
               Contabilidade para partidos políticos
             </h2>
-            <p className="font-montserrat text-base font-light">
+            <p className="font-mono text-base font-normal">
               Deixe sua contabilidade partidária com uma equipe especializada.
             </p>
           </div>

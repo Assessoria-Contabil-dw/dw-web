@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode, SelectHTMLAttributes } from 'react'
 import SelectBase from './SelectBase'
-import { useDirectoryFilter } from '@/hooks/useDirectory'
+import { useDirectoryFilter } from '@/hooks/Directory/useDirectory'
 
 interface SelectDirectoryProps extends SelectHTMLAttributes<HTMLSelectElement> {
   party?: string

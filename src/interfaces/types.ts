@@ -63,6 +63,8 @@ export interface DirectoryProps {
   typeOrg: string
   partyId: number
   cityCode: number
+
+  _vigencyCountVeciment: number
 }
 
 export interface TypeOrgProps {

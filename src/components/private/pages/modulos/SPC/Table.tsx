@@ -70,7 +70,7 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
               </span>
               <div className="break-words absolute z-[5] mt-[2px] hidden  transition duration-1000 peer-checked/popper:block">
                 <div className="rounded-md border-[1px] border-zinc-200 bg-white p-2 shadow-lg ">
-                  <h2 className="whitespace-normal w-[100px] font-montserrat text-xs text-slate-700 ">
+                  <h2 className="whitespace-normal w-[100px] font-mono text-xs text-slate-700 ">
                     {spca.observation}
                   </h2>
                 </div>
@@ -130,7 +130,7 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
                 <button
                   type="button"
                   onClick={() => setIsLinkTwo(!isLinkTwo)}
-                  className={`h-full rounded-lg p-1  font-inter text-xs transition-shadow duration-200 ${
+                  className={`h-full rounded-lg p-1  font-sans text-xs transition-shadow duration-200 ${
                     isLinkTwo
                       ? "bg-primary text-blue-950"
                       : "bg-slate-200 text-slate-400"

@@ -13,7 +13,7 @@ export default function MenuPrivate() {
 
   const { data, isLoading, isFetching } = useAccessModuleData(partyCode, stateId, cityCode);
 
-  if (isLoading) {
+  if (isLoading ) {
     return null;
   }
 

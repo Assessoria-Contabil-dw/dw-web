@@ -72,21 +72,21 @@ export const virgenciesFormSchema = z.object({
         leaderId: z.string().min(1,'O líder não pode ser vazio'),
       }),
     )
-    .min(0),
+    .optional(),
   vigencyAdvocate: z
     .array(
       z.object({
         advocateId: z.coerce.number().min(1, 'O advogado não pode ser vazio'),
       }),
     )
-    .min(0),
+    .optional(),
   vigencyLawFirm: z
     .array(
       z.object({
         lawFirmId: z.coerce.number().min(1, 'O escritório não pode ser vazio'),
       }),
     )
-    .min(0),
+    .optional(),
 })
 
 // Directory

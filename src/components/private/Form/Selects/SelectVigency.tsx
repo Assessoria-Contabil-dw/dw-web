@@ -1,7 +1,7 @@
 import { ChangeEvent, ReactNode, SelectHTMLAttributes } from "react";
-import { useVigencyData } from "@/hooks/useVigencyData";
 import SelectBase from "./SelectBase";
 import { useFormContext } from "react-hook-form";
+import { useVigencyData } from "@/hooks/Directory/useVigency";
 
 interface SelectVigencyProps extends SelectHTMLAttributes<HTMLSelectElement> {
   directoryId?: number;
@@ -28,7 +28,7 @@ export default function SelectVigency({
   ...atr
 }: SelectVigencyProps) {
   const { data, isLoading, isFetching } = useVigencyData(
-    directoryId,
+    String(directoryId),
     partyCode,
     stateId,
     cityCode

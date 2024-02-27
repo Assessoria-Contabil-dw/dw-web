@@ -32,7 +32,7 @@ export function Relatory() {
   return (
     <div className="flex h-full w-full gap-4 ">
       <div className="h-[800px] w-full flex-1 ">
-        {!isEditor ? (
+        {isEditor ? (
           <EditorDocument
             onSubmit={handleSaveEditorDocument}
             content={formData.content}

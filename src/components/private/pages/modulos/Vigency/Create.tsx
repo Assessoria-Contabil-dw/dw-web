@@ -20,10 +20,10 @@ import {
   OfficesProps,
 } from '@/interfaces/types'
 import { LoadingSecond } from '@/components/Loading/second'
-import { useNotify } from '@/components/Toast/toast'
-import { queryClient } from '@/provider/query.provider'
 import { virgenciesFormSchema } from '@/interfaces/validation'
 import { Form } from '@/components/Form'
+import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
+import { useVigencyCreate } from '@/hooks/Directory/useVigency'
 
 type VigencyFormData = z.infer<typeof virgenciesFormSchema>
 
@@ -57,6 +57,11 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
   }, [])
 
   const closeViewModal = useCallback(() => {
+    resetField("dateFirst"),
+    resetField("dateLast"),
+    useFieldLeader.remove(),
+    useFieldAdvocate.remove(),
+    useFieldLawFirm.remove(),
     setIsModalView(false)
   }, [])
 
@@ -72,6 +77,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
   const {
     handleSubmit,
     control,
+    resetField,
     formState: { isSubmitting },
   } = createVigencyForm
 
@@ -122,36 +128,20 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
       })
   }, [directoryId])
 
-  const notify = useNotify()
+
+  const {refetch, isFetched } = useVigencyCreate(
+    dayjs(createVigencyForm.watch('dateFirst')).format(),
+    dayjs(createVigencyForm.watch('dateLast')).format(),
+    directoryId,
+    createVigencyForm.watch('vigencyLeader'),
+    createVigencyForm.watch('vigencyAdvocate'),
+    createVigencyForm.watch('vigencyLawFirm'),
+  )
 
   async function handleVigency(data: VigencyFormData) {
-    console.log(dayjs(data.dateFirst).format())
+    console.log(data)
 
-    try {
-      await api.post('/vigencies/directory', {
-        dateFirst: dayjs(data.dateFirst).format(),
-        dateLast: dayjs(data.dateLast).format(),
-        directoryId,
-        vigencyLeader: data.vigencyLeader,
-        vigencyAdvocate: data.vigencyAdvocate,
-        vigencyLawFirm: data.vigencyLawFirm,
-      })
-
-      setError('')
-      notify({ type: 'success', message: 'Vigência cadastrada com sucesso' })
-      queryClient.invalidateQueries('vigencies')
-    } catch (error: any) {
-      if (
-        error.response.status === 422 ||
-        error.response.status === 400 ||
-        error.response.status === 404
-      ) {
-        setError(error.response.data.message)
-      } else {
-        console.log(error)
-        setError('Não foi possível cadastrar vigência')
-      }
-    }
+   await refetch()
   }
 
   if (!isModalView) {
@@ -169,11 +159,11 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
             <div className="model-card">
               <div className="model-header ">
                 <div>
-                  <h4>Cadastrar Vigência</h4>
+                  <h4 className='text-h4'>Cadastrar Vigência</h4>
                 </div>
                 <button
                   onClick={closeViewModal}
-                  className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
+                  className="model-close"
                 >
                   <X size={20} />
                 </button>
@@ -198,7 +188,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                     <button
                       type="button"
                       onClick={addNewLeader}
-                      className=" w-fit bg-gray-100  text-xs text-gray-500"
+                      className=" w-fit bg-gray-200 p-2 rounded-md text-gray-600 text-sm font-semibold font-mono"
                     >
                       Representante
                     </button>
@@ -206,7 +196,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                     <button
                       type="button"
                       onClick={addNewAdvocate}
-                      className=" w-fit bg-gray-100 text-xs text-gray-500"
+                      className=" w-fit bg-gray-200 p-2 rounded-md text-gray-600 text-sm font-semibold font-mono"
                     >
                       Advogado
                     </button>
@@ -214,7 +204,7 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                     <button
                       type="button"
                       onClick={addNewLawFirm}
-                      className=" w-fit bg-gray-100 text-xs text-gray-500"
+                      className=" w-fit bg-gray-200 p-2 rounded-md text-gray-600 text-sm font-semibold font-mono"
                     >
                       Escritório
                     </button>
@@ -387,19 +377,21 @@ const RegisterVigencyModel: ForwardRefRenderFunction<RegisterVigencyRef> = (
                 {error && <span className="text-sm text-red-500">{error}</span>}
 
                 <div className="flex gap-4">
-                  <button
+                  <ButtonPrimary
+                    variant='ghost'
+                    title='Cancelar'
                     onClick={closeViewModal}
-                    className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
                   >
                     Cancelar
-                  </button>
-                  <button
+                  </ButtonPrimary>
+                  <ButtonPrimary
+                    variant='fill'
+                    title='Cadastrar Vigência'
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-primary text-white hover:bg-green-600 disabled:bg-primary disabled:text-white"
                   >
                     {isSubmitting ? <LoadingSecond /> : 'Cadastrar'}
-                  </button>
+                  </ButtonPrimary>
                 </div>
               </div>
             </div>

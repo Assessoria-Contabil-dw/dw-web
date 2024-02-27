@@ -95,7 +95,7 @@ const ModelPassword: ForwardRefRenderFunction<ModelPasswordRef> = (
               className="flex w-full flex-col gap-4 border-none"
             >
               <div className="flex gap-2">
-                <div>
+                <div className="w-full">
                   <Form.PasswordInput
                     placeholder="Digite sua nova senha"
                     name="password"

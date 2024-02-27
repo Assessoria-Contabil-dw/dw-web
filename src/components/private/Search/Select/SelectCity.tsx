@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode, SelectHTMLAttributes } from 'react'
-import { useCityData } from '@/hooks/useCityData'
 import SelectBase from './SelectBase'
+import { useCityData } from '@/hooks/Directory/useCityData'
 
 interface SelectCityProps extends SelectHTMLAttributes<HTMLSelectElement> {
   stateId?: string

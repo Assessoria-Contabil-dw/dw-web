@@ -11,7 +11,7 @@ export function useLinkData() {
     {
       keepPreviousData: true,
       staleTime: 1000 * 60 * 60 * 12,
-      retry: false,
+      retry: 4,
       refetchOnWindowFocus: false,
     },
   )

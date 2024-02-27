@@ -65,31 +65,31 @@ export default function CardCount() {
   return (
     <div className="flex flex-col gap-2 sm:flex-row">
       <div className="flex flex-col items-center justify-center rounded-md border-[1px] bg-white p-4">
-        <h3 className="font-lexend text-lg font-bold text-slate-800">
+        <h3 className="font-serif text-lg font-bold text-slate-800">
           {data.districtCount ?? "0"}
         </h3>
-        <p className="font-lexend text-xs text-slate-500">Distrital</p>
+        <p className="font-serif text-xs text-slate-500">Distrital</p>
       </div>
 
       <div className="flex flex-col items-center justify-center rounded-md border-[1px] bg-white p-4">
-        <h3 className="font-lexend text-lg font-bold text-slate-800">
+        <h3 className="font-serif text-lg font-bold text-slate-800">
           {data.partyCount ?? "0"}
         </h3>
-        <p className="font-lexend text-xs text-slate-500">Nacional</p>
+        <p className="font-serif text-xs text-slate-500">Nacional</p>
       </div>
 
       <div className="flex flex-col items-center justify-center rounded-md border-[1px] bg-white p-4">
-        <h3 className="font-lexend text-lg font-bold text-slate-800">
+        <h3 className="font-serif text-lg font-bold text-slate-800">
           {data.stateCount ?? "0"}
         </h3>
-        <p className="font-lexend text-xs text-slate-500">Estadual</p>
+        <p className="font-serif text-xs text-slate-500">Estadual</p>
       </div>
 
       <div className="flex flex-col items-center justify-center rounded-md border-[1px] bg-white p-4">
-        <h3 className="font-lexend text-lg font-bold text-slate-800">
+        <h3 className="font-serif text-lg font-bold text-slate-800">
           {data.cityCount ?? "0"}
         </h3>
-        <p className="font-lexend text-xs text-slate-500">Municipal</p>
+        <p className="font-serif text-xs text-slate-500">Municipal</p>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { ChangeEvent, ReactNode, SelectHTMLAttributes } from 'react'
 import SelectBase from './SelectBase'
-import { useDirectoryData, useDirectoryFilter } from '@/hooks/useDirectory'
 import { useFormContext } from 'react-hook-form'
+import { useDirectoryData } from '@/hooks/Directory/useDirectory'
 
 interface SelectDirectoryProps extends SelectHTMLAttributes<HTMLSelectElement> {
   partyAbbreviation?: string

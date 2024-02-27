@@ -96,7 +96,7 @@ const DeleteModel: ForwardRefRenderFunction<DeleteRef> = (props, ref) => {
               <AlertTriangle className="stroke-red-500 " />
               <div className="flex flex-col items-center gap-2">
                 <h4 className="text-h4">Deletar registro</h4>
-                <p className="w-52 text-center font-montserrat text-xs text-slate-600">
+                <p className="w-52 text-center font-mono text-xs text-slate-600">
                   {params.msg}
                 </p>
               </div>

@@ -66,7 +66,7 @@ export function ViewDocuments({ content, onClick }: TemplateProps) {
           
         ) : (
           <div className="p-3">
-            <span className="font-inter text-sm text-slate-400">
+            <span className="font-sans text-sm text-slate-400">
               Em andamento
             </span>
           </div>

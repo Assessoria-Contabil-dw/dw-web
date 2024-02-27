@@ -1,165 +1,106 @@
-'use client'
-import { X } from 'lucide-react'
+"use client";
+import { X } from "lucide-react";
 import {
   ForwardRefRenderFunction,
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useState,
-} from 'react'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, FormProvider } from 'react-hook-form'
-import { api } from '@/lib/api'
-import { Form } from '../../../../Form'
+} from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, FormProvider } from "react-hook-form";
+import { Form } from "../../../../Form";
+import { LoadingSecond } from "@/components/Loading/second";
+import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
+import { directoryCreateType, directoryShema } from "./@type/zod.type";
+import SelectTypeOrg from "@/components/private/Form/Selects/SelectTypeOrg";
+import SelectPartyCode from "@/components/private/Form/Create/Party";
+import SelectStateCode from "@/components/private/Form/Create/State";
+import SelectCityCode from "@/components/private/Form/Create/City";
+import { RadioInput } from "@/components/Form/Radio";
 import {
-  CityProps,
-  PartyProps,
-  StateProps,
-  TypeOrgProps,
-} from '@/interfaces/types'
-import { LoadingSecond } from '@/components/Loading/second'
-import { queryClient } from '@/provider/query.provider'
-import { Page } from '@/interfaces/page'
-import { directoryFormShema } from '@/interfaces/validation'
-import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
+  useDirectoryCreate,
+  useDirectoryData,
+} from "@/hooks/Directory/useDirectory";
 
-interface DirectoryProps {
-  id: number
-
-  cnpj: string
-  address: string
-  siteUrl: string
-  email: string
-  phone: string
-  mailingAddress: string
-  virgencyStatus: string
-  surname: string
-  mailingList: string
-  vigencyStatus: string
-  city: string
-  state: string
-  party: string
-
-  typeOrg: string
-  partyId: number
-  cityCode: number
-}
-
-type DirectoryFormData = z.infer<typeof directoryFormShema>
 export interface RegisterDirectoryModalProps {
-  openModal: () => void
-  closeModal: () => void
+  openModal: () => void;
+  closeModal: () => void;
 }
 
 const RegisterDirectoryModel: ForwardRefRenderFunction<
   RegisterDirectoryModalProps
 > = (props, ref) => {
-  const [error, setError] = useState<string | null>(null)
-  const [states, setState] = useState<StateProps[]>([])
-  const [cities, setCity] = useState<CityProps[]>([])
-  const [org, setTypeOrg] = useState<TypeOrgProps[]>([])
-  const [selectedParty, setSelectedParty] = useState('')
-  const [selectedState, setSelectedState] = useState('')
-  const [selectedCity, setSelectedCity] = useState('')
-  const [selectedOrg, setSelectedOrg] = useState('')
-
-  const parties: Page<PartyProps> = queryClient.getQueryData(
-    'party',
-  ) as Page<PartyProps>
-
-  console.log(parties)
-
-  const [isModalView, setIsModalView] = useState(false)
+  const [selectedState, setSelectedState] = useState("");
+  const [isModalView, setIsModalView] = useState(false);
 
   const openModal = useCallback(() => {
-    setIsModalView(true)
-  }, [])
+    setIsModalView(true);
+  }, []);
 
   const closeModal = useCallback(() => {
-    setIsModalView(false)
-  }, [])
+    resetField("typeOrgId");
+    resetField("partyCode");
+    resetField("cityCode");
+    resetField("address");
+    resetField("cnpj");
+    resetField("phone");
+    resetField("siteUrl");
+    resetField("email");
+    resetField("mailingAddress");
+    resetField("vigencyStatus");
+    resetField("stateId");
+
+    setIsModalView(false);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     openModal,
     closeModal,
-  }))
+  }));
 
-  const createDirectoryForm = useForm<DirectoryFormData>({
-    resolver: zodResolver(directoryFormShema),
-  })
+  const createDirectoryForm = useForm<directoryCreateType>({
+    defaultValues: {
+      typeOrgId: "",
+      partyCode: "",
+      cityCode: "",
+      address: "",
+      cnpj: "",
+      phone: "",
+      siteUrl: "",
+      email: "",
+      mailingAddress: "",
+      vigencyStatus: "true",
+    },
+    resolver: zodResolver(directoryShema),
+  });
 
   const {
     handleSubmit,
+    watch,
+    resetField,
     formState: { isSubmitting },
-  } = createDirectoryForm
+  } = createDirectoryForm;
 
-  useEffect(() => {
-    Promise.all([api.get('/states'), api.get('/typeOrg')])
-      .then(([states, typeOrg]) => {
-        setState(states.data)
-        setTypeOrg(typeOrg.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
-
-  useEffect(() => {
-    setSelectedCity('')
-    if (selectedState) {
-      api
-        .get(`/cities/states/${selectedState}`)
-        .then((response) => {
-          setCity(response.data)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-  }, [selectedState])
-
-  async function handleDirectory(data: DirectoryFormData) {
-    console.log(data)
-
-    try {
-      const response = await api.post('/directories', [
-        {
-          typeOrgId: selectedOrg,
-          partyId: Number(selectedParty),
-          cityCode: selectedCity,
-          address: data.address === '' ? undefined : data.address,
-          cnpj: data.cnpj,
-          phone: data.phone === '' ? undefined : data.phone,
-          email: data.email === '' ? undefined : data.email,
-          siteUrl: data.siteUrl === '' ? undefined : data.siteUrl,
-          mailingAddress:
-            data.mailingAddress === '' ? undefined : data.mailingAddress,
-        },
-      ])
-
-      const directory = response.data as DirectoryProps
-      console.log(directory)
-
-      setError('')
-      console.log('Partido cadastrado com sucesso')
-    } catch (error: any) {
-      if (
-        error.response.status === 422 ||
-        error.response.status === 401 ||
-        error.response.status === 400
-      ) {
-        setError(error.response.data.message)
-      } else {
-        console.log(error)
-        setError('Error ao cadastrar')
-      }
-    }
+  const { isLoading, refetch } = useDirectoryCreate(
+    watch("cnpj"),
+    watch("partyCode"),
+    watch("cityCode"),
+    watch("typeOrgId"),
+    watch("vigencyStatus"),
+    watch("address"),
+    watch("siteUrl"),
+    watch("email"),
+    watch("phone"),
+    watch("mailingAddress")
+  );
+  async function handleDirectory(data: directoryCreateType) {
+    console.log(data);
+    await refetch();
   }
 
   if (!isModalView) {
-    return null
+    return null;
   }
 
   return (
@@ -182,36 +123,18 @@ const RegisterDirectoryModel: ForwardRefRenderFunction<
               </div>
               <div className="model-body">
                 <div className="flex flex-1 flex-col gap-4">
-                  <Form.Field>
-                    <Form.Label htmlFor="typeOrg">
-                      Tipo de organização
-                    </Form.Label>
-                    <Form.SelectInput
-                      type="text"
-                      name="typeOrg"
-                      value={selectedOrg}
-                      onChange={(e) => setSelectedOrg(e.target.value)}
-                      placeholder="Selecione o tipo"
-                    >
-                      {org.map((o, index) => {
-                        return (
-                          <option key={index} value={o.id}>
-                            {o.name}
-                          </option>
-                        )
-                      })}
-                    </Form.SelectInput>
-                    <Form.ErrorMessage field="typeOrg" />
-                  </Form.Field>
+                  <SelectTypeOrg name="typeOrgId">
+                    <option value="">Selecione um tipo de organização</option>
+                  </SelectTypeOrg>
+                  <Form.ErrorMessage field="typeOrgId" />
 
-                  {/* <Form.Field>
-                    <Form.Label htmlFor="typeOrg">Vigencia</Form.Label>
+                  <Form.Field>
+                    <Form.Label htmlFor="vigencyStatus">Vigencia</Form.Label>
                     <div className="flex gap-4">
                       <RadioInput
                         value="true"
                         type="radio"
                         label="Ativa"
-                        checked
                         name="vigencyStatus"
                       />
 
@@ -223,70 +146,28 @@ const RegisterDirectoryModel: ForwardRefRenderFunction<
                       />
                     </div>
                     <Form.ErrorMessage field="vigencyStatus" />
-                  </Form.Field> */}
+                  </Form.Field>
 
-                  <div className="flex gap-3 ">
-                    <Form.Field>
-                      <Form.Label htmlFor="partyId">Partido</Form.Label>
-                      <Form.SelectInput
-                        type="text"
-                        name="partyId"
-                        value={selectedParty}
-                        onChange={(e) => setSelectedParty(e.target.value)}
-                        placeholder="Selecione um partido"
-                      >
-                        {parties?.results !== null &&
-                          parties?.results.map((party, index) => {
-                            return (
-                              <option key={index} value={party.code.toString()}>
-                                {party.code} - {party.abbreviation}
-                              </option>
-                            )
-                          })}
-                      </Form.SelectInput>
-                      <Form.ErrorMessage field="partyId" />
-                    </Form.Field>
+                  <div className="flex gap-3">
+                    <SelectPartyCode name="partyCode">
+                      <option value="">Selecione um partido</option>
+                    </SelectPartyCode>
+                    <Form.ErrorMessage field="partyCode" />
 
-                    <Form.Field>
-                      <Form.Label>Estado</Form.Label>
-                      <select
-                        value={selectedState}
-                        onChange={(e) => setSelectedState(e.target.value)}
-                      >
-                        <option disabled value="">
-                          Selecione um estado
-                        </option>
-                        {states.map((state) => {
-                          return (
-                            <option key={state.uf} value={state.uf}>
-                              {state.uf}
-                            </option>
-                          )
-                        })}
-                      </select>
-                    </Form.Field>
+                    <SelectStateCode
+                      name="stateId"
+                      handleSearchOnChange={(e) =>
+                        setSelectedState(e.target.value)
+                      }
+                    >
+                      <option value="">Selecione um estado</option>
+                    </SelectStateCode>
+                    <Form.ErrorMessage field="stateId" />
 
-                    <Form.Field>
-                      <Form.Label htmlFor="cityCode">Cidade</Form.Label>
-                      <Form.SelectInput
-                        type="text"
-                        value={selectedCity}
-                        onChange={(e) => setSelectedCity(e.target.value)}
-                        placeholder="Selecione uma cidade"
-                        name="cityCode"
-                        disabled={!selectedState}
-                        className="disabled:bg-gray-100 disabled:text-gray-500"
-                      >
-                        {cities.map((city) => {
-                          return (
-                            <option key={city.code} value={city.code}>
-                              {city.code} - {city.name}
-                            </option>
-                          )
-                        })}
-                      </Form.SelectInput>
-                      <Form.ErrorMessage field="cityCode" />
-                    </Form.Field>
+                    <SelectCityCode name="cityCode" stateId={selectedState}>
+                      <option value="">Selecione uma cidade</option>
+                    </SelectCityCode>
+                    <Form.ErrorMessage field="cityCode" />
                   </div>
 
                   <div className="flex gap-3">
@@ -294,7 +175,8 @@ const RegisterDirectoryModel: ForwardRefRenderFunction<
                       <Form.Label htmlFor="cnpj">CNPJ</Form.Label>
                       <Form.TextInput
                         type="text"
-                        placeholder="Digite o CNPJ"
+                        mask="99.999.999/9999-99"
+                        placeholder="	00.000.000/0000-00"
                         name="cnpj"
                       />
                       <Form.ErrorMessage field="cnpj" />
@@ -358,13 +240,11 @@ const RegisterDirectoryModel: ForwardRefRenderFunction<
                   </div>
                 </div>
 
-                {error && <span className="text-red-500">{error}</span>}
                 <div className="flex gap-4">
                   <ButtonPrimary
                     title="Cancelar"
                     variant="outline"
                     onClick={closeModal}
-                    // className="bg-gray-200 text-gray-500 hover:bg-gray-300 "
                   >
                     Cancelar
                   </ButtonPrimary>
@@ -383,7 +263,7 @@ const RegisterDirectoryModel: ForwardRefRenderFunction<
         </FormProvider>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default forwardRef(RegisterDirectoryModel)
+export default forwardRef(RegisterDirectoryModel);

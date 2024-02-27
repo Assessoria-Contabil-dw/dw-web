@@ -1,7 +1,7 @@
 import { ChangeEvent, ReactNode, SelectHTMLAttributes } from 'react'
-import { usePartyData } from '@/hooks/usePartyData'
 import SelectBase from './SelectBase'
 import { useFormContext } from 'react-hook-form'
+import { usePartyData } from '@/hooks/Directory/usePartyData'
 
 interface SelectPartyProps extends SelectHTMLAttributes<HTMLSelectElement> {
   handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void

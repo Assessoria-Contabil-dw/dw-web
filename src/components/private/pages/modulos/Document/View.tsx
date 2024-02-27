@@ -65,7 +65,7 @@ export function ViewDocuments({ content, onClick, url, onSetUrl }: TemplateProps
           />)
         ) : (
           <div className="p-3">
-            <span className="font-inter text-sm text-slate-400">
+            <span className="font-sans text-sm text-slate-400">
               Selecione um modelo de documento
             </span>
           </div>

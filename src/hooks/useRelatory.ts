@@ -1,4 +1,4 @@
-import { RelatoryService } from "@/services/relatory.service";
+import { RelatoryService } from "@/services/Relatory/relatory.service";
 import { useQuery } from "react-query";
 
 interface DocumentData {
@@ -43,6 +43,35 @@ export function useRelatoryListDirectory(
         dateLast,
         isBefore,
         status
+        ),
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: 0,
+      refetchOnWindowFocus: false,
+      enabled: false,
+    }
+  );
+
+  return query;
+}
+
+
+export function useRelatoryPostPDF(
+  contentHtml: string,
+  partyCode: string | undefined,
+  stateId: string | undefined,
+  cityCode: string | undefined,
+){
+  const relatoryService = new RelatoryService();
+  const query = useQuery<DocumentData>(
+    [],
+    () =>
+      relatoryService.postPDF(
+        contentHtml,
+        partyCode,
+        stateId,
+        cityCode,
         ),
     {
       keepPreviousData: true,

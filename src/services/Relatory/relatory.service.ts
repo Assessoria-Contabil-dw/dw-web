@@ -46,4 +46,24 @@ export class RelatoryService {
     }
   }
 
+  public async postPDF(
+    content: string,
+    partyCode: string | undefined,
+    stateId: string | undefined,
+    cityCode: string | undefined,
+    
+  ) {
+    try {
+      const response = await api.post(`"/relatory/pdf`, {
+        content,
+        partyCode,
+        stateId,
+        cityCode,
+      })
+
+      return response.data
+    } catch (error: any) {
+      return this.notify({type: 'error', message: error.response.data.message})
+    }
+  }
 }

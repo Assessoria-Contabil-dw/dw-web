@@ -1,10 +1,14 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { AccessContext } from "@/provider/context.provider";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import { useRelatoryListDirectory } from "@/hooks/useRelatory";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
+import SelectParty from "@/components/private/Form/Selects/SelectParty";
+import SelectState from "@/components/private/Form/Selects/SelectState";
+import SelectCity from "@/components/private/Form/Selects/SelectCity";
+import SelectTypeOrg from "@/components/private/Form/Selects/SelectTypeOrg";
 
 interface Search {
   content: string;
@@ -17,7 +21,7 @@ interface Search {
   typeOrgId: string | undefined;
   vigencyStatus: string | undefined;
   spcStatusId: string | undefined;
-  spcYear?: string,
+  spcYear?: string;
   dateFirst: string | undefined;
   dateLast: string | undefined;
   isBefore: string | undefined;
@@ -33,11 +37,15 @@ interface FormDocumentProps {
 export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
   const [search, setSearch] = useState<Search>({} as Search);
   const { partyCode, cityCode, stateId } = useContext(AccessContext);
+  const [stateName, setStateName] = useState<string>("");
+
+  const methods = useForm();
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = methods;
 
   const { refetch, isFetching } = useRelatoryListDirectory(
     "oi",
@@ -57,7 +65,13 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
     search.status
   );
 
-  async function handleRelatoryDirectory(data: any) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedHandleSubmit = useCallback(handleSubmit(handleFormOnSubmit), [
+    methods,
+    handleFormOnSubmit,
+  ]);
+
+  async function handleFormOnSubmit(data: any) {
     console.log("data", data);
     setSearch(data);
     const response = await refetch();
@@ -66,108 +80,119 @@ export function FormDocument({ onSubmit, content, editor }: FormDocumentProps) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(handleRelatoryDirectory)}
-      className="h-fit w-full rounded-lg border-[1px] bg-white p-1"
-    >
-      <div className="h-full w-full space-y-2 overflow-y-auto  p-3">
-      <label className="text-sm font-semibold">Diretorio</label>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={memoizedHandleSubmit}
+        className="h-fit w-full rounded-lg border-[1px] bg-white p-1"
+      >
+        <div className="h-full w-full space-y-2 overflow-y-auto p-3">
+          <h4 className="text-h4">Filtrar por</h4>
 
-        {!partyCode && (
-          <input
-            {...register("partyAbbreviation")}
-            name="partyAbbreviation"
-            type="text"
+          <label className="text-sm font-semibold">Diretorio</label>
+
+          {!partyCode && (
+            <SelectParty name="partyAbbreviation">
+              <option value="" selected>
+                Todos
+              </option>
+            </SelectParty>
+          )}
+
+           
+          {!stateId && (
+            <SelectState name="stateName" onChange={(e) => setStateName(e.target.value)}>
+            <option value="" selected>
+              Todos
+            </option>
+          </SelectState>
+          )}
+
+          {!cityCode && (
+            <SelectCity name="cityName" stateName={stateName} stateId={stateId}>
+            <option value="" selected>
+              Todos
+            </option>
+          </SelectCity>
+          )}
+
+          <SelectTypeOrg name="typeOrgId">
+            <option value="" selected>
+              Todos
+            </option>
+          </SelectTypeOrg>
+
+          <select
+            {...register("vigencyStatus")}
+            name="vigencyStatus"
             className="input-style"
-            placeholder="Partido Sigla"
-          />
-        )}
+          >
+            <option value="" selected disabled>
+              Todos
+            </option>
+            <option value="true">Vigente</option>
+            <option value="false">Não Vigente</option>
+          </select>
 
-        {!stateId && (
+          <label className="text-sm font-semibold">Vigência</label>
           <input
-            {...register("stateName")}
-            name="stateName"
-            type="text"
+            {...register("dateFirst")}
+            type="date"
             className="input-style"
-            placeholder="Estado"
+            name="dateFirst"
           />
-        )}
-
-        {!cityCode && (
           <input
-            {...register("cityName")}
-            name="cityName"
-            type="text"
+            {...register("dateLast")}
+            type="date"
             className="input-style"
-            placeholder="Cidade"
+            name="dateLast"
           />
-        )}
 
-        <select
-          {...register("typeOrgId")}
-          name="typeOrgId"
-          className="input-style"
-        >
-          <option value="" selected disabled>
-            Todos
-          </option>
-          <option value="1">Nacional</option>
-          <option value="2">Estadual</option>
-          <option value="3">Municipal</option>
-        </select>
+          <select {...register("status")} name="status" className="input-style">
+            <option value="" selected>
+              Todos
+            </option>
+            <option value="true">Ativo</option>
+            <option value="false">Inativo</option>
+          </select>
 
-        <select
-          {...register("vigencyStatus")}
-          name="vigencyStatus"
-          className="input-style"
-        >
-          <option value="" selected disabled>
-            Todos
-          </option>
-          <option value="true">Vigente</option>
-          <option value="false">Não Vigente</option>
-        </select>
+          <input
+            {...register("isBefore")}
+            type="number"
+            className="input-style"
+            placeholder="Dias"
+          />
+          <label className="text-sm font-semibold">SPC</label>
+          <input
+            {...register("spcYear")}
+            type="number"
+            className="input-style"
+            placeholder="Ano"
+          />
 
-        <label className="text-sm font-semibold">Vigência</label>
-        <input  {...register("dateFirst")} type="date" className="input-style" name="dateFirst" />
-        <input  {...register("dateLast")} type="date" className="input-style" name="dateLast" />
+          <select
+            {...register("spcStatusId")}
+            name="spcStatusId"
+            className="input-style"
+          >
+            <option value="" selected disabled>
+              Todos
+            </option>
+            <option value="1">Pool</option>
+            <option value="2">Regente</option>
+          </select>
 
-        <select {...register("status")} name="status" className="input-style">
-          <option value="" selected>
-            Todos
-          </option>
-          <option value="true">Ativo</option>
-          <option value="false">Inativo</option>
-        </select>
-
-          <input  {...register("isBefore")} type="number" className="input-style" placeholder="Dias" />
-        <label className="text-sm font-semibold">SPC</label>
-        <input  {...register("spcYear")} type="number" className="input-style" placeholder="Ano"/>
-
-        <select
-          {...register("spcStatusId")}
-          name="spcStatusId"
-          className="input-style"
-        >
-          <option value="" selected disabled>
-            Todos
-          </option>
-          <option value="1">Pool</option>
-          <option value="2">Regente</option>
-        </select>
-
-
-        <ButtonPrimary
-          title="Preencher documento"
-          type="submit"
-          variant="fill"
-          loading={isFetching}
-          className="w-full justify-center"
-          // disabled={!(search.template && search.vigency && search.local)}
-        >
-          Preencher
-        </ButtonPrimary>
-      </div>
-    </form>
+          <ButtonPrimary
+            title="Preencher documento"
+            type="submit"
+            variant="fill"
+            loading={isFetching}
+            className="w-full justify-center"
+            // disabled={!(search.template && search.vigency && search.local)}
+          >
+            Buscar
+          </ButtonPrimary>
+        </div>
+      </form>
+    </FormProvider>
   );
 }

@@ -13,7 +13,7 @@ export default function ActiveOptions({
       {options.map((text, index) => (
         <button
           key={index}
-          className={`h-fit cursor-pointer rounded-md px-2 py-1 font-inter text-xs font-medium ${
+          className={`h-fit cursor-pointer rounded-md px-2 py-1 font-sans text-xs font-medium ${
             option === index + 1
               ? 'bg-white text-slate-700 shadow-sm'
               : 'bg-transparent text-slate-400 hover:text-slate-700'

@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode, SelectHTMLAttributes } from 'react'
-import { useStateData } from '@/hooks/useStateData'
 import SelectBase from './SelectBase'
+import { useStateData } from '@/hooks/Directory/useStateData'
 
 interface SelectStateProps extends SelectHTMLAttributes<HTMLSelectElement> {
   children?: ReactNode
