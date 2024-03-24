@@ -1,5 +1,5 @@
 'use client'
-import { User } from "@/hooks/useAuth";
+import { User } from "@/hooks/Access/User/useAuth";
 import ActiveLink from "./ActiveLink";
 import { queryClient } from "@/provider/query.provider";
 
@@ -13,28 +13,8 @@ export default function NavigationHeader() {
       disable: false,
     },
     {
-      href: '/templates',
-      label: 'Templates',
-      disable: user?.role === 'ADMIN' ? false : true,
-    },
-    {
-      href: '/partidos',
-      label: 'Partidos',
-      disable: user?.role === 'ADMIN' ? false : true,
-    },
-    {
-      href: '/advogados',
-      label: 'Advogados',
-      disable: user?.role === 'ADMIN' ? false : true,
-    },
-    {
-      href: '/escritorios',
-      label: 'Escritórios',
-      disable: user?.role === 'ADMIN' ? false : true,
-    },
-    {
-      href: '/clientes',
-      label: 'Clientes',
+      href: '/admin',
+      label: 'Administrador',
       disable: user?.role === 'ADMIN' ? false : true,
     },
   ]

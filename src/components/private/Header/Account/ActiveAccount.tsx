@@ -1,15 +1,15 @@
 "use client";
 import { Key, LogOut, User } from "lucide-react";
 import ButtonIcon from "../../../Buttons/ButtonIcon";
-import { useAuth } from "@/hooks/useAuth";
 import { useCallback, useRef, useState } from "react";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
-import { useLogout } from "@/hooks/useLogout";
 import ModelPassword, { ModelPasswordRef } from "./ModelPassword";
+import useAuth from "@/hooks/Access/User/useAuth";
+import useLogout from "@/hooks/Access/User/useLogout";
 
 export default function ActiveAccount() {
   const user = useAuth();
-  const { refetch } = useLogout();
+  const { mutate } = useLogout();
   const [isFilter, setIsFilter] = useState(false);
 
 
@@ -20,8 +20,8 @@ export default function ActiveAccount() {
   }, [])
 
   if (!user) return null;
-  function handleLogout() {
-    refetch();
+  async function handleLogout() {
+    await mutate()
   }
 
   return (

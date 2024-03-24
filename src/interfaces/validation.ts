@@ -211,20 +211,19 @@ export const userFormShema = z
       },
       { message: 'CPF inválido' },
     ),
-
-    email: z.string().optional(),
+    email: z.string(),
     role: z.enum(['ADMIN', 'CLIENT']).default('CLIENT'),
-    passwordHash: z.string().optional(),
-    disable: z.coerce.boolean().default(true).optional(),
+    password: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
+    disabled: z.coerce.boolean().default(true),
   })
   .transform((field) => ({
     id: field.id,
     name: field.name,
     email: field.email,
     role: field.role,
-    passwordHash: field.passwordHash,
-
+    password: field.password,
     cpf: field.cpf.replace(/[^0-9]/g, ''),
+    disabled: field.disabled,
   }))
 
 export const spcFormShema = z.object({

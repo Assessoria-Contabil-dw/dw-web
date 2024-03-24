@@ -2,8 +2,8 @@
 import { AccessContext } from "@/provider/context.provider";
 import { useContext } from "react";
 import ActiveLink from "./ActiveLink";
-import { User } from "@/hooks/useAuth";
 import { queryClient } from "@/provider/query.provider";
+import { User } from "@/hooks/Access/User/useAuth";
 
 export default function NavigationBody() {
   const { openHeader } = useContext(AccessContext);
@@ -17,28 +17,8 @@ export default function NavigationBody() {
       disable: false,
     },
     {
-      href: '/templates',
-      label: 'Templates',
-      disable: user?.role === 'ADMIN' ? false : true,
-    },
-    {
-      href: '/partidos',
-      label: 'Partidos',
-      disable: user?.role === 'ADMIN' ? false : true,
-    },
-    {
-      href: '/advogados',
-      label: 'Advogados',
-      disable: user?.role === 'ADMIN' ? false : true,
-    },
-    {
-      href: '/escritorios',
-      label: 'Escritórios',
-      disable: user?.role === 'ADMIN' ? false : true,
-    },
-    {
-      href: '/clientes' || '/clientes/acessos',
-      label: 'Clientes',
+      href: '/admin',
+      label: 'Administrador',
       disable: user?.role === 'ADMIN' ? false : true,
     },
   ]

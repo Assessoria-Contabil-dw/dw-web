@@ -1,29 +1,46 @@
-import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
-import { PartyData } from '@/interfaces/access.interface'
-import { Edit3, Trash2 } from 'lucide-react'
-import { useRef } from 'react'
+import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
+import { PartyData } from "@/interfaces/access.interface";
+import { Edit3, Trash2 } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import Model, { ModelRef } from "@/components/private/components/Modal";
+import FormUpdate from "./FormUpdate";
 
 interface ArrayParty {
-  data: PartyData[] | null
+  data: PartyData[] | null;
 }
 
 export default function PermitParty({ data }: ArrayParty) {
-  const deleteRef = useRef<DeleteRef>(null)
+  const [id, setId] = useState("");
+
+  const deleteRef = useRef<DeleteRef>(null);
   function handleDeleteModal(
     id: string,
     path: string,
     msg: string,
-    query: string,
+    query: string
   ) {
-    deleteRef.current?.openModal(id, path, msg, query)
+    deleteRef.current?.openModal(id, path, msg, query);
   }
+
+
+  const modelRef = useRef<ModelRef>(null);
+  const handleUpdateOpenModel = useCallback((id:string) => {
+    setId(id);
+    modelRef.current?.openModel();
+  }, []);
+
+  const handleUpdateCloseModel = useCallback(() => {
+    modelRef.current?.closeModel();
+  }, []);
 
   return (
     <>
       <DeleteModel ref={deleteRef} />
-
+      <Model title="Atualizar Acesso" ref={modelRef}>
+        <FormUpdate type="party" closeModel={handleUpdateCloseModel} id={id} />
+      </Model>
       <fieldset className="fieldset">
-        <table id='table-style'>
+        <table id="table-style">
           <thead>
             <tr>
               <th>Partido</th>
@@ -58,7 +75,7 @@ export default function PermitParty({ data }: ArrayParty) {
                   <td className="w-8">
                     <div className="flex items-center">
                       <button
-                        // onClick={() => handleUpdateModal(v.id.toString())}
+                        onClick={() => handleUpdateOpenModel(party.id.toString())}
                         className="h-full w-auto rounded p-1 hover:text-primary"
                       >
                         <Edit3 size={16} />
@@ -67,9 +84,9 @@ export default function PermitParty({ data }: ArrayParty) {
                         onClick={() =>
                           handleDeleteModal(
                             party.id.toString(),
-                            'access/party',
+                            "admin/access/party",
                             party.party,
-                            'accessData',
+                            "accessUserData"
                           )
                         }
                         className="h-full w-auto rounded p-1 hover:text-red-500"
@@ -83,7 +100,7 @@ export default function PermitParty({ data }: ArrayParty) {
             ) : (
               <tr>
                 <td colSpan={8} className="py-6 text-center">
-                  Nenhuma permissão encontrada
+                  Nenhum acesso cadastrado
                 </td>
               </tr>
             )}
@@ -91,5 +108,5 @@ export default function PermitParty({ data }: ArrayParty) {
         </table>
       </fieldset>
     </>
-  )
+  );
 }

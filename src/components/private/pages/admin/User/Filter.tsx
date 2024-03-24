@@ -14,7 +14,7 @@ export default function TableFilterUser({ onChange }: FilterUserProps) {
       <InputBase
         type="text"
         name="name"
-        label="Nome do cliente"
+        label="Nome"
         placeholder="Buscar por nome"
         onChange={onChange}
       />
@@ -22,14 +22,14 @@ export default function TableFilterUser({ onChange }: FilterUserProps) {
       <InputBase
         type="text"
         name="cpf"
-        label="CPF do cliente"
+        label="CPF"
         placeholder="Buscar por CPF"
         onChange={onChange}
       />
 
       <SelectBase name="role" onChange={onChange} label="Nível">
-        <option value="" disabled selected>
-          Selecione
+        <option value=""selected>
+          Todos
         </option>
         <option value="ADMIN">Administrador</option>
         <option value="CLIENT">Cliente</option>

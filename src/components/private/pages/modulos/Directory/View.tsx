@@ -129,14 +129,14 @@ const ViewModel: ForwardRefRenderFunction<ViewRef> = (props, ref) => {
                       <div className="flex flex-col gap-1">
                         <h5 className="text-h5">Endereço</h5>
                         <p className="text-xs text-slate-500">
-                          {data?.address}
+                          {data?.address ?? "Não informado"}
                         </p>
                       </div>
 
                       <div className="flex flex-col gap-1">
                         <h5 className="text-h5">CNPJ</h5>
                         <p className="whitespace-nowrap text-xs uppercase text-slate-500">
-                          {data?.cnpj}
+                          {data?.cnpj ?? "Não informado"}
                         </p>
                       </div>
                     </div>
@@ -145,20 +145,20 @@ const ViewModel: ForwardRefRenderFunction<ViewRef> = (props, ref) => {
                       <div className="flex flex-col gap-1">
                         <h5 className="text-h5">E-mail</h5>
                         <p className="whitespace-nowrap text-xs text-slate-500">
-                          {data?.email}
+                          {data?.email ?? "Não informado"}
                         </p>
                       </div>
 
                       <div className="flex flex-col gap-1">
                         <h5 className="text-h5">Telefone</h5>
                         <p className="whitespace-nowrap text-xs text-slate-500">
-                          {data?.phone}
+                          {data?.phone ?? "Não informado"}
                         </p>
                       </div>
                       <div className="flex flex-col gap-1">
                         <h5 className="text-h5">Correspondência</h5>
                         <p className="text-xs uppercase text-slate-500">
-                          {data?.mailingAddress}
+                          {data?.mailingAddress ?? "Não informado"}
                         </p>
                       </div>
                     </div>
@@ -167,7 +167,7 @@ const ViewModel: ForwardRefRenderFunction<ViewRef> = (props, ref) => {
 
                 <div>
                   <ul>
-                    {data?._vigencyVeciment.map((item) => (
+                    {data?._vigencyVeciment && data._vigencyVeciment.map((item) => (
                       <li key={item.id}>
                         <div className="flex gap-4">
                           <div className="flex flex-col gap-1">

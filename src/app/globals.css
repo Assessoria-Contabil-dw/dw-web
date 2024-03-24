@@ -20,7 +20,7 @@
   }
 
   html ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-slate-200;
+    @apply rounded-full bg-slate-300;
   }
 
   html ::-webkit-scrollbar-track {
@@ -51,7 +51,7 @@
   }
 
   #table-style tbody tr td {
-    @apply p-2 text-left font-sans text-[0.7rem] font-semibold text-slate-400;
+    @apply p-2 font-sans text-[0.7rem] font-semibold text-slate-400;
   }
 
   #table-style tbody tr:last-child {

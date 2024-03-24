@@ -6,7 +6,6 @@ import { ChangeEvent, useCallback, useContext, useRef, useState } from "react";
 import PaddingTable from "../../../Tools/TablePadding";
 import { LoadingPrimary } from "@/components/Loading/primary";
 import { RefreshButton } from "@/components/Buttons/ButtonRefresh";
-import { User } from "@/hooks/useAuth";
 import { queryClient } from "@/provider/query.provider";
 import ButtonIcon from "@/components/Buttons/ButtonIcon";
 import { Plus } from "lucide-react";
@@ -15,6 +14,7 @@ import TableFilterDirectory from "./Filter";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDirectoryData } from "@/hooks/Directory/useDirectory";
 import { LoadingSecond } from "@/components/Loading/second";
+import { User } from "@/hooks/Access/User/useAuth";
 
 interface Search {
   partyAbbreviation?: string;
@@ -76,15 +76,6 @@ export default function Directory() {
     registerDirectoryModalRef.current?.openModal();
   }, []);
 
-  function onChangeTake(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log(e.target.checked);
-    if (e.target.checked) {
-      setTake(0);
-    } else {
-      setTake(15);
-    }
-  }
-
   if (isLoading && user) {
     return (
       <div className="flex h-full w-full items-center justify-center">
@@ -111,7 +102,6 @@ export default function Directory() {
           </FormProvider>
 
           <div className="flex gap-2">
-            
             <RefreshButton isLoading={isFetching} queryName="directoryData" />
             {user?.role === "ADMIN" && (
               <ButtonIcon
@@ -133,25 +123,22 @@ export default function Directory() {
           cityCode={cityCode}
         />
 
-        <div className="flex gap-2">
-          <PaddingTable
-            pages={data?.info?.pages ?? 0}
-            page={page}
-            isPreviousData={isPreviousData}
-            nextPage={nextPage}
-            prevPage={prevPage}
-            next={data?.info?.next ?? null}
-          />
-          <div className="flex items-center justify-start gap-1 whitespace-nowrap font-sans font-medium text-slate-400 text-center text-xs uppercase">
-            <input
-              type="checkbox"
-              onChange={onChangeTake}
-              name="Mostrar todos"
+          {data?.results !== null && (
+            <PaddingTable
+              onChange={(e) => {
+                setTake(Number(e.target.value));
+                setSkip(0);
+                setPage(1);
+              }}
+              pages={data?.info?.pages ?? 0}
+              page={page}
+              isPreviousData={isPreviousData}
+              nextPage={nextPage}
+              prevPage={prevPage}
+              next={data?.info?.next ?? null}
+              isFetching={isFetching}
             />
-            <label>Mostrar todos</label>
-            {isFetching && <LoadingSecond />}
-          </div>
-        </div>
+          )}
       </div>
     </>
   );

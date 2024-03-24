@@ -5,8 +5,8 @@ import ToastProvider from '@/provider/toast.provider'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
 import HeaderPrivate from '@/components/private/Header'
-import { useAuth } from '@/hooks/useAuth'
-import { useAccessData } from '@/hooks/useAccess'
+import { useAccessData } from '@/hooks/Access/User/useAccess'
+import useAuth from '@/hooks/Access/User/useAuth'
 
 export default function PrivateLayout({ children }: { children: ReactNode }) {
   const user = useAuth()

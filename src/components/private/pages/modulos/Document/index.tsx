@@ -32,7 +32,7 @@ export function DocumentsView() {
 
   return (
     <div className="flex h-full w-full gap-4 ">
-      <div className="h-full w-full flex-1 ">
+      <div className="h-[90%] w-full flex-1 ">
         {isEditor ? (
           <EditorDocument
             onSubmit={handleSaveEditorDocument}
@@ -48,7 +48,7 @@ export function DocumentsView() {
         )}
       </div>
 
-      <div className="max-h-[80%] min-h-fit w-3/12 space-y-2 max-xl:min-w-[200px] ">
+      <div className="max-h-[80%] w-3/12 space-y-2 max-xl:min-w-[200px] ">
         <ActiveOptionsDocument option={option} setOption={setOption} />
         <FormDocument
             className={option === 1 ? 'block' : 'hidden'}

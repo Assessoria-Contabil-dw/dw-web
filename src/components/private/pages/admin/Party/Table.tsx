@@ -1,21 +1,28 @@
 import Image from 'next/image'
 import { Trash2 } from 'lucide-react'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
-import DeleteModel, { DeleteRef } from '../../../../Model/Delete'
+import DeleteModel, { DeleteRef } from '../../../Model/Delete'
 import { RefreshButton } from '../../../../Buttons/ButtonRefresh'
 import { LoadingSecond } from '@/components/Loading/second'
 import PaddingTable from '@/components/private/Tools/TablePadding'
 import { usePartyData } from '@/hooks/Directory/usePartyData'
 
 export function PartyTable() {
-  const [page, setPage] = useState(0)
+
+  const [page, setPage] = useState(1);
+  const [skip, setSkip] = useState(0);
+  const [take, setTake] = useState(15);
+
+
   const prevPage = useCallback(() => {
-    setPage((old) => Math.max(old - 1, 0))
-  }, [])
+    setSkip((old) => Math.max(old - take, 0));
+    setPage((old) => Math.max(old - 1, 0));
+  }, []);
 
   const nextPage = useCallback(() => {
-    setPage((old) => old + 1)
-  }, [])
+    setSkip((old) => old + take);
+    setPage((old) => old + 1);
+  }, []);
 
   const [search, setSearch] = useState({
     code: undefined as string | undefined,
@@ -23,8 +30,8 @@ export function PartyTable() {
   })
 
   const { data, isLoading, isError, isFetching, isPreviousData } = usePartyData(
-    page,
-    15,
+    skip,
+    take,
     search.name,
     search.code,
   )
@@ -36,7 +43,8 @@ export function PartyTable() {
       setSearch((old) => ({ ...old, [name]: undefined }))
       return
     }
-    setPage(0)
+    setPage(1);
+    setSkip(0);
     setSearch((old) => ({ ...old, [name]: value || undefined }))
   }
 
@@ -168,19 +176,23 @@ export function PartyTable() {
           </tbody>
         </table>
       </fieldset>
-      <div className="flex w-full justify-end">
-        {data?.results !== null ? (
+        {data?.results !== null && (
           <PaddingTable
-            pages={data?.info?.pages ?? 0}
-            page={page}
-            isPreviousData={isPreviousData}
-            nextPage={nextPage}
-            prevPage={prevPage}
-            next={data?.info?.next ?? null}
+          onChange={(e) => {
+            setTake(Number(e.target.value));
+            setSkip(0);
+            setPage(1);
+          }}
+          pages={data?.info?.pages ?? 0}
+          page={page}
+          isPreviousData={isPreviousData}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          next={data?.info?.next ?? null}
+          isFetching={isFetching}
             
           />
-        ) : null}
-      </div>
+        )}
     </div>
   )
 }

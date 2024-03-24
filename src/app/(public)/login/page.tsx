@@ -3,8 +3,8 @@ import { SignInForm } from "@/components/public/SignIn";
 import Image from "next/image";
 import imgContablue from "../../../../public/assets/bgLogin.svg";
 import { redirect } from "next/navigation";
-import { useAuth } from "@/lib/auth";
 import "@/app/globals.css";
+import useAuth from "@/hooks/Access/User/useAuth";
 
 export default function Login() {
   const user = useAuth();

@@ -12,7 +12,7 @@ export function usePartyData(
   const partyService = new PartyService()
 
   const query = useQuery<Page<PartyProps>>(
-    ['partyData', skip, abbreviation, code],
+    ['partyData', skip, take, abbreviation, code],
     () => partyService.getAll(skip, take, abbreviation, code),
     {
       keepPreviousData: true,

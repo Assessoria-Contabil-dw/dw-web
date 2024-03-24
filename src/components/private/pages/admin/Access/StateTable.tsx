@@ -1,30 +1,46 @@
-'use client'
-import { Edit3, Trash2 } from 'lucide-react'
-import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
-import { useRef } from 'react'
-import { StateData } from '@/interfaces/access.interface'
+"use client";
+import { Edit3, Trash2 } from "lucide-react";
+import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
+import { useCallback, useRef, useState } from "react";
+import { StateData } from "@/interfaces/access.interface";
+import FormUpdate from "./FormUpdate";
+import Model, { ModelRef } from "@/components/private/components/Modal";
 
 interface ArrayState {
-  data: StateData[] | null
+  data: StateData[] | null;
 }
 
 export default function PermitState({ data }: ArrayState) {
-  const deleteRef = useRef<DeleteRef>(null)
+  const [id, setId] = useState("");
+
+  const deleteRef = useRef<DeleteRef>(null);
   function handleDeleteModal(
     id: string,
     path: string,
     msg: string,
-    query: string,
+    query: string
   ) {
-    deleteRef.current?.openModal(id, path, msg, query)
+    deleteRef.current?.openModal(id, path, msg, query);
   }
+
+  const modelRef = useRef<ModelRef>(null);
+  const handleUpdateOpenModel = useCallback((id:string) => {
+    setId(id);
+    modelRef.current?.openModel();
+  }, []);
+
+  const handleUpdateCloseModel = useCallback(() => {
+    modelRef.current?.closeModel();
+  }, []);
 
   return (
     <>
       <DeleteModel ref={deleteRef} />
-
+      <Model title="Atualizar Acesso" ref={modelRef}>
+        <FormUpdate type="state" closeModel={handleUpdateCloseModel} id={id} />
+      </Model>
       <fieldset className="fieldset">
-        <table id='table-style'>
+        <table id="table-style">
           <thead>
             <tr>
               <th>Estado</th>
@@ -59,7 +75,7 @@ export default function PermitState({ data }: ArrayState) {
                   <td className="w-8">
                     <div className="flex items-center">
                       <button
-                        // onClick={() => handleUpdateModal(v.id.toString())}
+                        onClick={() => handleUpdateOpenModel(state.id.toString())}
                         className="h-full w-auto rounded p-1 hover:text-primary"
                       >
                         <Edit3 size={16} />
@@ -68,9 +84,9 @@ export default function PermitState({ data }: ArrayState) {
                         onClick={() =>
                           handleDeleteModal(
                             state.id.toString(),
-                            'access/state',
+                            "admin/access/state",
                             state.state,
-                            'accessData',
+                            "accessUserData"
                           )
                         }
                         className="h-full w-auto rounded p-1 hover:text-red-500"
@@ -84,7 +100,7 @@ export default function PermitState({ data }: ArrayState) {
             ) : (
               <tr>
                 <td colSpan={8} className="py-6 text-center">
-                  Nenhuma permissão encontrada
+                  Nenhum acesso cadastrado
                 </td>
               </tr>
             )}
@@ -92,5 +108,5 @@ export default function PermitState({ data }: ArrayState) {
         </table>
       </fieldset>
     </>
-  )
+  );
 }

@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import SelectLegend from "@/components/private/Search/Select/SelectLegend";
 import ButtonIcon from "@/components/Buttons/ButtonIcon";
 import { useCallback,  useRef } from "react";
-import DeleteModel, { DeleteRef } from "@/components/Model/Delete";
+import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
 import { useSPCUpdateById } from "@/hooks/SPC/useSPC";
 
 export default function FormUpdateSPC({

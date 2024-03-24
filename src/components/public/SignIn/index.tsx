@@ -5,10 +5,8 @@ import { z } from "zod";
 import { Form } from "../../Form";
 import imgLogo from "../../../assets/cdw.svg";
 import Image from "next/image";
-import { api } from "@/lib/api";
-import { useRouter } from "next/navigation";
-import { useNotify } from "../../Toast/toast";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
+import useLogin from "@/hooks/Access/User/useLogin";
 
 const signInUserFormShema = z
   .object({
@@ -19,19 +17,16 @@ const signInUserFormShema = z
       },
       { message: "CPF inválido" }
     ),
-    passwordHash: z.string().min(8, "A senha deve ter no mínimo 8 caracteres"),
+    password: z.string().min(8, "A senha deve ter no mínimo 8 caracteres"),
   })
   .transform((field) => ({
     cpf: field.cpf.replace(/[^0-9]/g, ""),
-    passwordHash: field.passwordHash,
+    password: field.password,
   }));
 
 type SignInUser = z.infer<typeof signInUserFormShema>;
 
 export function SignInForm() {
-  const router = useRouter();
-  const notify = useNotify();
-
   const createLogin = useForm<SignInUser>({
     resolver: zodResolver(signInUserFormShema),
   });
@@ -39,28 +34,15 @@ export function SignInForm() {
   const {
     formState: { isSubmitting },
     handleSubmit,
+    watch,
   } = createLogin;
 
-  async function handleSignInUser({ cpf, passwordHash }: SignInUser) {
-    try {
-      await api.post("/signIn", { cpf, passwordHash });
-      notify({ type: "success", message: "Acesso realizado!" });
-      router.push("");
-    } catch (error: any) {
-      if (error.status === 500) {
-        console.error(error);
-        return notify({
-          type: "error",
-          message: "Erro interno, tente novamente mais tarde",
-        });
-      }
+  const { mutate } = useLogin(watch("cpf"), watch("password"));
 
-      return notify({
-        type: "error",
-        message: error.message || "Erro inesperado, tente novamente mais tarde",
-      });
-    }
+  async function handleSignInUser() {
+    await mutate();
   }
+
   return (
     <FormProvider {...createLogin}>
       <form
@@ -94,9 +76,9 @@ export function SignInForm() {
               <Form.Label>Senha</Form.Label>
               <Form.PasswordInput
                 placeholder="Digite sua senha"
-                name="passwordHash"
+                name="password"
               />
-              <Form.ErrorMessage field="passwordHash" />
+              <Form.ErrorMessage field="password" />
             </Form.Field>
           </div>
 
@@ -114,7 +96,7 @@ export function SignInForm() {
               Ainda não tem uma conta?{" "}
               <a
                 className="cursor-pointer text-second underline 
-                focus-visible:ring-1 focus-visible:ring-slate-800 focus-visible:ring-offset-2  focus-visible:rounded-sm"
+                focus-visible:rounded-sm focus-visible:ring-1 focus-visible:ring-slate-800  focus-visible:ring-offset-2"
                 target="blank"
                 href="https://api.whatsapp.com/send?phone=559991014072"
               >

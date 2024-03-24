@@ -21,7 +21,6 @@ export function RefreshButton({ queryName, isLoading, ...atr }: RefreshProps) {
       type="button"
       startIcon={isLoading ? <LoadingSecond /> : <RotateCcw size={16} />}
       onClick={handleRefreshData}
-      className="h-10 font-mono text-xs"
       {...atr}
     >
       Atualizar

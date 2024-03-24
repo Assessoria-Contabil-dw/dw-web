@@ -7,8 +7,8 @@ import { LoadingSecond } from "@/components/Loading/second";
 
 import { useCallback, useContext, useRef } from "react";
 import { AccessContext } from "@/provider/context.provider";
-import DeleteModel, { DeleteRef } from "@/components/Model/Delete";
-import { useAccessModuleData } from "@/hooks/useAccess";
+import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
+import { useAccessModuleData } from "@/hooks/Access/User/useAccess";
 import ViewModel, { ViewRef } from "./View";
 import { CalendarClock } from "lucide-react";
 
@@ -159,7 +159,7 @@ export default function TableDirectory({
               ))
             ) : (
               <tr>
-                <td colSpan={8} className="py-6 text-center">
+                <td colSpan={8}>
                   Nenhum diretório cadastrado
                 </td>
               </tr>

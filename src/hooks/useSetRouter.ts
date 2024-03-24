@@ -1,6 +1,6 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { useAuth } from './useAuth'
+import useAuth from './Access/User/useAuth'
 
 export function useSetRouter(
   url?: string,

@@ -1,4 +1,4 @@
-import { Copy, X } from "lucide-react";
+import { X } from "lucide-react";
 import {
   ForwardRefRenderFunction,
   forwardRef,
@@ -7,13 +7,14 @@ import {
   useState,
 } from "react";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
-import ButtonIcon from "@/components/Buttons/ButtonIcon";
-import { useUserPassword } from "@/hooks/useUserData";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { Form } from "@/components/Form";
+import { useMutation } from "react-query";
+import { UserService } from "@/services/Access/User/user.service";
+import { useNotify } from "@/components/Toast/toast";
 
 export interface ModelPasswordRef {
   openModal: () => void;
@@ -57,22 +58,40 @@ const ModelPassword: ForwardRefRenderFunction<ModelPasswordRef> = (
     mode: "onSubmit",
     resolver: zodResolver(passwordSchema),
   });
+
   const {
     handleSubmit,
     watch,
     formState: { errors, isValid },
   } = methos;
 
+  const userService = new UserService();
+  const notify = useNotify();
 
+  const { mutate, isLoading  } = useMutation({
+    mutationKey: "updateUserPassword",
+    mutationFn: () => userService.putPassword(watch("password")),
+    onSuccess: () => {
+      notify({ type: "success", message: "Senha atualizada com sucesso!" });
+    },
+    onError: (error: any) => {
+      if (error.response.data.status === 500) {
+        console.error(error);
+        return notify({
+          type: "error",
+          message: "Erro interno, tente novamente mais tarde",
+        });
+      }
 
-  const { isFetching, refetch } = useUserPassword(
-    watch("password")
-  );
+      return notify({
+        type: "error",
+        message: error.response.data.message,
+      });
+    },
+  });
 
-  async function onSubmit(date: passwordType) {
-    await refetch();
-    console.log(date);
-    console.log("senhas", watch("password"));
+  async function onSubmit() {
+    mutate();
   }
 
   if (!isModalView) {
@@ -126,7 +145,7 @@ const ModelPassword: ForwardRefRenderFunction<ModelPasswordRef> = (
                   variant="fill"
                   type="submit"
                   disabled={!isValid}
-                  loading={isFetching}
+                  loading={isLoading}
                 >
                   Confirmar
                 </ButtonPrimary>

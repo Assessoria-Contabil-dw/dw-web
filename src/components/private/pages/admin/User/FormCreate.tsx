@@ -1,47 +1,76 @@
-'use client'
-import { Form } from '../../../../Form'
-import { z } from 'zod'
-import { useForm, FormProvider } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
-import { RegisterUserRef } from './Register'
-import { api } from '@/lib/api'
-import { userFormShema } from '@/interfaces/validation'
-import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
+"use client";
+import { Form } from "../../../../Form";
+import { z } from "zod";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
+import { useMutation } from "react-query";
+import { AdminUserService } from "@/services/Access/Admin/user.service";
+import { useNotify } from "@/components/Toast/toast";
 
-type UserFormData = z.infer<typeof userFormShema>
+interface FormProps {
+  closeModel: () => void;
+}
 
-export default function FormUser({ closeModal }: RegisterUserRef) {
-  const [error, setError] = useState<string | null>(null)
-  const [selectedRole, setSelectedRole] = useState('CLIENT')
+const userFormShema = z
+  .object({
+    name: z.string().min(3, 'O nome não pode ser vazio'),
+    cpf: z.string().min(14, 'O CPF deve ter 11 dígitos').transform((v) => v.replace(/\D/g, '')),
+    email: z.string().min(1, 'O email não pode ser vazio'),
+    role: z.enum(['ADMIN', 'CLIENT']).default('CLIENT'),
+    password: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
+  })
+type UserFormData = z.infer<typeof userFormShema>;
 
+export default function FormUser({ closeModel }: FormProps) {
+  const [selectedRole, setSelectedRole] = useState("CLIENT");
   const createUserForm = useForm<UserFormData>({
     resolver: zodResolver(userFormShema),
-  })
+  });
 
   const {
     handleSubmit,
-    formState: { isSubmitting },
-  } = createUserForm
+    watch,
+    formState: { isSubmitting, isValid },
+  } = createUserForm;
 
-  async function handleUser(data: UserFormData) {
-    try {
-      const response = await api.post(
-        '/register',
+  const userService = new AdminUserService();
+  const notify = useNotify();
 
-        {
-          name: data.name,
-          cpf: data.cpf,
-          email: data.email,
-          passwordHash: data.passwordHash,
-          role: data.role,
-        },
-      )
-      console.log(response)
-    } catch (err: string | any) {
-      setError(err.response.data.message)
-    }
+  const { mutate } = useMutation({
+    mutationKey: "createUser",
+    mutationFn: () =>
+      userService.createUser({
+        name: watch("name"),
+        email: watch("email"),
+        password: watch("password"),
+        role: selectedRole,
+        cpf: watch("cpf"),
+      }),
+    onSuccess: () => {
+      notify({ type: "success", message: "Usuário criado com sucesso" });
+    },
+    onError: (error: any) => {
+      if (error.response.data.status === 500) {
+        console.error(error);
+        return notify({
+          type: "error",
+          message: "Erro interno, tente novamente mais tarde",
+        });
+      }
+
+      return notify({
+        type: "error",
+        message: error.response.data.message,
+      });
+    },
+  });
+
+  async function handleUser() {
+   mutate()
   }
+
   return (
     <FormProvider {...createUserForm}>
       <form
@@ -73,13 +102,9 @@ export default function FormUser({ closeModal }: RegisterUserRef) {
           </Form.Field>
 
           <Form.Field>
-            <Form.Label htmlFor="passwordHash">Senha</Form.Label>
-            <Form.TextInput
-              type="text"
-              name="passwordHash"
-              placeholder="Senha"
-            />
-            <Form.ErrorMessage field="passwordHash" />
+            <Form.Label htmlFor="password">Senha</Form.Label>
+            <Form.TextInput type="text" name="password" placeholder="Senha" />
+            <Form.ErrorMessage field="password" />
           </Form.Field>
 
           <Form.Field>
@@ -98,14 +123,12 @@ export default function FormUser({ closeModal }: RegisterUserRef) {
           </Form.Field>
         </div>
 
-        {error && <span className="text-sm text-red-500">{error}</span>}
-
         <div className="flex gap-4">
           <ButtonPrimary
             title="Cancelar"
             variant="outline"
             type="button"
-            onClick={closeModal}
+            onClick={closeModel}
           >
             Cancelar
           </ButtonPrimary>
@@ -113,6 +136,7 @@ export default function FormUser({ closeModal }: RegisterUserRef) {
             title="Cadastrar"
             variant="fill"
             type="submit"
+            disabled={!isValid}
             loading={isSubmitting}
           >
             Cadastrar
@@ -120,5 +144,5 @@ export default function FormUser({ closeModal }: RegisterUserRef) {
         </div>
       </form>
     </FormProvider>
-  )
+  );
 }

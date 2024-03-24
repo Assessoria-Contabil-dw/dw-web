@@ -1,7 +1,7 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { useCallback, useRef, useState } from "react";
 import { Trash } from "lucide-react";
-import DeleteModel, { DeleteRef } from "../../../../Model/Delete";
+import DeleteModel, { DeleteRef } from "../../../Model/Delete";
 import ButtonIcon from "@/components/Buttons/ButtonIcon";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import { useTemplateCreate, useTemplateUpdate } from "@/hooks/useTemplate";

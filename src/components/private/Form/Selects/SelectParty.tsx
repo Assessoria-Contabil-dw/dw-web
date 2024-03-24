@@ -31,7 +31,7 @@ export default function SelectParty({
       {...atr}
     >
       {children}
-      {data !== undefined && data.results !== null
+      {data !== undefined && data.results !== null && data.results
         ? data?.results.map((party) => (
             <option key={party.code} value={party.abbreviation}>
               {party.abbreviation}

@@ -1,5 +1,5 @@
 import Fab from '@/components/private/Fab'
-import MenuPrivate from '@/components/private/Menu'
+import MenuPrivate from '@/components/private/pages/modulos/Menu'
 import { ReactNode } from 'react'
 
 export default function RootLayout({ children }: { children: ReactNode }) {

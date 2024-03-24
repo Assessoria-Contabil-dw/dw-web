@@ -3,23 +3,65 @@ import { Form } from '../../../../Form'
 import { z } from 'zod'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
-import { api } from '@/lib/api'
-import Cookie from 'js-cookie'
 import { userFormShema } from '@/interfaces/validation'
 import ButtonPrimary from '@/components/Buttons/ButtonPrimary'
+import { useMutation, useQuery } from 'react-query'
+import { AdminUserService } from '@/services/Access/Admin/user.service'
+import { useNotify } from '@/components/Toast/toast'
+import { queryClient } from '@/provider/query.provider'
 
 type UserFormData = z.infer<typeof userFormShema>
 export interface UpdateUserRef {
-  id: number
+  id: string
   closeModal: () => void
 }
 
 export default function FormUpdate({ closeModal, id }: UpdateUserRef) {
-  const [error, setError] = useState<string | null>(null)
-  const [selectedRole, setSelectedRole] = useState('CLIENT')
+  const userService = new AdminUserService();
+  const notify = useNotify();
 
-  const [valuesUser, setValuesUser] = useState<UserFormData>({} as UserFormData)
+  const accessService = new AdminUserService();
+  const { data, isLoading, isFetching } = useQuery<UserFormData>(
+    ["accessUser", id],
+    () => accessService.getById(id),
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: 2,
+      refetchOnWindowFocus: false,
+      enabled: !!id,
+    }
+  );
+
+  const { mutate } = useMutation({
+    mutationKey: "updateUser",
+    mutationFn: () => userService.updateUser(id, {
+      name: watch('name'),
+      email: watch('email'),
+      role: watch('role'),
+      cpf: watch('cpf'),
+      disabled: String(watch('disabled')),
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries('accessUser')
+      queryClient.invalidateQueries('userData')
+     return notify({ type: "success", message: "Usuário atualizado com sucesso" });
+    },
+    onError: (error: any) => {
+      if (error.response.data.status === 500) {
+        console.error(error);
+        return notify({
+          type: "error",
+          message: "Erro interno, tente novamente mais tarde",
+        });
+      }
+      return notify({
+        type: "error",
+        message: error.response.data.message,
+      });
+    },
+  });
+
 
   const createUserForm = useForm<UserFormData>({
     resolver: zodResolver(userFormShema),
@@ -28,49 +70,18 @@ export default function FormUpdate({ closeModal, id }: UpdateUserRef) {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    watch,
   } = createUserForm
 
-  async function handleUser(id: number) {
-    try {
-      const response = await api.get(`/users/${String(id)}`)
-      console.log(response.data)
-      setValuesUser(response.data)
-    } catch (err) {
-      console.log(err)
-    }
+  async function handleUpdateUser() {
+    mutate()
   }
 
-  useEffect(() => {
-    console.log(id)
-    handleUser(id)
-  }, [id])
 
-  async function handleUpdateUser(data: UserFormData) {
-    const token = Cookie.get('token')
-    try {
-      const response = await api.put(
-        `/users/${String(id)}`,
-
-        {
-          name: data.name,
-          cpf: data.cpf,
-          email: data.email,
-          role: data.role,
-          // disable: !!data.disable,
-        },
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      console.log(response)
-    } catch (err: string | any) {
-      setError(err.response.data.message)
-    }
+  if(isLoading || isFetching) {
+    return <div>Carregando...</div>
   }
-
+  
   return (
     <FormProvider {...createUserForm}>
       <form
@@ -83,11 +94,11 @@ export default function FormUpdate({ closeModal, id }: UpdateUserRef) {
             <Form.TextInput
               type="text"
               required
-              defaultValue={valuesUser.name}
+              defaultValue={data?.name}
               name="name"
               placeholder="Nome"
             />
-            {/* <Form.ErrorMessage field="name" /> */}
+            <Form.ErrorMessage field="name" />
           </Form.Field>
 
           <Form.Field>
@@ -95,42 +106,53 @@ export default function FormUpdate({ closeModal, id }: UpdateUserRef) {
             <Form.TextInput
               type="text"
               required
-              defaultValue={valuesUser.cpf}
+              defaultValue={data?.cpf}
               name="cpf"
               placeholder="CPF"
             />
-            {/* <Form.ErrorMessage field="cpf" /> */}
+            <Form.ErrorMessage field="cpf" />
           </Form.Field>
 
           <Form.Field>
             <Form.Label htmlFor="email">E-mail</Form.Label>
             <Form.TextInput
               type="text"
-              defaultValue={valuesUser.email}
+              defaultValue={data?.email}
               name="email"
               required
               placeholder="E-mail"
             />
-            {/* <Form.ErrorMessage field="email" /> */}
+            <Form.ErrorMessage field="email" />
+          </Form.Field>
+
+          <Form.Field>
+            <Form.Label htmlFor="disabled">Status</Form.Label>
+            <Form.SelectInput
+              type="text"
+              placeholder="Status"
+              name="disabled"
+              defaultValue={String(data?.disabled)}
+            >
+              <option value="true">Ativo</option>
+              <option value="false">Desativar</option>
+            </Form.SelectInput>
+            <Form.ErrorMessage field="disabled" />
           </Form.Field>
 
           <Form.Field>
             <Form.Label htmlFor="role">Role</Form.Label>
             <Form.SelectInput
               type="text"
-              value={selectedRole}
-              onChange={(e) => setSelectedRole(e.target.value)}
               placeholder="Nível"
               name="role"
+              defaultValue={data?.role}
             >
               <option value="ADMIN">Administrador</option>
               <option value="CLIENT">Cliente</option>
             </Form.SelectInput>
-            <Form.ErrorMessage field="passwordHash" />
+            <Form.ErrorMessage field="role" />
           </Form.Field>
         </div>
-
-        {error && <span className="text-sm text-red-500">{error}</span>}
 
         <div className="flex gap-4">
           <ButtonPrimary
@@ -142,12 +164,13 @@ export default function FormUpdate({ closeModal, id }: UpdateUserRef) {
             Cancelar
           </ButtonPrimary>
           <ButtonPrimary
-            title="Cadastrar"
+            onClick={handleUpdateUser}
+            title="Atualizar"
             variant="fill"
             loading={isSubmitting}
             type="submit"
           >
-            Cadastrar
+            Atualizar
           </ButtonPrimary>
         </div>
       </form>

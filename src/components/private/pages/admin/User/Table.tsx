@@ -1,53 +1,79 @@
-'use client'
-import { Circle, KeyIcon } from 'lucide-react'
-import { useCallback, useRef } from 'react'
-import UpdateUser, { UpdateUserRef } from './Update'
-import PasswordUser, { PasswordUserRef } from './Password'
-import Link from 'next/link'
-import { TableOptions } from '@/components/private/Tools/TableOptions'
-import { UserProps } from '@/interfaces/user.interface'
-import DeleteModel, { DeleteRef } from '@/components/Model/Delete'
+"use client";
+import { Circle, KeyIcon } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import Link from "next/link";
+import { TableOptions } from "@/components/private/Tools/TableOptions";
+import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
+import Model, { ModelRef } from "@/components/private/components/Modal";
+import FormUpdate from "./FormUpdate";
+import FormPassword from "./FormPassword";
 
 interface TableUserProps {
-  loading?: boolean
-  data: UserProps[] | null
+  loading?: boolean;
+  data: {
+    id: number;
+    disabled: boolean;
+    name: string;
+    email: string;
+    role: string;
+    cpf: string;
+  }[] | null;
 }
 export function TableUser({ loading, data }: TableUserProps) {
-  const modelUpdateRef = useRef<UpdateUserRef>(null)
+ 
+  const [id, setId] = useState("");
 
-  const handleUpdateModal = useCallback((id: number) => {
-    modelUpdateRef.current?.openModal(id)
-  }, [])
+  const modelUpdateRef = useRef<ModelRef>(null);
+  const handleUpdateOpenModal = useCallback((id: string) => {
+    setId(id);
+    modelUpdateRef.current?.openModel();
+  }, []);
 
-  const modelPassordRef = useRef<PasswordUserRef>(null)
-  const handlePasswordModal = useCallback((id: number) => {
-    modelPassordRef.current?.openModal(id)
-  }, [])
+  const handleUpdateCloseModal = useCallback(() => {
+    modelUpdateRef.current?.closeModel();
+  }, []);
 
-  const modelDeleteRef = useRef<DeleteRef>(null)
-  const handleDeleteUser = (id: number, name: string) => {
+  const modelPassordRef = useRef<ModelRef>(null);
+  const handlePasswordOpenModal = useCallback((id: string) => {
+    setId(id);
+    modelPassordRef.current?.openModel();
+  }, []);
+
+  const handlePasswordCloseModal = useCallback(() => {
+    modelPassordRef.current?.closeModel();
+  }, []);
+
+
+  const modelDeleteRef = useRef<DeleteRef>(null);
+  const handleDeleteUser = (id: string, name: string) => {
     modelDeleteRef.current?.openModal(
-      String(id),
-      'users',
+      id,
+      "admin/user",
       `Deseja excluir o usuário ${name}?`,
-      'userData',
-    )
-  }
+      "userData"
+    );
+  };
 
   return (
     <div className="flex flex-col gap-2">
-      <UpdateUser ref={modelUpdateRef} />
-      <PasswordUser ref={modelPassordRef} />
+      <Model title="Atualizar usuário" ref={modelUpdateRef}>
+       <FormUpdate id={id} closeModal={handleUpdateCloseModal} />
+      </Model>
+
+      <Model title="Mudar senha" className="h-fit w-fit" ref={modelPassordRef}>
+        <FormPassword id={id} closeModal={handlePasswordCloseModal} />
+      </Model>
+
       <DeleteModel ref={modelDeleteRef} />
       <fieldset className="fieldset">
-        <table id='table-style'>
+        <table id="table-style">
           <thead>
             <tr>
               <th></th>
               <th>Nome</th>
+              <th>Nível</th>
               <th>CPF</th>
               <th>Email</th>
-              <th>Nível</th>
               <th></th>
             </tr>
           </thead>
@@ -57,7 +83,7 @@ export function TableUser({ loading, data }: TableUserProps) {
                 <tr key={index}>
                   <td
                     className="cursor-pointer"
-                    title={user.disabled ? 'Ativo' : 'Inativo'}
+                    title={user.disabled ? "Ativo" : "Inativo"}
                   >
                     <Circle
                       className={
@@ -68,18 +94,24 @@ export function TableUser({ loading, data }: TableUserProps) {
                       size={12}
                     />
                   </td>
-                  <td className="text-secondHover">
-                    <Link
+                  <td>
+                    {user.role === "Administrador" ? (
+                      <h2>{user.name}</h2>
+                    ) : (
+                      <Link
+                      className="text-secondHover"
                       href={{
-                        pathname: `/clientes/acessos/${user.cpf}`,
+                        pathname: `/admin/clientes/acessos/${user.cpf}`,
                       }}
                     >
                       {user.name}
                     </Link>
+                    )}
+                    
                   </td>
-                  <td>{user.cpf}</td>
-                  <td>{user.email}</td>
                   <td>{user.role}</td>
+                  <td className="whitespace-nowrap">{user.cpf}</td>
+                  <td>{user.email}</td>
 
                   <td>
                     <TableOptions
@@ -87,12 +119,11 @@ export function TableUser({ loading, data }: TableUserProps) {
                       isView={false}
                       isEdit
                       isDelete
-                      // handleView={handleViewDirectory}
-                      handleEdit={() => handleUpdateModal(user.id)}
-                      handleDelete={() => handleDeleteUser(user.id, user.name)}
+                      handleEdit={() => handleUpdateOpenModal(String(user.id))}
+                      handleDelete={() => handleDeleteUser(String(user.id), user.name)}
                     >
                       <button
-                        onClick={() => handlePasswordModal(user.id)}
+                        onClick={() => handlePasswordOpenModal(String(user.id))}
                         className="h-full px-1 hover:text-second"
                       >
                         <KeyIcon size={16} />
@@ -112,5 +143,5 @@ export function TableUser({ loading, data }: TableUserProps) {
         </table>
       </fieldset>
     </div>
-  )
+  );
 }
