@@ -1,6 +1,6 @@
 'use client'
 import MenuData from '@/components/private/pages/admin/Menu'
-import { User } from '@/hooks/useAuth'
+import { User } from '@/hooks/Access/User/useAuth'
 import { queryClient } from '@/provider/query.provider'
 import { useRouter } from 'next/navigation'
 import { ReactNode } from 'react'

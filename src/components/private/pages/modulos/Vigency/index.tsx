@@ -6,12 +6,12 @@ import { LoadingPrimary } from '@/components/Loading/primary'
 import { useParams } from 'next/navigation'
 import { AccessContext } from '@/provider/context.provider'
 import { RefreshButton } from '@/components/Buttons/ButtonRefresh'
-import { User } from '@/lib/auth'
 import { queryClient } from '@/provider/query.provider'
 import TableVigency from './Table'
 import { ButtomBack } from '@/components/Buttons/ButtonBack'
 import ButtonIcon from '@/components/Buttons/ButtonIcon'
 import { useVigencyData } from '@/hooks/Directory/useVigency'
+import { User } from '@/hooks/Access/User/useAuth'
 
 export function VigencyTable() {
   const params = useParams()

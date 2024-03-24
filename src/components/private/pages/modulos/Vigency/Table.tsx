@@ -1,12 +1,9 @@
 import { Vigency } from "@/interfaces/vigency";
 import { TableOptions } from "../../../Tools/TableOptions";
-
 import ViewVigencyModel, { ViewVigencyRef } from "./View";
 import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
 import UpdateVigency, { UpdateVigencyRef } from "./Update";
 import { useCallback, useRef } from "react";
-import { AlertCircleIcon, AlertOctagon } from "lucide-react";
-import { AlertTriangle } from "lucide-react";
 
 interface TableVigencyProps {
   role?: string;
