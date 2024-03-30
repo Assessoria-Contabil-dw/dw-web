@@ -64,6 +64,11 @@ export class VigencyService {
     }
   }
 
+  public async getVenciment(){
+      const response = await api.get('/vigencies/venciment')
+      return response.data
+  }
+
   public async create(
     dateFirst: string,
     dateLast: string,

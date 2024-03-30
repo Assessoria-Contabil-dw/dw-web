@@ -32,7 +32,6 @@ export class AdminAccessService {
       cityCode?: string;
       modules?: string[] | string;
   }) {
-    //se modules for so um numero converter para array
     if (typeof data.modules === "string") {
       data.modules = [data.modules];
     }

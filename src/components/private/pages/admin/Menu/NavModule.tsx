@@ -28,13 +28,8 @@ export default function NavigationModule( { modules } :NavigationProps) {
   const MENU_MODULOS = [
     {
       href: `/admin`,
-      label: 'Pagina Inicial',
-      sub: null,
-    },
-    {
-      href: `/admin/partidos`,
       label: 'Partidos',
-      replace: true,
+      sub: null,
     },
     {
       href: `/admin/diretorio`,

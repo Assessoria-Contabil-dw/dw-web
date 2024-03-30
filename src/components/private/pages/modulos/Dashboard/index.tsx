@@ -1,4 +1,6 @@
-import CardCount from './CardCount'
+import CardCount from "./CardCount";
+import TableSpcCount from "./TableSpcCount";
+import TableVencimentVigency from "./TableVenciment";
 
 export default function Dashboard() {
   return (
@@ -7,6 +9,10 @@ export default function Dashboard() {
         Dashboard <span className="text-span">/ Acessos</span>
       </h2>
       <CardCount />
+      <div className="flex flex-col gap-8 lg:flex-row">
+        <TableVencimentVigency />
+        <TableSpcCount/>
+      </div>
     </div>
-  )
+  );
 }

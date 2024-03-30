@@ -86,7 +86,7 @@ const ViewVigencyModel: ForwardRefRenderFunction<ViewVigencyRef> = (
                         <div className="flex flex-col gap-1">
                           <h5 className="text-h5">Vencimento</h5>
                           <p className="text-xs text-slate-500">
-                            Faltam {vigencyData?.vigency.daysVenciment}
+                            {vigencyData?.vigency.daysVenciment}
                           </p>
                         </div>
                       ) : null
