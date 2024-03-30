@@ -31,28 +31,28 @@ export default function NavigationModule( { modules } :NavigationProps) {
       label: 'Partidos',
       sub: null,
     },
+    // {
+    //   href: `/admin/diretorio`,
+    //   sub: '/admin/vigencia',
+    //   label: 'Diretórios',
+    //   replace: true,
+    // },
+    // {
+    //   href: `/admin/spc`,
+    //   label: 'SPC',
+    //   sub: null,
+    // },
     {
-      href: `/admin/diretorio`,
-      sub: '/admin/vigencia',
-      label: 'Diretórios',
-      replace: true,
-    },
-    {
-      href: `/admin/spc`,
-      label: 'SPC',
-      sub: null,
-    },
-    {
-      href: `/admin/template`,
+      href: `/admin/templates`,
       label: 'Template',
       sub: null,
     },
-    {
-      href: `/admin/advogados`,
-      label: 'Advogados',
-      replace: true,
-      sub: null,
-    },
+    // {
+    //   href: `/admin/advogados`,
+    //   label: 'Advogados',
+    //   replace: true,
+    //   sub: null,
+    // },
     {
       href: `/admin/clientes`,
       sub: '/acessos',
