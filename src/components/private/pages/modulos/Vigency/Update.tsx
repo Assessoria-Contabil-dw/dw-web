@@ -1,15 +1,7 @@
 "use client";
 import { X, Trash2, Plus } from "lucide-react";
-
 import { api } from "@/lib/api";
-import {
-  useEffect,
-  useState,
-  ForwardRefRenderFunction,
-  forwardRef,
-  useImperativeHandle,
-  useCallback,
-} from "react";
+import { useCallback } from "react";
 import {
   AdvocateProps,
   LawFirmProps,
@@ -22,28 +14,20 @@ import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { vigencyUpdateSchema, vigencyUpdateType } from "./@type/zod.type";
-import { useVigencyById, useVigencyUpdate } from "@/hooks/Directory/useVigency";
+import { useVigencyUpdate } from "@/hooks/Directory/useVigency";
 import { Form } from "@/components/Form";
 import InputBase from "@/components/private/Form/Inputs/InputBase";
 import { useParams } from "next/navigation";
+import { UseQueryResult, useQueries, useQuery } from "react-query";
+import { Page } from "@/interfaces/page";
+import { VigencyService } from "@/services/Directory/vigency.service";
 
-export interface UpdateVigencyRef {
-  openViewModal: (id: string) => void;
-  closeViewModal: () => void;
+export interface UpdateVigency {
+  vigencyId: string;
+  closeModal: () => void;
 }
 
-const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
-  props,
-  ref
-) => {
-  const [vigencyId, setvigencyId] = useState("");
-  const [isModalView, setIsModalView] = useState(false);
-
-  const [leaderies, setLeader] = useState<LeaderProps[]>([]);
-  const [offices, setOffice] = useState<OfficesProps[]>([]);
-  const [lawFirms, setLawFirm] = useState<LawFirmProps[]>([]);
-  const [advocates, setAdvocate] = useState<AdvocateProps[]>([]);
-
+export function UpdateVigencyModel({ vigencyId, closeModal }: UpdateVigency) {
   const methods = useForm<vigencyUpdateType>({
     mode: "onSubmit",
     resolver: zodResolver(vigencyUpdateSchema),
@@ -53,36 +37,38 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
 
   const params = useParams();
   const { id } = params;
-  const vigencyById = useVigencyById(vigencyId);
-  const vigencyUpdate = useVigencyUpdate(
-    vigencyId,
-    id,
-    watch("dateFirst"),
-    watch("dateLast"),
-    watch("vigencyLeader"),
-    watch("vigencyAdvocate"),
-    watch("vigencyLawFirm")
+
+  const vigencyById = useQuery<{
+    dateFirst: string;
+    dateLast: string;
+    daysVenciment: number;
+    vigencyLeader: {
+      leaderId: string;
+      officeId: string;
+    }[];
+    vigencyAdvocate: {
+      advocateId: string;
+    }[];
+    vigencyLawFirm: {
+      lawFirmId: string;
+    }[];
+  }>(
+    ["vigencyByIdUpdate", vigencyId],
+    async () => VigencyService.getById(vigencyId),
+    {
+      onSuccess: (data) => {
+        setValue("dateFirst", data?.dateFirst || "");
+        setValue("dateLast", data?.dateLast || "");
+        setValue("vigencyLeader", data?.vigencyLeader);
+        setValue("vigencyAdvocate", data?.vigencyAdvocate);
+        setValue("vigencyLawFirm", data?.vigencyLawFirm);
+      },
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 60,
+      retry: 2,
+      enabled: !!vigencyId,
+    }
   );
-
-  const openViewModal = useCallback((id: string) => {
-    setvigencyId(id);
-    vigencyById.refetch()
-    setValue("dateFirst", vigencyById.data?.dateFirst || "");
-    setValue("dateLast", vigencyById.data?.dateLast || "");
-    setValue("vigencyLeader", vigencyById.data?.vigencyLeader);
-    setValue("vigencyAdvocate", vigencyById.data?.vigencyAdvocate);
-    setValue("vigencyLawFirm", vigencyById.data?.vigencyLawFirm);
-    setIsModalView(true);
-  }, []);
-
-  const closeViewModal = useCallback(() => {
-    setIsModalView(false);
-  }, []);
-
-  useImperativeHandle(ref, () => ({
-    openViewModal,
-    closeViewModal,
-  }));
 
   const useFieldLeader = useFieldArray({
     control,
@@ -111,26 +97,66 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
     useFieldLawFirm.append({ lawFirmId: "" });
   }
 
-  useEffect(() => {
-    Promise.all([
-      api.get("/leaderies"),
-      api.get("/offices"),
-      api.get("/advocates"),
-      api.get("/lawFirms"),
-    ])
-      .then(([leaderies, offices, advocates, lawFirms]) => {
-        setLeader(leaderies.data);
-        setOffice(offices.data);
-        setAdvocate(advocates.data);
-        setLawFirm(lawFirms.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-   
-  }, [vigencyId]);
+  const [dataLeaderies, dataOffices, dataAdvocates, dataLawFirm]: [
+    UseQueryResult<LeaderProps[]>,
+    UseQueryResult<OfficesProps[]>,
+    UseQueryResult<Page<AdvocateProps>>,
+    UseQueryResult<LawFirmProps[]>
+  ] = useQueries([
+    {
+      queryKey: ["leaderies", vigencyId],
 
-  const onSubmit = async (data: vigencyUpdateType) => {
+      queryFn: async () => {
+        const response = await api.get("/leaderies");
+        return response.data;
+      },
+      keepPreviousData: true,
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+    {
+      queryKey: ["offices", vigencyId],
+      queryFn: async () => {
+        const response = await api.get("/offices");
+        return response.data;
+      },
+      keepPreviousData: true,
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+    {
+      queryKey: ["advocates", vigencyId],
+      queryFn: async () => {
+        const response = await api.get("/advocates");
+        return response.data;
+      },
+      keepPreviousData: true,
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+    {
+      queryKey: ["lawFirm", vigencyId],
+      queryFn: async () => {
+        const response = await api.get("/lawFirms");
+        return response.data;
+      },
+      keepPreviousData: true,
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  ]);
+
+  const vigencyUpdate = useVigencyUpdate(
+    vigencyId,
+    id,
+    watch("dateFirst"),
+    watch("dateLast"),
+    watch("vigencyLeader"),
+    watch("vigencyAdvocate"),
+    watch("vigencyLawFirm")
+  );
+
+  const onSubmit = async () => {
     await vigencyUpdate.refetch();
   };
 
@@ -139,251 +165,210 @@ const UpdateVigencyModel: ForwardRefRenderFunction<UpdateVigencyRef> = (
     onSubmit,
   ]);
 
-  if (!isModalView) {
-    return null;
+  if (vigencyById.isLoading) {
+    return <LoadingSecond />;
   }
 
   return (
-    <div className="model-bg">
-      <div className="model-size model-size-full">
-        <div className="model-card">
-          <div className="model-header ">
-            <div>
-              <h4 className="text-h4">Cadastrar Vigência</h4>
-            </div>
-            <button
-              onClick={closeViewModal}
-              className="w-fit rounded-full p-0 text-gray-300 hover:text-gray-600"
-            >
-              <X size={20} />
-            </button>
+    <FormProvider {...methods}>
+      <form className="model-body" onSubmit={memoizedHandleSubmit}>
+        <InputBase
+          {...register("dateFirst")}
+          label="Data Inicial"
+          type="date"
+          name="dateFirst"
+        />
+        <InputBase
+          {...register("dateLast")}
+          label="Data Final"
+          type="date"
+          name="dateLast"
+        />
+
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <label>Representantes</label>
+            <ButtonIcon
+              title="Adicionar representante"
+              type="button"
+              icon={<Plus size={16} />}
+              onClick={addNewLeader}
+            />
           </div>
-          {vigencyById.isLoading || !vigencyById.data ? (
-            <div className="model-loading">
-              <LoadingSecond />
-            </div>
-          ) : (
-            <FormProvider {...methods}>
-              <form className="model-body" onSubmit={memoizedHandleSubmit}>
-                <InputBase
-                  {...register("dateFirst")}
-                  label="Data Inicial"
-                  type="date"
-                  name="dateFirst"
-                />
-                <InputBase
-                  {...register("dateLast")}
-                  label="Data Final"
-                  type="date"
-                  name="dateLast"
-                />
+          <Form.Field className="flex flex-col gap-4">
+            {useFieldLeader.fields.map((fieldLeader, index) => {
+              const fleader = `vigencyLeader.${index}.leaderId`;
+              const foffice = `vigencyLeader.${index}.officeId`;
 
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <label>Representantes</label>
-                    <ButtonIcon
-                      title="Adicionar representante"
+              return (
+                <Form.Field key={fieldLeader.id}>
+                  <Form.Label htmlFor={fleader}>
+                    Representante {index + 1}
+                  </Form.Label>
+                  <div className="flex gap-2">
+                    <Form.Field>
+                      <Form.SelectInput
+                        type="text"
+                        placeholder="Selecione representante"
+                        name={fleader}
+                      >
+                        {dataLeaderies.data?.map((leader, index) => {
+                          return (
+                            <option key={index} value={leader.id.toString()}>
+                              {leader.name}
+                            </option>
+                          );
+                        })}
+                      </Form.SelectInput>
+                      <Form.ErrorMessage field={fleader} />
+                    </Form.Field>
+
+                    <Form.Field>
+                      <Form.SelectInput
+                        type="text"
+                        placeholder="Selecione cargo"
+                        name={foffice}
+                      >
+                        {dataOffices.data?.map((office, index) => {
+                          return (
+                            <option key={index} value={office.id.toString()}>
+                              {office.name}
+                            </option>
+                          );
+                        })}
+                      </Form.SelectInput>
+                      <Form.ErrorMessage field={foffice} />
+                    </Form.Field>
+                    <button
+                      onClick={() => useFieldLeader.remove(index)}
                       type="button"
-                      icon={<Plus size={16} />}
-                      onClick={addNewLeader}
-                    />
+                      className="w-fit text-red-500"
+                    >
+                      <Trash2 className="w-4" />
+                    </button>
                   </div>
-                  <Form.Field className="flex flex-col gap-4">
-                    {useFieldLeader.fields.map((fieldLeader, index) => {
-                      const fleader = `vigencyLeader.${index}.leaderId`;
-                      const foffice = `vigencyLeader.${index}.officeId`;
-
-                      return (
-                        <Form.Field key={fieldLeader.id}>
-                          <Form.Label htmlFor={fleader}>
-                            Representante {index + 1}
-                          </Form.Label>
-                          <div className="flex gap-2">
-                            <Form.Field>
-                              <Form.SelectInput
-                                type="text"
-                                placeholder="Selecione representante"
-                                name={fleader}
-                              >
-                                {leaderies.map((leader, index) => {
-                                  return (
-                                    <option
-                                      key={index}
-                                      value={leader.id.toString()}
-                                    >
-                                      {leader.name}
-                                    </option>
-                                  );
-                                })}
-                              </Form.SelectInput>
-                              <Form.ErrorMessage field={fleader} />
-                            </Form.Field>
-
-                            <Form.Field>
-                              <Form.SelectInput
-                                type="text"
-                                placeholder="Selecione cargo"
-                                name={foffice}
-                              >
-                                {offices.map((office, index) => {
-                                  return (
-                                    <option
-                                      key={index}
-                                      value={office.id.toString()}
-                                    >
-                                      {office.name}
-                                    </option>
-                                  );
-                                })}
-                              </Form.SelectInput>
-                              <Form.ErrorMessage field={foffice} />
-                            </Form.Field>
-                            <button
-                              onClick={() => useFieldLeader.remove(index)}
-                              type="button"
-                              className="w-fit text-red-500"
-                            >
-                              <Trash2 className="w-4" />
-                            </button>
-                          </div>
-                        </Form.Field>
-                      );
-                    })}
-                  </Form.Field>
-                </div>
-
-                <div>
-                  <div className="flex items-center gap-2">
-                    <label>Advogados</label>
-                    <ButtonIcon
-                      title="Adicionar advogado"
-                      type="button"
-                      icon={<Plus size={16} />}
-                      onClick={addNewAdvocate}
-                    />
-                  </div>
-                  <Form.Field className="flex flex-col gap-4">
-                    {useFieldAdvocate.fields.map((fieldAdvocate, index) => {
-                      const fleader = `vigencyAdvocate.${index}.advocateId`;
-
-                      return (
-                        <Form.Field key={fieldAdvocate.id}>
-                          <Form.Label htmlFor={fleader}>
-                            Advogado {index + 1}
-                          </Form.Label>
-                          <div className="flex gap-2">
-                            <Form.Field>
-                              <Form.SelectInput
-                                type="text"
-                                placeholder="Selecione representante"
-                                name={fleader}
-                              >
-                                {advocates.map((item, index) => {
-                                  return (
-                                    <option
-                                      key={index}
-                                      value={item.id.toString()}
-                                    >
-                                      {item.name}
-                                    </option>
-                                  );
-                                })}
-                              </Form.SelectInput>
-                              <Form.ErrorMessage field={fleader} />
-                            </Form.Field>
-
-                            <button
-                              onClick={() => useFieldAdvocate.remove(index)}
-                              type="button"
-                              className="w-fit text-red-500"
-                            >
-                              <Trash2 className="w-4" />
-                            </button>
-                          </div>
-                        </Form.Field>
-                      );
-                    })}
-                  </Form.Field>
-                </div>
-
-                <div>
-                  <div className="flex items-center gap-2">
-                    <label>Escritório</label>
-                    <ButtonIcon
-                      title="Adicionar escritorio"
-                      type="button"
-                      icon={<Plus size={16} />}
-                      onClick={addNewLawFirm}
-                    />
-                  </div>
-                  <Form.Field className="flex flex-col gap-4">
-                    {useFieldLawFirm.fields.map((fieldLawFirm, index) => {
-                      const fleader = `vigencyLawFirm.${index}.lawFirmId`;
-
-                      return (
-                        <Form.Field key={fieldLawFirm.id}>
-                          <Form.Label htmlFor={fleader}>
-                            Escritório {index + 1}
-                          </Form.Label>
-                          <div className="flex gap-2">
-                            <Form.Field>
-                              <Form.SelectInput
-                                type="text"
-                                placeholder="Selecione escritorio"
-                                name={fleader}
-                              >
-                                {lawFirms.map((item, index) => {
-                                  return (
-                                    <option
-                                      key={index}
-                                      value={item.id.toString()}
-                                    >
-                                      {item.name}
-                                    </option>
-                                  );
-                                })}
-                              </Form.SelectInput>
-                              <Form.ErrorMessage field={fleader} />
-                            </Form.Field>
-
-                            <button
-                              onClick={() => useFieldLawFirm.remove(index)}
-                              type="button"
-                              className="w-fit text-red-500"
-                            >
-                              <Trash2 className="w-4" />
-                            </button>
-                          </div>
-                        </Form.Field>
-                      );
-                    })}
-                  </Form.Field>
-                </div>
-
-                <div className="flex gap-4">
-                  <ButtonPrimary
-                    variant="ghost"
-                    title="Cancelar"
-                    onClick={closeViewModal}
-                  >
-                    Cancelar
-                  </ButtonPrimary>
-                  <ButtonPrimary
-                    loading={vigencyUpdate.isFetching}
-                    variant="fill"
-                    title="Atualizar vigencia"
-                    type="submit"
-                  >
-                    Atualizar
-                  </ButtonPrimary>
-                </div>
-              </form>
-            </FormProvider>
-          )}
+                </Form.Field>
+              );
+            })}
+          </Form.Field>
         </div>
-      </div>
-    </div>
-  );
-};
 
-export default forwardRef(UpdateVigencyModel);
+        <div>
+          <div className="flex items-center gap-2">
+            <label>Advogados</label>
+            <ButtonIcon
+              title="Adicionar advogado"
+              type="button"
+              icon={<Plus size={16} />}
+              onClick={addNewAdvocate}
+            />
+          </div>
+          <Form.Field className="flex flex-col gap-4">
+            {useFieldAdvocate.fields.map((fieldAdvocate, index) => {
+              const fleader = `vigencyAdvocate.${index}.advocateId`;
+
+              return (
+                <Form.Field key={fieldAdvocate.id}>
+                  <Form.Label htmlFor={fleader}>
+                    Advogado {index + 1}
+                  </Form.Label>
+                  <div className="flex gap-2">
+                    <Form.Field>
+                      <Form.SelectInput
+                        type="text"
+                        placeholder="Selecione representante"
+                        name={fleader}
+                      >
+                        {dataAdvocates.data?.results?.map((item, index) => {
+                          return (
+                            <option key={index} value={item.id.toString()}>
+                              {item.name}
+                            </option>
+                          );
+                        })}
+                      </Form.SelectInput>
+                      <Form.ErrorMessage field={fleader} />
+                    </Form.Field>
+
+                    <button
+                      onClick={() => useFieldAdvocate.remove(index)}
+                      type="button"
+                      className="w-fit text-red-500"
+                    >
+                      <Trash2 className="w-4" />
+                    </button>
+                  </div>
+                </Form.Field>
+              );
+            })}
+          </Form.Field>
+        </div>
+
+        <div>
+          <div className="flex items-center gap-2">
+            <label>Escritório</label>
+            <ButtonIcon
+              title="Adicionar escritorio"
+              type="button"
+              icon={<Plus size={16} />}
+              onClick={addNewLawFirm}
+            />
+          </div>
+          <Form.Field className="flex flex-col gap-4">
+            {useFieldLawFirm.fields.map((fieldLawFirm, index) => {
+              const fleader = `vigencyLawFirm.${index}.lawFirmId`;
+
+              return (
+                <Form.Field key={fieldLawFirm.id}>
+                  <Form.Label htmlFor={fleader}>
+                    Escritório {index + 1}
+                  </Form.Label>
+                  <div className="flex gap-2">
+                    <Form.Field>
+                      <Form.SelectInput
+                        type="text"
+                        placeholder="Selecione escritorio"
+                        name={fleader}
+                      >
+                        {dataLawFirm.data?.map((item, index) => {
+                          return (
+                            <option key={index} value={item.id.toString()}>
+                              {item.name}
+                            </option>
+                          );
+                        })}
+                      </Form.SelectInput>
+                      <Form.ErrorMessage field={fleader} />
+                    </Form.Field>
+
+                    <button
+                      onClick={() => useFieldLawFirm.remove(index)}
+                      type="button"
+                      className="w-fit text-red-500"
+                    >
+                      <Trash2 className="w-4" />
+                    </button>
+                  </div>
+                </Form.Field>
+              );
+            })}
+          </Form.Field>
+        </div>
+
+        <div className="flex gap-4">
+          <ButtonPrimary variant="ghost" title="Cancelar" onClick={closeModal}>
+            Cancelar
+          </ButtonPrimary>
+          <ButtonPrimary
+            loading={vigencyUpdate.isFetching}
+            variant="fill"
+            title="Atualizar vigencia"
+            type="submit"
+          >
+            Atualizar
+          </ButtonPrimary>
+        </div>
+      </form>
+    </FormProvider>
+  );
+}

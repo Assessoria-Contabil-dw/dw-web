@@ -9,7 +9,7 @@ export default function MenuData() {
   const { openMenu, setOpenMenu } = useContext(AccessContext);
   const { partyCode, cityCode, stateId } = useContext(AccessContext);
 
-  const { data, isLoading, isFetching } = useAccessModuleData(partyCode, stateId, cityCode);
+  const { data, isLoading} = useAccessModuleData(partyCode, stateId, cityCode);
 
   if (isLoading ) {
     return null;

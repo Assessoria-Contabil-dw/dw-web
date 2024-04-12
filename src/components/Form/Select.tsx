@@ -28,7 +28,7 @@ export function SelectInput({
       name={name}
       {...props}
     >
-      <option disabled value="">
+      <option disabled selected value="">
         {placeholder}
       </option>
       {props.children}

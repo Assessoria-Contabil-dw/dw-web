@@ -185,6 +185,8 @@ export function PartyTable() {
           }}
           pages={data?.info?.pages ?? 0}
           page={page}
+          result={data?.info?.result ?? 0}
+          count={data?.info?.count ?? 0}
           isPreviousData={isPreviousData}
           nextPage={nextPage}
           prevPage={prevPage}

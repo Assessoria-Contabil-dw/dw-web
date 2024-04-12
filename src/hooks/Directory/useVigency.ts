@@ -44,44 +44,6 @@ export function useVigencyOne(id?: number, partyCode?: string, stateId?: string,
   return query
 }
 
-export function useVigencyCreate(
-  dateFirst: string,
-    dateLast: string,
-    directoryId: string,
-    vigencyLeader?: {
-      officeId: number;
-      leaderId: string;
-    }[],
-    VigencyAdvocate?: {
-      advocateId: number;
-    }[],
-    vigencyLawFirm?: {
-      lawFirmId: number;
-    }[]
-) {
-  const vigencyService = new VigencyService()
-
-  const query = useQuery<VigencyProps>(
-    ['vigencyCreate'],
-    () => vigencyService.create(
-      dateFirst,
-      dateLast,
-      directoryId,
-      vigencyLeader,
-      VigencyAdvocate,
-      vigencyLawFirm,
-    ),
-    {
-      keepPreviousData: true,
-      retry: false,
-      refetchOnWindowFocus: false,
-      enabled: false,
-    },
-  )
-
-  return query
-}
-
 export function useVigencyUpdate(
     vigencyId: string,
     directoryId: string,
@@ -120,24 +82,4 @@ export function useVigencyUpdate(
   )
 
   return query
-}
-
-
-export function useVigencyById(
-  vigencyId: string
-){
-  const vigencyService = new VigencyService()
-  const query = useQuery<VigencyById>(
-    ["vigencyByIdUpdate", vigencyId],
-    async () => 
-    vigencyService.getById(vigencyId),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 60,
-      retry: 2,
-      enabled: !!vigencyId,
-    }
-  );
-
-  return query;
 }

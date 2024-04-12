@@ -1,4 +1,8 @@
+import dayjs from 'dayjs'
 import { z } from 'zod'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
+
 // const MAX_FILE_SIZE = 5 * 1024 * 1024
 // const ACCEPTED_IMAGE_TYPES = [
 //   'image/jpeg',
@@ -164,29 +168,18 @@ export const leaderFormShema = z.object({
 })
 
 export const advocateFormShema = z.object({
-  name: z
-    .string()
-    .min(3, 'O nome não pode ser vazio')
-    .min(1,'O nome não pode ser vazio'),
-  cpf: z
-    .string()
-    .min(11, 'O CPF deve ter 11 dígitos')
-    .max(11, 'O CPF deve ter 11 dígitos')
-    .min(1,'O CPF não pode ser vazio'),
-  birthday: z.string().optional(),
+  name: z.string().min(3, 'O nome não pode ser vazio'),
+  cpf: z.string().max(14).transform((cpf)=> cpf.replace(/[^0-9]/g, '')),
+  birthday: z.string().transform((value) => value ? dayjs(value).utc().format("YYYY-MM-DD") : undefined).optional(),
   email: z.string().optional(),
   oab: z.string().optional(),
-  phone: z.string().optional(),
-  address: z.string().min(3, 'Endereço não pode ser vazio').optional(),
-  img: z
-    .instanceof(FileList)
-    .transform((file) => file[0])
-    .optional(),
-  title: z.string().optional(),
-  status: z
-    .enum(['CASADO', 'DIVORCIADO', 'SOLTEIRO', 'VIUVO'])
-    .default('SOLTEIRO'),
+  phone: z.string().transform((value )=> value.replace(/[^0-9]/g, '')).optional(),
+  address: z.string().optional(),
+  file: z.instanceof(FileList).optional(),
+  title: z.string().transform((value )=> value.replace(/[^0-9]/g, '')).optional(),
+  status: z.enum(['CASADO', 'DIVORCIADO', 'SOLTEIRO', 'VIUVO']),
   lawFirmId: z.string().optional(),
+  signatureUrl: z.string().optional(),
 })
 
 export const lawFirmFormShema = z.object({

@@ -13,7 +13,6 @@ import RegisterDirectoryModal, { RegisterDirectoryModalProps } from "./Create";
 import TableFilterDirectory from "./Filter";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDirectoryData } from "@/hooks/Directory/useDirectory";
-import { LoadingSecond } from "@/components/Loading/second";
 import { User } from "@/hooks/Access/User/useAuth";
 
 interface Search {
@@ -122,7 +121,6 @@ export default function Directory() {
           stateId={stateId}
           cityCode={cityCode}
         />
-
           {data?.results !== null && (
             <PaddingTable
               onChange={(e) => {
@@ -132,6 +130,8 @@ export default function Directory() {
               }}
               pages={data?.info?.pages ?? 0}
               page={page}
+              result={data?.info?.result ?? 0}
+              count={data?.info?.count ?? 0}
               isPreviousData={isPreviousData}
               nextPage={nextPage}
               prevPage={prevPage}

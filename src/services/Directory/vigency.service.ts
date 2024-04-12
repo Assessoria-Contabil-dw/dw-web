@@ -7,13 +7,9 @@ export class VigencyService {
   notify = useNotify();
   router = useRouter();
 
-  public async getById(vigencyId: string){
-    try{
-      const response = await api.get(`/vigency/create/${vigencyId}`)
-      return response.data
-    }catch(error: any){
-      return this.notify({ type: "warning", message: error.response.data.message });
-    }
+  static async getById(vigencyId: string) {
+    const response = await api.get(`/vigency/create/${vigencyId}`);
+    return response.data;
   }
 
   public async getAllById(
@@ -64,12 +60,12 @@ export class VigencyService {
     }
   }
 
-  public async getVenciment(){
-      const response = await api.get('/vigencies/venciment')
-      return response.data
+  public async getVenciment() {
+    const response = await api.get("/vigencies/venciment");
+    return response.data;
   }
 
-  public async create(
+  static async create(
     dateFirst: string,
     dateLast: string,
     directoryId: string,
@@ -84,27 +80,16 @@ export class VigencyService {
       lawFirmId: number;
     }[]
   ) {
-    try {
-      const response = await api.post(`/vigency`, {
-        dateFirst,
-        dateLast,
-        directoryId,
-        vigencyLeader,
-        vigencyAdvocate,
-        vigencyLawFirm,
-      });
-      this.notify({ type: 'success', message: 'Vigência cadastrada com sucesso' })
-      queryClient.invalidateQueries('vigenciesData')
-      return response.data;
+    const response = await api.post(`/vigency`, {
+      dateFirst,
+      dateLast,
+      directoryId,
+      vigencyLeader,
+      vigencyAdvocate,
+      vigencyLawFirm,
+    });
 
-    } catch (error: any) {
-      if (error.response.status === 500) {
-        console.error(error);
-        this.notify({ type: "warning", message: "Erro interno no servidor" });
-      }
-      return this.notify({ type: "warning", message: error.response.data.message });
-
-    }
+    return response.data;
   }
 
   public async update(
@@ -122,8 +107,8 @@ export class VigencyService {
     vigencyLawFirm?: {
       lawFirmId: string;
     }[]
-  ){
-    try{
+  ) {
+    try {
       const response = await api.put(`/vigency/${vigencyId}`, {
         directoryId,
         dateFirst,
@@ -131,19 +116,25 @@ export class VigencyService {
         vigencyLeader,
         vigencyAdvocate,
         vigencyLawFirm,
-      })
+      });
 
-      this.notify({ type: 'success', message: 'Vigência atualizada com sucesso' })
-      queryClient.invalidateQueries('vigenciesData')
-      queryClient.invalidateQueries('vigencyByIdUpdate')
-      queryClient.invalidateQueries('vigencyUpdate')
+      this.notify({
+        type: "success",
+        message: "Vigência atualizada com sucesso",
+      });
+      queryClient.invalidateQueries("vigenciesData");
+      queryClient.invalidateQueries("vigencyByIdUpdate");
+      queryClient.invalidateQueries("vigencyUpdate");
       return response.data;
-    }catch(error: any){
+    } catch (error: any) {
       if (error.response.status === 500) {
         console.error(error);
         this.notify({ type: "warning", message: "Erro interno no servidor" });
       }
-      return this.notify({ type: "warning", message: error.response.data.message });
+      return this.notify({
+        type: "warning",
+        message: error.response.data.message,
+      });
     }
   }
 }

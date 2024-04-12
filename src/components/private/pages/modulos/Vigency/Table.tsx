@@ -2,8 +2,9 @@ import { Vigency } from "@/interfaces/vigency";
 import { TableOptions } from "../../../Tools/TableOptions";
 import ViewVigencyModel, { ViewVigencyRef } from "./View";
 import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
-import UpdateVigency, { UpdateVigencyRef } from "./Update";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
+import Model, { ModelRef } from "@/components/private/components/Modal";
+import { UpdateVigencyModel } from "./Update";
 
 interface TableVigencyProps {
   role?: string;
@@ -17,12 +18,18 @@ export default function TableVigency({
   role,
   defaultText,
 }: TableVigencyProps) {
+  const [id, setId] = useState("");
+
   const modalDeleteRef = useRef<DeleteRef>(null);
-  const modalUpdateRef = useRef<UpdateVigencyRef>(null);
   const modalViewRef = useRef<ViewVigencyRef>(null);
 
-  const handleUpdateModal = useCallback((id: string) => {
-    modalUpdateRef.current?.openViewModal(id);
+  const modalUpdateRef =  useRef<ModelRef>(null);
+  const handleUpdateOpenModel = useCallback((id: string) => {
+    setId(id);
+    modalUpdateRef.current?.openModel();
+  }, []);
+  const handleUpdateCloseModel = useCallback(() => {
+    modalUpdateRef.current?.closeModel();
   }, []);
 
   const handleDeleteModal = useCallback((id: string, msg: string) => {
@@ -35,8 +42,11 @@ export default function TableVigency({
 
   return (
     <>
+    <Model title="Atualizar" ref={modalUpdateRef}>
+      <UpdateVigencyModel closeModal={handleUpdateCloseModel} vigencyId={id}/>
+    </Model>
+
       <DeleteModel ref={modalDeleteRef} />
-      <UpdateVigency ref={modalUpdateRef} />
       <ViewVigencyModel ref={modalViewRef} />
       <div className="flex flex-col gap-2">
         <h4 className="text-h4">{title}</h4>
@@ -99,7 +109,7 @@ export default function TableVigency({
                         isEdit
                         isDelete
                         handleView={() => handleViewModal(v.id.toString())}
-                        handleEdit={() => handleUpdateModal(v.id.toString())}
+                        handleEdit={() => handleUpdateOpenModel(v.id.toString())}
                         handleDelete={() =>
                           handleDeleteModal(
                             String(v.id),

@@ -47,12 +47,12 @@ export default function NavigationModule( { modules } :NavigationProps) {
       label: 'Template',
       sub: null,
     },
-    // {
-    //   href: `/admin/advogados`,
-    //   label: 'Advogados',
-    //   replace: true,
-    //   sub: null,
-    // },
+    {
+      href: `/admin/advogados`,
+      label: 'Advogados',
+      replace: true,
+      sub: null,
+    },
     {
       href: `/admin/clientes`,
       sub: '/acessos',

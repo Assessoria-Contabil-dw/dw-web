@@ -8,6 +8,8 @@ export interface PaddingProps {
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   page: number;
   pages: number;
+  result?: number;
+  count?: number;
   isPreviousData: boolean;
   next: boolean | null;
   isFetching: boolean;
@@ -16,6 +18,8 @@ export interface PaddingProps {
 export default function PaddingTable({
   page,
   pages,
+  result,
+  count,
   isPreviousData,
   next,
   isFetching,
@@ -54,8 +58,7 @@ export default function PaddingTable({
         focus-visible:border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <option value="15" selected>15 itens</option>
-        <option value="45">45 itens</option>
-        <option value="0">Todos</option>
+        <option value="0">Todos ({count})</option>
       </select>
 
       {isFetching && <LoadingSecond />}

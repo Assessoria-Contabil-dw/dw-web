@@ -10,7 +10,7 @@ export default function ActiveLinks() {
 
   return (
     <ul className="grid grid-flow-row grid-cols-3 ">
-      {data.map((item, index) => (
+      {data?.map((item, index) => (
         <li
           key={index}
           className="flex items-center justify-center border-[1px] border-dashed p-1"

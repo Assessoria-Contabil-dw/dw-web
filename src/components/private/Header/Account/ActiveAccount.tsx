@@ -5,14 +5,40 @@ import { useCallback, useRef, useState } from "react";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import ModelPassword, { ModelPasswordRef } from "./ModelPassword";
 import useAuth from "@/hooks/Access/User/useAuth";
-import useLogout from "@/hooks/Access/User/useLogout";
+import { useMutation } from "react-query";
+import { UserAuthService } from "@/services/Access/User/auth.service";
+import { useNotify } from "@/components/Toast/toast";
+import { useRouter } from "next/navigation";
 
 export default function ActiveAccount() {
   const user = useAuth();
-  const { mutate } = useLogout();
+  const notify = useNotify()
+  const router = useRouter()
+
+  const { mutate } = useMutation({
+    mutationKey: 'logout',
+    mutationFn: () => UserAuthService.postLogout(),
+    onSuccess: () => {
+      notify({message: 'Você saiu da sua conta', type:'success'})
+      router.push('/login')
+    },
+    onError: (error: any) => {
+      if (error.response.data.status === 500) {
+        console.error(error);
+        return notify({
+          type: "error",
+          message: "Erro interno, tente novamente mais tarde",
+        });
+      }
+  
+      return notify({
+        type: "error",
+        message: error.response.data.message,
+      });
+    },
+  })
+
   const [isFilter, setIsFilter] = useState(false);
-
-
 
   const modelPassordRef = useRef<ModelPasswordRef>(null)
   const handleModalPassword = useCallback(() => {
@@ -20,8 +46,9 @@ export default function ActiveAccount() {
   }, [])
 
   if (!user) return null;
+
   async function handleLogout() {
-    await mutate()
+   mutate()
   }
 
   return (
