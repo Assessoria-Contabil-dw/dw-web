@@ -17,10 +17,7 @@ interface RegisterLeaderModalProps {
 }
 
 type AdvocateFormData = z.infer<typeof advocateFormShema>;
-interface LawFirm {
-  id: string;
-  name: string;
-}
+
 export function FormCreate({ onClose }: RegisterLeaderModalProps) {
   const notify = useNotify();
   const createAdvocateForm = useForm<AdvocateFormData>({
@@ -40,10 +37,6 @@ export function FormCreate({ onClose }: RegisterLeaderModalProps) {
         const response = await api.get("/lawFirms");
         return response.data;
       },
-      keepPreviousData: true,
-      retry: false,
-      refetchOnWindowFocus: false,
-      enabled: false,
     },
 
     {
@@ -52,16 +45,13 @@ export function FormCreate({ onClose }: RegisterLeaderModalProps) {
         const response = await api.get("/upload/assinaturas");
         return response.data;
       },
-      keepPreviousData: true,
-      retry: false,
-      refetchOnWindowFocus: false,
-      enabled: false,
     },
   ]);
 
   const { mutate } = useMutation({
     mutationKey: "createAdvocate",
     mutationFn: async () => {
+      console.log("teste")
       const advocateData = createAdvocateForm.getValues();
       const transformedData = advocateFormShema.safeParse(advocateData);
       if (!transformedData.success) {

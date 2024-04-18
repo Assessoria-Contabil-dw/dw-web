@@ -55,7 +55,7 @@ export function FormUpdate({ onClose, id }: RegisterLeaderModalProps) {
     },
   ]);
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: "updateAdvocate",
     mutationFn: async () => {
       const advocateData = createAdvocateForm.getValues();
@@ -293,10 +293,11 @@ export function FormUpdate({ onClose, id }: RegisterLeaderModalProps) {
               variant="fill"
               title="Cadastrar"
               type="submit"
+              loading={isSubmitting || isLoading }
               disabled={isSubmitting}
               className="hover:bg-primary-hover bg-primary text-white "
             >
-              {isSubmitting ? <LoadingSecond /> : "Cadastrar"}
+              Atualizar
             </ButtonSecondary>
           </div>
         </div>

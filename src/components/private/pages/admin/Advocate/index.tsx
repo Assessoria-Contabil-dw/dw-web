@@ -47,8 +47,8 @@ export function AdvocateTable() {
     ["advocateData", skip, take, watch("name"), watch("cpf")],
     async () => {
       const response = await AdvocatesService.getAll({
-        skip,
-        take,
+        skip: watch("name") || watch("cpf") ? 0 : skip,
+        take: watch("name") || watch("cpf") ? 15 : take,
         name: watch("name"),
         cpf: watch("cpf"),
       });

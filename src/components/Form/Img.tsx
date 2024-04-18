@@ -44,7 +44,7 @@ export function ImgInput({ name, signatureUrl, ...props }: TextInputProps) {
         </label>
         <label
           htmlFor={name}
-          className="group-hover:text-secundary flex h-1/5 cursor-pointer items-center justify-start gap-2 text-xs font-medium text-gray-400 transition-colors duration-200"
+          className="group-hover:text-secundary flex mb-4 cursor-pointer items-center justify-start gap-2 text-xs font-medium text-gray-400 transition-colors duration-200"
         >
           <Camera size={18} />
           Anexar imagem

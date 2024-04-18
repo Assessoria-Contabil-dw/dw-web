@@ -71,8 +71,8 @@ export function TableAdvocates({data}: IAdvocate) {
               data.map((advocate, index) => (
                 <tr key={index}>
                   <td>{advocate.name ? advocate.name : "-"}</td>
-                  <td>{advocate.oab ? advocate.oab : "-"}</td>
-                  <td>{advocate.cpf ? advocate.cpf : "-"}</td>
+                  <td className="whitespace-nowrap">{advocate.oab ? advocate.oab : "-"}</td>
+                  <td className="whitespace-nowrap">{advocate.cpf ? advocate.cpf : "-"}</td>
                   <td>{advocate.address ? advocate.address : "-"}</td>
                   <td>{advocate.email ? advocate.email : "-"}</td>
                   <td>

@@ -48,6 +48,12 @@ export default function NavigationModule( { modules } :NavigationProps) {
       sub: null,
     },
     {
+      href: `/admin/lideres`,
+      label: 'Lideres',
+      replace: true,
+      sub: null,
+    },
+    {
       href: `/admin/advogados`,
       label: 'Advogados',
       replace: true,

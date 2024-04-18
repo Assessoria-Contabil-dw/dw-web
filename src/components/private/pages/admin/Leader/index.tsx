@@ -1,188 +1,157 @@
-'use client'
-
-import { api } from '@/lib/api'
-import { Edit3, Eye, Plus, RotateCcw, Search, Trash2 } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
-import { RegisterLeader } from './RegisterLeader'
-import { LoadingSecond } from '@/components/Loading/second'
-
-type LeaderProps = {
-  id: number
-  name: string
-  birthday: string
-  cpf: string
-  rg: string
-  email: string
-  phone: string
-  address: string
-  signatureUrl: string
-  title: string
-  nationality: string
-  status: string
-  profession: string
+"use client";
+import { Plus } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import { LoadingSecond } from "@/components/Loading/second";
+import { useQuery } from "react-query";
+import { LeadersService } from "@/services/Leader/leader.service";
+import { useNotify } from "@/components/Toast/toast";
+import { useForm } from "react-hook-form";
+import TableLeader from "./Table";
+import { Page } from "@/interfaces/page";
+import PaddingTable from "@/components/private/Tools/TablePadding";
+import { RefreshButton } from "@/components/Buttons/ButtonRefresh";
+import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
+import Model, { ModelRef } from "@/components/private/components/Modal";
+import { FormCreateLeader } from "./FormCreate";
+export interface LeaderProps {
+  id: number;
+  name: string;
+  birthday: string;
+  cpf: string;
+  rg: string;
+  email: string;
+  phone: string;
+  address: string;
+  signatureUrl: string;
+  title: string;
+  qualification: string;
 }
 
 export function LeaderTable() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [leaderies, setLeaderies] = useState<LeaderProps[]>([])
-  const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1);
+  const [skip, setSkip] = useState(0);
+  const [take, setTake] = useState(15);
+  const notify = useNotify();
 
-  async function loadLeader() {
-    const token = Cookies.get('token')
-    setLoading(true)
-    try {
-      const response = await api.get('/leaderies', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      setLeaderies(response.data)
-      console.log(leaderies)
-    } catch (error) {
-      console.log(error)
+  const { register, watch } = useForm({
+    mode: "onSubmit",
+  });
+
+  const { data, isLoading, isPreviousData, isFetching } = useQuery<
+    Page<LeaderProps>
+  >(
+    ["leaderData", skip, take, watch("name"), watch("cpf")],
+    async () => {
+      return await LeadersService.getAll({
+        skip: watch("name") || watch("cpf") ? 0 : skip,
+        take: watch("name") || watch("cpf") ? 15 : take,
+        name: watch("name"),
+        cpf: watch("cpf"),
+      });
+    },
+    {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 60 * 12,
+      retry: false,
+      refetchOnWindowFocus: false,
+      onError: (error: any) => {
+        if (error.response.status === 500) {
+          console.log(error);
+          return notify({
+            type: "error",
+            message: "Erro interno no servidor",
+          });
+        }
+        return notify({
+          type: "warning",
+          message: error.response.data.message,
+        });
+      },
     }
-    setLoading(false)
-  }
-  useEffect(() => {
-    loadLeader()
-  }, [])
+  );
 
-  function handleCreateLeader(leader: LeaderProps) {
-    setLeaderies((prevState) => prevState.concat(leader))
-  }
+  const prevPage = useCallback(() => {
+    setSkip((old) => Math.max(old - take, 0));
+    setPage((old) => Math.max(old - 1, 0));
+  }, []);
 
-  async function handleDeleteLeader(id: number) {
-    try {
-      await api.delete(`/leaderies/${id}`, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`,
-        },
-      })
-      loadLeader()
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const nextPage = useCallback(() => {
+    setSkip((old) => old + take);
+    setPage((old) => old + 1);
+  }, []);
 
-  if (loading) {
+  const modelRef = useRef<ModelRef>(null);
+  const handleRegisterOpenModel = useCallback(() => {
+    modelRef.current?.openModel();
+  }, []);
+
+  const handleRegisterCloseModel = useCallback(() => {
+    modelRef.current?.closeModel();
+  }, []);
+
+  if (isLoading && !data) {
     return (
       <div className="mt-4 flex items-center justify-center gap-2">
         <LoadingSecond />
         <i className="text-gray-500">Carregando...</i>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <RegisterLeader
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onCreate={handleCreateLeader}
-      />
-
+    <div className="flex w-full flex-col gap-4">
+      <Model title="Cadastrar advogado" ref={modelRef}>
+        <FormCreateLeader onClose={handleRegisterCloseModel} />
+      </Model>
       <div className="flex justify-between">
         <div className="flex w-fit gap-4">
-          <input type="text" className="w-fit" placeholder="Buscar por nome" />
-          <button className="w-fit gap-2 bg-second text-white">
-            <Search className="w-4" />
-            Pesquisar
-          </button>
+          <input
+            type="text"
+            className="input-style w-fit"
+            placeholder="Buscar por nome"
+            {...register("name")}
+          />
+
+          <input
+            type="text"
+            className="input-style w-fit"
+            placeholder="Buscar por CPF"
+            {...register("cpf")}
+          />
         </div>
         <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={() => loadLeader()}
-            className="w-fit border-[1px]  border-gray-200 bg-white text-gray-700"
+          <RefreshButton queryName="leaderData" isLoading={isFetching} />
+
+          <ButtonPrimary
+            title="Cadastrar"
+            variant="fill"
+            startIcon={<Plus className="w-4" />}
+            onClick={() => handleRegisterOpenModel()}
           >
-            <RotateCcw className="w-4" />
-            Atualizar
-          </button>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="w-fit bg-primary text-white"
-          >
-            <Plus className="w-4" />
             Cadastrar
-          </button>
+          </ButtonPrimary>
         </div>
       </div>
 
-      <fieldset className="h-auto w-full rounded-lg px-3 py-2">
-        <table id='table-style'>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>CPF</th>
-              <th>RG</th>
-              <th>Título</th>
-              <th>Qualificação</th>
-              <th>Endereço</th>
-              <th>email</th>
-              <th>Assinatura</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {leaderies.length > 0 ? (
-              leaderies.map((leader, index) => (
-                <tr key={index}>
-                  <td>{leader.name}</td>
-                  <td>{leader.cpf ? leader.cpf : '-'}</td>
-                  <td>{leader.rg ? leader.rg : '-'}</td>
-                  <td>{leader.title ? leader.title : '-'}</td>
-                  <td>
-                    {leader.nationality ? leader.nationality : '-'},{' '}
-                    {leader.status ? leader.status : '-'},{' '}
-                    {leader.profession ? leader.profession : '-'}
-                  </td>
-                  <td>{leader.address ? leader.address : '-'}</td>
-                  <td>{leader.email ? leader.email : '-'}</td>
-                  <td>
-                    {leader.signatureUrl ? (
-                      <picture>
-                        <img
-                          src={leader.signatureUrl}
-                          className="bg-slate-200 object-cover"
-                          width={50}
-                          height={50}
-                          alt="Assinatura do representante"
-                        />
-                      </picture>
-                    ) : (
-                      '-'
-                    )}
-                  </td>
-                  <td className="w-16 ">
-                    <div className="flex items-center ">
-                      <button className="h-full w-auto p-1 hover:text-second">
-                        <Eye className="w-4" />
-                      </button>
-                      <button className="h-full w-auto rounded p-1 hover:text-primary">
-                        <Edit3 className="w-4" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteLeader(leader.id)}
-                        className="h-full w-auto rounded p-1 hover:text-red-500"
-                      >
-                        <Trash2 className="w-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={10} className="py-6 text-center">
-                  Nenhum representante cadastrado
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </fieldset>
+      <TableLeader data={data?.results} />
+      {data?.results !== null && (
+        <PaddingTable
+          onChange={(e) => {
+            setTake(Number(e.target.value));
+            setSkip(0);
+            setPage(1);
+          }}
+          pages={data?.info?.pages ?? 0}
+          page={page}
+          result={data?.info?.result ?? 0}
+          count={data?.info?.count ?? 0}
+          isPreviousData={isPreviousData}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          next={data?.info?.next ?? null}
+          isFetching={isFetching}
+        />
+      )}
     </div>
-  )
+  );
 }

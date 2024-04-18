@@ -141,34 +141,29 @@ export const directoryVigencyFormShema = z.object({
 })
 
 export const leaderFormShema = z.object({
-  name: z
-    .string()
-    .min(3, 'O nome não pode ser vazio')
-    .min(1,'O nome é obrigatório'),
-  cpf: z
-    .string()
-    .min(11, 'O CPF deve ter 11 dígitos')
-    .max(11, 'O CPF deve ter 11 dígitos')
-    .min(1,'O CPF não pode ser vazio'),
-  rg: z.string().optional(),
-  title: z.string().optional(),
-  birthday: z.coerce.date().optional(),
+  name: z.string().min(3, 'Campo não pode ser vazio'),
+  cpf: z.string().min(3, "Campo não pode ser vazio").max(14).transform((cpf)=> cpf.replace(/[^0-9]/g, '')),
+  birthday: z.string().transform((value) => value ? dayjs(value).utc().format("YYYY-MM-DD") : undefined).optional(),
   email: z.string().optional(),
-  phone: z.string().optional(),
+  oab: z.string().optional(),
+  phone: z.string().transform((value )=> value.replace(/[^0-9]/g, '')).optional(),
   address: z.string().optional(),
-  img: z
-    .instanceof(FileList)
-    .transform((file) => file[0])
-    .optional(),
-  nationality: z.enum(['BRASILEIRO', 'ESTRANGEIRO']).default('BRASILEIRO'),
-  status: z
-    .enum(['CASADO', 'DIVORCIADO', 'SOLTEIRO', 'VIUVO'])
-    .default('SOLTEIRO'),
+  file: z.instanceof(FileList).optional(),
+  title: z.string().transform((value )=> value.replace(/[^0-9]/g, '')).optional(),
+  status: z.enum(['CASADO', 'DIVORCIADO', 'SOLTEIRO', 'VIUVO']),
+  lawFirmId: z.string().optional(),
+  signatureUrl: z.string().optional(),
   profession: z.string().optional(),
+  importantPasswords: z.array(
+    z.object({
+      password: z.string().min(3, 'Campo não pode ser vazio'),
+      name: z.string().min(3, 'Campo não pode ser vazio'),
+    }),
+  ).optional()
 })
 
 export const advocateFormShema = z.object({
-  name: z.string().min(3, 'O nome não pode ser vazio'),
+  name: z.string().min(3, 'Campo não pode ser vazio'),
   cpf: z.string().max(14).transform((cpf)=> cpf.replace(/[^0-9]/g, '')),
   birthday: z.string().transform((value) => value ? dayjs(value).utc().format("YYYY-MM-DD") : undefined).optional(),
   email: z.string().optional(),
@@ -183,7 +178,7 @@ export const advocateFormShema = z.object({
 })
 
 export const lawFirmFormShema = z.object({
-  name: z.string().min(3, 'O nome não pode ser vazio').min(1,),
+  name: z.string().min(3, 'Campo não pode ser vazio').min(1,),
   address: z.string().min(3, 'O endereço não pode ficar vazio').max(255),
   cnpj: z
     .string()
@@ -196,7 +191,7 @@ export const lawFirmFormShema = z.object({
 export const userFormShema = z
   .object({
     id: z.coerce.number().optional(),
-    name: z.string().min(3, 'O nome não pode ser vazio'),
+    name: z.string().min(3, 'Campo não pode ser vazio'),
     cpf: z.string().refine(
       (value) => {
         const cleanedValue = value.replace(/[.-]/g, '')
