@@ -16,7 +16,7 @@ export interface Vigency {
   treasurer: Leader;
   advocates: AdvocateProps[];
   lawFirms: LawFirmProps[];
-  daysVenciment: number;
+  daysVenciment: string;
 }
 
 export interface VigencyDirectoryProps {

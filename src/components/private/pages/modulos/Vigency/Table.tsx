@@ -74,7 +74,7 @@ export default function TableVigency({
                           <p>{v.dateLast}</p>
                           {v.daysVenciment ? (
                             <span className="bg-red-500/30 uppercase text-red-500 px-2 rounded-full" title="Data de vencimento próxima">
-                              {v.daysVenciment} dias
+                              {v.daysVenciment}
                             </span>
                           ) : null}
                         </span>

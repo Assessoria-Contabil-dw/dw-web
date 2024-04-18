@@ -1,7 +1,6 @@
 import { VigencyDirectoryProps, VigencyProps } from '@/interfaces/vigency'
 import { VigencyService } from '@/services/Directory/vigency.service'
 import { useQuery } from 'react-query'
-import { VigencyById } from './@type/interfaces'
 
 export function useVigencyData(
   directoryId?: string,
