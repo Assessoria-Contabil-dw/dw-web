@@ -8,7 +8,7 @@ export interface LinkSitesProps {
   logoUrl: string
 }
 export interface PartyProps {
-  code: string
+  code: number
 
   name: string
   abbreviation: string

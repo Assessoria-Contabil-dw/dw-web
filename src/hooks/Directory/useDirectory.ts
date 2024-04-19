@@ -145,7 +145,7 @@ export function useDirectoryById(
 
   const query = useQuery<DirectoryByIdProps>(
     ["directoryById", directoryId, partyCode, stateId, cityCode],
-    () => directoryService.getById(directoryId, partyCode, stateId, cityCode),
+    () => DirectoryService.getById(directoryId, partyCode, stateId, cityCode),
     {
       staleTime: 1000 * 60 * 60 * 12,
       retry: false,

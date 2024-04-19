@@ -98,7 +98,7 @@ export function UpdateVigencyModel({ vigencyId, closeModal }: UpdateVigency) {
   }
 
   const [dataLeaderies, dataOffices, dataAdvocates, dataLawFirm]: [
-    UseQueryResult<LeaderProps[]>,
+    UseQueryResult<Page<LeaderProps>>,
     UseQueryResult<OfficesProps[]>,
     UseQueryResult<Page<AdvocateProps>>,
     UseQueryResult<LawFirmProps[]>
@@ -212,7 +212,7 @@ export function UpdateVigencyModel({ vigencyId, closeModal }: UpdateVigency) {
                         placeholder="Selecione representante"
                         name={fleader}
                       >
-                        {dataLeaderies.data?.map((leader, index) => {
+                        {dataLeaderies.data?.results && dataLeaderies.data?.results.map((leader, index) => {
                           return (
                             <option key={index} value={leader.id.toString()}>
                               {leader.name}

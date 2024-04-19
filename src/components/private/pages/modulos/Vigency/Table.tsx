@@ -73,7 +73,7 @@ export default function TableVigency({
                         <span className="flex items-end gap-2">
                           <p>{v.dateLast}</p>
                           {v.daysVenciment ? (
-                            <span className="bg-red-500/30 uppercase text-red-500 px-2 rounded-full" title="Data de vencimento próxima">
+                            <span className="bg-red-500/30 uppercase text-red-500 px-2 rounded-full whitespace-nowrap" title="Data de vencimento próxima">
                               {v.daysVenciment}
                             </span>
                           ) : null}

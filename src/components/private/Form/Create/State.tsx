@@ -6,6 +6,7 @@ import SelectBase from '../Selects/SelectBase'
 interface SelectStateProps extends SelectHTMLAttributes<HTMLSelectElement> {
   children?: ReactNode
   loading?: boolean
+  onSelected?: string
   name: string
   handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
@@ -14,6 +15,7 @@ export default function SelectStateCode({
   handleSearchOnChange,
   children,
   loading,
+  onSelected,
   name,
   ...atr
 }: SelectStateProps) {
@@ -32,7 +34,8 @@ export default function SelectStateCode({
       {children}
       {data !== undefined
         ? data.map((state) => (
-            <option key={state.code} value={state.uf}>
+            <option key={state.code} value={state.uf}  
+            selected={onSelected === state.uf ? true : false}>
               {state.name}
             </option>
           ))

@@ -7,6 +7,7 @@ interface SelectStateProps extends SelectHTMLAttributes<HTMLSelectElement> {
   children?: ReactNode
   loading?: boolean
   name: string
+  onSelected?: number
   handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
@@ -14,6 +15,7 @@ export default function SelectTypeOrg({
   handleSearchOnChange,
   children,
   loading,
+  onSelected,
   name,
   ...atr
 }: SelectStateProps) {
@@ -32,7 +34,7 @@ export default function SelectTypeOrg({
       {children}
       {data !== undefined
         ? data.map((item) => (
-            <option key={item.id} value={item.id}>
+            <option key={item.id} value={item.id} selected={onSelected === item.id ? true : false}>
               {item.name}
             </option>
           ))

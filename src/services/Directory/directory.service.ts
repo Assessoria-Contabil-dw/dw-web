@@ -36,13 +36,12 @@ export class DirectoryService {
     }
   }
 
-  public async getById(
+  static async getById(
     directoryId: string,
     partyCode?: string,
     stateId?: string,
     cityCode?: string
   ) {
-    try {
       const response = await api.get(`/directory/${directoryId}`, {
         params: {
           partyCode,
@@ -51,12 +50,6 @@ export class DirectoryService {
         },
       });
       return response.data;
-    } catch (error:any) {
-      return this.notify({
-        type: "warning",
-        message: error.response.data.message,
-      });
-    }
   }
 
   public async getByFilter(
@@ -121,6 +114,26 @@ export class DirectoryService {
         type: "error",
         message: error.response.data.message,
       });
+    }
+  }
+
+  static async update(id: string, data: {
+    cnpj: string,
+    partyCode: string,
+    cityCode: string,
+    typeOrgId: string,
+    vigencyStatus: string,
+    address?: string,
+    siteUrl?: string,
+    email?: string,
+    phone?: string,
+    mailingAddress?: string
+  }) {
+    try {
+      const response = await api.put(`/directory/${id}`, data);
+      return response.data;
+    } catch (error) {
+      return error;
     }
   }
 

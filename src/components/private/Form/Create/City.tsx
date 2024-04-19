@@ -8,6 +8,7 @@ interface SelectCityProps extends SelectHTMLAttributes<HTMLSelectElement> {
   stateId?: string
   children?: ReactNode
   loading?: boolean
+  onSelected?: string
   name: string
   handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
@@ -18,12 +19,15 @@ export default function SelectCityCode({
   stateId,
   children,
   loading,
+  onSelected,
   name,
   ...atr
 }: SelectCityProps) {
   const { data, isLoading } = useCityData(stateId, stateName)
   const { register } = useFormContext()
 
+  if(data === undefined) return null
+  
   return (
     <SelectBase
       {...register(name)}
@@ -36,7 +40,8 @@ export default function SelectCityCode({
       {children}
       {data !== undefined
         ? data.map((city) => (
-            <option key={city.code} value={city.code}>
+            <option key={city.code} value={city.code}
+              selected={onSelected === city.code ? true : false}>
               {city.name}
             </option>
           ))

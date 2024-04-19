@@ -7,7 +7,9 @@ interface SelectPartyProps extends SelectHTMLAttributes<HTMLSelectElement> {
   handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
   children?: ReactNode
   loading?: boolean
+  onSelected?: number
   name: string
+
 }
 
 export default function SelectPartyCode({
@@ -15,6 +17,7 @@ export default function SelectPartyCode({
   children,
   loading,
   name,
+  onSelected,
   ...atr
 }: SelectPartyProps) {
   const { data, isLoading } = usePartyData()
@@ -33,7 +36,7 @@ export default function SelectPartyCode({
       {children}
       {data !== undefined && data.results !== null
         ? data?.results.map((party) => (
-            <option key={party.code} value={party.code}>
+            <option key={party.code} value={party.code} selected={onSelected === party.code ? true : false}>
               {party.abbreviation}
             </option>
           ))

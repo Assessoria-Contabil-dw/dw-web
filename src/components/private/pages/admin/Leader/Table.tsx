@@ -5,7 +5,6 @@ import { useCallback, useRef, useState } from "react";
 import Model, { ModelRef } from "@/components/private/components/Modal";
 import { FormUpdateLeader } from "./FormUpdate";
 import { ViewLeader } from "./View";
-import useAuth from "@/hooks/Access/User/useAuth";
 
 interface ILeader {
   data: LeaderProps[] | null | undefined;

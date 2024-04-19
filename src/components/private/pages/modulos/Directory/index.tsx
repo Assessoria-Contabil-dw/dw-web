@@ -9,7 +9,7 @@ import { RefreshButton } from "@/components/Buttons/ButtonRefresh";
 import { queryClient } from "@/provider/query.provider";
 import ButtonIcon from "@/components/Buttons/ButtonIcon";
 import { Plus } from "lucide-react";
-import RegisterDirectoryModal, { RegisterDirectoryModalProps } from "./Create";
+import RegisterDirectoryModal, { RegisterDirectoryModalProps } from "./FormCreate";
 import TableFilterDirectory from "./Filter";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDirectoryData } from "@/hooks/Directory/useDirectory";

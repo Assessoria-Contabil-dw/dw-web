@@ -5,11 +5,13 @@ import { BellRing, Circle, Lock } from "lucide-react";
 import { TableOptions } from "../../../Tools/TableOptions";
 import { LoadingSecond } from "@/components/Loading/second";
 
-import { useCallback, useContext, useRef } from "react";
+import { useCallback, useContext, useRef, useState } from "react";
 import { AccessContext } from "@/provider/context.provider";
 import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
 import { useAccessModuleData } from "@/hooks/Access/User/useAccess";
 import ViewModel, { ViewRef } from "./View";
+import Model, { ModelRef } from "@/components/private/components/Modal";
+import FormUpdateDirectory from "./FormUpdate";
 
 interface TableDirectoryProps {
   role: string;
@@ -28,6 +30,7 @@ export default function TableDirectory({
   stateId,
   cityCode,
 }: TableDirectoryProps) {
+  const [id, setId] = useState("");
   const { setRouter } = useContext(AccessContext);
   const { data: modulesData } = useAccessModuleData(
     partyCode,
@@ -54,14 +57,23 @@ export default function TableDirectory({
     modelViewRef.current?.openModal(String(id));
   }, []);
 
-  function handleEditDirectory() {
-    alert("Em andamento");
-  }
+  const modelUpdateRef = useRef<ModelRef>(null);
+  const handleUpdateOpenModel = useCallback((id: string) => {
+    setId(id);
+    modelUpdateRef.current?.openModel();
+  }, []);
+
+  const handleUpdateCloseModel = useCallback(() => {
+    modelUpdateRef.current?.closeModel();
+  }, []);
 
   return (
     <>
       <DeleteModel ref={modelDeleteRef} />
       <ViewModel ref={modelViewRef} />
+      <Model title="Atualizar" ref={modelUpdateRef}>
+        <FormUpdateDirectory onClose={handleUpdateCloseModel} id={id} />
+      </Model>
       <fieldset className="fieldset">
         <table id="table-style">
           <thead>
@@ -148,7 +160,7 @@ export default function TableDirectory({
                       isEdit
                       isDelete
                       handleView={() => handleViewModal(directory.id)}
-                      handleEdit={handleEditDirectory}
+                      handleEdit={() => handleUpdateOpenModel(directory.id.toString())}
                       handleDelete={() =>
                         handleDeleteDirectory(directory.id, directory.surname)
                       }
