@@ -22,7 +22,7 @@ module.exports = {
         primaryHover: "#f9dd04",
         second: "#22C55E",
         secondHover: "#16A34A",
-        white: "#f8fafc",
+        white: "#FAFAFA",
         yellow: "#f6e909",
         orange: "#ffb560",
         blue: "#38bdf8",

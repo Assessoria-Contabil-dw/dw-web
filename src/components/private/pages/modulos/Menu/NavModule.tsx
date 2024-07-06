@@ -48,10 +48,15 @@ export default function NavigationModule( { modules } :NavigationProps) {
       sub: null,
     },
     {
-      href: `/relatorio`,
-      label: 'Relatório',
+      href: `/eleicao`,
+      label: 'Eleições',
       sub: null,
     },
+    // {
+    //   href: `/relatorio`,
+    //   label: 'Relatório',
+    //   sub: null,
+    // },
   ]
 
   function isMenuItemDisabled({ role, href, modules, party }: MenuItemProps) {
@@ -72,6 +77,8 @@ export default function NavigationModule( { modules } :NavigationProps) {
           return !!modules?.find((item) => item.module === 'Visualizar Emissor')
         case '/relatorio':
           return !!modules?.find((item) => item.module === 'Visualizar Relatório')
+        case '/eleicao':
+          return !!modules?.find((item) => item.module === 'Visualizar Eleições')
         default:
           return false  
       }

@@ -1,36 +1,47 @@
-'use client'
-import { useState } from 'react'
-import { ViewDocuments } from './View'
-import EditorDocument from './Editor'
-import Dicionary from '@/components/private/Tools/Dicionary'
-import ActiveOptions from './ActiveOptions'
-import { FormDocument } from './Form'
+"use client";
+import { useState } from "react";
+import { ViewDocuments } from "./View";
+import EditorDocument from "./Editor";
+import Dicionary from "@/components/private/Tools/Dicionary";
+import ActiveOptions from "./ActiveOptions";
+import FormRelatory from "./Form";
+
 
 interface DocumentProps {
-  content?: string
+  content?: string;
 }
 
 export function Relatory() {
-  const [formData, setFormData] = useState<DocumentProps>({} as DocumentProps)
-  const [isEditor, setIsEditor] = useState(false)
-  const [option, setOption] = useState(1)
+  const [formData, setFormData] = useState<DocumentProps>({} as DocumentProps);
+  const [isEditor, setIsEditor] = useState(false);
+  const [option, setOption] = useState(1);
 
   const handleFormSubmit = (data: DocumentProps) => {
-    console.log("index",data)
-    setFormData(data)
-  }
+    console.log("index", data);
+    setFormData(data);
+  };
 
   const handleSaveEditorDocument = (data: DocumentProps) => {
-    setFormData(data)
-    setIsEditor((old) => !old)
-  }
+    setFormData(data);
+    setIsEditor((old) => !old);
+  };
 
   const handleEditor = () => {
-    setIsEditor((old) => !old)
-  }
+    setIsEditor((old) => !old);
+  };
 
   return (
-    <div className="flex h-full w-full gap-4 ">
+    <div className="flex h-full w-full gap-4 flex-col">
+     
+
+      <div className="w-full space-y-2">
+        <ActiveOptions option={option} setOption={setOption} />
+        {option === 1 && (
+          <FormRelatory handleFormSubmit={handleFormSubmit}/>
+        )}
+        {option === 2 && <Dicionary />}
+      </div>
+
       <div className="h-[800px] w-full flex-1 ">
         {isEditor ? (
           <EditorDocument
@@ -38,24 +49,9 @@ export function Relatory() {
             content={formData.content}
           />
         ) : (
-          <ViewDocuments 
-            onClick={handleEditor} 
-            content={formData.content} 
-          />
+          <ViewDocuments onClick={handleEditor} content={formData.content} />
         )}
-      </div>
-
-      <div className="h-[72%] w-3/12 space-y-2 max-xl:min-w-[200px]">
-        <ActiveOptions option={option} setOption={setOption}/>
-        {option === 1 && (
-          <FormDocument 
-            content={formData.content} 
-            onSubmit={handleFormSubmit} 
-            editor={isEditor}
-            />
-        )}
-        {option === 2 && (<Dicionary/>)}
       </div>
     </div>
-  )
+  );
 }
