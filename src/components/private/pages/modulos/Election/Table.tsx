@@ -4,11 +4,15 @@ import { useCallback, useRef, useState } from "react";
 import dayjs from "dayjs";
 import { LoadingSecond } from "@/components/Loading/second";
 import { TableOptions } from "../../../Tools/TableOptions";
-import { SPCAllProps } from "@/hooks/SPC/@type";
+import {
+  ElectionAllProps,
+  ElectionProps,
+  SPCAllProps,
+} from "@/hooks/SPC/@type";
 
 interface TableProps {
   role?: string;
-  data?: SPCAllProps[] | null;
+  data?: ElectionAllProps[] | null;
   loading?: boolean;
 }
 export function TableElection({ role, data, loading }: TableProps) {
@@ -34,34 +38,36 @@ export function TableElection({ role, data, loading }: TableProps) {
     setSelectedCheckbox(checkboxId);
   };
 
-  const generateSPCAList = (spc: SPCAllProps) => {
-    const spcaList = [];
+  const generateElectionList = (elections: ElectionProps[]) => {
+    const electionsArray = [];
 
-    for (let i = 2017; i <= dayjs().year(); i++) {
-      const spca = spc.SPCA?.find((spca) => spca?.year === String(i) || null);
+    for (let i = 2018; i <= dayjs().year(); i += 2) {
+      const e = elections.find((e) => e.year === String(i) || null);
 
-      spcaList.push(
+      electionsArray.push(
         <li key={i} className="relative">
-          {spca ? (
+          {e ? (
             <a
               target="blank"
-              title={spca.status}
-              style={{ backgroundColor: `${spca.color}` }}
-              href={isLinkTwo ? spca.link2 : spca.link1}
+              title={e.legendName}
+              style={{
+                backgroundColor: `${e.legendHex}`,
+              }}
+              href={e.link}
             >
-              {spca.year}
+              {e.year}
             </a>
           ) : (
             <div className="w-10" />
           )}
-          {spca?.observation && (
+          {e?.observation && (
             <>
               <input
                 type="checkbox"
                 name="observation"
-                id={spca.id.toString()}
-                checked={selectedCheckbox === spca.id}
-                onChange={() => handleCheckboxChange(spca.id)}
+                id={e.id.toString()}
+                checked={selectedCheckbox === e.id}
+                onChange={() => handleCheckboxChange(e.id)}
                 className="peer/popper absolute -right-1 -top-2 z-10 h-3 w-3 cursor-pointer opacity-0"
               />
               <span className="z-1 absolute -right-1 -top-2 flex h-3 w-3 ">
@@ -71,7 +77,7 @@ export function TableElection({ role, data, loading }: TableProps) {
               <div className="break-words absolute z-[5] mt-[2px] hidden  transition duration-1000 peer-checked/popper:block">
                 <div className="rounded-md border-[1px] border-zinc-200 bg-white p-2 shadow-lg ">
                   <h2 className="whitespace-normal w-[100px] font-mono text-xs text-slate-700 ">
-                    {spca.observation}
+                    {e.observation}
                   </h2>
                 </div>
               </div>
@@ -80,35 +86,7 @@ export function TableElection({ role, data, loading }: TableProps) {
         </li>
       );
     }
-    return spcaList;
-  };
-
-  const generateSPCEList = (spc: SPCAllProps) => {
-    const spceList = [];
-
-    for (let i = 2018; i <= dayjs().year(); i += 2) {
-      const spce = spc.SPCE?.find((spce) => spce?.year === String(i) || null);
-
-      spceList.push(
-        <li key={i} className="relative">
-          {spce ? (
-            <a
-              target="blank"
-              title={spce.status}
-              style={{
-                backgroundColor: `${spce.color}`,
-              }}
-              href={spce.link}
-            >
-              {spce.year}
-            </a>
-          ) : (
-            <div className="w-10" />
-          )}
-        </li>
-      );
-    }
-    return spceList;
+    return electionsArray;
   };
 
   return (
@@ -117,7 +95,7 @@ export function TableElection({ role, data, loading }: TableProps) {
       <ViewSPC ref={modalViewRef} /> */}
 
       <fieldset className="fieldset">
-        <table id='table-style'>
+        <table id="table-style">
           <thead>
             <tr>
               <th>
@@ -131,26 +109,13 @@ export function TableElection({ role, data, loading }: TableProps) {
           </thead>
           <tbody>
             {data ? (
-              data?.map((spc, index) => (
+              data?.map((item, index) => (
                 <tr key={index}>
-                  <td>
-                    {spc.state} - {spc.party} - {spc.surname}
-                  </td>
-                  <td>
-                    <span
-                      className={
-                        spc.vigency
-                          ? `rounded-xl bg-blue-100 px-2 py-1 text-blue-400`
-                          : `rounded-xl bg-zinc-100 px-2 py-1 text-gray-400`
-                      }
-                    >
-                      {spc.vigency ? "Ativa" : "Inativa"}
-                    </span>
-                  </td>
+                  <td>{item.name}</td>
                   <td className="whitespace-nowrap">
                     <ul>
-                      {spc.SPCE !== null && spc.SPCE.length > 0 ? (
-                        generateSPCEList(spc)
+                      {item.elections !== null && item.elections.length > 0 ? (
+                        generateElectionList(item.elections)
                       ) : (
                         <li></li>
                       )}
@@ -163,8 +128,8 @@ export function TableElection({ role, data, loading }: TableProps) {
                       isView
                       isEdit
                       isDelete={false}
-                      // handleView={() => handleViewModal(spc.id.toString())}
-                      // handleEdit={() => handleEditDirectory(spc.id.toString())}
+                      // handleView={() => handleViewModal(item.id.toString())}
+                      // handleEdit={() => handleEditDirectory(item.id.toString())}
                     />
                   </td>
                 </tr>

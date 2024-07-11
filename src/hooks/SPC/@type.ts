@@ -44,6 +44,24 @@ export interface SPCAllProps {
   SPCE: SPCEProps[] | null
 }
 
+
+export interface ElectionProps {
+  id: number
+  year: string
+  numPge: string
+  observation: string
+  legendId: number
+  legendHex: string
+  legendName: string
+  link: string
+}
+export interface ElectionAllProps {
+  id: number
+  name: string
+  elections: ElectionProps[] | null
+}
+
+
 export interface SPCDirectoryProps {
   id: number;
   typeOrg: string;

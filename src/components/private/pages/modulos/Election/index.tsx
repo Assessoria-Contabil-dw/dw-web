@@ -1,8 +1,32 @@
 "use client";
 
+import { useElectionData } from "@/hooks/Leader/useElection";
 import { TableElection } from "./Table";
+import { useState } from "react";
+import { User } from "@/hooks/Access/User/useAuth";
+import { queryClient } from "@/provider/query.provider";
 
 export default function Election() {
+
+  const [filter, setFilter] = useState<{
+    leaderName?: string;
+    year?: string;
+    legendId?: string;
+  }>({});
+  const user: User = queryClient.getQueryData("authUser") as User;
+
+  const [page, setPage] = useState(1);
+  const [skip, setSkip] = useState(0);
+  const [take, setTake] = useState(15);
+
+  const {data, isLoading, isFetching, isError, isPreviousData, refetch} = useElectionData(
+    skip,
+    take,
+    filter.leaderName,
+    filter.year,
+    filter.legendId,
+  )
+
     return(
         <>
         {/* <CreateSPCModel ref={modalCreateRef} /> */}
@@ -34,9 +58,9 @@ export default function Election() {
           </div>
   
           <TableElection
-            // role={user?.role ?? "CLIENT"}
-            // loading={isFetching}
-            // data={data?.results}
+            role={user?.role ?? "CLIENT"}
+            loading={isFetching}
+            data={data?.results}
           />
   
           {/* {data?.results !== null && (

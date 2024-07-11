@@ -105,6 +105,29 @@ export function TableSPC({ role, data, loading }: TableSPCProps) {
           ) : (
             <div className="w-10" />
           )}
+          {spce?.observation && (
+            <>
+              <input
+                type="checkbox"
+                name="observation"
+                id={spce.id.toString()}
+                checked={selectedCheckbox === spce.id}
+                onChange={() => handleCheckboxChange(spce.id)}
+                className="peer/popper absolute -right-1 -top-2 z-10 h-3 w-3 cursor-pointer opacity-0"
+              />
+              <span className="z-1 absolute -right-1 -top-2 flex h-3 w-3 ">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-second opacity-75"></span>
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-second"></span>
+              </span>
+              <div className="break-words absolute z-[5] mt-[2px] hidden  transition duration-1000 peer-checked/popper:block">
+                <div className="rounded-md border-[1px] border-zinc-200 bg-white p-2 shadow-lg ">
+                  <h2 className="whitespace-normal w-[100px] font-mono text-xs text-slate-700 ">
+                    {spce.observation}
+                  </h2>
+                </div>
+              </div>
+            </>
+          )}
         </li>
       );
     }
