@@ -6,6 +6,7 @@ import { useCityData } from '@/hooks/Directory/useCityData'
 interface SelectCityProps extends SelectHTMLAttributes<HTMLSelectElement> {
   stateName?: string
   stateId?: string
+  cityName?: string
   children?: ReactNode
   loading?: boolean
   name: string
@@ -16,14 +17,16 @@ export default function SelectCity({
   handleSearchOnChange,
   stateName,
   stateId,
+  cityName,
   children,
   loading,
   name,
   ...atr
 }: SelectCityProps) {
+  const { register} = useFormContext()
   const { data, isLoading } = useCityData(stateId, stateName)
-  const { register } = useFormContext()
 
+  console.log(stateId, stateName)
   return (
     <SelectBase
       {...register(name)}
@@ -36,7 +39,7 @@ export default function SelectCity({
       {children}
       {data !== undefined
         ? data.map((city) => (
-            <option key={city.code} value={city.name}>
+            <option key={city.code} data-code={city.code} value={city.name} selected={city.name === cityName}>
               {city.name}
             </option>
           ))

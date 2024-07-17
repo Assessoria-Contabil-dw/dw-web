@@ -183,7 +183,7 @@
   }
 
   .model-size {
-    @apply rounded-xl border-[1px] border-slate-300 bg-white p-6;
+    @apply rounded-xl border-[1px] border-slate-300 bg-white p-6 box-content;
   }
 
   .model-size-min {

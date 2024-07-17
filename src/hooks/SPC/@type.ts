@@ -50,14 +50,26 @@ export interface ElectionProps {
   year: string
   numPge: string
   observation: string
-  legendId: number
-  legendHex: string
-  legendName: string
-  link: string
+  colorId: number
+  colorHex: string
+  colorName: string
+  link1: string
+  link2: string
+  city: string
+  state: string
+  cnpj: string
+  accountOR: string
+  accountFP: string
+  accountFEFC: string
+  bank: string
+  agency: string
 }
 export interface ElectionAllProps {
   id: number
   name: string
+  cnpjCurrent: string
+  cityCurrent: string
+  stateCurrent: string
   elections: ElectionProps[] | null
 }
 
