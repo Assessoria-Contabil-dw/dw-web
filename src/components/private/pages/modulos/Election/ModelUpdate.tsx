@@ -94,7 +94,7 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
               {electionsData != null ? (
                 electionsData?.elections?.map((e) =>
                   id === e.id.toString() ? (
-                    <div className="overflow-x-auto rounded-xl border-[1px] p-4">
+                    <div key={e.id} className="overflow-x-auto rounded-xl border-[1px] p-4">
                       <FormUpdate
                         id={e.id}
                         year={String(e.year)}
@@ -113,7 +113,7 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
                       />
                     </div>
                   ) : (
-                    <div className="overflow-x-auto rounded-xl border-[1px]">
+                    <div key={e.id} className="overflow-x-auto rounded-xl border-[1px]">
                       <table id="table-style">
                         <thead>
                           <tr>
