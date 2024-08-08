@@ -26,6 +26,7 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
   const [electionsData, setElectionsData] = useState<ElectionAllProps>();
 
   const openModal = useCallback((id: string) => {
+    console.log("dentro do open modal", id);
     setLeaderId(id);
     setIsModalView(true);
   }, []);
@@ -41,18 +42,45 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
     closeModal,
   }));
 
-  const elections = queryClient.getQueriesData("electionData");
-
-  useEffect(() => {
+  async function electionPullOne(elections: any) {
     if (elections.length > 0) {
-      const electionData = elections[0][1] as Page<ElectionAllProps>;
+      const electionData = elections[
+        elections.length - 1
+      ][1] as Page<ElectionAllProps>;
       const results = electionData.results?.find(
         (e) => e.id === Number(leaderId)
       );
 
-      setElectionsData(results);
+      console.log("results", results);
+      if (results === undefined) {
+        for (let i = 0; i < elections.length; i++) {
+          const electionData = elections[i][1] as Page<ElectionAllProps>;
+          const results = electionData.results?.find(
+            (e) => e.id === Number(leaderId)
+          );
+          if (results !== undefined) {
+            return results;
+          }
+        }
+        return results;
+      }
+      return results;
     }
-  }, [elections]);
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const elections = queryClient.getQueriesData("electionData");
+        const results = await electionPullOne(elections);
+        setElectionsData(results as ElectionAllProps);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [isModalView]);
 
   function handleSelectRow(electionId: string) {
     setId(electionId);
@@ -79,7 +107,7 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
 
       <div className="model-bg z-10">
         <div className="model-size model-size-full p-4">
-          <div className="overflow-auto h-full p-1">
+          <div className="h-full overflow-auto p-1">
             <div className="model-header">
               <div>
                 <h4 className="text-h4">Atualizar</h4>
@@ -94,7 +122,10 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
               {electionsData != null ? (
                 electionsData?.elections?.map((e) =>
                   id === e.id.toString() ? (
-                    <div key={e.id} className="overflow-x-auto rounded-xl border-[1px] p-4">
+                    <div
+                      key={e.id}
+                      className="overflow-x-auto rounded-xl border-[1px] p-4"
+                    >
                       <FormUpdate
                         id={e.id}
                         year={String(e.year)}
@@ -113,7 +144,10 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
                       />
                     </div>
                   ) : (
-                    <div key={e.id} className="overflow-x-auto rounded-xl border-[1px]">
+                    <div
+                      key={e.id}
+                      className="overflow-x-auto rounded-xl border-[1px]"
+                    >
                       <table id="table-style">
                         <thead>
                           <tr>
