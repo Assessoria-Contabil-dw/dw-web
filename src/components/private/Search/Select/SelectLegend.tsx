@@ -23,7 +23,7 @@ export default function SelectLegend({
   const { data, isLoading } = useLegendData()
 
   return (
-    <div className="flex w-full min-w-[90px] flex-col gap-1">
+    <div className={`flex w-full min-w-[90px] flex-col gap-1 ${className || ''}`} >
       <div className="flex gap-1">
         <label htmlFor={name} className="text-label">
           {label}
@@ -35,7 +35,7 @@ export default function SelectLegend({
         name={name}
         disabled={loading || isLoading}
         defaultValue={String(valueSelect)}
-        className={`input-style ${className || ''}`}
+        className="input-style"
       >
         {children}
         {data !== undefined

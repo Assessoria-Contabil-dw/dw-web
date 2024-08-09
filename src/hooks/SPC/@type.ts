@@ -49,6 +49,7 @@ export interface ElectionProps {
   id: number
   year: string
   numPge: string
+  candAccount: string;
   observation: string
   colorId: number
   colorHex: string

@@ -69,6 +69,7 @@ export function useElectionUpdate(
   id: string,
   year: string,
   numPge?: string,
+  candAccount?: string,
   colorId?: string,
   cityCode?: string,
   observation?: string,
@@ -87,6 +88,7 @@ export function useElectionUpdate(
       service.update(id, {
         year,
         numPge,
+        candAccount,
         colorId,
         cityCode,
         observation,

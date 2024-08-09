@@ -129,6 +129,7 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
                         id={e.id}
                         year={String(e.year)}
                         numPge={e.numPge}
+                        candAccount={e.candAccount}
                         colorId={e.colorId}
                         observation={e.observation}
                         accountOR={e.accountOR}

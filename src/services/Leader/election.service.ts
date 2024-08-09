@@ -37,6 +37,7 @@ export class ElectionService {
     array: Array<{
       year: string;
       numPge: string;
+      candAccount: string;
       observation?: string;
       colorId?: string;
       cityCode?: string;
@@ -62,6 +63,7 @@ export class ElectionService {
     data: {
       year: string;
       numPge?: string;
+      candAccount?: string;
       colorId?: string;
       cityCode?: string;
       observation?: string;

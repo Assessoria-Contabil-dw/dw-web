@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
-import { X } from "lucide-react";
 import dayjs from "dayjs";
 import SelectLegend from "@/components/private/Search/Select/SelectLegend";
 import { z } from "zod";
@@ -9,13 +8,13 @@ import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import SelectState from "@/components/private/Search/Select/SelectState";
 import SelectCity from "@/components/private/Form/Selects/SelectCity";
 import { useCallback, useState } from "react";
-import ButtonSecondary from "@/components/Buttons/ButtonSecondary";
 import ButtonTertiary from "@/components/Buttons/ButtonTertiary";
 
 export default function FormUpdate({
   id,
   year,
   numPge,
+  candAccount,
   colorId,
   observation,
   cnpj,
@@ -32,6 +31,7 @@ export default function FormUpdate({
   id: number;
   year: string;
   numPge: string;
+  candAccount: string;
   colorId: number;
   cityName: string;
   observation: string;
@@ -51,6 +51,7 @@ export default function FormUpdate({
   const spcFilterSchema = z.object({
     year: z.string(),
     numPge: z.string().optional(),
+    candAccount: z.string().optional(),
     colorId: z.string().optional(),
     cityCode: z.string().optional(),
     stateCode: z.string().optional(),
@@ -69,6 +70,7 @@ export default function FormUpdate({
     defaultValues: {
       year: year,
       numPge: numPge ?? "",
+      candAccount: candAccount ?? "",
       colorId: String(colorId) ?? "",
       stateCode: stateCode ?? "",
       observation: observation ?? "",
@@ -90,6 +92,7 @@ export default function FormUpdate({
     String(id),
     watch("year"),
     watch("numPge"),
+    watch("candAccount"),
     watch("colorId"),
     cityCode == "" ? undefined : cityCode,
     watch("observation"),
@@ -138,9 +141,9 @@ export default function FormUpdate({
                 />
               </div>
 
-              <div className="flex w-[50%] flex-col gap-1">
+              <div className="flex w-full flex-col gap-1">
                 <div className="flex gap-1">
-                  <label className="text-label">Número</label>
+                  <label className="text-label">N° PGE</label>
                 </div>
                 <input
                   type="text"
@@ -152,19 +155,36 @@ export default function FormUpdate({
                 />
               </div>
 
+              <div className="flex w-full flex-col gap-1">
+                <div className="flex gap-1">
+                  <label className="text-label">CandContas</label>
+                </div>
+                <input
+                  type="text"
+                  className="input-style"
+                  defaultValue={numPge}
+                  {...register("candAccount")}
+                  name="candAccount"
+                  placeholder="Num CandContas"
+                />
+              </div>
+
               <SelectLegend
                 {...register("colorId")}
                 label="Status"
                 onChange={(e) => setValue("colorId", e.target.value)}
                 valueSelect={colorId}
                 name="colorId"
+                className="w-[70%]"
               >
                 <option hidden value="" selected>
                   Selecione um status
                 </option>
               </SelectLegend>
+            </div>
 
-              <div className="flex w-full flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <div className="flex w-full min-w-[90px] flex-col gap-1">
                 <div className="flex gap-1">
                   <label className="text-label">CNPJ</label>
                 </div>
@@ -177,9 +197,7 @@ export default function FormUpdate({
                   placeholder="CNPJ"
                 />
               </div>
-            </div>
 
-            <div className="flex items-center gap-2">
               <SelectState
                 {...register("stateCode")}
                 defaultValue={stateCode}
@@ -210,7 +228,11 @@ export default function FormUpdate({
                 </option>
               </SelectCity>
 
-              <div className="flex w-full min-w-[90px] flex-col gap-1">
+             
+            </div>
+
+            <div className="flex items-center gap-2">
+            <div className="flex w-[70%] flex-col gap-1">
                 <div className="flex gap-1">
                   <label className="text-label">Banco</label>
                 </div>
@@ -234,7 +256,7 @@ export default function FormUpdate({
                 </select>
               </div>
 
-              <div className="flex w-full min-w-[90px] flex-col gap-1">
+              <div className="flex w-[60%] flex-col gap-1">
                 <div className="flex gap-1">
                   <label className="text-label">Agência</label>
                 </div>
@@ -247,9 +269,6 @@ export default function FormUpdate({
                   placeholder="Agência"
                 />
               </div>
-            </div>
-
-            <div className="flex items-center gap-2">
               <div className="flex w-full min-w-[90px] flex-col gap-1">
                 <div className="flex gap-1">
                   <label className="text-label">Conta OR</label>
