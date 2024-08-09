@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { X } from "lucide-react";
 import dayjs from "dayjs";
 import SelectLegend from "@/components/private/Search/Select/SelectLegend";
-import { set, z } from "zod";
+import { z } from "zod";
 import { useElectionUpdate } from "@/hooks/Leader/useElection";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import SelectState from "@/components/private/Search/Select/SelectState";
@@ -30,6 +30,7 @@ export default function FormUpdate({
   year: string;
   numPge: string;
   colorId: number;
+  cityName: string;
   observation: string;
   cnpj: string;
   accountOR: string;
@@ -38,7 +39,6 @@ export default function FormUpdate({
   bank: string;
   agency: string;
   stateCode: string;
-  cityName: string;
   onClick: (id: string) => void;
 }) {
   const [stateId, setState] = useState(stateCode);
@@ -64,16 +64,16 @@ export default function FormUpdate({
   const methods = useForm<spcUpdateType>({
     defaultValues: {
       year: year,
-      numPge: numPge,
-      colorId: String(colorId),
-      stateCode: stateCode,
-      observation: observation,
-      cnpj: cnpj,
-      accountOR: accountOR,
-      accountFP: accountFP,
-      accountFEFC: accountFEFC,
-      bank: bank,
-      agency: agency,
+      numPge: numPge ?? '',
+      colorId: String(colorId) ?? '',
+      stateCode: stateCode ?? '',
+      observation: observation ?? '',
+      cnpj: cnpj ?? '',
+      accountOR: accountOR ?? '',
+      accountFP: accountFP ?? '',
+      accountFEFC: accountFEFC ?? '',
+      bank: bank ?? '',
+      agency: agency ?? '',
     },
     mode: "onSubmit",
     resolver: zodResolver(spcFilterSchema),
@@ -87,13 +87,13 @@ export default function FormUpdate({
     watch("year"),
     watch("numPge"),
     watch("colorId"),
-    cityCode,
+    cityCode == "" ? undefined : cityCode,
     watch("observation"),
     watch("cnpj"),
     watch("accountOR"),
     watch("accountFP"),
     watch("accountFEFC"),
-    watch("bank"),
+    watch("bank") == "" ? undefined : watch("bank"),
     watch("agency")
   );
 
@@ -261,7 +261,7 @@ export default function FormUpdate({
                   <label className="text-label">Banco</label>
                 </div>
                 <select className="input-style" {...register("bank")}>
-                  <option hidden value="">
+                  <option value="">
                     Selecione um banco
                   </option>
                   <option value="BANCO_DO_BRASIL" className="font-medium">
@@ -305,6 +305,7 @@ export default function FormUpdate({
                   className="input-style"
                   placeholder="Observação"
                   {...register("observation")}
+                  required={false}
                   name="observation"
                 >
                   {observation}
