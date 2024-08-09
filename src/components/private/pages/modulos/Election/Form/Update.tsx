@@ -25,6 +25,7 @@ export default function FormUpdate({
   stateCode,
   cityName,
   onClick,
+  onClose,
 }: {
   id: number;
   year: string;
@@ -40,6 +41,7 @@ export default function FormUpdate({
   agency: string;
   stateCode: string;
   onClick: (id: string) => void;
+  onClose: () => void;
 }) {
   const [stateId, setState] = useState(stateCode);
   const [cityCode, setCity] = useState("");
@@ -82,7 +84,7 @@ export default function FormUpdate({
   const { handleSubmit, watch, setValue, register } = methods;
 
   //atualizar spc
-  const { mutate, isLoading } = useElectionUpdate(
+  const { mutate, isLoading, isSuccess } = useElectionUpdate(
     String(id),
     watch("year"),
     watch("numPge"),
@@ -103,8 +105,13 @@ export default function FormUpdate({
   ]);
 
   async function onSubmit(data: spcUpdateType) {
-    await mutate();
+    mutate();
   }
+
+
+  if (isSuccess) {
+    onClose();
+  } 
 
   return (
     <>

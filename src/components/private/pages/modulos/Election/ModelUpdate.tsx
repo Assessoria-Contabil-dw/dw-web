@@ -26,13 +26,12 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
   const [electionsData, setElectionsData] = useState<ElectionAllProps>();
 
   const openModal = useCallback((id: string) => {
-    console.log("dentro do open modal", id);
     setLeaderId(id);
     setIsModalView(true);
   }, []);
 
   const closeModal = useCallback(() => {
-    queryClient.invalidateQueries("electionData");
+    // queryClient.invalidateQueries("electionData");
     setIsModalView(false);
     setId("");
   }, []);
@@ -141,6 +140,7 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
                         stateCode={e.state}
                         cityName={e.city}
                         onClick={setId}
+                        onClose={closeModal}
                       />
                     </div>
                   ) : (

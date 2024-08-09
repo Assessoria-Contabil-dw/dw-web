@@ -1,6 +1,5 @@
-import { useNotify } from "@/components/Toast/toast";
-import { api } from "@/lib/api";
 
+import { api } from "@/lib/api";
 export class ElectionService {
 
   public async getAll(

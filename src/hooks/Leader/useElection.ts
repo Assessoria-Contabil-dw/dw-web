@@ -3,6 +3,7 @@ import { ElectionService } from "@/services/Leader/election.service";
 import { useMutation, useQuery } from "react-query";
 import { ElectionAllProps, ElectionProps } from "../SPC/@type";
 import { useNotify } from "@/components/Toast/toast";
+import { queryClient } from "@/provider/query.provider";
 
 export function useElectionData(
   skip: number,
@@ -98,6 +99,8 @@ export function useElectionUpdate(
       }),
     onSuccess: () => {
       notify({ type: "success", message: "Atualizado com sucesso!" });
+      queryClient.invalidateQueries("electionData");
+    
     },
     onError: (error: any) => {
       if (error.response.data.status === 500) {
