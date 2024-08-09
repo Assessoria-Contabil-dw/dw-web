@@ -9,6 +9,8 @@ import ButtonPrimary from "@/components/Buttons/ButtonPrimary";
 import SelectState from "@/components/private/Search/Select/SelectState";
 import SelectCity from "@/components/private/Form/Selects/SelectCity";
 import { useCallback, useState } from "react";
+import ButtonSecondary from "@/components/Buttons/ButtonSecondary";
+import ButtonTertiary from "@/components/Buttons/ButtonTertiary";
 
 export default function FormUpdate({
   id,
@@ -66,16 +68,16 @@ export default function FormUpdate({
   const methods = useForm<spcUpdateType>({
     defaultValues: {
       year: year,
-      numPge: numPge ?? '',
-      colorId: String(colorId) ?? '',
-      stateCode: stateCode ?? '',
-      observation: observation ?? '',
-      cnpj: cnpj ?? '',
-      accountOR: accountOR ?? '',
-      accountFP: accountFP ?? '',
-      accountFEFC: accountFEFC ?? '',
-      bank: bank ?? '',
-      agency: agency ?? '',
+      numPge: numPge ?? "",
+      colorId: String(colorId) ?? "",
+      stateCode: stateCode ?? "",
+      observation: observation ?? "",
+      cnpj: cnpj ?? "",
+      accountOR: accountOR ?? "",
+      accountFP: accountFP ?? "",
+      accountFEFC: accountFEFC ?? "",
+      bank: bank ?? "",
+      agency: agency ?? "",
     },
     mode: "onSubmit",
     resolver: zodResolver(spcFilterSchema),
@@ -108,30 +110,20 @@ export default function FormUpdate({
     mutate();
   }
 
-
   if (isSuccess) {
     onClose();
-  } 
+  }
 
   return (
     <>
       <FormProvider {...methods}>
         <form
           onSubmit={memoizedHandleSubmit}
-          className="grid w-full grid-flow-row gap-2 border-none  p-0"
+          className="grid w-full grid-flow-row gap-2 border-none p-0"
         >
-          <div className="flex justify-between">
-            <h4 className="text-h4">Atualizar</h4>
-            <button
-              onClick={() => onClick("")}
-              className="rounded-md bg-zinc-500/20 p-1 text-zinc-500"
-            >
-              <X size={16} />
-            </button>
-          </div>
-          <div className="flex w-full flex-col gap-4 ">
+          <div className="flex w-full flex-col gap-2 ">
             <div className="flex items-end gap-2">
-              <div className="flex w-full min-w-[90px] flex-col gap-1">
+              <div className="flex w-[50%] flex-col gap-1">
                 <div className="flex gap-1">
                   <label className="text-label">Ano</label>
                 </div>
@@ -146,7 +138,7 @@ export default function FormUpdate({
                 />
               </div>
 
-              <div className="flex w-full min-w-[90px] flex-col gap-1">
+              <div className="flex w-[50%] flex-col gap-1">
                 <div className="flex gap-1">
                   <label className="text-label">Número</label>
                 </div>
@@ -171,10 +163,8 @@ export default function FormUpdate({
                   Selecione um status
                 </option>
               </SelectLegend>
-            </div>
 
-            <div className="flex items-center gap-2">
-              <div className="flex w-full min-w-[90px] flex-col gap-1">
+              <div className="flex w-full flex-col gap-1">
                 <div className="flex gap-1">
                   <label className="text-label">CNPJ</label>
                 </div>
@@ -187,7 +177,9 @@ export default function FormUpdate({
                   placeholder="CNPJ"
                 />
               </div>
+            </div>
 
+            <div className="flex items-center gap-2">
               <SelectState
                 {...register("stateCode")}
                 defaultValue={stateCode}
@@ -217,7 +209,46 @@ export default function FormUpdate({
                   Todos
                 </option>
               </SelectCity>
+
+              <div className="flex w-full min-w-[90px] flex-col gap-1">
+                <div className="flex gap-1">
+                  <label className="text-label">Banco</label>
+                </div>
+                <select className="input-style" {...register("bank")}>
+                  <option value="">Selecione um banco</option>
+                  <option value="BANCO_DO_BRASIL" className="font-medium">
+                    BB
+                  </option>
+                  <option value="CAIXA" className="font-medium">
+                    CAIXA
+                  </option>
+                  <option value="BRADESCO" className="font-medium">
+                    BRADESCO
+                  </option>
+                  <option value="ITAU" className="font-medium">
+                    ITAU
+                  </option>
+                  <option value="SANTANDER" className="font-medium">
+                    SANTANDER
+                  </option>
+                </select>
+              </div>
+
+              <div className="flex w-full min-w-[90px] flex-col gap-1">
+                <div className="flex gap-1">
+                  <label className="text-label">Agência</label>
+                </div>
+                <input
+                  type="text"
+                  className="input-style"
+                  defaultValue={agency}
+                  {...register("agency")}
+                  name="agency"
+                  placeholder="Agência"
+                />
+              </div>
             </div>
+
             <div className="flex items-center gap-2">
               <div className="flex w-full min-w-[90px] flex-col gap-1">
                 <div className="flex gap-1">
@@ -262,47 +293,6 @@ export default function FormUpdate({
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="flex w-full min-w-[90px] flex-col gap-1">
-                <div className="flex gap-1">
-                  <label className="text-label">Banco</label>
-                </div>
-                <select className="input-style" {...register("bank")}>
-                  <option value="">
-                    Selecione um banco
-                  </option>
-                  <option value="BANCO_DO_BRASIL" className="font-medium">
-                    BB
-                  </option>
-                  <option value="CAIXA" className="font-medium">
-                    CAIXA
-                  </option>
-                  <option value="BRADESCO" className="font-medium">
-                    BRADESCO
-                  </option>
-                  <option value="ITAU" className="font-medium">
-                    ITAU
-                  </option>
-                  <option value="SANTANDER" className="font-medium">
-                    SANTANDER
-                  </option>
-                </select>
-              </div>
-
-              <div className="flex w-full min-w-[90px] flex-col gap-1">
-                <div className="flex gap-1">
-                  <label className="text-label">Agência</label>
-                </div>
-                <input
-                  type="text"
-                  className="input-style"
-                  defaultValue={agency}
-                  {...register("agency")}
-                  name="agency"
-                  placeholder="Agência"
-                />
-              </div>
-            </div>
             <div className="flex items-end justify-end gap-2">
               <div className="flex w-full min-w-[90px] flex-col gap-1">
                 <div className="flex gap-1">
@@ -320,15 +310,24 @@ export default function FormUpdate({
               </div>
             </div>
           </div>
-          <ButtonPrimary
-            title="Atualizar"
-            variant="fill"
-            type="submit"
-            loading={isLoading}
-            className="items-center justify-center"
-          >
-            Atualizar
-          </ButtonPrimary>
+          <div className="flex justify-end gap-2">
+            <ButtonTertiary
+              title="Cancelar"
+              variant="cancel"
+              onClick={() => onClick("")}
+            >
+              Cancelar
+            </ButtonTertiary>
+            <ButtonPrimary
+              title="Atualizar"
+              variant="fill"
+              type="submit"
+              loading={isLoading}
+              className="items-center justify-center"
+            >
+              Atualizar
+            </ButtonPrimary>
+          </div>
         </form>
       </FormProvider>
     </>

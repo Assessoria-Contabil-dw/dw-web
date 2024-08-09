@@ -114,7 +114,7 @@ export function TableElection({ role, data, loading }: TableProps) {
             {data ? (
               data?.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.name}</td>
+                  <td><a href={item.link} target="_blank" className="cursor-pointer text-secondHover">{item.name}</a></td>
                   <td>{item.cnpjCurrent}</td>
                   <td>{item.stateCurrent}</td>
                   <td>{item.cityCurrent}</td>

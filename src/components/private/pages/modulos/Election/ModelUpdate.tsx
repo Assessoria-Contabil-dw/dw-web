@@ -1,4 +1,4 @@
-import { Check, Edit, Trash, X } from "lucide-react";
+import { Edit, Trash, X } from "lucide-react";
 import {
   ForwardRefRenderFunction,
   forwardRef,

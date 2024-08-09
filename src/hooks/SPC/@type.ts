@@ -67,6 +67,7 @@ export interface ElectionProps {
 export interface ElectionAllProps {
   id: number
   name: string
+  link: string
   cnpjCurrent: string
   cityCurrent: string
   stateCurrent: string
