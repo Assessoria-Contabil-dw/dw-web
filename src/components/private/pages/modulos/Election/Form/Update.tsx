@@ -285,7 +285,7 @@ export default function FormUpdate({
 
               <div className="flex w-full min-w-[90px] flex-col gap-1">
                 <div className="flex gap-1">
-                  <label className="text-label">Conta FT</label>
+                  <label className="text-label">Conta FP</label>
                 </div>
                 <input
                   type="text"
