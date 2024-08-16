@@ -153,7 +153,8 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
                         <thead>
                           <tr>
                             <th>Ano</th>
-                            <th>Num</th>
+                            <th>n° PGE</th>
+                            <th>CandContas</th>
                             <th>CNPJ</th>
                             <th>Situação</th>
                             <th>UF/Municipio</th>
@@ -169,6 +170,7 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
                               {e.year}
                             </td>
                             <td>{e.numPge ?? "-"}</td>
+                            <td>{e.candAccount ?? "-"}</td>
                             <td className="whitespace-nowrap">
                               {e.cnpj ?? "-"}
                             </td>

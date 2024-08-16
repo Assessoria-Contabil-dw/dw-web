@@ -72,6 +72,9 @@ export interface ElectionAllProps {
   cnpjCurrent: string
   cityCurrent: string
   stateCurrent: string
+  bankCurrent: string
+  agencyCurrent: string
+  fefcCurrent: string
   elections: ElectionProps[] | null
 }
 

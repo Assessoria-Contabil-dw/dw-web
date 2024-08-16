@@ -106,6 +106,9 @@ export function TableElection({ role, data, loading }: TableProps) {
               <th>CNPJ</th>
               <th>Estado</th>
               <th>Cidade</th>
+              <th>Banco</th>
+              <th>Agência</th>
+              <th>FEFC</th>
               <th>SPCE</th>
               <th></th>
             </tr>
@@ -118,6 +121,9 @@ export function TableElection({ role, data, loading }: TableProps) {
                   <td>{item.cnpjCurrent}</td>
                   <td>{item.stateCurrent}</td>
                   <td>{item.cityCurrent}</td>
+                  <td>{item.bankCurrent}</td>
+                  <td>{item.agencyCurrent}</td>
+                  <td>{item.fefcCurrent}</td>
                   <td className="whitespace-nowrap">
                     <ul>
                       {item.elections !== null && item.elections.length > 0 ? (
