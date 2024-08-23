@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-// import ViewSPC, { ViewSPCRef } from "./View";
+import ModelView, { ViewElectionRef } from "./ModelView";
 import dayjs from "dayjs";
 import { LoadingSecond } from "@/components/Loading/second";
 import { TableOptions } from "../../../Tools/TableOptions";
@@ -19,15 +19,15 @@ export function TableElection({ role, data, loading }: TableProps) {
 
   const [isLinkTwo, setIsLinkTwo] = useState(false);
   const modalUpdateRef = useRef<UpdateRef>(null);
-  // const modalViewRef = useRef<ViewSPCRef>(null);
+  const modalViewRef = useRef<ViewElectionRef>(null);
 
   const handleEdit = useCallback((id: string) => {
     modalUpdateRef.current?.openModal(id);
   }, []);
 
-  // const handleViewModal = useCallback((id: string) => {
-  //   modalViewRef.current?.openModal(id);
-  // }, []);
+  const handleViewModal = useCallback((id: string) => {
+    modalViewRef.current?.openModal(id);
+  }, []);
 
   const handleCheckboxChange = (checkboxId: number) => {
     if (checkboxId === selectedCheckbox) {
@@ -91,8 +91,8 @@ export function TableElection({ role, data, loading }: TableProps) {
   return (
     <div>
       <ModelUpdate ref={modalUpdateRef} />
-      {/* 
-      <ViewSPC ref={modalViewRef} /> */}
+      <ModelView ref={modalViewRef} />
+   
 
       <fieldset className="fieldset">
         <table id="table-style">
@@ -137,10 +137,10 @@ export function TableElection({ role, data, loading }: TableProps) {
                   <td>
                     <TableOptions
                       role={role || ""}
-                      isView={false}
+                      isView
                       isEdit
                       isDelete={false}
-                      // handleView={() => handleViewModal(item.id.toString())}
+                      handleView={() => handleViewModal(item.id.toString())}
                       handleEdit={() => handleEdit(item.id.toString())}
                     />
                   </td>
