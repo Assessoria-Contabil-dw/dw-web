@@ -30,7 +30,9 @@ export default function ButtonIcon({
       {!loading ? (
         <>
           {icon && (
-            <span className="flex items-center justify-center">{icon}</span>
+            <>
+              <span className="flex items-center justify-center">{icon}</span>
+            </>
           )}
         </>
       ) : (

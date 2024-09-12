@@ -1,13 +1,7 @@
 "use client";
 import { LoadingPrimary } from "@/components/Loading/primary";
 import { TableSPC } from "./Table";
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, useCallback, useContext, useRef, useState, useEffect } from "react";
 import { AccessContext } from "@/provider/context.provider";
 import { queryClient } from "@/provider/query.provider";
 import PaddingTable from "../../../Tools/TablePadding";
@@ -107,6 +101,10 @@ export default function SPC() {
     setPage((old) => old + 1);
   }, []);
 
+  useEffect(() => {
+    setSkip(take * (page - 1));
+  }, [page])
+
   if (isLoading) {
     return (
       <div className="flex h-full w-full items-center justify-center">
@@ -173,6 +171,7 @@ export default function SPC() {
             isPreviousData={isPreviousData}
             nextPage={nextPage}
             prevPage={prevPage}
+            setPage={setPage}
             next={data?.info?.next ?? null}
             isFetching={isFetching}
           />

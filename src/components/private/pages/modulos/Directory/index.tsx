@@ -2,7 +2,7 @@
 
 import { AccessContext } from "@/provider/context.provider";
 import TableDirectory from "./Table";
-import { ChangeEvent, useCallback, useContext, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useContext, useRef, useState, useEffect } from "react";
 import PaddingTable from "../../../Tools/TablePadding";
 import { LoadingPrimary } from "@/components/Loading/primary";
 import { RefreshButton } from "@/components/Buttons/ButtonRefresh";
@@ -57,6 +57,10 @@ export default function Directory() {
     setSkip((old) => old + take);
     setPage((old) => old + 1);
   }, []);
+
+  useEffect(() => {
+    setSkip(take * (page - 1));
+  }, [page])
 
   function handleSearchOnChange(
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -135,6 +139,7 @@ export default function Directory() {
               isPreviousData={isPreviousData}
               nextPage={nextPage}
               prevPage={prevPage}
+              setPage={setPage}
               next={data?.info?.next ?? null}
               isFetching={isFetching}
             />

@@ -17,7 +17,7 @@ const SelectBase = forwardRef<Ref, SelectBaseProps>(function SelectBase(
     <div className="flex w-full min-w-[90px] flex-col gap-1">
       <div className="flex gap-1">
         <label htmlFor={name} className="text-label">
-          {label}
+          <strong>{label}</strong>
         </label>
         {loading && <LoadingSecond />}
       </div>

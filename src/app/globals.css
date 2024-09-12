@@ -51,7 +51,7 @@
   }
 
   #table-style tbody tr td {
-    @apply p-2 font-sans text-[0.7rem] font-semibold text-slate-400;
+    @apply p-2 font-sans text-[0.7rem] font-semibold text-slate-600;
   }
 
   #table-style tbody tr:last-child {
@@ -138,6 +138,11 @@
   .input-style {
     @apply h-10 w-full rounded border border-slate-300 bg-white p-2 font-sans text-sm font-normal text-slate-600 
     focus-visible:border-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary;
+  }
+
+  [readonly] {
+    @apply bg-slate-200;
+    cursor: not-allowed;
   }
 
   /* ---------- */

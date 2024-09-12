@@ -52,6 +52,11 @@ export default function NavigationModule( { modules } :NavigationProps) {
       label: 'Eleições',
       sub: null,
     },
+    {
+      href: `/gera_xsds`,
+      label: `Gera XSD's`,
+      sub: null,
+    },
     // {
     //   href: `/relatorio`,
     //   label: 'Relatório',
@@ -79,6 +84,8 @@ export default function NavigationModule( { modules } :NavigationProps) {
           return !!modules?.find((item) => item.module === 'Visualizar Relatório')
         case '/eleicao':
           return !!modules?.find((item) => item.module === 'Visualizar Eleições')
+        case '/gera_xsds':
+          return !!modules?.find((item) => item.module === `Gera XSD's`)
         default:
           return false  
       }
