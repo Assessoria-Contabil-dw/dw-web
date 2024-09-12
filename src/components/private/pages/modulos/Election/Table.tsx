@@ -1,14 +1,13 @@
 import { useCallback, useRef, useState } from "react";
-// import UpdateSPC, { UpdateSPCRef } from "./ModelUpdate";
-// import ViewSPC, { ViewSPCRef } from "./View";
+import ModelView, { ViewElectionRef } from "./ModelView";
 import dayjs from "dayjs";
 import { LoadingSecond } from "@/components/Loading/second";
 import { TableOptions } from "../../../Tools/TableOptions";
 import {
   ElectionAllProps,
   ElectionProps,
-  SPCAllProps,
 } from "@/hooks/SPC/@type";
+import ModelUpdate, { UpdateRef } from "./ModelUpdate";
 
 interface TableProps {
   role?: string;
@@ -19,16 +18,16 @@ export function TableElection({ role, data, loading }: TableProps) {
   const [selectedCheckbox, setSelectedCheckbox] = useState(0);
 
   const [isLinkTwo, setIsLinkTwo] = useState(false);
-  // const modalUpdateRef = useRef<UpdateSPCRef>(null);
-  // const modalViewRef = useRef<ViewSPCRef>(null);
+  const modalUpdateRef = useRef<UpdateRef>(null);
+  const modalViewRef = useRef<ViewElectionRef>(null);
 
-  // const handleEditDirectory = useCallback((id: string) => {
-  //   modalUpdateRef.current?.openModal(id);
-  // }, []);
+  const handleEdit = useCallback((id: string) => {
+    modalUpdateRef.current?.openModal(id);
+  }, []);
 
-  // const handleViewModal = useCallback((id: string) => {
-  //   modalViewRef.current?.openModal(id);
-  // }, []);
+  const handleViewModal = useCallback((id: string) => {
+    modalViewRef.current?.openModal(id);
+  }, []);
 
   const handleCheckboxChange = (checkboxId: number) => {
     if (checkboxId === selectedCheckbox) {
@@ -41,7 +40,7 @@ export function TableElection({ role, data, loading }: TableProps) {
   const generateElectionList = (elections: ElectionProps[]) => {
     const electionsArray = [];
 
-    for (let i = 2018; i <= dayjs().year(); i += 2) {
+    for (let i = 2024; i <= dayjs().year() ; i += 2) {
       const e = elections.find((e) => e.year === String(i) || null);
 
       electionsArray.push(
@@ -49,11 +48,11 @@ export function TableElection({ role, data, loading }: TableProps) {
           {e ? (
             <a
               target="blank"
-              title={e.legendName}
+              title={e.colorName}
               style={{
-                backgroundColor: `${e.legendHex}`,
+                backgroundColor: `${e.colorHex}`,
               }}
-              href={e.link}
+              href={e.link1}
             >
               {e.year}
             </a>
@@ -91,8 +90,9 @@ export function TableElection({ role, data, loading }: TableProps) {
 
   return (
     <div>
-      {/* <UpdateSPC ref={modalUpdateRef} />
-      <ViewSPC ref={modalViewRef} /> */}
+      <ModelUpdate ref={modalUpdateRef} />
+      <ModelView ref={modalViewRef} />
+   
 
       <fieldset className="fieldset">
         <table id="table-style">
@@ -103,7 +103,13 @@ export function TableElection({ role, data, loading }: TableProps) {
                   {loading && <LoadingSecond />} Líder
                 </div>
               </th>
-              <th>Eleições</th>
+              <th>CNPJ</th>
+              <th>Estado</th>
+              <th>Cidade</th>
+              <th>Banco</th>
+              <th>Agência</th>
+              <th>FEFC</th>
+              <th>SPCE</th>
               <th></th>
             </tr>
           </thead>
@@ -111,7 +117,13 @@ export function TableElection({ role, data, loading }: TableProps) {
             {data ? (
               data?.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.name}</td>
+                  <td><a href={item.link} target="_blank" className="cursor-pointer text-secondHover">{item.name}</a></td>
+                  <td>{item.cnpjCurrent}</td>
+                  <td>{item.stateCurrent}</td>
+                  <td>{item.cityCurrent}</td>
+                  <td>{item.bankCurrent}</td>
+                  <td>{item.agencyCurrent}</td>
+                  <td>{item.fefcCurrent}</td>
                   <td className="whitespace-nowrap">
                     <ul>
                       {item.elections !== null && item.elections.length > 0 ? (
@@ -128,8 +140,8 @@ export function TableElection({ role, data, loading }: TableProps) {
                       isView
                       isEdit
                       isDelete={false}
-                      // handleView={() => handleViewModal(item.id.toString())}
-                      // handleEdit={() => handleEditDirectory(item.id.toString())}
+                      handleView={() => handleViewModal(item.id.toString())}
+                      handleEdit={() => handleEdit(item.id.toString())}
                     />
                   </td>
                 </tr>
@@ -137,7 +149,7 @@ export function TableElection({ role, data, loading }: TableProps) {
             ) : (
               <tr>
                 <td colSpan={5} className="py-6 text-center">
-                  Nenhum partido cadastrado
+                  Nenhum registro encontrado
                 </td>
               </tr>
             )}

@@ -1,13 +1,16 @@
-import { api } from "@/lib/api";
 
+import { api } from "@/lib/api";
 export class ElectionService {
+
   public async getAll(
     skip: number,
     take?: number,
 
     leaderName?: string,
     year?: string,
-    legendId?: string
+    colorId?: string,
+    stateName?: string,
+    cityName?: string
   ) {
     const response = await api.get("/elections", {
       params: {
@@ -15,14 +18,15 @@ export class ElectionService {
         take,
         leaderName,
         year,
-        legendId,
+        colorId,
+        stateName,
+        cityName,
       },
     });
-
     return response.data;
   }
 
-  static async getById(id: string) {
+  public async getById(id: string) {
     const response = await api.get(`/elections/${id}`);
 
     return response.data;
@@ -33,8 +37,16 @@ export class ElectionService {
     array: Array<{
       year: string;
       numPge: string;
+      candAccount: string;
       observation?: string;
       colorId?: string;
+      cityCode?: string;
+      cnpj?: string;
+      accountOR?: string;
+      accountFP?: string;
+      accountFEFC?: string;
+      bank?: string;
+      agency?: string;
     }>
   ) {
     const response = await api.post(`/elections`, {
@@ -45,20 +57,28 @@ export class ElectionService {
     return response.data;
   }
 
-  static async update(
+  public async update(
     id: string,
-    year: string,
-    numPge?: string,
-    colorId?: string,
-    observation?: string
-  ) {
-    const response = await api.put(`/elections/${id}`, {
-      year,
-      numPge,
-      colorId,
-      observation,
-    });
 
+    data: {
+      year: string;
+      numPge?: string;
+      candAccount?: string;
+      colorId?: string;
+      cityCode?: string;
+      observation?: string;
+      cnpj?: string;
+      accountOR?: string;
+      accountFP?: string;
+      accountFEFC?: string;
+      bank?: string;
+      agency?: string;
+    }
+  ) {
+    const response = await api.put(`/election/${id}`, {
+      data
+    });
+   
     return response.data;
   }
 }
