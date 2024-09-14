@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { spcFilterSchema, spcUpdateType } from "../@types/zod.type";
-import { spcUpdateProps } from "../@types/interface.type";
 import { Check, Trash, X } from "lucide-react";
 import dayjs from "dayjs";
 import SelectLegend from "@/components/private/Search/Select/SelectLegend";
@@ -9,6 +8,7 @@ import ButtonIcon from "@/components/Buttons/ButtonIcon";
 import { useCallback,  useRef } from "react";
 import DeleteModel, { DeleteRef } from "@/components/private/Model/Delete";
 import { useSPCUpdateById } from "@/hooks/SPC/useSPC";
+import { spcUpdateProps } from "../../SPC/@types/interface.type";
 
 export default function FormUpdateSPC({
   id,
