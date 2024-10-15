@@ -19,7 +19,7 @@ import FormCreate from "./FormCreate";
 export default function Access() {
   const [option, setOption] = useState(1);
   const [id, setId] = useState("");
-  const { cpf } = useParams<{ cpf: string }>()
+  const { cpf } = useParams()
   const accessService = new AdminAccessService();
 
   const { data, isLoading, isFetching } = useQuery<{
