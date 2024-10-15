@@ -48,11 +48,12 @@ export function SignInForm() {
 
   const { mutate, isLoading } = useMutation({
     mutationKey: 'login',
-    mutationFn: (data: {cpf:string, password:string}) => UserAuthService.postLogin(data),
+    mutationFn: (data: { cpf: string, password: string }) => UserAuthService.postLogin(data),
     onSuccess: () => {
-      notify({message: 'Login efetuado com sucesso', type:'success'})
+      notify({ message: 'Login efetuado com sucesso', type: 'success' })
       setIsTest(false)
-      router.push('')
+      console.log("sucess")
+      router.push('/')
     },
     onError: (error: any) => {
       setIsTest(false)
@@ -63,7 +64,7 @@ export function SignInForm() {
           message: "Erro interno, tente novamente mais tarde",
         });
       }
-  
+
       return notify({
         type: "error",
         message: error.response.data.message,
@@ -72,12 +73,12 @@ export function SignInForm() {
   })
 
   async function handleSignInUser(data: SignInUser) {
-    mutate({cpf: data.cpf, password: data.password});
+    mutate({ cpf: data.cpf, password: data.password });
   }
 
   async function handleSignInUserTest() {
     setIsTest(true);
-    mutate({cpf: "00000000001", password: "cliente001"});
+    mutate({ cpf: "00000000001", password: "cliente001" });
   }
 
   return (

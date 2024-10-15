@@ -9,16 +9,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const user: User = queryClient.getQueryData('authUser') as User
   const router = useRouter()
   if (user?.role !== 'ADMIN') {
-    router.push('')
+    router.push('/')
     return null
   }
 
   return (
     <section className="relative flex h-full w-full">
-    <MenuData />
-    <div className="relative flex-1 overflow-y-auto px-4 py-6">
-      {children}
-    </div>
-  </section>
+      <MenuData />
+      <div className="relative flex-1 overflow-y-auto px-4 py-6">
+        {children}
+      </div>
+    </section>
   )
 }
