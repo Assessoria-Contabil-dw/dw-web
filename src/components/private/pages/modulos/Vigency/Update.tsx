@@ -35,8 +35,7 @@ export function UpdateVigencyModel({ vigencyId, closeModal }: UpdateVigency) {
 
   const { handleSubmit, watch, setValue, register, control } = methods;
 
-  const params = useParams();
-  const { id } = params;
+  const { id } = useParams<{ id: string }>();
 
   const vigencyById = useQuery<{
     dateFirst: string;

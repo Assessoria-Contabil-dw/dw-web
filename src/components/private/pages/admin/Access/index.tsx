@@ -19,8 +19,7 @@ import FormCreate from "./FormCreate";
 export default function Access() {
   const [option, setOption] = useState(1);
   const [id, setId] = useState("");
-  const params = useParams();
-  const { cpf } = params;
+  const { cpf } = useParams<{ cpf: string }>()
   const accessService = new AdminAccessService();
 
   const { data, isLoading, isFetching } = useQuery<{
@@ -30,7 +29,7 @@ export default function Access() {
     partyAccess: PartyData[] | null;
     cityAccess: CityData[] | null;
     stateAccess: StateData[] | null;
-    _count:{
+    _count: {
       party: number;
       state: number;
       city: number;
@@ -45,7 +44,7 @@ export default function Access() {
 
 
   const modelRef = useRef<ModelRef>(null);
-  const handleRegisterOpenModel = useCallback((id:string) => {
+  const handleRegisterOpenModel = useCallback((id: string) => {
     setId(id);
     modelRef.current?.openModel();
   }, []);
@@ -64,9 +63,9 @@ export default function Access() {
 
   return (
     <>
-    <Model title="Cadastrar Acesso" ref={modelRef}>
-      <FormCreate closeModel={handleRegisterCloseModel} id={id} />
-    </Model>
+      <Model title="Cadastrar Acesso" ref={modelRef}>
+        <FormCreate closeModel={handleRegisterCloseModel} id={id} />
+      </Model>
 
       <div className="flex w-full flex-col gap-4">
         <div className="flex items-center justify-start gap-4">

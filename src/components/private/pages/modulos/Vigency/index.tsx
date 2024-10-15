@@ -14,8 +14,7 @@ import { useVigencyData } from '@/hooks/Directory/useVigency'
 import { User } from '@/hooks/Access/User/useAuth'
 
 export function VigencyTable() {
-  const params = useParams()
-  const { id } = params
+  const { id } = useParams<{ id: string }>()
 
   const { partyCode, stateId, cityCode } = useContext(AccessContext)
   const user: User = queryClient.getQueryData('authUser') as User
