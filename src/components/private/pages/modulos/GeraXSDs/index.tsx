@@ -8,6 +8,7 @@ import { LucideDownloadCloud, LucideRefreshCw, LucideUploadCloud } from "lucide-
 import { api } from "@/lib/api";
 import { TableXSD } from './Table'
 import FormularioDownload, { FormularioDownloadRef } from './FormularioDownload'
+import FormularioUpload, { FormularioUploadRef } from './FormularioUpload'
 import { useNotify } from "@/components/Toast/toast"
 
 import z from "zod";
@@ -42,16 +43,14 @@ export default function GeraXSDs() {
 
   const user: User = queryClient.getQueryData("authUser") as User;
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [ isFetching, setIsFetching ] = useState<boolean>(false);
-
   const [ filter, setFilter ] = useState<{ ano: string | null, partido: string }>({
     ano: null,
     partido: ''
   });
 
-  const inputFileRef = useRef<HTMLInputElement>(null);
   const modalFormularioDownloadRef = useRef<FormularioDownloadRef>(null);
+  const modalFormularioUploadRef = useRef<FormularioUploadRef>(null);
 
   const [ data, setData ] = useState<any>([]);
   const [ page, setPage ] = useState(1);
@@ -67,16 +66,6 @@ export default function GeraXSDs() {
     setSkip((old) => old + take)
     setPage((old) => old + 1)
   }, []);
-
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0])
-    }
-  }
-
-  const handleButtonClick = () => {
-    inputFileRef.current?.click()
-  }
 
   const fetchData = async() => {
     clearInterval(interval)
@@ -100,42 +89,10 @@ export default function GeraXSDs() {
     fetchData()
   }
 
-  const resetFileInput = () => {
-    if (inputFileRef.current) {
-      inputFileRef.current.value = ''
-    }
-  }
-
   useEffect(() => {
     fetchData()
   }, [filter, page, take])
 
-  useEffect(() => {
-
-    if (selectedFile) {
-      setIsFetching(true)
-
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-
-      api.post(`/gera_xsds/csv`, formData)
-        .then(response => {
-          console.log(response.data)
-          setIsFetching(false)
-          setSelectedFile(null)
-          resetFileInput()
-          fetchData()
-        })
-        .catch(error => {
-          setIsFetching(false)
-          setSelectedFile(null)
-          resetFileInput()
-          notify({ type: "error", message: error.message })
-        })
-
-    }
-
-  }, [selectedFile])
 
   async function handleSearchOnChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) {
     const { name, value } = e.target;
@@ -154,6 +111,7 @@ export default function GeraXSDs() {
   return (
     <>
       <FormularioDownload ref={modalFormularioDownloadRef} />
+      <FormularioUpload ref={modalFormularioUploadRef} />
       <div className="flex flex-col gap-2">
         <div className="flex items-end justify-between gap-4">
           <FormProvider {...methods}>
@@ -167,14 +125,6 @@ export default function GeraXSDs() {
           <div className="flex gap-2">
             {user?.role === "ADMIN" && (
               <>
-                <input
-                  accept=".csv"
-                  ref={inputFileRef}
-                  type="file"
-                  style={{ display: "none" }}
-                  id="hiddenFileInput"
-                  onChange={handleFileChange}
-                />
                 <ButtonBase
                   className="border-none bg-primary text-black hover:bg-primaryHover hover:text-black"
                   title="Download XSD"
@@ -196,7 +146,7 @@ export default function GeraXSDs() {
                 <ButtonBase
                   className="border-none bg-second text-white hover:bg-secondHover hover:text-white"
                   title="Upload CSV"
-                  onClick={handleButtonClick}
+                  onClick={() => modalFormularioUploadRef.current?.openModal()}
                   disabled={isFetching}
                   loading={isFetching}
                   startIcon={<LucideUploadCloud size={16} className="h-fit w-5" />}>
