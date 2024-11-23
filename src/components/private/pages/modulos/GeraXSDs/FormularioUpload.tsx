@@ -87,7 +87,7 @@ const FormularioUpload: ForwardRefRenderFunction<FormularioUploadRef> = (_, ref)
     api.post(`/gera_xsds/csv`, formData)
       .then(response => {
         setIsFetching(false)
-        notify({ type: "success", message: 'Upload concluído com sucesso!' })
+        notify({ type: "success", message: 'Upload concluído com sucesso !' })
       })
       .catch(error => {
         setIsFetching(false)
