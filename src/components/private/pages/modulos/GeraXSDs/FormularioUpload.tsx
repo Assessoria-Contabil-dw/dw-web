@@ -36,7 +36,7 @@ function fileToBase64(file: any) {
       };
 
       reader.onerror = () => {
-          reject(new Error("Erro ao ler o arquivo"));
+          reject(new Error("Erro ao ler o arquivo."));
       };
 
       reader.readAsDataURL(file);
