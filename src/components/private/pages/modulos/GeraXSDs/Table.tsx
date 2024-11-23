@@ -93,7 +93,7 @@ export function TableXSD({ role, data, loading, setData, prevPage, nextPage, set
                     <td>{reg.NR_CNPJ_PRESTADOR_CONTA}</td>
                     <td>{reg.SG_PARTIDO}</td>
                     <td>{reg.AA_REFERENCIA}</td>
-                    <td>{moment(reg.DT_LANCAMENTO).format('DD/MM/YYYY')}</td>
+                    <td>{moment(reg.DT_LANCAMENTO).utc().format('DD/MM/YYYY')}</td>
                     <td>{reg.NM_ESFERA}</td>
                     <td>{reg.DS_LANCAMENTO}</td>
                     <td>{reg.NM_CONTRAPARTE}</td>

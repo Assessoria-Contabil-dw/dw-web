@@ -13,10 +13,10 @@ import InputBase from "@/components/private/Search/Input/InputBase";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary"
 
 const formUploadSchema = z.object({
-  cnpj: z.string().regex(new RegExp(/^\d{14}$/, "i")),
-  tipoLancamento: z.string().regex(new RegExp(/^[CD]{1}$/)),
-  dataInicial: z.string().length(10),
-  dataFinal: z.string().length(10),
+  cnpj: z.string().regex(new RegExp(/^(\d{14})?$/, "i")),
+  tipoLancamento: z.string().regex(new RegExp(/^[CD]{0,1}$/)),
+  dataInicial: z.string().optional(),
+  dataFinal: z.string().optional(),
   arquivoCSV: z.instanceof(FileList).refine((files) => files.length > 0)
 })
 
