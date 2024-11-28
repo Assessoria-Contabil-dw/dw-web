@@ -33,7 +33,7 @@ export default function TableFilterXSD({
           <option value="">Todos</option>
         </SelectParty>
       )}
-      <SelectBase onChange={onChange} name="tipoLancamento" label="Tipo Lançamento">
+      <SelectBase onChange={onChange} name="tipoLancamento" label="D/C">
         <option value="">Todos</option>
         <option value="D">D</option>
         <option value="C">C</option>
