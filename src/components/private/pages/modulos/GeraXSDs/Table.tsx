@@ -136,8 +136,6 @@ export function TableXSD({
                     }`}
                   >
                     <td>{reg.SG_PARTIDO}</td>
-                    <td>{reg.AA_REFERENCIA}</td>
-                    <td>{moment(reg.DT_LANCAMENTO).format('DD/MM/YYYY')}</td>
                     <td>{reg.NM_ESFERA}</td>
 
                     <td>{reg.NR_CNPJ_PRESTADOR_CONTA ?? "-"}</td>
