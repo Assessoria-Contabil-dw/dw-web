@@ -76,7 +76,7 @@ export function TableXSD({
             <thead>
               <tr>
                 <th>PARTIDO</th>
-                <th>ESFERA</th>
+                <th>DIRETÓRIO</th>
                 <th>CNPJ PRESTADOR</th>
                 <th>DATA LANÇAMENTO</th>
                 <th>Nº RECIBO</th>
@@ -136,7 +136,7 @@ export function TableXSD({
                     }`}
                   >
                     <td>{reg.SG_PARTIDO}</td>
-                    <td>{reg.NM_ESFERA}</td>
+                    <td>{reg.SURNAME}</td>
 
                     <td>{reg.NR_CNPJ_PRESTADOR_CONTA ?? "-"}</td>
                     <td>
