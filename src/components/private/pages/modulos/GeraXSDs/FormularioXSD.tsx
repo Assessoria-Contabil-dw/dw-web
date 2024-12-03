@@ -18,10 +18,6 @@ export interface FormularioXSDRef {
   passIdData: (id: number) => void;
 }
 
-interface TableXSDProps {
-  data?: any[] | null;
-}
-
 const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
 
   const notify = useNotify();
@@ -35,10 +31,13 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
 
   const watchOrigem = watch('origem')
   const watchFonte = watch('fonte')
+  const watchDocumento = watch('documento')
   const watchTipoLancamento = watch('tipoLancamento')
+  const watchDescricaoDocumentoOutro = watch('descricaoDocumentoOutro')
+  const watchNotaFiscal = watch('notaFiscal')
 
-  const arrayTipoLancamentos = ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D']
-  const values = watch(['fonte', 'natureza', 'origem', 'candidatura', 'classificacao', 'especie', 'anoEleicao', 'eleicaoSuplementar', 'gasto', 'documento',])
+  const arrayTipoLancamentos = ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D',]
+  const values = watch(['fonte', 'natureza', 'origem', 'candidatura', 'classificacao', 'especie', 'anoEleicao', 'eleicaoSuplementar', 'gasto', 'documento', 'descricaoDocumentoOutro', 'notaFiscal',])
   const criterioChecagem: any = {
     3: [2, 'CA'],
     6: [0, 'FEFC'],
@@ -47,10 +46,10 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
 
   const isFormFilled = values.every((value, index, arr) => {
     if (arrayTipoLancamentos[index] == watchTipoLancamento && !Object.keys(criterioChecagem).includes(index.toString())) {
-      return value && value.trim() !== ""
+      return value && value.trim() !== ''
     }
     if (arrayTipoLancamentos[index] == watchTipoLancamento && Object.keys(criterioChecagem).includes(index.toString()) && values[criterioChecagem[index][0]] === criterioChecagem[index][1]) {
-      return value && value.trim() !== ""
+      return value && value.trim() !== ''
     }
     return true
   })
@@ -91,6 +90,8 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
             setValue('gasto', data?.CD_GASTO)
             setValue('documento', data?.CD_DOCUMENTO)
             setValue('cpfCnpjContraparte', data?.NR_CPF_CNPJ_CONTRAPARTE)
+            setValue('notaFiscal', data?.NR_NF)
+            setValue('descricaoDocumentoOutro', data?.DS_DOCUMENTO_OUTRO)
 
           setIsLoading(false)
 
@@ -193,7 +194,13 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
                 {watchTipoLancamento == 'D' && <SelectBase {...register('documento')} label="Documento">
                   {documentos.map((v, i) => <option key={i} value={v}>{v}</option>)}
                 </SelectBase>}
-
+                {watchTipoLancamento == 'D' && watchDocumento == 'OUTRO' && <InputBase label="Descrição" {...register('descricaoDocumentoOutro')} maxLength={20} />}
+                {watchTipoLancamento == 'D' && watchDocumento == 'FISCAL' && <InputBase label="Nº NF" {...register('notaFiscal')} />}
+                <div className="flex">
+                  <input type="checkbox" id="aplicarConfiguracao" {...register('aplicarConfiguracao')} />
+                  &nbsp;<label htmlFor="aplicarConfiguracao">Aplicar esta configuração para os demais registros desta contraparte</label>
+                </div>
+    
                 <ButtonPrimary loading={isFetching} disabled={!isFormFilled} variant="fill" title="Salvar" type="submit" className="items-center justify-center">
                   Salvar
                 </ButtonPrimary>

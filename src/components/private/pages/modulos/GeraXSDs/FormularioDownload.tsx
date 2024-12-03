@@ -18,6 +18,7 @@ const formDownloadSchema = z.object({
   tipoLancamento: z.string().regex(new RegExp(/^[CD]{1}$/)),
   dataInicial: z.string().length(10),
   dataFinal: z.string().length(10),
+  registrosSelecionados: z.boolean()
 })
 
 type FormDownloadData = z.infer<typeof formDownloadSchema>;
@@ -105,6 +106,10 @@ const FormularioDownload: ForwardRefRenderFunction<FormularioDownloadRef> = (_, 
                   <InputBase label="D/C" type="text" className="w-16 text-center" {...register('tipoLancamento')} />
                   <InputBase label="Data Inicial" type="date" className="w-40 text-center" {...register('dataInicial')} />
                   <InputBase label="Data Final" type="date" className="w-40 text-center" {...register('dataFinal')} />
+                </div>
+                <div className="flex">
+                  <input type="checkbox" id="registrosSelecionados" {...register('registrosSelecionados')} />
+                  &nbsp;<label htmlFor="registrosSelecionados">Usar apenas registros selecionados</label>
                 </div>
 
                 <ButtonPrimary loading={isFetching} disabled={!isValid} variant="fill" title="Download XSD" type="submit" className="items-center justify-center">

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { LoadingSecond } from "@/components/Loading/second";
 import { api } from "@/lib/api";
 
@@ -32,8 +32,8 @@ export function TableXSD({
   setPage,
   page,
 }: TableXSDProps) {
-  const [selectedCheckbox, setSelectedCheckbox] = useState(0);
 
+  const [selectedCheckbox, setSelectedCheckbox] = useState(false);
   const modalFormularioXSDRef = useRef<FormularioXSDRef>(null);
 
   const salvarNumeroRecibo = (
@@ -53,7 +53,47 @@ export function TableXSD({
         })
         .catch((error) => console.log(error));
     }
-  };
+  }
+
+  useEffect(() => {
+    return setSelectedCheckbox(data?.results?.filter(v => v['SELECIONADO'] == false).length == 0);
+  }, [data])
+
+  const marcarTodosComoSelecionado= (
+    e: ChangeEvent<HTMLInputElement>,
+  ) => {
+    setSelectedCheckbox(!selectedCheckbox)
+    data?.results?.map((v) => {
+      return v['SELECIONADO'] = !selectedCheckbox
+    })
+
+    api
+    .patch(`/gera_xsds/selecionar`, { ids: data?.results?.map(v => v['ID']), selecionado: !selectedCheckbox })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => console.log(error));
+
+  }
+
+  const marcarComoSelecionado = (
+    e: ChangeEvent<HTMLInputElement>,
+    idx: number
+  ) => {
+    if (data && data.results && data.results.length) {
+      const value = { ...data.results[idx], SELECIONADO: !data.results[idx]['SELECIONADO'] };
+      const localData = { ...data };
+      localData.results[idx] = value;
+      setData(localData);
+
+      api
+        .patch(`/gera_xsds/selecionar`, { ids: [ value["ID"] ], selecionado: value['SELECIONADO'] })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => console.log(error));
+    }
+  }
 
   const handleEditXSD = (index: number, e: any) => {
     if (
@@ -75,6 +115,7 @@ export function TableXSD({
           <table id="table-style">
             <thead>
               <tr>
+                <th><input type="checkbox" checked={selectedCheckbox} onChange={(e) => marcarTodosComoSelecionado(e)} /></th>
                 <th>PARTIDO</th>
                 <th>DIRETÓRIO</th>
                 <th>CNPJ PRESTADOR</th>
@@ -135,6 +176,7 @@ export function TableXSD({
                       registroValido ? " bg-lime-300 text-slate-800" : ""
                     }`}
                   >
+                    <td><input type="checkbox" value={reg.ID} checked={reg.SELECIONADO} onChange={(e) => marcarComoSelecionado(e, idx)} /></td>
                     <td>{reg.SG_PARTIDO}</td>
                     <td>{reg.SURNAME}</td>
 

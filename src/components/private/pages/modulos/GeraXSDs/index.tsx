@@ -56,6 +56,7 @@ export default function GeraXSDs() {
   const [ page, setPage ] = useState(1);
   const [ skip, setSkip ] = useState(0);
   const [ take, setTake ] = useState(15);
+  const [ reload, setReload ] = useState(0);
 
   const prevPage = useCallback(() => {
     setSkip((old) => Math.max(old - take, 0))
@@ -91,8 +92,7 @@ export default function GeraXSDs() {
 
   useEffect(() => {
     fetchData()
-  }, [filter, page, take])
-
+  }, [filter, page, take, reload])
 
   async function handleSearchOnChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) {
     const { name, value } = e.target;
