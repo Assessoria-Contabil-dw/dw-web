@@ -33,15 +33,16 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
   const watchFonte = watch('fonte')
   const watchDocumento = watch('documento')
   const watchTipoLancamento = watch('tipoLancamento')
-  const watchDescricaoDocumentoOutro = watch('descricaoDocumentoOutro')
-  const watchNotaFiscal = watch('notaFiscal')
 
-  const arrayTipoLancamentos = ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D',]
-  const values = watch(['fonte', 'natureza', 'origem', 'candidatura', 'classificacao', 'especie', 'anoEleicao', 'eleicaoSuplementar', 'gasto', 'documento', 'descricaoDocumentoOutro', 'notaFiscal',])
+  const arrayTipoLancamentos = ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'D', 'D', 'D', 'D', 'C']
+  const values = watch(['fonte', 'natureza', 'origem', 'candidatura', 'classificacao', 'especie', 'anoEleicao', 'eleicaoSuplementar', 'gasto', 'documento', 'descricaoDocumentoOutro', 'notaFiscal', 'nrCandidato'])
   const criterioChecagem: any = {
     3: [2, 'CA'],
-    6: [0, 'FEFC'],
-    7: [0, 'FEFC'],
+    6: [2, 'CA'],
+    7: [2, 'CA'],
+    10: [9, 'OUTRO'],
+    11: [9, 'FISCAL'],
+    12: [2, 'CA'],
   }
 
   const isFormFilled = values.every((value, index, arr) => {
@@ -49,6 +50,9 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
       return value && value.trim() !== ''
     }
     if (arrayTipoLancamentos[index] == watchTipoLancamento && Object.keys(criterioChecagem).includes(index.toString()) && values[criterioChecagem[index][0]] === criterioChecagem[index][1]) {
+      console.log(index)
+      console.log(values[criterioChecagem[index][0]])
+      console.log(criterioChecagem[index][1])
       return value && value.trim() !== ''
     }
     return true
@@ -92,6 +96,9 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
             setValue('cpfCnpjContraparte', data?.NR_CPF_CNPJ_CONTRAPARTE)
             setValue('notaFiscal', data?.NR_NF)
             setValue('descricaoDocumentoOutro', data?.DS_DOCUMENTO_OUTRO)
+            setValue('nrCandidato', data?.NR_CANDIDATO)
+            setValue('anoEleicao', data?.AA_ELEICAO ? data?.AA_ELEICAO.toString() : '')
+            setValue('eleicaoSuplementar', data?.CD_ELEICAO_SUPLEMENTAR)
 
           setIsLoading(false)
 
@@ -183,8 +190,9 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
                 {watchTipoLancamento == 'C' && <SelectBase {...register('especie')} label="Espécie">
                   {especies.map((v, i) => <option key={i} value={v.codigo}>{v.codigo} - {v.descricao}</option>)}
                 </SelectBase>}
-                {(watchTipoLancamento == 'C' && watchFonte == 'FEFC' && watchOrigem == 'CA') && <InputBase type="number" min="2017" max="2100" label="Ano Eleição" {...register('anoEleicao')} />}
-                {(watchTipoLancamento == 'C' && watchFonte == 'FEFC' && watchOrigem == 'CA') && <SelectBase {...register('eleicaoSuplementar')} label="Eleição Suplementar">
+                {(watchTipoLancamento == 'C' && watchOrigem == 'CA') && <InputBase type="number" min="10" max="99999" label="Número Candidato" {...register('nrCandidato')} />}
+                {(watchTipoLancamento == 'C' && watchOrigem == 'CA') && <InputBase type="number" min="2017" max="2100" label="Ano Eleição" {...register('anoEleicao')} />}
+                {(watchTipoLancamento == 'C' && watchOrigem == 'CA') && <SelectBase {...register('eleicaoSuplementar')} label="Eleição Suplementar">
                   <option value='S'>SIM</option>
                   <option value='N'>NÃO</option>
                 </SelectBase>}
