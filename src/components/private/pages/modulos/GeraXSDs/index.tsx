@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, useEffect, useRef, useState, useCallback, } from "react";
 import { queryClient } from "@/provider/query.provider";
 import { User } from "@/hooks/Access/User/useAuth";
-import { LucideDownloadCloud, LucideRefreshCw, LucideDelete, LucideUploadCloud } from "lucide-react";
+import { LucideDownloadCloud, LucideRefreshCw, LucideDelete, LucideTrash2, LucideUploadCloud } from "lucide-react";
 import { api } from "@/lib/api";
 import { TableXSD } from './Table'
 import FormularioDownload, { FormularioDownloadRef } from './FormularioDownload'
@@ -93,6 +93,9 @@ export default function GeraXSDs() {
     if (registros.length) {
       await api.post(`/gera_xsds/deletar`, { ids: registros })
       await fetchData()
+    } else {
+      alert('Selecione pelo menos um registro.')
+      setIsFetching(false)
     }
 
   }
@@ -142,7 +145,7 @@ export default function GeraXSDs() {
                   onClick={handleButtonDeleteClick}
                   disabled={isFetching}
                   loading={isFetching}
-                  startIcon={<LucideDelete size={16} className="h-fit w-5" />}>
+                  startIcon={<LucideTrash2 size={16} className="h-fit w-5" />}>
                     Deletar
                 </ButtonBase>
                 <ButtonBase
