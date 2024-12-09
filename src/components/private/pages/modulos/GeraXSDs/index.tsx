@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, useEffect, useRef, useState, useCallback, } from "react";
 import { queryClient } from "@/provider/query.provider";
 import { User } from "@/hooks/Access/User/useAuth";
-import { LucideDownloadCloud, LucideRefreshCw, LucideDelete, LucideTrash2, LucideUploadCloud } from "lucide-react";
+import { LucideDownloadCloud, LucideRefreshCw, LucideUploadCloud } from "lucide-react";
 import { api } from "@/lib/api";
 import { TableXSD } from './Table'
 import FormularioDownload, { FormularioDownloadRef } from './FormularioDownload'
@@ -86,20 +86,6 @@ export default function GeraXSDs() {
     }, 700)
   }
 
-  const handleButtonDeleteClick = async() => {
-
-    setIsFetching(true)
-    const registros = data.results.filter((v: any) => v.SELECIONADO).map((v: any) => v.ID)
-    if (registros.length) {
-      await api.post(`/gera_xsds/deletar`, { ids: registros })
-      await fetchData()
-    } else {
-      alert('Selecione pelo menos um registro.')
-      setIsFetching(false)
-    }
-
-  }
-
   const handleButtonRefreshClick = () => {
     fetchData()
   }
@@ -139,15 +125,6 @@ export default function GeraXSDs() {
           <div className="flex gap-2">
             {user?.role === "ADMIN" && (
               <>
-                <ButtonBase
-                  className="border-none bg-primary text-black hover:bg-primaryHover hover:text-black"
-                  title="Download XSD"
-                  onClick={handleButtonDeleteClick}
-                  disabled={isFetching}
-                  loading={isFetching}
-                  startIcon={<LucideTrash2 size={16} className="h-fit w-5" />}>
-                    Deletar
-                </ButtonBase>
                 <ButtonBase
                   className="border-none bg-primary text-black hover:bg-primaryHover hover:text-black"
                   title="Download XSD"
