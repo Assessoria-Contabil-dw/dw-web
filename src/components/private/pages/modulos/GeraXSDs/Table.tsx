@@ -9,7 +9,7 @@ import moment from "moment";
 
 interface TableXSDProps {
   role: string;
-  data: { results: any[]; pages: number; count: number; next: boolean, saldo: string, credito: string, debito: string } | null;
+  data: { results: any[]; pages: number; count: number; next: boolean, saldo: string, credito: string, debito: string, totalDebito:string, totalCredito: string, totalSaldo:string } | null;
   loading: boolean;
   setData: (data: any) => void;
   prevPage: () => void;
