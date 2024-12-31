@@ -37,7 +37,8 @@
   }
 
   #table-style table thead tr th,
-  #table-style table tbody tr td {
+  #table-style table tbody tr td,
+  #table-style table tfoot tr td{
     @apply mr-9;
   }
 
@@ -46,12 +47,23 @@
     @apply border-b-[1px] border-dashed border-slate-300;
   }
 
-  #table-style thead th {
+  #table-style thead th, #table-style tfoot tr th {
     @apply whitespace-nowrap p-2 text-left font-mono text-xs font-bold uppercase text-zinc-600;
   }
+  
+  #table-style tfoot{
+    @apply bg-neutral-200
+  }
+  #table-style tfoot tr th {
+    @apply text-right text-neutral-500;
+  }
 
-  #table-style tbody tr td {
+  #table-style tbody tr td, #table-style tfoot tr td {
     @apply p-2 font-sans text-[0.7rem] font-semibold text-slate-600;
+  }
+
+  #table-style tfoot tr td {
+    @apply font-medium whitespace-nowrap text-right text-neutral-500;
   }
 
   #table-style tbody tr:last-child {

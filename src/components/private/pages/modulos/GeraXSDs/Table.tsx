@@ -9,7 +9,7 @@ import moment from "moment";
 
 interface TableXSDProps {
   role: string;
-  data: { results: any[]; pages: number; count: number; next: boolean } | null;
+  data: { results: any[]; pages: number; count: number; next: boolean, saldo: string, credito: string, debito: string } | null;
   loading: boolean;
   setData: (data: any) => void;
   prevPage: () => void;
@@ -32,7 +32,6 @@ export function TableXSD({
   setPage,
   page,
 }: TableXSDProps) {
-
   const [selectedCheckbox, setSelectedCheckbox] = useState(false);
   const modalFormularioXSDRef = useRef<FormularioXSDRef>(null);
 
@@ -53,47 +52,55 @@ export function TableXSD({
         })
         .catch((error) => console.log(error));
     }
-  }
+  };
 
   useEffect(() => {
-    return setSelectedCheckbox(data?.results?.filter(v => v['SELECIONADO'] == false).length == 0);
-  }, [data])
+    return setSelectedCheckbox(
+      data?.results?.filter((v) => v["SELECIONADO"] == false).length == 0
+    );
+  }, [data]);
 
-  const marcarTodosComoSelecionado= (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => {
-    setSelectedCheckbox(!selectedCheckbox)
+  const marcarTodosComoSelecionado = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedCheckbox(!selectedCheckbox);
     data?.results?.map((v) => {
-      return v['SELECIONADO'] = !selectedCheckbox
-    })
+      return (v["SELECIONADO"] = !selectedCheckbox);
+    });
 
     api
-    .patch(`/gera_xsds/selecionar`, { ids: data?.results?.map(v => v['ID']), selecionado: !selectedCheckbox })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => console.log(error));
-
-  }
+      .patch(`/gera_xsds/selecionar`, {
+        ids: data?.results?.map((v) => v["ID"]),
+        selecionado: !selectedCheckbox,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
 
   const marcarComoSelecionado = (
     e: ChangeEvent<HTMLInputElement>,
     idx: number
   ) => {
     if (data && data.results && data.results.length) {
-      const value = { ...data.results[idx], SELECIONADO: !data.results[idx]['SELECIONADO'] };
+      const value = {
+        ...data.results[idx],
+        SELECIONADO: !data.results[idx]["SELECIONADO"],
+      };
       const localData = { ...data };
       localData.results[idx] = value;
       setData(localData);
 
       api
-        .patch(`/gera_xsds/selecionar`, { ids: [ value["ID"] ], selecionado: value['SELECIONADO'] })
+        .patch(`/gera_xsds/selecionar`, {
+          ids: [value["ID"]],
+          selecionado: value["SELECIONADO"],
+        })
         .then((response) => {
           console.log(response.data);
         })
         .catch((error) => console.log(error));
     }
-  }
+  };
 
   const handleEditXSD = (index: number, e: any) => {
     if (
@@ -115,7 +122,13 @@ export function TableXSD({
           <table id="table-style">
             <thead>
               <tr>
-                <th><input type="checkbox" checked={selectedCheckbox} onChange={(e) => marcarTodosComoSelecionado(e)} /></th>
+                <th>
+                  <input
+                    type="checkbox"
+                    checked={selectedCheckbox}
+                    onChange={(e) => marcarTodosComoSelecionado(e)}
+                  />
+                </th>
                 <th>PARTIDO</th>
                 <th>DIRETÓRIO</th>
                 <th>CNPJ PRESTADOR</th>
@@ -176,7 +189,14 @@ export function TableXSD({
                       registroValido ? " bg-lime-300 text-slate-800" : ""
                     }`}
                   >
-                    <td><input type="checkbox" value={reg.ID} checked={reg.SELECIONADO} onChange={(e) => marcarComoSelecionado(e, idx)} /></td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value={reg.ID}
+                        checked={reg.SELECIONADO}
+                        onChange={(e) => marcarComoSelecionado(e, idx)}
+                      />
+                    </td>
                     <td>{reg.SG_PARTIDO}</td>
                     <td>{reg.SURNAME}</td>
 
@@ -198,14 +218,42 @@ export function TableXSD({
                     <td>{reg.DS_LANCAMENTO}</td>
                     <td>{reg.NR_CPF_CNPJ_CONTRAPARTE}</td>
                     <td>{reg.NM_CONTRAPARTE}</td>
-                    <td className="text-right">
-                      {Number(reg.VR_LANCAMENTO).toFixed(2)}
+                    <td
+                      className={`text-right !font-bold ${
+                        reg.TP_LANCAMENTO === "D"
+                          ? "!text-red-600"
+                          : "!text-sky-600"
+                      }`}
+                    >
+                      {reg.VR_LANCAMENTO}
                     </td>
                     <td>{reg.TP_LANCAMENTO}</td>
                   </tr>
                 );
               })}
             </tbody>
+            <tfoot>
+              <tr>
+                <th colSpan={4} className="!text-red-600">Débito: </th>
+                <td className="!text-red-600">{data?.debito}</td>
+
+                <th colSpan={2} className="!text-sky-600">Crédito:</th>
+                <td className="!text-sky-600">{data?.credito}</td>
+
+                <th colSpan={2}>Saldo:</th>
+                <td colSpan={2}>{data?.saldo}</td>
+              </tr>
+                <tr>
+                <th colSpan={4} className="!text-red-600">Débito Total: </th>
+                <td className="!text-red-600">{data?.totalDebito}</td>
+
+                <th colSpan={2} className="!text-sky-600">Crédito Total:</th>
+                <td className="!text-sky-600">{data?.totalCredito}</td>
+
+                <th colSpan={2}>Saldo Total:</th>
+                <td colSpan={2}>{data?.totalSaldo}</td>
+              </tr>
+            </tfoot>
           </table>
         </fieldset>
 
