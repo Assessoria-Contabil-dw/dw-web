@@ -7,7 +7,7 @@ interface SelectPartyProps extends SelectHTMLAttributes<HTMLSelectElement> {
   handleSearchOnChange?: (e: ChangeEvent<HTMLSelectElement>) => void
   children?: ReactNode
   loading?: boolean
-  name: string
+  name: string,
 }
 
 export default function SelectParty({

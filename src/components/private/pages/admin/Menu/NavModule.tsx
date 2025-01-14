@@ -64,6 +64,12 @@ export default function NavigationModule( { modules } :NavigationProps) {
       sub: '/acessos',
       label: 'Clientes',
     },
+    {
+      href: `/admin/financeiro`,
+      replace: true,
+      sub: null,
+      label: 'Controle Financeiro',
+    },
   ]
 
   function handleClick(path: string) {

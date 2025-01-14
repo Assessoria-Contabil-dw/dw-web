@@ -9,7 +9,18 @@ import moment from "moment";
 
 interface TableXSDProps {
   role: string;
-  data: { results: any[]; pages: number; count: number; next: boolean, saldo: string, credito: string, debito: string, totalDebito:string, totalCredito: string, totalSaldo:string } | null;
+  data: {
+    results: any[];
+    pages: number;
+    count: number;
+    next: boolean;
+    saldo: string;
+    credito: string;
+    debito: string;
+    totalDebito: string;
+    totalCredito: string;
+    totalSaldo: string;
+  } | null;
   loading: boolean;
   setData: (data: any) => void;
   prevPage: () => void;
@@ -234,24 +245,55 @@ export function TableXSD({
             </tbody>
             <tfoot>
               <tr>
-                <th colSpan={4} className="!text-red-600">Débito: </th>
-                <td className="!text-red-600">{data?.debito}</td>
+                <td colSpan={12}>
+                  <div className="flex flex-col rounded-lg border-[1px] border-neutral-300 p-4 bg-slate-100">
+                    <ul className="w-full flex gap-8 justify-end">
+                      <li className="flex w-auto flex-col gap-2">
+                        <label className="w-64 font-mono text-sm font-bold uppercase text-red-600">
+                          Débito:
+                          <span className="ml-4 font-medium ">
+                            {data?.debito}
+                          </span>
+                        </label>
+                        <label className="w-64 font-mono text-sm font-bold uppercase text-red-600">
+                          Débito Total:
+                          <span className="ml-4 font-medium">
+                            {data?.totalDebito}
+                          </span>
+                        </label>
+                      </li>
+                      <li className="flex w-auto flex-col gap-2">
+                        <label className=" w-64 font-mono text-sm font-bold uppercase text-sky-600">
+                          Crédito:
+                          <span className="ml-4 font-medium">
+                            {data?.credito}
+                          </span>
+                        </label>
+                        <label className="w-64 font-mono text-sm font-bold uppercase text-sky-600">
+                          Crédito Total:
+                          <span className="ml-4 font-medium">
+                            {data?.totalCredito}
+                          </span>
+                        </label>
+                      </li>
 
-                <th colSpan={2} className="!text-sky-600">Crédito:</th>
-                <td className="!text-sky-600">{data?.credito}</td>
-
-                <th colSpan={2}>Saldo:</th>
-                <td colSpan={2}>{data?.saldo}</td>
-              </tr>
-                <tr>
-                <th colSpan={4} className="!text-red-600">Débito Total: </th>
-                <td className="!text-red-600">{data?.totalDebito}</td>
-
-                <th colSpan={2} className="!text-sky-600">Crédito Total:</th>
-                <td className="!text-sky-600">{data?.totalCredito}</td>
-
-                <th colSpan={2}>Saldo Total:</th>
-                <td colSpan={2}>{data?.totalSaldo}</td>
+                      <li className="flex w-auto flex-col gap-2">
+                        <label className="w-64 font-mono text-sm font-bold uppercase">
+                          Saldo:
+                          <span className="ml-4 font-medium">
+                            {data?.saldo}
+                          </span>
+                        </label>
+                        <label className="w-64 font-mono text-sm font-bold uppercase">
+                          Saldo Total:
+                          <span className="ml-4 font-medium">
+                            {data?.totalSaldo}
+                          </span>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
               </tr>
             </tfoot>
           </table>

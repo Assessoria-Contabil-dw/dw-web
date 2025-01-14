@@ -51,9 +51,6 @@
     @apply whitespace-nowrap p-2 text-left font-mono text-xs font-bold uppercase text-zinc-600;
   }
   
-  #table-style tfoot{
-    @apply bg-neutral-200
-  }
   #table-style tfoot tr th {
     @apply text-right text-neutral-500;
   }

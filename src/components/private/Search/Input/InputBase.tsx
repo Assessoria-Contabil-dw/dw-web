@@ -22,6 +22,7 @@ const InputBase = forwardRef<Ref, InputBaseProps>(function InputBase(
         ref={ref}
         name={name}
         type={type || 'text'}
+        placeholder={label}
         className={`input-style ${className || ''}`}
       />
     </div>
