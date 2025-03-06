@@ -91,7 +91,7 @@ const FormularioUpload: ForwardRefRenderFunction<FormularioUploadRef> = (_, ref)
       })
       .catch(error => {
         setIsFetching(false)
-        notify({ type: "error", message: error.message })
+        notify({ type: "error", message: error.response.data.message })
       })
   }
 
