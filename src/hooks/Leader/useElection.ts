@@ -8,6 +8,9 @@ import { queryClient } from "@/provider/query.provider";
 export function useElectionData(
   skip: number,
   take?: number,
+  partyCode?: string,
+  stateId?: string,
+  cityCode?: string,
 
   leaderName?: string,
   year?: string,
@@ -22,6 +25,9 @@ export function useElectionData(
       "electionData",
       skip,
       take,
+      partyCode,
+      stateId,
+      cityCode,
       leaderName,
       year,
       colorId,
@@ -32,6 +38,9 @@ export function useElectionData(
       electionService.getAll(
         skip,
         take,
+        partyCode,
+        stateId,
+        cityCode,
         leaderName,
         year,
         colorId,

@@ -104,6 +104,7 @@ export function TableElection({ role, data, loading }: TableProps) {
                 </div>
               </th>
               <th>CNPJ</th>
+              <th>PARTIDO</th>
               <th>Estado</th>
               <th>Cidade</th>
               <th>Banco</th>
@@ -119,6 +120,7 @@ export function TableElection({ role, data, loading }: TableProps) {
                 <tr key={index}>
                   <td><a href={item.link} target="_blank" className="cursor-pointer text-secondHover">{item.name}</a></td>
                   <td>{item.cnpjCurrent}</td>
+                  <td>{item.partyCurrent}</td>
                   <td>{item.stateCurrent}</td>
                   <td>{item.cityCurrent}</td>
                   <td>{item.bankCurrent}</td>

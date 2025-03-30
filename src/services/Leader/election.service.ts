@@ -5,6 +5,9 @@ export class ElectionService {
   public async getAll(
     skip: number,
     take?: number,
+    partyCode?: string,
+    stateId?: string,
+    cityCode?: string,
 
     leaderName?: string,
     year?: string,
@@ -16,6 +19,9 @@ export class ElectionService {
       params: {
         skip,
         take,
+        partyCode,
+        stateId,
+        cityCode,
         leaderName,
         year,
         colorId,

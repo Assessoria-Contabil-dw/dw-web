@@ -4,13 +4,13 @@ import { Globe } from "lucide-react";
 export default function ActiveLinks() {
   const { data, isLoading } = useLinkData();
 
-  if (!data || isLoading) {
+  if (!Array.isArray(data) || isLoading) {
     return null;
   }
 
   return (
     <ul className="grid grid-flow-row grid-cols-3 ">
-      {data?.map((item, index) => (
+      {data.map((item, index) => (
         <li
           key={index}
           className="flex items-center justify-center border-[1px] border-dashed p-1"

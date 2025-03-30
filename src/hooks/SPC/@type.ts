@@ -58,6 +58,7 @@ export interface ElectionProps {
   link2: string
   city: string
   state: string
+  party: string
   cnpj: string
   accountOR: string
   accountFP: string
@@ -70,6 +71,7 @@ export interface ElectionAllProps {
   name: string
   link: string
   cnpjCurrent: string
+  partyCurrent: string
   cityCurrent: string
   stateCurrent: string
   bankCurrent: string

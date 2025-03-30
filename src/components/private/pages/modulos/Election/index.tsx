@@ -2,7 +2,7 @@
 
 import { useElectionData } from "@/hooks/Leader/useElection";
 import { TableElection } from "./Table";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useContext, useState } from "react";
 import { User } from "@/hooks/Access/User/useAuth";
 import { queryClient } from "@/provider/query.provider";
 import PaddingTable from "@/components/private/Tools/TablePadding";
@@ -12,6 +12,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import TableFilter from "./Filter";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { AccessContext } from "@/provider/context.provider";
 
 
 interface ElectionProps {
@@ -26,6 +27,7 @@ export default function Election() {
 
   const [filter, setFilter] = useState<ElectionProps>({});
   const user: User = queryClient.getQueryData("authUser") as User;
+  const { partyCode, cityCode, stateId } = useContext(AccessContext);
   const [stateName, setStateName] = useState("");
 
   const schema = z.object({
@@ -45,6 +47,9 @@ export default function Election() {
   const {data, isLoading, isFetching, isError, isPreviousData, refetch} = useElectionData(
     skip,
     take,
+    partyCode,
+    stateId,
+    cityCode,
     filter.leaderName,
     filter.year,
     filter.colorId,
@@ -73,8 +78,6 @@ export default function Election() {
     setPage(1);
     setSkip(0);
     setFilter((old) => ({ ...old, [name]: value }));
-
-    console.log(filter);
     await refetch();
   }
 
