@@ -1,7 +1,7 @@
 "use client";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangeEvent, useEffect, useRef, useState, useCallback } from "react";
+import { ChangeEvent, useEffect, useRef, useState, useCallback, useContext } from "react";
 import { queryClient } from "@/provider/query.provider";
 import { User } from "@/hooks/Access/User/useAuth";
 import {
@@ -23,6 +23,7 @@ import TableFilterXSD from "./Filter";
 import ButtonBase from "@/components/Buttons/ButtonBase";
 import React from "react";
 import ButtonIcon from "@/components/Buttons/ButtonIcon";
+import { AccessContext } from "@/provider/context.provider";
 
 let interval: any;
 
@@ -50,6 +51,7 @@ export default function GeraXSDs() {
   const notify = useNotify();
 
   const user: User = queryClient.getQueryData("authUser") as User;
+  const { partyCode, cityCode, stateId } = useContext(AccessContext);
 
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [filter, setFilter] = useState<{ ano: string | null; partido: string }>(
@@ -85,6 +87,9 @@ export default function GeraXSDs() {
       api
         .post(`/gera_xsds`, {
           ...filter,
+          partyCode,
+          stateId,
+          cityCode,
           itensPorPagina: take,
           paginaAtual: page,
         })
