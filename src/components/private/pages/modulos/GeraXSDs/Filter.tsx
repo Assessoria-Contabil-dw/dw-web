@@ -23,7 +23,8 @@ export default function TableFilterXSD({
           <div className="w-44">
             <SelectParty
               defaultValue=""
-              name="partido"
+              name="partyCode"
+              type="code"
               handleSearchOnChange={onChange}
             >
               <option value="">Todos</option>

@@ -51,13 +51,13 @@ export default function GeraXSDs() {
   const notify = useNotify();
 
   const user: User = queryClient.getQueryData("authUser") as User;
-  const { partyCode, cityCode, stateId } = useContext(AccessContext);
+  const { partyCode, cityCode, stateId, } = useContext(AccessContext);
 
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [filter, setFilter] = useState<{ ano: string | null; partido: string }>(
+  const [filter, setFilter] = useState<{ ano: string | null; partyCode: string }>(
     {
       ano: null,
-      partido: "",
+      partyCode: "",
     }
   );
 
@@ -87,7 +87,7 @@ export default function GeraXSDs() {
       api
         .post(`/gera_xsds`, {
           ...filter,
-          partyCode,
+          partyCode: user?.role == 'ADMIN' ? filter.partyCode : partyCode,
           stateId,
           cityCode,
           itensPorPagina: take,
