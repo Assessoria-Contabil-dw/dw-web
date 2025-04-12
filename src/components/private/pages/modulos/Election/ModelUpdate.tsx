@@ -31,7 +31,7 @@ const ModelUpdate: ForwardRefRenderFunction<UpdateRef> = (props, ref) => {
   }, []);
 
   const closeModal = useCallback(() => {
-    // queryClient.invalidateQueries("electionData");
+    queryClient.invalidateQueries("electionData");
     setIsModalView(false);
     setId("");
   }, []);
