@@ -4,6 +4,8 @@ import InputYear from "../../../Search/Input/InputYear";
 import SelectParty from "@/components/private/Form/Selects/SelectParty";
 import SelectBase from "@/components/private/Search/Select/SelectBase";
 import InputBase from "@/components/private/Search/Input/InputBase";
+import { queryClient } from "@/provider/query.provider";
+import { User } from "@/hooks/Access/User/useAuth";
 
 interface FilterXSDProps {
   partyCode?: string;
@@ -16,10 +18,13 @@ export default function TableFilterXSD({
   partyCode,
   onChange,
 }: FilterXSDProps) {
+
+  const user = queryClient.getQueryData("authUser") as User;
+
   return (
     <div className="flex gap-2 ">
       <div className="flex flex-wrap gap-2 basis-[fit-content]">
-        {partyCode == null && (
+        {user?.role == 'ADMIN' && (
           <div className="w-44">
             <SelectParty
               defaultValue=""
