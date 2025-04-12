@@ -26,6 +26,7 @@ interface SPCProps {
 }
 
 const schema = z.object({
+  
   partyAbbreviation: z.string().optional(),
   stateName: z.string().optional(),
   cityName: z.string().optional(),
