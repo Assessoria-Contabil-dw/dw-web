@@ -65,6 +65,11 @@ export class VigencyService {
     return response.data;
   }
 
+  public async getExpired() {
+    const response = await api.get("/vigencies/expired");
+    return response.data;
+  }
+
   static async create(
     dateFirst: string,
     dateLast: string,

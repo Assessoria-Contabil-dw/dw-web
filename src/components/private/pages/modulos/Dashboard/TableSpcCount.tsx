@@ -34,11 +34,12 @@ export default function TableSpcCount() {
     await refetch();
   }
 
-
-  const queryElection = useQuery<{
+  const queryElection = useQuery<
+    {
       year: string;
       count: number;
-    }[]>(
+    }[]
+  >(
     [
       "dashboardElection",
       filter.partyAbbreviation,
@@ -74,7 +75,6 @@ export default function TableSpcCount() {
       },
     }
   );
-
 
   const { data, isLoading, isFetching, refetch } = useQuery<{
     SPCA: {
@@ -122,7 +122,7 @@ export default function TableSpcCount() {
     }
   );
 
-  if (isLoading || !data || !queryElection.data || queryElection.isLoading ) {
+  if (isLoading || !data || !queryElection.data || queryElection.isLoading) {
     return (
       <div className="w-full rounded-md border border-slate-200 p-4">
         <div className="flex animate-pulse space-x-4">
@@ -185,12 +185,13 @@ export default function TableSpcCount() {
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <h4 className="text-h4 flex items-center gap-2">
-            SPCE {isFetching && <LoadingSecond />}
-          </h4>
+        <div className="flex flex-row gap-6" >
+          <div className="flex flex-col gap-2">
+            <h4 className="text-h4 flex items-center gap-2">
+              SPCE {isFetching && <LoadingSecond />}
+            </h4>
             {data.SPCE.length > 0 ? (
-              <div className="grid grid-flow-row grid-cols-8 gap-2 max-md:grid-cols-4 max-sm:grid-cols-3">
+              <div className="grid grid-flow-row grid-cols-4 gap-4 max-md:grid-cols-4 max-sm:grid-cols-3">
                 {data.SPCE.map((spc) =>
                   Number(spc.year) < 2017 ? null : (
                     <div
@@ -210,14 +211,14 @@ export default function TableSpcCount() {
             ) : (
               <p className="text-span">Nenhum dado encontrado</p>
             )}
-        </div>
+          </div>
 
-        <div className="flex flex-col gap-2">
-          <h4 className="text-h4 flex items-center gap-2">
-            Eleições {queryElection.isFetching && <LoadingSecond />}
-          </h4>
+          <div className="flex flex-col gap-2">
+            <h4 className="text-h4 flex items-center gap-2">
+              Eleições {queryElection.isFetching && <LoadingSecond />}
+            </h4>
             {queryElection?.data?.length > 0 ? (
-              <div className="grid grid-flow-row grid-cols-8 gap-2 max-md:grid-cols-4 max-sm:grid-cols-3">
+              <div className="grid grid-flow-row grid-cols-2 gap-2 max-md:grid-cols-4 max-sm:grid-cols-3">
                 {queryElection.data.map((election) =>
                   Number(election.year) < 2017 ? null : (
                     <div
@@ -237,6 +238,7 @@ export default function TableSpcCount() {
             ) : (
               <p className="text-span">Nenhum dado encontrado</p>
             )}
+          </div>
         </div>
       </div>
     </fieldset>
