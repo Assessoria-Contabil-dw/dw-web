@@ -21,4 +21,16 @@ export class DashboardService {
     const response = await api.get("/dashboard/spc", { params: data });
     return response.data;
   }
+
+  public async getElection(
+    data:{
+      partyAbbreviation?: string,
+      stateName?: string,
+      cityName?: string,
+      legendId?: string,
+    }
+  ) {
+    const response = await api.get("/dashboard/election", { params: data });
+    return response.data;
+  }
 }
