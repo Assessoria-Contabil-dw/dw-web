@@ -3,7 +3,7 @@
 import { X } from "lucide-react"
 import { ForwardRefRenderFunction, forwardRef, useCallback, useImperativeHandle, useState, useEffect } from "react"
 import { useForm, Controller } from 'react-hook-form'
-import { fontes, naturezas, origens, candidaturas, classificacoesReceita, especies, gastos, documentos } from "./@types/interface.type"
+import { fontes, naturezas, origens, candidaturas, especies, documentos } from "./@types/interface.type"
 import { api } from "@/lib/api"
 import { useNotify } from "@/components/Toast/toast"
 import { LoadingSecond } from "@/components/Loading/second";
@@ -26,6 +26,8 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
   const [ isFetching, setIsFetching ] = useState<boolean>(false);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const [ idData, setIdData ] = useState<number | null>(null);
+  const [ gastos, setGastos ] = useState<any[]>([]);
+  const [ receitas, setReceitas ] = useState<any[]>([]);
 
   const { register, handleSubmit, watch, setValue } = useForm()
 
@@ -68,6 +70,17 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
 
   const passIdData = useCallback((id: number) => {
     setIdData(id);
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const [gastosRes, receitasRes] = await Promise.all([
+        api.get(`/gera_xsds/gastos`),
+        api.get(`/gera_xsds/receitas`)
+      ]);
+      setGastos(gastosRes.data);
+      setReceitas(receitasRes.data);
+    })();
   }, []);
 
   useEffect(() => {
@@ -185,7 +198,7 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
                   {candidaturas.map((v, i) => <option key={i} value={v.codigo}>{v.codigo} - {v.descricao}</option>)}
                 </SelectBase>}
                 {watchTipoLancamento == 'C' && <SelectBase {...register('classificacao')} label="Classificação">
-                  {classificacoesReceita.map((v, i) => <option key={i} value={v.codigo}>{v.codigo} - {v.descricao}</option>)}
+                  {receitas.map((v, i) => <option key={i} value={v.id}>{v.id} - {v.descricao}</option>)}
                 </SelectBase>}
                 {watchTipoLancamento == 'C' && <SelectBase {...register('especie')} label="Espécie">
                   {especies.map((v, i) => <option key={i} value={v.codigo}>{v.codigo} - {v.descricao}</option>)}
@@ -197,7 +210,7 @@ const FormularioXSD: ForwardRefRenderFunction<FormularioXSDRef> = (_, ref) => {
                   <option value='N'>NÃO</option>
                 </SelectBase>}
                 {watchTipoLancamento == 'D' && <SelectBase {...register('gasto')} label="Gasto">
-                  {gastos.map((v, i) => <option key={i} value={v.codigo}>{v.codigo} - {v.descricao}</option>)}
+                  {gastos.map((v, i) => <option key={i} value={v.id}>{v.id} - {v.descricao}</option>)}
                 </SelectBase>}
                 {watchTipoLancamento == 'D' && <SelectBase {...register('documento')} label="Documento">
                   {documentos.map((v, i) => <option key={i} value={v}>{v}</option>)}
