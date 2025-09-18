@@ -5,7 +5,7 @@ export default function NotFound() {
 
       <div className=" text-center">
         <h4 className="text-base font-semibold uppercase text-slate-500">
-          Página não encontrada!
+          Página não encontrada! Teste
         </h4>
       </div>
     </div>
