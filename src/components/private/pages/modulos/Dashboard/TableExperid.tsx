@@ -30,7 +30,7 @@ export default function TableExperidVigency() {
         console.error(error);
         return notify({
           type: "error",
-          message: " Erro interno, tente novamente mais tarde",
+          message: "Erro interno, tente novamente mais tarde",
         });
       }
   
