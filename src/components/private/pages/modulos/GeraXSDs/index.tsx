@@ -12,18 +12,21 @@ import {
   LucideUploadCloud,
 } from "lucide-react";
 import { api } from "@/lib/api";
+
 import { TableXSD } from "./Table";
 import FormularioDownload, {
   FormularioDownloadRef,
 } from "./FormularioDownload";
 import FormularioUpload, { FormularioUploadRef } from "./FormularioUpload";
 import { useNotify } from "@/components/Toast/toast";
+
 import z from "zod";
 import TableFilterXSD from "./Filter";
 import ButtonBase from "@/components/Buttons/ButtonBase";
 import React from "react";
 import ButtonIcon from "@/components/Buttons/ButtonIcon";
 import { AccessContext } from "@/provider/context.provider";
+import FormularioMastermaq, { FormularioMastermaqRef } from "./FormularioMastermaq";
 
 let interval: any;
 
@@ -63,6 +66,7 @@ export default function GeraXSDs() {
 
   const modalFormularioDownloadRef = useRef<FormularioDownloadRef>(null);
   const modalFormularioUploadRef = useRef<FormularioUploadRef>(null);
+  const modalFormularioMastermaqRef = useRef<FormularioMastermaqRef>(null);
 
   const [data, setData] = useState<any>([]);
   const [page, setPage] = useState(1);
@@ -143,6 +147,7 @@ export default function GeraXSDs() {
   return (
     <>
       <FormularioDownload ref={modalFormularioDownloadRef} />
+      <FormularioMastermaq ref={modalFormularioMastermaqRef} />
       <FormularioUpload ref={modalFormularioUploadRef} />
       <div className="flex flex-col  gap-2">
         <div className="flex   items-end justify-between gap-4 max-md:justify-center">
@@ -186,6 +191,15 @@ export default function GeraXSDs() {
                   }
                 >
                   XSD
+                </ButtonBase>
+                <ButtonBase
+                  className="border-none bg-primary text-black hover:bg-primaryHover hover:text-black"
+                  title="Download XSD"
+                  onClick={() => modalFormularioMastermaqRef.current?.openModal()}
+                  disabled={isFetching}
+                  loading={isFetching}
+                  startIcon={<LucideDownloadCloud size={16} className="h-fit w-5" />}>
+                    Mastermaq
                 </ButtonBase>
                 <ButtonBase
                   className="border-none bg-second text-white hover:bg-secondHover hover:text-white"
