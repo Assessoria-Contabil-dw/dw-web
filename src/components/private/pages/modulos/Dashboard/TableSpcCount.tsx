@@ -163,7 +163,7 @@ export default function TableSpcCount() {
             SPCA {isFetching && <LoadingSecond />}
           </h4>
           {data.SPCA.length > 0 ? (
-            <div className="grid grid-flow-row grid-cols-8 gap-2 max-md:grid-cols-4 max-sm:grid-cols-3">
+            <div className="grid grid-flow-row grid-cols-4 gap-2 max-md:grid-cols-4 max-sm:grid-cols-3">
               {data.SPCA.map((spc) =>
                 Number(spc.year) < 2017 ? null : (
                   <div
@@ -185,7 +185,7 @@ export default function TableSpcCount() {
           )}
         </div>
 
-        <div className="flex flex-row gap-6" >
+        <div className="flex flex-col gap-6 w-full" >
           <div className="flex flex-col gap-2">
             <h4 className="text-h4 flex items-center gap-2">
               SPCE {isFetching && <LoadingSecond />}
