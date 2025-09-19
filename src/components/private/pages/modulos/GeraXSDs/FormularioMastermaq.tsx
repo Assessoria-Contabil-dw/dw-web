@@ -15,7 +15,7 @@ import ButtonPrimary from "@/components/Buttons/ButtonPrimary"
 
 const formDownloadSchema = z.object({
   cnpj: z.string().regex(new RegExp(/^\d{14}$/, "i")),
-  tipoLancamento: z.string().regex(new RegExp(/^[CD]{1}$/)),
+  tipoLancamento: z.string().regex(new RegExp(/^[CD]{0,1}$/)),
   dataInicial: z.string().length(10),
   dataFinal: z.string().length(10),
   registrosSelecionados: z.boolean()
