@@ -172,7 +172,7 @@ export default function TableSpcCount() {
 									>
 										<div className="flex flex-col items-center border-b border-slate-200 pb-2">
 											<h3 className="font-serif text-2xl font-bold text-slate-800">
-												{Object.values(spc.statuses ?? {}).reduce((a, b) => a + b, 0) ?? "0"}
+												{Object.values(spc.statuses ?? ).reduce((a, b) => a + b, 0) ?? "0"}
 											</h3>
 											<p className="font-serif text-xs font-semibold text-slate-600">
 												{spc.year}
