@@ -7,6 +7,7 @@ export class OfficeService {
       return response.data
     } catch (error) {
       return error
+      
     }
   }
 }
