@@ -23,6 +23,8 @@ interface SPCProps {
   year?: string;
   colorId?: string;
   vigencyStatus?: string;
+  spca?: boolean;
+  spce?: boolean;
 }
 
 const schema = z.object({
@@ -42,6 +44,8 @@ export default function SPC() {
   const { partyCode, cityCode, stateId } = useContext(AccessContext);
   const [filter, setFilter] = useState<SPCProps>({});
   const [stateName, setStateName] = useState("");
+  const [spcaChecked, setSpcaChecked] = useState(false);
+  const [spceChecked, setSpceChecked] = useState(false);
 
   const methods = useForm<FormDataType | SPCProps>({
     mode: "onSubmit",
@@ -69,25 +73,41 @@ export default function SPC() {
       filter.cityName,
       filter.year,
       filter.colorId,
-      filter.vigencyStatus
+      filter.vigencyStatus,
+      filter.spca,
+      filter.spce
     );
 
   async function handleSearchOnChange(
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
 
     if (name === "stateName") {
       setStateName(value);
       setFilter((old) => ({ ...old, cityName: undefined }));
     }
+    
+    if (name === "spca") {
+      setSpcaChecked(checked ?? false);
+      setFilter((old) => ({ ...old, spca: checked }));
+    } else if (name === "spce") {
+      setSpceChecked(checked ?? false);
+      setFilter((old) => ({ ...old, spce: checked }));
+    }
+    
     if (name === "year" && value.length < 4) {
       setFilter((old) => ({ ...old, [name]: undefined }));
       return;
     }
+    
+    if (type !== 'checkbox') {
+      setFilter((old) => ({ ...old, [name]: value }));
+    }
+    
     setPage(1);
     setSkip(0);
-    setFilter((old) => ({ ...old, [name]: value }));
     await refetch();
   }
 
@@ -135,6 +155,8 @@ export default function SPC() {
                 stateId={stateId}
                 stateName={stateName}
                 onChange={handleSearchOnChange}
+                spcaChecked={spcaChecked}
+                spceChecked={spceChecked}
               />
             </form>
           </FormProvider>

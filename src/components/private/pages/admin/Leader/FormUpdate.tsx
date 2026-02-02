@@ -32,7 +32,7 @@ export function FormUpdateLeader({ id, onClose }: RegisterLeaderModalProps) {
       queryKey: ["leader", id],
       queryFn: async () => {
         const response = await LeadersService.getById(id);
-        return response.data;
+        return response;
       },
     },
 
@@ -69,6 +69,7 @@ export function FormUpdateLeader({ id, onClose }: RegisterLeaderModalProps) {
 
 
 useEffect(() => {
+  console.log(dataLeader);
   if(dataLeader.data && !dataLeader.isLoading){
     const mappedData = dataLeader.data?.importantPasswords.map((item: {
       name: string;

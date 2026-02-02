@@ -20,7 +20,9 @@ export class SPCService {
     cityName?: string,
     year?: string,
     legendId?: string,
-    vigencyStatus?: string
+    vigencyStatus?: string,
+    spca?: boolean,
+    spce?: boolean
   ) {
     try {
       const response = await api.get("/spcs", {
@@ -36,6 +38,8 @@ export class SPCService {
           year,
           legendId,
           vigencyStatus,
+          spca,
+          spce,
         },
       });
       return response.data;
