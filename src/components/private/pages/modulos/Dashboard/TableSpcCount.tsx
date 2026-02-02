@@ -38,6 +38,7 @@ export default function TableSpcCount() {
 		{
 			year: string;
 			count: number;
+			
 		}[]
 	>(
 		[
@@ -80,10 +81,12 @@ export default function TableSpcCount() {
 		SPCA: {
 			year: string;
 			count: number;
+			statuses: number;
 		}[];
 		SPCE: {
 			year: string;
 			count: number;
+			statuses: number;
 		}[];
 	}>(
 		[
@@ -138,8 +141,8 @@ export default function TableSpcCount() {
 				</div>
 			</div>
 		);
-	}
-	return (
+	};
+	return (<>
 		<fieldset className="fieldset h-fit w-full p-4">
 			<div className="mb-4">
 				<h4 className="text-h4">SPC</h4>
@@ -172,7 +175,7 @@ export default function TableSpcCount() {
 									>
 										<div className="flex flex-col items-center border-b border-slate-200 pb-2">
 											<h3 className="font-serif text-2xl font-bold text-slate-800">
-												{Object.values(spc.statuses ?? ).reduce((a, b) => a + b, 0) ?? "0"}
+												{Object.values(spc.statuses ?? {}).reduce((a, b) => a + b, 0) ?? "0"}
 											</h3>
 											<p className="font-serif text-xs font-semibold text-slate-600">
 												{spc.year}
@@ -276,5 +279,5 @@ export default function TableSpcCount() {
 				</div>
 			</div>
 		</fieldset>
-	);
+	</>);
 }
