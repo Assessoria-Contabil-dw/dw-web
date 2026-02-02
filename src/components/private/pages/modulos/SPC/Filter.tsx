@@ -15,6 +15,8 @@ interface FilterSPCProps {
   onChange?: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => void;
+  spcaChecked?: boolean;
+  spceChecked?: boolean;
 }
 
 export default function TableFilterSPC({
@@ -23,6 +25,8 @@ export default function TableFilterSPC({
   stateId,
   stateName,
   onChange,
+  spcaChecked,
+  spceChecked,
 }: FilterSPCProps) {
   return (
     <div className="flex gap-2 ">
@@ -61,6 +65,30 @@ export default function TableFilterSPC({
       <SelectLegend label="Status" name="colorId" onChange={onChange}>
         <option value="">Todos</option>
       </SelectLegend>
+      
+      <div className="flex items-center gap-4">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            name="spca"
+            checked={spcaChecked}
+            onChange={onChange}
+            className="h-4 w-4 cursor-pointer"
+          />
+          <span className="text-sm">SPCA</span>
+        </label>
+        
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            name="spce"
+            checked={spceChecked}
+            onChange={onChange}
+            className="h-4 w-4 cursor-pointer"
+          />
+          <span className="text-sm">SPCE</span>
+        </label>
+      </div>
     </div>
   );
 }

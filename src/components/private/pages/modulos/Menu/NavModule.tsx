@@ -57,6 +57,11 @@ export default function NavigationModule( { modules } :NavigationProps) {
       label: `Gera XSD's`,
       sub: null,
     },
+    {
+      href: `/convenios`,
+      label: `Convênios BB`,
+      sub: null,
+    },
     // {
     //   href: `/relatorio`,
     //   label: 'Relatório',

@@ -6,6 +6,7 @@ import {
   useCallback,
   useImperativeHandle,
   useState,
+  useEffect,
 } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
@@ -42,6 +43,7 @@ export default function FormUpdateDirectory({
   const {
     handleSubmit,
     watch,
+    reset,
     formState: { isSubmitting },
   } = createDirectoryForm;
 
@@ -78,6 +80,26 @@ export default function FormUpdateDirectory({
       watch("typeOrgId")
     );
   });
+  
+  useEffect(() => {
+    console.log(data);
+    if (data) {
+      reset({
+        typeOrgId: data.typeOrg.id.toString(),
+        vigencyStatus: data.vigencyStatus.toString(),
+        partyCode: data.party.code.toString(),
+        stateId: data.state.abbreviation,
+        cityCode: data.city.code,
+        cnpj: data.cnpj,
+        mailingAddress: data.mailingAddress,
+        phone: data.phone,
+        email: data.email,
+        siteUrl: data.siteUrl,
+        address: data.address,
+      });
+      setSelectedState(data.state.abbreviation);
+    }
+  }, [data, reset]);
   
   const { mutate } = useMutation({
     mutationKey: "updateLeader",

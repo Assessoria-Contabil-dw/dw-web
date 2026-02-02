@@ -15,7 +15,9 @@ export function useSPCData(
   cityName?: string,
   year?: string,
   colorId?: string,
-  vigencyStatus?: string
+  vigencyStatus?: string,
+  spca?: boolean,
+  spce?: boolean
 ) {
   const spcService = new SPCService();
 
@@ -33,6 +35,8 @@ export function useSPCData(
       year,
       colorId,
       vigencyStatus,
+      spca,
+      spce,
     ],
     () =>
       spcService.getAll(
@@ -46,7 +50,9 @@ export function useSPCData(
         cityName,
         year,
         colorId,
-        vigencyStatus
+        vigencyStatus,
+        spca,
+        spce
       ),
     {
       keepPreviousData: true,

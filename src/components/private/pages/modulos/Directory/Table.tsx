@@ -1,7 +1,7 @@
 "use client";
 
 import { DirectoryProps } from "@/interfaces/types";
-import { BellRing, Circle, Lock } from "lucide-react";
+import { BellRing, Circle, Lock, Upload } from "lucide-react";
 import { TableOptions } from "../../../Tools/TableOptions";
 import { LoadingSecond } from "@/components/Loading/second";
 
@@ -12,6 +12,7 @@ import { useAccessModuleData } from "@/hooks/Access/User/useAccess";
 import ViewModel, { ViewRef } from "./View";
 import Model, { ModelRef } from "@/components/private/components/Modal";
 import FormUpdateDirectory from "./FormUpdate";
+import FormCertificate from "./FormCertificate";
 
 interface TableDirectoryProps {
   role: string;
@@ -67,12 +68,25 @@ export default function TableDirectory({
     modelUpdateRef.current?.closeModel();
   }, []);
 
+  const modelCertificateRef = useRef<ModelRef>(null);
+  const handleCertificateOpenModel = useCallback((id: string) => {
+    setId(id);
+    modelCertificateRef.current?.openModel();
+  }, []);
+
+  const handleCertificateCloseModel = useCallback(() => {
+    modelCertificateRef.current?.closeModel();
+  }, []);
+
   return (
     <>
       <DeleteModel ref={modelDeleteRef} />
       <ViewModel ref={modelViewRef} />
       <Model title="Atualizar" ref={modelUpdateRef}>
         <FormUpdateDirectory onClose={handleUpdateCloseModel} id={id} />
+      </Model>
+      <Model title="Upload de Certificado" ref={modelCertificateRef}>
+        <FormCertificate onClose={handleCertificateCloseModel} directoryId={id} />
       </Model>
       <fieldset className="fieldset">
         <table id="table-style">
@@ -85,6 +99,7 @@ export default function TableDirectory({
               <th>Endereço</th>
               <th>CNPJ</th>
               <th>E-mail</th>
+              <th>Certificado</th>
               <th></th>
             </tr>
           </thead>
@@ -154,6 +169,15 @@ export default function TableDirectory({
                     {directory.email == null ? "-" : directory.email}
                   </td>
                   <td>
+                    <button
+                      title="Upload de Certificado"
+                      onClick={() => handleCertificateOpenModel(directory.id.toString())}
+                      className="flex items-center justify-center rounded-md p-2 text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
+                    >
+                      <Upload size={16} />
+                    </button>
+                  </td>
+                  <td>
                     <TableOptions
                       role={role || ""}
                       isView
@@ -170,7 +194,7 @@ export default function TableDirectory({
               ))
             ) : (
               <tr>
-                <td colSpan={8}>
+                <td colSpan={9}>
                   Nenhum diretório cadastrado
                 </td>
               </tr>
