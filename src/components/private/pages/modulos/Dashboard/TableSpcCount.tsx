@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import TableFilterSPC from "./Filter";
 import { ChangeEvent, useState } from "react";
 import { LoadingSecond } from "@/components/Loading/second";
+import { count } from "console";
 
 export default function TableSpcCount() {
 	const dashboardService = new DashboardService();
@@ -172,23 +173,24 @@ export default function TableSpcCount() {
 									>
 										<div className="flex flex-col items-center border-b border-slate-200 pb-2">
 											<h3 className="font-serif text-2xl font-bold text-slate-800">
-												{Object.values(spc.statuses ?? {}).reduce((a, b) => a + b, 0) ?? "0"}
+												{Object.values(spc.statuses ?? {}).reduce((a, b) => a + b?.count, 0) ?? "0"}
 											</h3>
 											<p className="font-serif text-xs font-semibold text-slate-600">
 												{spc.year}
 											</p>
 										</div>
 										<div className="flex flex-wrap gap-1.5">
-											{Object.entries(spc.statuses ?? {}).map(([color, count]) => {
+											{Object.entries(spc.statuses ?? {}).map(([color, obj]) => {
+												console.log(color, obj);
 												const isLightColor = color.toLowerCase() === '#ffffff' || color.toLowerCase() === '#fff' || color.toLowerCase() === 'white' || color.toLowerCase() === 'sem-cor';
 												return (
 													<div
 														key={color}
 														className={`flex h-6 w-10 items-center justify-center rounded px-2 py-1 text-xs font-semibold shadow-sm ${isLightColor ? 'text-slate-700' : 'text-white'}`}
 														style={{ backgroundColor: color }}
-														title={color}
+														title={obj?.legend}
 													>
-														{count}
+														{obj?.count}
 													</div>
 												);
 											})}
@@ -217,23 +219,23 @@ export default function TableSpcCount() {
 										>
 											<div className="flex flex-col items-center border-b border-slate-200 pb-2">
 												<h3 className="font-serif text-2xl font-bold text-slate-800">
-													{Object.values(spc.statuses ?? {}).reduce((a, b) => a + b, 0)}
+													{Object.values(spc.statuses ?? {}).reduce((a, b) => a + b?.count, 0) ?? "0"}
 												</h3>
 												<p className="font-serif text-xs font-semibold text-slate-600">
 													{spc.year}
 												</p>
 											</div>
 											<div className="flex flex-wrap gap-1.5">
-												{Object.entries(spc.statuses ?? {}).map(([color, count]) => {
+												{Object.entries(spc.statuses ?? {}).map(([color, obj]) => {
 													const isLightColor = color.toLowerCase() === '#ffffff' || color.toLowerCase() === '#fff' || color.toLowerCase() === 'white' || color.toLowerCase() === 'sem-cor';
 													return (
 														<div
 															key={color}
 															className={`flex h-6 w-10 items-center justify-center rounded px-2 py-1 text-xs font-semibold shadow-sm ${isLightColor ? 'text-slate-700' : 'text-white'}`}
 															style={{ backgroundColor: color }}
-															title={color}
+															title={obj?.legend}
 														>
-															{count}
+															{obj?.count}
 														</div>
 													);
 												})}
