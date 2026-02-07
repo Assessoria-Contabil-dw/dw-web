@@ -43,9 +43,9 @@ export default function FormCertificate({
       formData.append("directoryId", directoryId);
 
       const response = await api.post("/certificate/extract-pfx", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
       });
 
       console.log("Resposta do upload:", response.data);
