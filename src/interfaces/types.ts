@@ -63,7 +63,7 @@ export interface DirectoryProps {
   typeOrg: string
   partyId: number
   cityCode: number
-
+  hasCertificate: boolean
   _vigencyCountVeciment: number
 }
 

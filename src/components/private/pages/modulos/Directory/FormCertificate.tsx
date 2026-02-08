@@ -42,11 +42,7 @@ export default function FormCertificate({
       formData.append("password", password);
       formData.append("directoryId", directoryId);
 
-      const response = await api.post("/certificate/extract-pfx", formData, {
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // },
-      });
+      const response = await api.post("/certificate/extract-pfx", formData);
 
       console.log("Resposta do upload:", response.data);
 

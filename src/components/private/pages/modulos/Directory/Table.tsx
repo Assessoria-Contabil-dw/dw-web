@@ -13,6 +13,8 @@ import ViewModel, { ViewRef } from "./View";
 import Model, { ModelRef } from "@/components/private/components/Modal";
 import FormUpdateDirectory from "./FormUpdate";
 import FormCertificate from "./FormCertificate";
+import UiTooltip from "@/components/ui/ui-tooltip";
+import UiActiveDot from "@/components/ui/ui-active-dot";
 
 interface TableDirectoryProps {
   role: string;
@@ -169,13 +171,22 @@ export default function TableDirectory({
                     {directory.email == null ? "-" : directory.email}
                   </td>
                   <td>
-                    <button
-                      title="Upload de Certificado"
-                      onClick={() => handleCertificateOpenModel(directory.id.toString())}
-                      className="flex items-center justify-center rounded-md p-2 text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
-                    >
-                      <Upload size={16} />
-                    </button>
+                    <div className="relative inline-flex">
+                      <button
+                        title="Upload de Certificado"
+                        onClick={() =>
+                          handleCertificateOpenModel(directory.id.toString())
+                        }
+                        className="flex items-center justify-center rounded-md p-2 text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
+                      >
+                        <Upload size={16} />
+                      </button>
+
+                      <UiTooltip content="Já possui certificado">
+                       <UiActiveDot enable={directory.hasCertificate }/>
+                      </UiTooltip>
+                     
+                    </div>
                   </td>
                   <td>
                     <TableOptions
